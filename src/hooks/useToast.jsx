@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export const useToast = () => {
+export default function useToast() {
     const getToastType = (type) => {
         return type.toLowerCase();
     };

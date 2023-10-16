@@ -1,0 +1,11 @@
+@mixin sub-title {
+    font-size: 16px;
+    line-height: auto;
+    font-weight: lighter;
+}
+
+@mixin h1-text {
+    font-size: 48px;
+    line-height: auto;
+    font-weight: bold;
+}

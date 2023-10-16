@@ -1,0 +1,19 @@
+
+$light-accent : #81A2B1;
+
+$light-shades : #F5F5F0;
+$dark-shades  : #1F2F37;
+
+$main-color   : #0BAEDD;
+$error        : #FF0000;
+
+
+:export {
+    light-accent: $light-accent;
+
+    light-shades: $light-shades;
+    dark-shades: $dark-shades;
+
+    main-color: $main-color;
+    error: $error;
+}

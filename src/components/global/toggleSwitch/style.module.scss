@@ -1,0 +1,144 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.btn-container {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    height: 48px;
+    width: 355px;
+    @include mixins.sub-title;
+  }
+  
+  .btn-container i {
+    display: inline-block;
+    position: relative;
+    top: -9px;
+    width: 100%;
+    height: 100%;
+  }
+  
+  label {
+    // font-size: 13px;
+    color: #424242;
+    // font-weight: 500;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .btn-color-mode-switch {
+    display: inline-block;
+    margin: 0px;
+    position: relative;
+  }
+  
+  .btn-color-mode-switch > label.btn-color-mode-switch-inner {
+    margin: 0px;
+    // width: 140px;
+    // height: 30px;
+    height: 100%;
+    width: 100%;
+    background: $light-shades;
+    border-radius: 26px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+      /*box-shadow: 0px 0px 8px 0px rgba(17, 17, 17, 0.34) inset;*/
+    display: block;
+  }
+  
+  .btn-color-mode-switch > label.btn-color-mode-switch-inner:before {
+    content: attr(data-right);
+    position: absolute;
+    // font-size: 12px;
+    // font-weight: 500;
+    @include mixins.sub-title;
+    // top: 7px;
+    right: 75px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    color: $main-color;
+  }
+  
+  .btn-color-mode-switch > label.btn-color-mode-switch-inner:after {
+    content: attr(data-left);
+    width: 70px;
+    width: 50%;
+    // height: 16px;
+    height: 100%;
+    background: $main-color;
+    color: $light-shades;;
+    border-radius: 26px;
+    position: absolute;
+    left: 0px;
+    // top: 2px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0px 0px 6px -2px #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    // padding: 5px 0px;
+  }
+  
+  .btn-color-mode-switch > .alert {
+    display: none;
+    border: none;
+    color: #fff;
+
+  }
+  
+  .btn-color-mode-switch input[type="checkbox"] {
+    cursor: pointer;
+    width: 50px;
+    height: 25px;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    margin: 0px;
+  }
+  
+  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner {
+    background: $light-shades;
+    color: #fff;
+  }
+  
+  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after {
+    content: attr(data-right);
+    left: 280px;
+    left: 50%;
+    background: $main-color;
+    color: $light-shades;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before {
+    content: attr(data-left);
+    right: auto;
+    height: 100%;
+    left: 70px;
+    line-height: 30px;
+    color: $main-color;
+  }
+  
+  .btn-color-mode-switch input[type="checkbox"]:checked ~ .alert {
+    display: block;
+  }
+  
+  .dark-preview {
+    background: #0d0d0d;
+  }
+  
+  .white-preview {
+    background: #fff;
+  }
+  
+  
