@@ -2,11 +2,11 @@
 @import "styles/colors.module.scss";
 
 .btn-container {
-    display: table-cell;
-    vertical-align: middle;
+    // display: table-cell;
+    // vertical-align: middle;
     text-align: center;
     height: 48px;
-    width: 355px;
+    width: 100%;
     @include mixins.sub-title;
   }
   
@@ -19,9 +19,7 @@
   }
   
   label {
-    // font-size: 13px;
     color: #424242;
-    // font-weight: 500;
     height: 100%;
     width: 100%;
   }
@@ -34,8 +32,6 @@
   
   .btn-color-mode-switch > label.btn-color-mode-switch-inner {
     margin: 0px;
-    // width: 140px;
-    // height: 30px;
     height: 100%;
     width: 100%;
     background: $light-shades;
@@ -43,18 +39,16 @@
     overflow: hidden;
     position: relative;
     transition: all 0.3s ease;
-      /*box-shadow: 0px 0px 8px 0px rgba(17, 17, 17, 0.34) inset;*/
     display: block;
+    cursor: pointer;
   }
   
   .btn-color-mode-switch > label.btn-color-mode-switch-inner:before {
     content: attr(data-right);
     position: absolute;
-    // font-size: 12px;
-    // font-weight: 500;
     @include mixins.sub-title;
-    // top: 7px;
-    right: 75px;
+    // right: 75px;
+    right: 20%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -66,45 +60,43 @@
     content: attr(data-left);
     width: 70px;
     width: 50%;
-    // height: 16px;
     height: 100%;
     background: $main-color;
     color: $light-shades;;
     border-radius: 26px;
     position: absolute;
     left: 0px;
-    // top: 2px;
     text-align: center;
     transition: all 0.3s ease;
     box-shadow: 0px 0px 6px -2px #111;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    // padding: 5px 0px;
+    cursor: auto;
   }
   
   .btn-color-mode-switch > .alert {
     display: none;
     border: none;
     color: #fff;
-
   }
   
   .btn-color-mode-switch input[type="checkbox"] {
-    cursor: pointer;
     width: 50px;
+    visibility: hidden;
     height: 25px;
     opacity: 0;
     position: absolute;
     top: 0;
     z-index: 1;
     margin: 0px;
+    cursor: pointer;
   }
   
   .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner {
     background: $light-shades;
     color: #fff;
+    cursor: pointer;
   }
   
   .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after {
@@ -113,32 +105,32 @@
     left: 50%;
     background: $main-color;
     color: $light-shades;
-    cursor: pointer;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   
-  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before {
+.btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before {
     content: attr(data-left);
     right: auto;
     height: 100%;
-    left: 70px;
+    // left: 70px;
+    left: 20%;
     line-height: 30px;
     color: $main-color;
-  }
+}
   
-  .btn-color-mode-switch input[type="checkbox"]:checked ~ .alert {
+.btn-color-mode-switch input[type="checkbox"]:checked ~ .alert {
     display: block;
-  }
+}
   
-  .dark-preview {
+.dark-preview {
     background: #0d0d0d;
-  }
+}
   
-  .white-preview {
+.white-preview {
     background: #fff;
-  }
+}
   
   

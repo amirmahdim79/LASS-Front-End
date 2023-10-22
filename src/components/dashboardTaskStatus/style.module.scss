@@ -1,0 +1,13 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    height: 24px;
+    padding: 1px 24px;
+    border-radius: 15px;
+    @include mixins.sub-description;
+}

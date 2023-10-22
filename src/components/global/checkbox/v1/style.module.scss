@@ -1,0 +1,48 @@
+@import "styles/colors.module.scss";
+
+.container {
+    display: block;
+    position: relative;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        height: 0;
+        width: 0;
+    } 
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 1.8px solid $light-accent-100;
+    border-radius: 27%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container:hover input ~ .checkmark {
+    background-color: transparent;
+}
+  
+.container input:checked ~ .checkmark {
+    background-color: transparent;
+}
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+  

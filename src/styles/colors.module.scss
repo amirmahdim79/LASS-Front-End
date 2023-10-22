@@ -1,19 +1,43 @@
 
-$light-accent : #81A2B1;
+$light-accent-100 : #81A2B1;
+$light-accent-30  : #D2DCDD;
+$light-accent-20  : #DEE4E3;
 
-$light-shades : #F5F5F0;
-$dark-shades  : #1F2F37;
+$dark-accent-100  : #777765;
 
-$main-color   : #0BAEDD;
-$error        : #FF0000;
+
+$light-shades     : #F5F5F0;
+$dark-shades      : #1F2F37;
+
+$main-color       : #0BAEDD;
+
+$error-100        : #FF0000;
+$error-60         : #F25B5B;
+
+$warning-60       : #DEF461;
+
+$success-100       : #4ECC00;
+$success-60       : #87D65B;
 
 
 :export {
-    light-accent: $light-accent;
+    light-accent-100: $light-accent-100;
+    light-accent-30: $light-accent-30;
+    light-accent-20: $light-accent-20;
+
+    dark-accent-100: $dark-accent-100;
 
     light-shades: $light-shades;
     dark-shades: $dark-shades;
 
     main-color: $main-color;
-    error: $error;
+
+    error-100: $error-100;
+    error-60: $error-60;
+
+    warning-60: $warning-60;
+
+    success-100: $success-100;
+    success-60: $success-60;
+
 }

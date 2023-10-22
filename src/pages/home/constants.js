@@ -6,4 +6,6 @@ export const text = {
 
     input_1: 'ایمیل',
     input_2: ' رمز عبور',
+
+    button: 'وارد شوید',
 }

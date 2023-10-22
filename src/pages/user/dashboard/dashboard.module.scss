@@ -1,0 +1,149 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    height: 100vh;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+
+    .step_progress_container {
+        width: 100%;
+        background-color: $light-accent-20;
+        border-radius: 15px;
+        padding: 25px 30px 35px 30px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+
+        h5 {
+            @include mixins.h5-text;
+            color: $dark-shades;
+            text-align: right;
+        }
+    }
+
+
+    .upcoming_activities_container {
+        width: 100%;
+        border-radius: 15px;
+        border: 1px solid $light-accent-30;
+        padding: 15px 24px 30px 24px;
+        
+
+        .title {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 86% 14%;
+            direction: rtl;
+            padding: 0 33px 14px 33px;
+            @include mixins.sub-title;
+            color: $dark-shades;
+        }
+
+        .activities {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 30px;
+            // min-height: 1310px;
+            // max-height: 1310px;
+            min-height: 506px;
+            max-height: 506px;
+            direction: rtl;
+            padding-left: 10px;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            &::-webkit-scrollbar {
+                width: 10px;
+                background-color: #eeeeee;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background:  #3dbbff;
+                border-radius: 10px;
+            }
+
+            .activity-box {
+                width: 100%;
+                border-radius: 15px;
+                background-color: $light-accent-20;
+                display: flex;
+                flex-direction: column;
+                // align-items: flex-end;
+                align-items: flex-start;
+                justify-content: center;
+                row-gap: 10px;
+                padding: 14px 28px 16px 40px;
+
+                .activity-data {
+                    width: 100%;
+                    display: grid;
+                    align-items: baseline;
+                    grid-template-columns: 88% 12%;
+                    
+
+                    .right-column {
+                        // // order: 1;
+                        // display: flex;
+                        // justify-content: flex-start;
+                        // // align-items: baseline;
+                        // align-items: center;
+                        // flex-direction: row-reverse;
+                        // column-gap: 10px;
+
+                        display: flex;
+                        justify-content: flex-start;
+                        // align-items: center;
+                        align-items: baseline;
+                        flex-direction: row;
+                        column-gap: 10px;
+
+                        .activity-title {
+                            @include mixins.text;
+                            color: $dark-shades;
+                            flex-basis: 60px;
+                            text-align: right;
+                        }
+
+                        .icon {
+                            width: 48px;
+                            height: 48px;
+                            background-color: $main-color;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            img {
+                                width: 24px;
+                                height: 24px;
+                            }
+                        }
+                    }
+
+                    .activity-deadline {
+                        @include mixins.sub-title;
+                        color: $dark-shades;
+                        text-align: right;
+                    }
+
+                }
+
+                .activity-text {
+                    direction: rtl;
+                    @include mixins.sub-description;
+                    color: $dark-shades;
+                    padding-right: 17px;
+                }
+
+            }
+        }
+    }
+
+
+
+}
