@@ -26,7 +26,7 @@ export default function TextInput({
     return (
         <div 
             className={cs(styles['container'])} 
-            style={{height: height, ...((!isValid && showError) ? {borderBottom:`1px solid ${colors['error-100']}`} : {borderBottom:`1px solid ${colors['dark-shades']}`})}}>
+            style={{height: height, ...((!isValid && showError) ? {borderBottom:`1px solid ${colors['error-100']}`} : {borderBottom:`1px solid ${colors['dark-shades-100']}`})}}>
             <div 
                 className={cs(styles['input_container'])} 
                 style={{...(labelDirection === 'ltr' && {gridTemplateColumns: 'auto 1fr'})}}

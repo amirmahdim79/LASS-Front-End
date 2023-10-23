@@ -1,7 +1,7 @@
 import { default as cs } from 'classnames'
 import styles from './style.module.scss'
 import colors from "styles/colors.module.scss"
-import icon from "assets/icons/checkmark/Vector.svg"
+import icon from "assets/icons/checkmark/success.svg"
 
 
 export default function CheckBoxV1({

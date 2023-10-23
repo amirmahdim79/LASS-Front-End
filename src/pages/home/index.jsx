@@ -75,7 +75,7 @@ export default function HomePage() {
                             setValue={setType}
                         />
                         <Button 
-                            color={colors['dark-shades']} 
+                            color={colors['dark-shades-100']} 
                             onClick={() => login()}
                             text={text.button} 
                             disabled={!email || !password}

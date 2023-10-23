@@ -4,6 +4,8 @@ import styles from './style.module.scss'
 import colors from "styles/colors.module.scss"
 import CheckBoxV1 from 'components/global/checkbox/v1'
 import download from "assets/icons/contents/download/main-color.svg"
+import checkmarkDark from "assets/icons/checkmark/dark-shades.svg"
+import checkmarkSuccess from "assets/icons/checkmark/success2.svg"
 
 
 
@@ -151,7 +153,14 @@ export default function ProgressTracker() {
                                     className={cs(styles['step_count'])} 
                                     style={{ ...(activeStep >= step && {color: colors['success-100']})}}
                                 >
-                                    {activeStep === step ? width : step}
+                                    {activeStep === step 
+                                        ? width 
+                                        : <img 
+                                            src={activeStep > step ? checkmarkSuccess : checkmarkDark}
+                                            alt='checkmark'
+                                            className={cs(styles['checkmark_icon'])}
+                                        />
+                                    }
                                 </span>
                             </div>
                             <p className={cs(styles['milestone'])}> {label} </p>
@@ -161,13 +170,13 @@ export default function ProgressTracker() {
                                             return (
                                                 <div className={cs(styles['details_data'])}>
                                                     <CheckBoxV1 checked={status === 'done' ? true : false}/>
-                                                    <p style={{...(status === 'done' && {color: colors['dark-shades']})}}> {title} </p>
+                                                    <p style={{...(status === 'done' && {color: colors['dark-shades-100']})}}> {title} </p>
                                                     {hasFile && 
                                                         <img 
-                                                        src={download}
-                                                        alt='download'
-                                                        className={cs(styles['download_icon'])}
-                                                    />
+                                                            src={download}
+                                                            alt='download'
+                                                            className={cs(styles['download_icon'])}
+                                                        />
                                                     }
                                                 </div>
                                             )

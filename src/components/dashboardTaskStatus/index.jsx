@@ -10,17 +10,17 @@ export default function TaskStatusBar({status}) {
         if (status === text.status_1) {
             return {
                 'background-color': colors['error-60'],
-                'color': colors['light-shades']
+                'color': colors['light-shades-100']
             }
         } else if (status === text.status_2) {
             return {
                 'background-color': colors['warning-60'],
-                'color': colors['dark-shades']
+                'color': colors['dark-shades-100']
             }
         } else if (status === text.status_3) {
             return {
                 'background-color': colors['success-60'],
-                'color': colors['dark-shades']
+                'color': colors['dark-shades-100']
             }
         }
     }

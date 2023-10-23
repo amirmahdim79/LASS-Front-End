@@ -1,0 +1,51 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+
+    .searchBox {
+        background-color: $light-accent-25;
+        height: 48px;
+        border-radius: 15px;
+        padding: 12px;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .searchBox:hover > .searchInput {
+        width: 255px;
+        padding: 0 6px;
+    }
+    
+    .searchButton {
+        float: right;
+        border-radius: 50%;
+        background-color: $light-accent-25;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.4s;
+    }
+    
+    .searchInput {
+        border:none;
+        background: none;
+        outline:none;
+        text-align: right;
+        padding: 0;
+        color: $dark-shades-60;
+        transition: 0.4s;
+        width: 0px;
+        @include mixins.text;
+    }
+
+    .searchInput::placeholder {
+        color: $dark-shades-60;
+        @include mixins.text;
+    }
+    
+}

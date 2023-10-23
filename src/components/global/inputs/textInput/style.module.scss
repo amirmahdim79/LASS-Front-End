@@ -3,7 +3,7 @@
 
 .container {
     width: 100%;
-    // border-bottom: 1px solid $dark-shades;
+    // border-bottom: 1px solid $dark-shades-100;
 
     .input_container {
         width: 100%;
@@ -20,7 +20,7 @@
             grid-area: 1 / 2 / span 1 / span 2;
 
             .label {
-                color: $dark-shades;
+                color: $dark-shades-100;
             }
         }
 

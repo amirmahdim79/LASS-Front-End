@@ -1,13 +1,17 @@
 
 $light-accent-100 : #81A2B1;
 $light-accent-30  : #D2DCDD;
+$light-accent-25  : #D8E0E0;
 $light-accent-20  : #DEE4E3;
 
 $dark-accent-100  : #777765;
 
 
-$light-shades     : #F5F5F0;
-$dark-shades      : #1F2F37;
+$light-shades-100 : #F5F5F0;
+$light-shades-20  : #4A575C;
+
+$dark-shades-100  : #1F2F37;
+$dark-shades-60   : #69767B;
 
 $main-color       : #0BAEDD;
 
@@ -23,12 +27,16 @@ $success-60       : #87D65B;
 :export {
     light-accent-100: $light-accent-100;
     light-accent-30: $light-accent-30;
+    light-accent-25: $light-accent-25;
     light-accent-20: $light-accent-20;
 
     dark-accent-100: $dark-accent-100;
 
-    light-shades: $light-shades;
-    dark-shades: $dark-shades;
+    light-shades-100: $light-shades-100;
+    light-shades-20: $light-shades-20;
+
+    dark-shades-100: $dark-shades-100;
+    dark-shades-60: $dark-shades-60;
 
     main-color: $main-color;
 

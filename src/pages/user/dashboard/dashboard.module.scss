@@ -2,8 +2,7 @@
 @import "styles/colors.module.scss";
 
 .container {
-    height: 100vh;
-    padding: 0 20px;
+    padding: 5px 118px 10px 20px;
     display: flex;
     flex-direction: column;
     row-gap: 30px;
@@ -19,7 +18,7 @@
 
         h5 {
             @include mixins.h5-text;
-            color: $dark-shades;
+            color: $dark-shades-100;
             text-align: right;
         }
     }
@@ -39,7 +38,7 @@
             direction: rtl;
             padding: 0 33px 14px 33px;
             @include mixins.sub-title;
-            color: $dark-shades;
+            color: $dark-shades-100;
         }
 
         .activities {
@@ -104,7 +103,7 @@
 
                         .activity-title {
                             @include mixins.text;
-                            color: $dark-shades;
+                            color: $dark-shades-100;
                             flex-basis: 60px;
                             text-align: right;
                         }
@@ -127,7 +126,7 @@
 
                     .activity-deadline {
                         @include mixins.sub-title;
-                        color: $dark-shades;
+                        color: $dark-shades-100;
                         text-align: right;
                     }
 
@@ -136,7 +135,7 @@
                 .activity-text {
                     direction: rtl;
                     @include mixins.sub-description;
-                    color: $dark-shades;
+                    color: $dark-shades-100;
                     padding-right: 17px;
                 }
 

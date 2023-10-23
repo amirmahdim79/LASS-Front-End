@@ -1,6 +1,6 @@
 import {default as cs} from 'classnames'
-import LogoWhite from '../../../assets/images/Fanni_logo1.svg';
-import LogoBlue from '../../../assets/images/Fanni_logo2.svg';
+import LogoWhite from 'assets/images/Fanni_logo1.svg';
+import LogoBlue from 'assets/images/Fanni_logo2.svg';
 
 
 export default function Logo({width='65px', height='48px', color='blue'}) {
