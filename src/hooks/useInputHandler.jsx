@@ -18,9 +18,6 @@ export default function useInput( defaultValue = '' ) {
     }
     const focus = () => inputRef.current?.focus()
 
-    useEffect(() => {
-        setValue(defaultValue)
-    }, [defaultValue])
 
     return {
         clear,

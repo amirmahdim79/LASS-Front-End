@@ -48,6 +48,7 @@ export default function TextInput({
                     style={{width:width, height:height, fontSize:fontSize}}
                     type={type}
                     value={value} 
+                    // style={{fontFamily: }}
                 />
             </div>
             {(!isValid && showError) && <p className={cs(styles['container'])}>{errorMessage}</p>}

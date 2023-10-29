@@ -22,23 +22,20 @@ export default function HomePage() {
 
     const { authenticateUser, authenticateSupervisor } = useAuthActions();
 
-
     const login = () => {
         if (type === 'دانشجو') {
             authenticateUser({ email:email, password:password }).then(res => {
                 console.log("............rrrrrrrrrrrr", res);
+                navigate('/user/dashboard')
             }).catch(err => {
                 console.log("...........eeeeeeeeeeeeeeee", err);
-            }).finally(() => {
-                navigate('/user/dashboard')
             })
         }else if (type === 'استاد') {
             authenticateSupervisor({ email:email, password:password }).then(res => {
-                console.log("............rrrrrrrrrrrr", res);
+                console.log("............rrrrrrrrrrrr super", res);
+                navigate('/supervisor/dashboard')
             }).catch(err => {
                 console.log("...........eeeeeeeeeeeeeeee", err);
-            }).finally(() => {
-                // navigate('/dashboard/user')
             })
         }
     }       
@@ -73,6 +70,7 @@ export default function HomePage() {
                             left={text.switch_left_data} 
                             right={text.switch_right_data}
                             setValue={setType}
+                            value={type}
                         />
                         <Button 
                             color={colors['dark-shades-100']} 

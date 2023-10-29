@@ -11,8 +11,11 @@ export default function CheckBoxV1({
 }) {
 
     return (
-        <div className={cs(styles['container'])} style={{width: width, height: height}}>
-            <input type="checkbox" checked={checked} />
+        <div 
+            className={cs(styles['container'])} 
+            style={{width: width, height: height, minWidth: width, minHeight: height, maxWidth: width, maxHeight: height}}
+        >
+            <input type="checkbox" defaultChecked={checked} />
             <span className={cs(styles['checkmark'])} style={{...(checked && {borderColor: colors['success-100']}) }}>
                 {
                     checked && 

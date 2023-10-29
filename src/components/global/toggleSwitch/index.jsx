@@ -7,11 +7,12 @@ import styles from './style.module.scss'
 export default function Switch({
     left, 
     right,
-    setValue
+    setValue,
+    value
 }) {
 
     const label2 = document.getElementById("color_mode");
-    const [type, setType] = useState('')
+    const [type, setType] = useState(value)
 
     useEffect(() => {
         setValue(type)

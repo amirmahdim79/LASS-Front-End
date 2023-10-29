@@ -8,8 +8,10 @@ export default function Button({
     fontWeight = 'normal',
     height = '48px',
     onClick = () => {},
+    outlined = false,
     text = '', 
-    width = '100%'
+    width = '100%',
+   
 }) {  
   
     window.onload = function() {
@@ -18,10 +20,11 @@ export default function Button({
             let ripple = document.createElement("span"); 
             ripple.classList.add("ripple"); 
             this.appendChild(ripple); 
-            let x = e.clientX - e.target.offsetLeft; 
-            let y = e.clientY - e.target.offsetTop; 
+            let x = e.clientX - e.target.offsetLeft - 45; 
+            let y = e.clientY - e.target.offsetTop + 12; 
             ripple.style.left = `${x}px`; 
             ripple.style.top = `${y}px`; 
+            console.log("rrrrrrrrrrrrrrrrrrrrrrr", ripple);
             setTimeout(() => { 
                 ripple.remove(); 
             }, 300); 
@@ -32,11 +35,13 @@ export default function Button({
 
     return (
         <button 
-            className={cs(styles['btn'])} 
+            className={outlined ? cs(styles['btn_outlined']) : cs(styles['btn'])} 
             disabled={disabled}
             onClick={onClick}
             style={{
-                backgroundColor: disabled ? `${color}33`  : color, 
+                backgroundColor: outlined ? 'transparent' : (disabled ? `${color}33`  : color), 
+                border: outlined ? `1px solid ${color}` : 'none',
+                color: outlined ? color : '#ffffff',
                 cursor: !disabled && 'pointer',
                 fontSize: fontSize, 
                 fontWeight: fontWeight, 

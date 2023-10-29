@@ -1,17 +1,30 @@
 import { default as cs } from 'classnames'
 import styles from './dashboard.module.scss'
-import { text } from './constants';
 import ProgressTracker from 'components/progressTracker';
 import TaskStatusBar from 'components/dashboardTaskStatus';
 import taskIcon from 'assets/icons/clipboard-text.svg'
-import { truncateText } from 'utils/mapper';
 import Pagination from 'components/global/pagination';
-
+import useInput from 'hooks/useInputHandler';
+import { truncateText } from 'utils/mapper';
+import { text } from './constants';
+import { useEffect, useState } from 'react';
+import { useLabActions } from './hooks/useLabsActions';
+import { useDispatch, useSelector } from "react-redux";
+import { setPath, setMilestone, setCurrentMilestone, setPrevInd } from "store/labSlice/index"
+import Preloader from 'components/global/preloaders';
+import text_preloader from 'assets/gifs/text_preloader.gif'
 
 
 export default function UserDashboard() {
 
+    const dispatch = useDispatch();
+
     const title = 'عنوان فاز';
+
+    const path = useSelector(state => state.lab.Paths);
+    const milestones = useSelector(state => state.lab.Milestones);
+    const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
+
     const tasks = [
         {
             id: '1',
@@ -139,11 +152,61 @@ export default function UserDashboard() {
         },
     ]
 
+    const { getMyLabs } = useLabActions();
+
+
+    useEffect(() => {
+        getMyLabs().then(res => {
+            dispatch(setPath(res.data.Paths[0]))
+            dispatch(setMilestone(res.data.Paths[0].Milestones))
+
+            // for(let [i, milestone] of res.data.Paths[0].Milestones){
+            //     console.log(".........milestone", milestone);
+            //     if (milestone.status[0] === null) {
+            //         dispatch(setCurrentMilestone(milestone))
+            //       break;
+            //     }
+            // }
+
+            for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
+                    if (milestone.status[0] === null) {
+                        dispatch(setCurrentMilestone(milestone))
+                        if (i === 0) dispatch(setPrevInd(0))
+                        else dispatch(setPrevInd(i-1))
+                        break;
+                    }
+            }
+
+        }).catch(err => {
+            console.log("...........eeeeeoeeeeeeeeeee", err);
+        })
+    }, [])
+
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['step_progress_container'])}>
-                <h5> {text.t1.title} - {`[${title}]`} </h5>
-                <ProgressTracker />
+                {
+                    path?.name
+                        ? <h5> {text.t1.title} - {`[${path?.name}]`}</h5>
+                        : 
+                            <div className={cs(styles['title_container'])}>
+                                <h5> {text.t1.title} - </h5>
+                                <span> 
+                                    {'['} 
+                                    <img
+                                        src={text_preloader}
+                                        alt='loading'
+                                    />
+                                    {']'} 
+                                </span>
+                            </div>
+                }
+                
+                { milestones 
+                    ? <ProgressTracker/> 
+                    : <Preloader />
+                }
+               
             </div>
 
             <div className={cs(styles['upcoming_activities_container'])}>
@@ -153,29 +216,34 @@ export default function UserDashboard() {
                 </div>
                 <div className={cs(styles['activities'])}>
                     {
-                        tasks.map((task, index) => {
-                            return (
-                                <div className={cs(styles['activity-box'])}>
-                                    <div className={cs(styles['activity-data'])}>
-                                        <div className={cs(styles['right-column'])}> 
-                                            <div className={cs(styles['icon'])}>
-                                                <img src={taskIcon} alt='icon'/>
+                        currentMilestone
+                            ? 
+                                currentMilestone?.Tasks.map((task, index) => {
+                                    return (
+                                        <div className={cs(styles['activity-box'])} key={index}>
+                                            <div className={cs(styles['activity-data'])}>
+                                                <div className={cs(styles['right-column'])}> 
+                                                    <div className={cs(styles['icon'])}>
+                                                        <img src={taskIcon} alt='icon'/>
+                                                    </div>
+                                                    <p className={cs(styles['activity-title'])}> {task.name} </p>
+                                                    {task?.type && <TaskStatusBar type={task?.type}/>}                                            
+                                                </div>
+        
+                                                <div className={cs(styles['activity-deadline'])}> {task?.type === 'fixed' ? '-' : 'نداریم فهلا'} </div>
                                             </div>
-                                            <p className={cs(styles['activity-title'])}> {task.title} </p>
-                                            {task?.status && <TaskStatusBar status={task.status}/>}                                            
+                                            <p className={cs(styles['activity-text'])}> {task.desc} </p>
                                         </div>
-
-                                        <div className={cs(styles['activity-deadline'])}> {task.deadline} </div>
-                                    </div>
-                                    <p className={cs(styles['activity-text'])}> {truncateText(task.text, 180)} </p>
-                                </div>
-                            )
-                        })
+                                    )
+                                })
+                            :
+                                <Preloader />
+                        
                     }
                 </div>
 
                 <div>
-                    <Pagination />
+                    {/* <Pagination /> */}
                 </div>
             </div>
         </div>

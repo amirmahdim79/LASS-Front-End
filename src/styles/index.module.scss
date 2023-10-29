@@ -3,11 +3,56 @@
 @tailwind utilities;
 @import "./colors.module.scss";
 
+@font-face {
+    font-family: "pinar_black";
+    src: local("Pinar_Black"),
+    url("../assets/fonts/Pinar-DS1-FD-Black.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "pinar_bold";
+    src: local("Pinar_Bold"),
+    url("../assets/fonts/Pinar-DS1-FD-Bold.ttf") format("truetype");
+    // font-weight: bold;
+}
+  
+@font-face {
+    font-family: "pinar_extra_bold";
+    src: local("Pinar_ExtraBold"),
+    url("../assets/fonts/Pinar-DS1-FD-ExtraBold.ttf") format("truetype");
+    // font-weight: bolder;
+}
+
+@font-face {
+    font-family: "pinar_light";
+    src: local("Pinar_Light"),
+    url("../assets/fonts/Pinar-DS1-FD-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "pinar_medium";
+    src: local("Pinar_Medium"),
+    url("../assets/fonts/Pinar-DS1-FD-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "pinar_reg";
+    src: local("Pinar_Regular"),
+    url("../assets/fonts/Pinar-DS1-FD-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "pinar_semi_bold";
+    src: local("Pinar_SemiBold"),
+    url("../assets/fonts/Pinar-DS1-FD-SemiBold.ttf") format("truetype");
+}
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
+        sans-serif, 'pinar_black', 'pinar_bold', 'pinar_extra_bold', 'pinar_light', 
+        'pinar_medium', 'pinar_reg', 'pinar_semi_bold';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: $light-shades-100;

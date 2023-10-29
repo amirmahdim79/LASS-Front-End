@@ -1,6 +1,7 @@
 @mixin sub-title {
     font-size: 16px;
     font-weight: 300;
+    font-family: 'pinar_light';
 }
 
 @mixin description {
@@ -11,24 +12,34 @@
 @mixin sub-description {
     font-size: 12px;
     font-weight: 300;
+    font-family: 'pinar_light';
 }
 
 @mixin text {
     font-size: 20px;
     font-weight: normal;
+    font-family: 'pinar_reg';
 }
 
 @mixin h1-text {
     font-size: 48px;
     font-weight: bold;
+    font-family: 'pinar_semi_bold';
+}
+
+@mixin h3-text {
+    font-size: 32px;
+    font-weight: 600;
 }
 
 @mixin h5-text {
     font-size: 20px;
     font-weight: 600;
+    font-family: 'pinar_semi_bold';
 }
 
 @mixin h6-text {
     font-size: 16px;
     font-weight: 600;
+    font-family: 'pinar_semi_bold';
 }

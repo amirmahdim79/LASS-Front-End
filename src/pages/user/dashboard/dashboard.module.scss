@@ -15,11 +15,33 @@
         display: flex;
         flex-direction: column;
         row-gap: 20px;
+        min-height: 300px;
 
         h5 {
             @include mixins.h5-text;
             color: $dark-shades-100;
             text-align: right;
+            direction: rtl;
+        }
+
+        .title_container {
+            display: flex;
+            direction: rtl;
+            align-items: flex-end;
+            justify-content: flex-start;
+            column-gap: 5px;
+
+            span {
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                @include mixins.h5-text;
+                img {
+                    width: 23px;
+                    height: 25px;
+                }
+            }
+
         }
     }
 
@@ -48,7 +70,7 @@
             row-gap: 30px;
             // min-height: 1310px;
             // max-height: 1310px;
-            min-height: 506px;
+            min-height: 378px;
             max-height: 506px;
             direction: rtl;
             padding-left: 10px;
@@ -96,22 +118,21 @@
 
                         display: flex;
                         justify-content: flex-start;
-                        // align-items: center;
-                        align-items: baseline;
+                        align-items: center;
+                        // align-items: baseline;
                         flex-direction: row;
                         column-gap: 10px;
 
                         .activity-title {
                             @include mixins.text;
                             color: $dark-shades-100;
-                            flex-basis: 60px;
                             text-align: right;
                         }
 
                         .icon {
                             width: 48px;
                             height: 48px;
-                            background-color: $main-color;
+                            background-color: $main-color_100;
                             border-radius: 50%;
                             display: flex;
                             align-items: center;
@@ -137,6 +158,12 @@
                     @include mixins.sub-description;
                     color: $dark-shades-100;
                     padding-right: 17px;
+                    max-width: 900px;
+                    width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
                 }
 
             }

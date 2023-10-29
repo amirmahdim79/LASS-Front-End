@@ -8,19 +8,23 @@ $dark-accent-100  : #777765;
 
 
 $light-shades-100 : #F5F5F0;
+$light-shades-80  : #D4D6D4;
 $light-shades-20  : #4A575C;
 
 $dark-shades-100  : #1F2F37;
 $dark-shades-60   : #69767B;
 
-$main-color       : #0BAEDD;
+$dark-glass-75    : #1f2f37bf;
+
+
+$main-color_100   : #0BAEDD;
 
 $error-100        : #FF0000;
 $error-60         : #F25B5B;
 
 $warning-60       : #DEF461;
 
-$success-100       : #4ECC00;
+$success-100      : #4ECC00;
 $success-60       : #87D65B;
 
 
@@ -38,7 +42,7 @@ $success-60       : #87D65B;
     dark-shades-100: $dark-shades-100;
     dark-shades-60: $dark-shades-60;
 
-    main-color: $main-color;
+    main-color_100: $main-color_100;
 
     error-100: $error-100;
     error-60: $error-60;

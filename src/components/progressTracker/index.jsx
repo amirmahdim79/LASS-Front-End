@@ -1,15 +1,23 @@
 import { default as cs } from 'classnames'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './style.module.scss'
 import colors from "styles/colors.module.scss"
 import CheckBoxV1 from 'components/global/checkbox/v1'
 import download from "assets/icons/contents/download/main-color.svg"
-import checkmarkDark from "assets/icons/checkmark/dark-shades.svg"
-import checkmarkSuccess from "assets/icons/checkmark/success2.svg"
-
+import { useSelector } from 'react-redux'
+import DataContainer from './components'
+import arrowRight from "assets/icons/arrow/arrow-right-accent.svg"
+import arrowLeft from "assets/icons/arrow/arrow-left-accent.svg"
 
 
 export default function ProgressTracker() {
+
+    const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
+    const milestones = useSelector(state => state.lab.Milestones);
+    const prevId = useSelector(state => state.lab.prevId);
+
+    // console.log("currentMilestone", currentMilestone);
+    // console.log("paths[0].Milestones", paths[0]?.Milestones);
 
     const steps = [
         {
@@ -124,8 +132,11 @@ export default function ProgressTracker() {
         },
     ]
 
-    const [activeStep, setActiveStep] = useState(3)
-    const totalSteps = steps.length
+    const [activeStep, setActiveStep] = useState(0)
+    const [width, setWidth] = useState(0)
+    // const totalSteps = steps.length
+
+    // console.log("activeStep", activeStep);
 
     const nextStep = () => {
         setActiveStep(activeStep + 1)
@@ -135,67 +146,103 @@ export default function ProgressTracker() {
         setActiveStep(activeStep - 1)
     }
 
-    const width = `${(100 / (totalSteps - 1)) * (activeStep - 1)}%`
+    useEffect(() => {
+        if (currentMilestone) {
+            let sum = 0;
+            let total = currentMilestone.Tasks.length;
+            for(let task of currentMilestone.Tasks){
+                if (task.status[0] !== null) sum += 1;
+                else continue
+            }
+            setWidth(`${Math.ceil( 100 * sum / total)}%`)
+        }
 
+    }, [currentMilestone])
+
+    // console.log("currentMilestone", currentMilestone);
+    // console.log("width", width);
+
+    // const width = `${(100 / (milestones.length - 1)) * (activeStep - 1)}%`
+
+    // useEffect(() => {
+    //     let sum = 0;
+    //     let completed = 0; 
+    //     paths[0]?.Milestones.map((m,i) => {
+    //         sum += m.Tasks.length
+    //         if(i <= activeStep) completed += m.Tasks.length;
+    //     })
+    //     setTotal(sum)
+    //     setActiveStep(completed)
+
+    // }, [paths])
+
+    // width={currentMilestone._id === m._id ? }
+
+
+    // const checkMilesoneStatus = (milestone) => {
+    //     console.log("milestone", milestone);
+    // }
+
+    // useEffect(() => {
+    //     checkMilesoneStatus()
+    // }, [])
+
+    const leftScroll = () => {
+        const left = document.getElementById('#steps_container')
+        left.scrollBy({
+            top: 20,
+            left: -350,
+            behavior: "smooth",
+          });
+    }
+
+    
+    const rightScroll = () => {
+        const right = document.getElementById('#steps_container')
+        right.scrollBy({
+            top: 20,
+            left: 350,
+            behavior: "smooth",
+          });
+    }
 
     return (
 
         <div className={cs(styles['main_container'])}>
-            <div className={cs(styles['steps_container'])}>
-                <div className={cs(styles['line'])}>
-                    <div className={cs(styles['line_filled'])} style={{width: width}}></div>
-                </div>
-                { steps.map(({ step, label, details }, ind) => {
-                    return (
-                        <div className={ind === 0 ? cs(styles['step_wrapper_first']) : (ind === steps.length-1 ? cs(styles['step_wrapper_last']) : cs(styles['step_wrapper']))}>
-                            <div className={cs(styles['step_style'])} style={{...(activeStep >= step && {borderColor: colors['success-100']})}}>
-                                <span 
-                                    className={cs(styles['step_count'])} 
-                                    style={{ ...(activeStep >= step && {color: colors['success-100']})}}
-                                >
-                                    {activeStep === step 
-                                        ? width 
-                                        : <img 
-                                            src={activeStep > step ? checkmarkSuccess : checkmarkDark}
-                                            alt='checkmark'
-                                            className={cs(styles['checkmark_icon'])}
-                                        />
-                                    }
-                                </span>
-                            </div>
-                            <p className={cs(styles['milestone'])}> {label} </p>
-                                <div className={cs(styles['details'])}>
-                                    {
-                                        details.map(({title, status, hasFile}) => {
-                                            return (
-                                                <div className={cs(styles['details_data'])}>
-                                                    <CheckBoxV1 checked={status === 'done' ? true : false}/>
-                                                    <p style={{...(status === 'done' && {color: colors['dark-shades-100']})}}> {title} </p>
-                                                    {hasFile && 
-                                                        <img 
-                                                            src={download}
-                                                            alt='download'
-                                                            className={cs(styles['download_icon'])}
-                                                        />
-                                                    }
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                        </div>
-                    )
-                })}
+            <button className={cs(styles['arrow_left'])} onClick={leftScroll}>
+                <img 
+                    src={arrowLeft}
+                    alt='left arrow'
+                    className={cs(styles['arrow_icon'])}
+                />
+            </button>
+
+            <div className={cs(styles['steps_container'])} id='#steps_container'>
+                
+                {milestones.map((m,i) => 
+                    <DataContainer 
+                        name={m.name} 
+                        tasks={m?.Tasks} 
+                        isLast={i === milestones.length-1} 
+                        milestoneStatus={m.status[0]}
+                        width={width}
+                        prevId={prevId}
+                        currInd={i}
+
+                    />
+                )}
+
             </div>
 
-            <div className={cs(styles['buttons_container'])}>
-                <button className={cs(styles['step_button'])} onClick={prevStep} disabled={activeStep === 1}>
-                    prev
-                </button>
-                <button className={cs(styles['step_button'])} onClick={nextStep} disabled={activeStep === totalSteps}> 
-                    next
-                </button>
-            </div>
+            <button className={cs(styles['arrow_right'])} onClick={rightScroll}>
+                <img 
+                    src={arrowRight}
+                    alt='right arrow'
+                    className={cs(styles['arrow_icon'])}
+                />
+            </button>
+
+
         </div>
 
 
