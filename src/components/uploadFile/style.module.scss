@@ -104,6 +104,21 @@
             display: flex;
             align-items: center;
             gap: 3px;
+
+            .inner_wrapper {
+                width: 100%;
+                max-width: 680px;
+                min-width: 0;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            span {
+                width: max-content;
+                min-width: max-content;
+            }
+
         }
 
         .more_icon {

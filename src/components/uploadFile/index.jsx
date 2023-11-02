@@ -96,6 +96,7 @@ export default function UploadFile({updatePapers}) {
             input.value = '';
             setHasTag(false);
             setFileData({});
+            setTags([])
             closeTagsListModal();
         })
     }
@@ -127,7 +128,7 @@ export default function UploadFile({updatePapers}) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedTag(tag);
-        }, 500); 
+        }, 200); 
     
         return () => {
             clearTimeout(timer);
@@ -154,7 +155,7 @@ export default function UploadFile({updatePapers}) {
 
 
             {
-                openProgressBarModal && 
+                openProgressBarModal &&
                     <div className={cs(styles['upload_progress_bar_wrapper'])}>
                         <div className={cs(styles['folder_icon'])}>
                             <img 
@@ -171,11 +172,13 @@ export default function UploadFile({updatePapers}) {
                         </div>
 
                         <div className={cs(styles['tags_wrapper'])}> 
-                            {
-                                (fileData.tags && fileData?.tags.length !== 0) && fileData.tags.map((tag, i) => 
-                                    <span> {`#${tag}`} </span>
-                                )
-                            }
+                            <div className={cs(styles['inner_wrapper'])}>
+                                {
+                                    (fileData.tags && fileData?.tags.length !== 0) && fileData.tags.map((tag, i) => 
+                                        <span> {`#${tag}`} </span>
+                                    )
+                                }
+                            </div>
                         </div>
 
                         <div className={cs(styles['more_icon'])}>
