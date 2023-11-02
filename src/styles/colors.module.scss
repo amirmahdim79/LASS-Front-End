@@ -1,5 +1,6 @@
 
 $light-accent-100 : #81A2B1;
+$light-accent-50  : #BBCBD1;
 $light-accent-30  : #D2DCDD;
 $light-accent-25  : #D8E0E0;
 $light-accent-20  : #DEE4E3;
@@ -30,6 +31,7 @@ $success-60       : #87D65B;
 
 :export {
     light-accent-100: $light-accent-100;
+    light-accent-50: $light-accent-50;
     light-accent-30: $light-accent-30;
     light-accent-25: $light-accent-25;
     light-accent-20: $light-accent-20;

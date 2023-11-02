@@ -17,6 +17,7 @@
     flex-direction: column;
     row-gap: 20px;
     padding: 24px 0;
+    z-index: 10;
 
     .logo {
         flex-basis: 100px;
@@ -43,7 +44,7 @@
     }
 
 
-    .icon:active {
+    .active {
         background-color: $light-shades-20;
         cursor: pointer;
     }

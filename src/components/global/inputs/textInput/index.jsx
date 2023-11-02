@@ -4,6 +4,7 @@ import colors from "../../../../styles/colors.module.scss"
 
 
 export default function TextInput({
+    color,
     defaultValue ,
     dir = 'ltr' ,
     disabled = false ,
@@ -45,7 +46,7 @@ export default function TextInput({
                     placeholder={placeholder}
                     ref={inputRef}
                     required={required}
-                    style={{width:width, height:height, fontSize:fontSize}}
+                    style={{width:width, height:height, fontSize:fontSize, fontWeight: fontWeight, color: color}}
                     type={type}
                     value={value} 
                     // style={{fontFamily: }}

@@ -1,19 +1,16 @@
 import useAPI from "hooks/useAPI"
 import useToast from "hooks/useToast";
-import { AuthCheckAPI } from "api/authCheck"
+import { AuthCheckAPI, AuthCheckSupAPI } from "api/authCheck"
 
 export const useBaseActions = () => {
     const { showToast } = useToast();
 
     const { pending: checkingAuth, request: checkAuth } = useAPI({
         apiMethod: AuthCheckAPI,
+    })
 
-        successCallback: (res) => {
-            
-        },
-        
-        failedCallback: (e) => {
-        },
+    const { pending: checkingSupAuth, request: checkSupAuth } = useAPI({
+        apiMethod: AuthCheckSupAPI,
     })
     
     
@@ -21,5 +18,7 @@ export const useBaseActions = () => {
         checkAuth,
         checkingAuth,
 
+        checkSupAuth,
+        checkingSupAuth
     }
 }

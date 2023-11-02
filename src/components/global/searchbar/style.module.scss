@@ -6,8 +6,6 @@
 
     .searchBox {
         background-color: $light-accent-25;
-        height: 48px;
-        border-radius: 15px;
         padding: 12px;
         display: flex;
         flex-direction: row-reverse;
@@ -17,8 +15,8 @@
     }
 
     .searchBox:hover > .searchInput {
-        width: 255px;
-        padding: 0 6px;
+        width: 250px;
+        // padding: 0 6px;
     }
     
     .searchButton {
@@ -36,7 +34,6 @@
         background: none;
         outline:none;
         text-align: right;
-        padding: 0;
         color: $dark-shades-60;
         transition: 0.4s;
         width: 0px;

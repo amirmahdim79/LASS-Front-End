@@ -1,0 +1,1 @@
+export const SEARCH_TAGS = '/api-lass/tags/search'
