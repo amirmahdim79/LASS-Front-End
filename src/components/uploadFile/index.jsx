@@ -89,15 +89,20 @@ export default function UploadFile({updatePapers}) {
                 setProgress(Math.round((100 * data.loaded) / data.total))
             }
         })
-        .then(() => closeProgressBarModal())
-        .catch(err => console.log(err))
-        .finally(() => {
+        .then(() => {
+            console.log("sucessssssssssssssssssss");
+            closeProgressBarModal();
             updatePapers();
+        })
+        .catch(err => console.log("erreeeeeeeeeeeeeeeeeee", err))
+        .finally(() => {
+            console.log("finallllllllllllllllllll");
             input.value = '';
             setHasTag(false);
             setFileData({});
             setTags([])
             closeTagsListModal();
+            
         })
     }
 
@@ -141,6 +146,8 @@ export default function UploadFile({updatePapers}) {
             .catch(err => console.log("err search", err))
       }, [debouncedTag]);
 
+      console.log("openProgressBarModal", openProgressBarModal);
+
 
     return (
         <div className={cs(styles['container'])} style={{...(!openProgressBarModal  && {justifyContent: 'center'})}}>
@@ -164,7 +171,7 @@ export default function UploadFile({updatePapers}) {
                             />
                         </div>
 
-                        <p className={cs(styles['file_name'])}> {fileData?.name.substring(0, fileData?.name.indexOf('.'))} </p>
+                        <p className={cs(styles['file_name'])}> {fileData?.name && fileData?.name.substring(0, fileData?.name.indexOf('.'))} </p>
 
                         <div className={cs(styles['progress_data'])}> 
                             <span> {`${progress}%`} </span>
