@@ -38,10 +38,10 @@ export default function Button({
     return (
         <button 
             className={outlined ? cs(styles['btn_outlined']) : cs(styles['btn'])} 
-            disabled={disabled}
+            disabled={ load || disabled }
             onClick={onClick}
             style={{
-                backgroundColor: outlined ? 'transparent' : (disabled ? `${color}33`  : color), 
+                backgroundColor: outlined ? 'transparent' : ((load || disabled) ? `${color}33`  : color), 
                 border: outlined ? `1px solid ${color}` : 'none',
                 color: outlined ? color : '#ffffff',
                 cursor: !disabled && 'pointer',
