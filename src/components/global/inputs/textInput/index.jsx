@@ -1,6 +1,9 @@
 import styles from './style.module.scss'
 import {default as cs} from 'classnames'
 import colors from "styles/colors.module.scss"
+import useInput from 'hooks/useInputHandler';
+import VisibilityOn from 'assets/icons/security/eye/dark-color.svg';
+import VisibilityOff from 'assets/icons/security/eye-slash/dark-color.svg';
 
 
 export default function TextInput({
@@ -26,8 +29,9 @@ export default function TextInput({
 }) {
 
 
-    console.log("errrrrrrrrrrrrrrrrrrrrrrrrror", errorMessage);
+    const { value: showPassword, setValue: setShowPassword } = useInput(false,true);
 
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
     
     return (
         <div 
@@ -43,19 +47,32 @@ export default function TextInput({
                 >
                     <p className={cs(styles['label'])} style={{fontSize: fontSize, fontWeight: fontWeight}}> {inputLabel} </p>
                 </div>
-                <input 
-                    defaultValue={defaultValue}
-                    dir={(type==='email'|| type==='number' || type==='password') ? 'ltr' : dir} 
-                    disabled={disabled}
-                    onChange={onChange} 
-                    placeholder={placeholder}
-                    ref={inputRef}
-                    required={required}
-                    style={{width:width, height:height, fontSize:fontSize, fontWeight: fontWeight, color: color}}
-                    type={type}
-                    value={value} 
-                    // style={{fontFamily: }}
-                />
+
+                <div className={cs(styles['input'])} >
+                    <input 
+                        defaultValue={defaultValue}
+                        dir={(type==='email'|| type==='number' || type==='password') ? 'ltr' : dir} 
+                        disabled={disabled}
+                        onChange={onChange} 
+                        placeholder={placeholder}
+                        ref={inputRef}
+                        required={required}
+                        style={{width:width, height:height, fontSize:fontSize, fontWeight: fontWeight, color: color}}
+                        type={type === 'password' ? (showPassword ? 'text' : 'password') : type} 
+                        value={value} 
+                        autoComplete="off"
+                    />
+                    {
+                        type === 'password' && (
+                        <span className={cs(styles['eye_container'])} onClick={() => handleClickShowPassword()}>
+                            <img 
+                                src={showPassword ? VisibilityOn : VisibilityOff}
+                                alt='visibility icon'
+                            />
+                        </span>
+                        )
+                    }
+                </div>
             </div>
             {(!isValid && showError) && <p className={cs(styles['error_text'])}>{errorMessage}</p>}
         </div>

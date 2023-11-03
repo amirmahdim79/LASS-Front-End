@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { text } from './constants';
 import { useAuthActions } from './hooks/useAuthActions';
 import { default as cs } from 'classnames'
@@ -11,7 +11,6 @@ import TextInput from 'components/global/inputs/textInput';
 import useInput from 'hooks/useInputHandler';
 import colors from "styles/colors.module.scss"
 import Button from 'components/global/button';
-import { useEffect } from 'react';
 
 
 export default function HomePage() {
@@ -66,7 +65,7 @@ export default function HomePage() {
                             <TextInput 
                                 value={email}
                                 onChange={onChangeEmail}
-                                placeholder={text.input_1} 
+                                inputLabel={text.input_1} 
                                 errorMessage={emailErr}
                                 showError={true}
                                 isValid={!emailErr}
@@ -75,11 +74,12 @@ export default function HomePage() {
                             <TextInput 
                                 value={password}
                                 onChange={onChangePassword}
-                                placeholder={text.input_2} 
+                                inputLabel={text.input_2} 
                                 errorMessage={passwordErr}
                                 showError={true}
                                 isValid={!passwordErr}
                                 dir={'ltr'}
+                                type={'password'}
                             />
                         </div>
                     </div>

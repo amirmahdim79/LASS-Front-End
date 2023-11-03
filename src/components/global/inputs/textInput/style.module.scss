@@ -6,7 +6,6 @@
     font-family: 'pinar_reg';
     -webkit-transition: 0.2s  ease-out  ;
     transition: 0.2s  ease-out  ;
-    // border-bottom: 1px solid $dark-shades-100;
 
     .input_container {
         width: 100%;
@@ -27,30 +26,57 @@
             }
         }
 
-        input {
-            background-color: transparent;
-            padding: 0 5px;
+        .input {
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            column-gap: 10px;
+
+            input {
+                background-color: transparent;
+                padding: 0 5px;
+            }
+    
+            input:focus {
+                outline: none !important;
+                border: none;
+            }
+    
+            input::placeholder {
+                color: $dark-shades-100;
+                text-align: right;
+            }
+    
+            input:-ms-input-placeholder {
+                color: $dark-shades-100;
+                text-align: right;
+            }
+            
+            input::-ms-input-placeholder { 
+                color: $dark-shades-100;
+                text-align: right;
+            }
+    
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover, 
+            input:-webkit-autofill:focus, 
+            input:-webkit-autofill:active{
+                transition: background-color 5000s ease-in-out 0s;
+            }
+
+            .eye_container {
+                cursor: pointer;
+                
+                img {
+                    width: 25px;
+                }
+    
+            }
+
+            
         }
 
-        input:focus {
-            outline: none !important;
-            border: none;
-        }
-
-        input::placeholder {
-            color: $dark-shades-100;
-            text-align: right;
-        }
-
-        input:-ms-input-placeholder {
-            color: $dark-shades-100;
-            text-align: right;
-        }
-        
-        input::-ms-input-placeholder { 
-            color: $dark-shades-100;
-            text-align: right;
-        }
     }
 
     .error_text {
