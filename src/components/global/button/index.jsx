@@ -1,5 +1,7 @@
 import {default as cs} from 'classnames'
+import Preloader from './preloaders'
 import styles from './style.module.scss'
+
 
 export default function Button({
     color, 
@@ -11,6 +13,7 @@ export default function Button({
     outlined = false,
     text = '', 
     width = '100%',
+    load,
    
 }) {  
   
@@ -32,7 +35,6 @@ export default function Button({
     // };
 
 
-
     return (
         <button 
             className={outlined ? cs(styles['btn_outlined']) : cs(styles['btn'])} 
@@ -50,8 +52,7 @@ export default function Button({
             }}
             id='#button'
         >
-            {text}
+            {load ? <Preloader type={outlined ? 'outlined' : 'filled'}/> : text}            
         </button>
     )
 }
-

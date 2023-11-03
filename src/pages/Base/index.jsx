@@ -8,7 +8,7 @@ import SideBar from "components/global/sidebar";
 export default function Base({type}) {
         
     const { checkAuth, checkSupAuth } = useBaseActions();
-    const userType = useSelector(state => state.user.type);
+    const userType = localStorage.getItem('type');
 
     useEffect(() => {
         if ( userType === type ) {

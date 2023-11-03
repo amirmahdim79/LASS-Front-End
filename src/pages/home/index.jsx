@@ -24,7 +24,10 @@ export default function HomePage() {
 
     const { value: type, setValue: setType } = useInput('دانشجو');
 
-    const { authenticateUser, authenticateSupervisor } = useAuthActions(setEmailErr, setPasswordErr);
+    const { 
+            authenticateUser, userAuthentication,
+            authenticateSupervisor, supervisorAuthentication 
+        } = useAuthActions(setEmailErr, setPasswordErr);
 
     const login = () => {
         if (type === 'دانشجو') {
@@ -42,8 +45,8 @@ export default function HomePage() {
                 console.log("...........eeeeeeeeeeeeeeee", err);
             })
         }
-    }      
-
+    }    
+    
     useEffect(() => {
         setEmailErr('')
     }, [email, type, password])
@@ -96,6 +99,7 @@ export default function HomePage() {
                             onClick={() => login()}
                             text={text.button} 
                             disabled={!email || !password}
+                            load={type === 'دانشجو' ? userAuthentication : supervisorAuthentication}
                         />
                     </div>
                 </div>

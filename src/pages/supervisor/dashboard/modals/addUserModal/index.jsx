@@ -59,6 +59,7 @@ export default function AddUserModal({close}) {
                         onClick={() => submit()}
                         text={text.button} 
                         disabled={ !state.email }
+                        load={userEnrollment}
                     />
                 </div>
             </div>

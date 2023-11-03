@@ -21,6 +21,7 @@ export default function SideBar({type}) {
     const location = useLocation()
     const { showToast } = useToast();
 
+
     const { value: iconNum, setValue: setIconNum } = useInput('1');
 
     const onClickIcon1 = () => {
