@@ -138,13 +138,6 @@ export default function ProgressTracker() {
 
     // console.log("activeStep", activeStep);
 
-    const nextStep = () => {
-        setActiveStep(activeStep + 1)
-    }
-
-    const prevStep = () => {
-        setActiveStep(activeStep - 1)
-    }
 
     useEffect(() => {
         if (currentMilestone) {
@@ -190,8 +183,8 @@ export default function ProgressTracker() {
     const leftScroll = () => {
         const left = document.getElementById('#steps_container')
         left.scrollBy({
-            top: 20,
-            left: -350,
+            top: 10,
+            left: -left.offsetWidth,
             behavior: "smooth",
           });
     }
@@ -200,8 +193,8 @@ export default function ProgressTracker() {
     const rightScroll = () => {
         const right = document.getElementById('#steps_container')
         right.scrollBy({
-            top: 20,
-            left: 350,
+            top: 10,
+            left: right.offsetWidth,
             behavior: "smooth",
           });
     }
@@ -209,13 +202,16 @@ export default function ProgressTracker() {
     return (
 
         <div className={cs(styles['main_container'])}>
-            <button className={cs(styles['arrow_left'])} onClick={leftScroll}>
-                <img 
-                    src={arrowLeft}
-                    alt='left arrow'
-                    className={cs(styles['arrow_icon'])}
-                />
-            </button>
+            {
+                milestones.length > 5 &&
+                    <button className={cs(styles['arrow_left'])} onClick={leftScroll}>
+                        <img 
+                            src={arrowLeft}
+                            alt='left arrow'
+                            className={cs(styles['arrow_icon'])}
+                        />
+                    </button>
+            }
 
             <div className={cs(styles['steps_container'])} id='#steps_container'>
                 
@@ -234,17 +230,18 @@ export default function ProgressTracker() {
 
             </div>
 
-            <button className={cs(styles['arrow_right'])} onClick={rightScroll}>
-                <img 
-                    src={arrowRight}
-                    alt='right arrow'
-                    className={cs(styles['arrow_icon'])}
-                />
-            </button>
-
+            {
+                milestones.length > 5 &&
+                    <button className={cs(styles['arrow_right'])} onClick={rightScroll}>
+                        <img 
+                            src={arrowRight}
+                            alt='right arrow'
+                            className={cs(styles['arrow_icon'])}
+                        />
+                    </button>
+            }
 
         </div>
-
 
     )
 }
