@@ -24,10 +24,15 @@ export default function TextInput({
     value ,
     width = '100%' ,
 }) {
+
+
+    console.log("errrrrrrrrrrrrrrrrrrrrrrrrror", errorMessage);
+
+    
     return (
         <div 
             className={cs(styles['container'])} 
-            style={{height: height, ...((!isValid && showError) ? {borderBottom:`1px solid ${colors['error-100']}`} : {borderBottom:`1px solid ${colors['dark-shades-100']}`})}}>
+            style={{height: height, ...((!isValid && showError) ? {borderBottom:`1px solid #bc0000`} : {borderBottom:`1px solid ${colors['dark-shades-100']}`})}}>
             <div 
                 className={cs(styles['input_container'])} 
                 style={{...(labelDirection === 'ltr' && {gridTemplateColumns: 'auto 1fr'})}}
@@ -52,7 +57,7 @@ export default function TextInput({
                     // style={{fontFamily: }}
                 />
             </div>
-            {(!isValid && showError) && <p className={cs(styles['container'])}>{errorMessage}</p>}
+            {(!isValid && showError) && <p className={cs(styles['error_text'])}>{errorMessage}</p>}
         </div>
     )
 }

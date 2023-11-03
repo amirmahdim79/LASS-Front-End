@@ -4,6 +4,8 @@
 .container {
     width: 100%;
     font-family: 'pinar_reg';
+    -webkit-transition: 0.2s  ease-out  ;
+    transition: 0.2s  ease-out  ;
     // border-bottom: 1px solid $dark-shades-100;
 
     .input_container {
@@ -39,12 +41,24 @@
             color: $dark-shades-100;
             text-align: right;
         }
+
+        input:-ms-input-placeholder {
+            color: $dark-shades-100;
+            text-align: right;
+        }
+        
+        input::-ms-input-placeholder { 
+            color: $dark-shades-100;
+            text-align: right;
+        }
     }
 
     .error_text {
         color: #E82323;
+        color: #bc0000;
         font-size: 12px;
         font-weight: 500;
         padding-right: 5px;
+        direction: rtl;
     }
 }

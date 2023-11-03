@@ -11,6 +11,7 @@ import TextInput from 'components/global/inputs/textInput';
 import useInput from 'hooks/useInputHandler';
 import colors from "styles/colors.module.scss"
 import Button from 'components/global/button';
+import { useEffect } from 'react';
 
 
 export default function HomePage() {
@@ -19,28 +20,39 @@ export default function HomePage() {
 
     const { value: email, onChange: onChangeEmail } = useInput('');
     const { value: password, onChange: onChangePassword } = useInput('');
+    const { value: emailErr, setValue: setEmailErr } = useInput('');
+    const { value: passwordErr, setValue: setPasswordErr } = useInput('');
+
     const { value: type, setValue: setType } = useInput('دانشجو');
 
-    const { authenticateUser, authenticateSupervisor } = useAuthActions();
+    const { authenticateUser, authenticateSupervisor } = useAuthActions(setEmailErr, setPasswordErr);
 
     const login = () => {
         if (type === 'دانشجو') {
-            authenticateUser({ email:email, password:password }).then(res => {
+            authenticateUser({ email:email.replace(/^\s+|\s+$/gm,''), password:password.replace(/^\s+|\s+$/gm,'') }).then(res => {
                 localStorage.setItem('type', 'user')
                 navigate('/user/dashboard')
             }).catch(err => {
                 console.log("...........eeeeeeeeeeeeeeee", err);
             })
         }else if (type === 'استاد') {
-            authenticateSupervisor({ email:email, password:password }).then(res => {
+            authenticateSupervisor({ email:email.replace(/^\s+|\s+$/gm,''), password:password.replace(/^\s+|\s+$/gm,'') }).then(res => {
                 localStorage.setItem('type', 'supervisor')
                 navigate('/supervisor/dashboard')
             }).catch(err => {
                 console.log("...........eeeeeeeeeeeeeeee", err);
             })
         }
-    }       
+    }      
 
+    useEffect(() => {
+        setEmailErr('')
+    }, [email, type, password])
+
+    useEffect(() => {
+        setPasswordErr('')
+    }, [password, type])
+    
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['login_form'])}>
@@ -55,12 +67,18 @@ export default function HomePage() {
                                 value={email}
                                 onChange={onChangeEmail}
                                 placeholder={text.input_1} 
+                                errorMessage={emailErr}
+                                showError={true}
+                                isValid={!emailErr}
                                 dir={'ltr'}
                             />
                             <TextInput 
                                 value={password}
                                 onChange={onChangePassword}
                                 placeholder={text.input_2} 
+                                errorMessage={passwordErr}
+                                showError={true}
+                                isValid={!passwordErr}
                                 dir={'ltr'}
                             />
                         </div>
