@@ -1,6 +1,6 @@
 import styles from './style.module.scss'
 import {default as cs} from 'classnames'
-import colors from "../../../../styles/colors.module.scss"
+import colors from "styles/colors.module.scss"
 
 
 export default function TextInput({

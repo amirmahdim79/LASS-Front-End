@@ -27,13 +27,17 @@
 
         input {
             background-color: transparent;
-            // position: absolute;
             padding: 0 5px;
         }
 
         input:focus {
             outline: none !important;
             border: none;
+        }
+
+        input::placeholder {
+            color: $dark-shades-100;
+            text-align: right;
         }
     }
 

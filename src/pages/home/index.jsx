@@ -16,7 +16,6 @@ import Button from 'components/global/button';
 export default function HomePage() {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const { value: email, onChange: onChangeEmail } = useInput('');
     const { value: password, onChange: onChangePassword } = useInput('');
@@ -55,13 +54,13 @@ export default function HomePage() {
                             <TextInput 
                                 value={email}
                                 onChange={onChangeEmail}
-                                inputLabel={text.input_1} 
+                                placeholder={text.input_1} 
                                 dir={'ltr'}
                             />
                             <TextInput 
                                 value={password}
                                 onChange={onChangePassword}
-                                inputLabel={text.input_2} 
+                                placeholder={text.input_2} 
                                 dir={'ltr'}
                             />
                         </div>
