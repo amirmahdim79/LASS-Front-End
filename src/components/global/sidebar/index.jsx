@@ -12,12 +12,14 @@ import useInput from 'hooks/useInputHandler';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
 import { REMOVE_TOKEN } from "utils/tokenHandler";
+import useToast from 'hooks/useToast';
 
 
 export default function SideBar({type}) { 
     
     const navigate = useNavigate();
     const location = useLocation()
+    const { showToast } = useToast();
 
     const { value: iconNum, setValue: setIconNum } = useInput('1');
 
@@ -41,6 +43,7 @@ export default function SideBar({type}) {
         navigate('/')
         REMOVE_TOKEN()
         localStorage.removeItem("type")
+        showToast('با موفقیت خارج شدید', 'success')
     }
 
     useEffect(() => {
