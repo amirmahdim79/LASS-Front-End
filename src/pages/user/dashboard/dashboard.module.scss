@@ -127,6 +127,7 @@
                             @include mixins.text;
                             color: $dark-shades-100;
                             text-align: right;
+                            cursor: pointer;
                         }
 
                         .icon {
@@ -159,11 +160,10 @@
                     color: $dark-shades-100;
                     padding-right: 17px;
                     max-width: 900px;
-                    width: 100%;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-
+                    cursor: pointer;
                 }
 
             }

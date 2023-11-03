@@ -10,4 +10,5 @@
     padding: 1px 24px;
     border-radius: 15px;
     @include mixins.sub-description;
+    cursor: pointer;
 }
