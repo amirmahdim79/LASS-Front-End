@@ -94,7 +94,10 @@ export default function UploadFile({updatePapers}) {
             closeProgressBarModal();
             updatePapers();
         })
-        .catch(err => console.log("erreeeeeeeeeeeeeeeeeee", err))
+        .catch(err => {
+            console.log("erreeeeeeeeeeeeeeeeeee", err)
+            closeProgressBarModal();
+        })
         .finally(() => {
             console.log("finallllllllllllllllllll");
             input.value = '';
@@ -146,7 +149,6 @@ export default function UploadFile({updatePapers}) {
             .catch(err => console.log("err search", err))
       }, [debouncedTag]);
 
-      console.log("openProgressBarModal", openProgressBarModal);
 
 
     return (
