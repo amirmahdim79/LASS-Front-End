@@ -14,22 +14,22 @@ export default function Button({
    
 }) {  
   
-    window.onload = function() {
-        const btn = document.getElementById('#button'); 
-        btn.onclick = function (e) { 
-            let ripple = document.createElement("span"); 
-            ripple.classList.add("ripple"); 
-            this.appendChild(ripple); 
-            let x = e.clientX - e.target.offsetLeft - 45; 
-            let y = e.clientY - e.target.offsetTop + 12; 
-            ripple.style.left = `${x}px`; 
-            ripple.style.top = `${y}px`; 
-            console.log("rrrrrrrrrrrrrrrrrrrrrrr", ripple);
-            setTimeout(() => { 
-                ripple.remove(); 
-            }, 300); 
-        }; 
-    };
+    // window.onload = function() {
+    //     const btn = document.getElementById('#button'); 
+    //     btn.onclick = function (e) { 
+    //         let ripple = document.createElement("span"); 
+    //         ripple.classList.add("ripple"); 
+    //         this.appendChild(ripple); 
+    //         let x = e.clientX - e.target.offsetLeft - 45; 
+    //         let y = e.clientY - e.target.offsetTop + 12; 
+    //         ripple.style.left = `${x}px`; 
+    //         ripple.style.top = `${y}px`; 
+    //         console.log("rrrrrrrrrrrrrrrrrrrrrrr", ripple);
+    //         setTimeout(() => { 
+    //             ripple.remove(); 
+    //         }, 300); 
+    //     }; 
+    // };
 
 
 

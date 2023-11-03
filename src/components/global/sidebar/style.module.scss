@@ -31,6 +31,16 @@
         display: flex;
         justify-content: center;
         align-items: flex-end;
+        padding: 12px;
+    }
+
+    .dark-mode-icon {
+        padding: 12px;
+        border-radius: 50%;
+    }
+
+    .dark-mode-icon:hover {
+        cursor: pointer;
     }
 
     .icon {

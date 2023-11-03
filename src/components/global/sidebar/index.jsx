@@ -8,9 +8,10 @@ import clipboardLight from 'assets/icons/contents/clipboard/light-color.svg';
 import chartLight from 'assets/icons/business/chart/light-color.svg';
 import settingsLight from 'assets/icons/settings/settings-2/light-color.svg';
 import moonLight from 'assets/icons/weather/moon/light-color.svg';
-import { useLocation, useNavigate } from 'react-router-dom'
 import useInput from 'hooks/useInputHandler';
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
+import { REMOVE_TOKEN } from "utils/tokenHandler";
 
 
 export default function SideBar({type}) { 
@@ -20,16 +21,24 @@ export default function SideBar({type}) {
 
     const { value: iconNum, setValue: setIconNum } = useInput('1');
 
-    const onClickIcon3 = () => {
-        setIconNum('3')
-        if ( type === 'user' ) navigate('/user/articles_database')
 
-    }
 
     const onClickIcon1 = () => {
         setIconNum('1')
         if ( type === 'user' ) navigate('/user/dashboard')
+    }
 
+    const onClickIcon3 = () => {
+        setIconNum('3')
+        if ( type === 'user' ) navigate('/user/articles_database')
+    }
+
+    const onClickIcon7 = () => {
+        setIconNum('7')
+        // modal for logout
+        navigate('/')
+        REMOVE_TOKEN()
+        localStorage.removeItem("type")
     }
 
     useEffect(() => {
@@ -57,7 +66,7 @@ export default function SideBar({type}) {
             <img className={cs(styles['icon'])} src={settingsLight} alt='settings icon' />
             
             <div className={cs(styles['dark-mode'])}>
-                <img src={moonLight} alt='moon icon' />
+                <img src={moonLight} alt='moon icon' className={cs(styles['dark-mode-icon'], iconNum === '7' && styles['active'])} onClick={() => onClickIcon7()}/>
             </div>
         </aside>
     )
