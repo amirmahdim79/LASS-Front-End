@@ -4,7 +4,7 @@ import { text } from './constants'
 import styles from './style.module.scss'
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
 import docIcon from 'assets/icons/contents/document-text/main-color.svg'
-import moreIcon from 'assets/icons/essential/more/dark-color.svg'
+import downloadIcon from 'assets/icons/arrow/import/dark-color.svg'
 import CheckBoxV1 from 'components/global/checkbox/v1'
 import { useSelector } from 'react-redux'
 import { formatFileSize } from 'utils/mapper'
@@ -30,6 +30,23 @@ export default function ArticlesList({data, load}) {
     //         console.log("eeeeeeeeeeeeeeeeeeeeeeeee", err);
     //     })
     // }
+
+    const downloadPaper = (paper, index) => {
+
+        // console.log("paper", paper);
+        // console.log("index", index);
+        // var link = document.createElement('a');
+        // link.href = paper.url;
+        // link.download = paper.name;
+        // link.dispatchEvent(new MouseEvent('click'));
+
+        var link = document.createElement('a');
+        link.href = paper.url;
+        link.download = paper.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
 
     return (
@@ -75,7 +92,7 @@ export default function ArticlesList({data, load}) {
                             ? <Preloader/>
                             : 
                                 data.map((paper, i) => 
-                                    <div key={i} className={cs(styles['row'])}>
+                                    <div key={i} className={cs(styles['row'])} onClick={() => downloadPaper(paper, i)}>
                                         <div className={cs(styles['name_wrapper'])}>
                                             <CheckBoxV1 checked={false}/>
                                             <img 
@@ -92,7 +109,7 @@ export default function ArticlesList({data, load}) {
                                             <p> 2019/06/18 </p>
                                         </div>
                                         <div className={cs(styles['tags_wrapper'])}>
-                                            <img src={moreIcon} alt='more icon'/>
+                                            <img src={downloadIcon} alt='download icon'/>
                                             <span className={cs(styles['tags'])}> 
                                                 { paper.Tags.length 
                                                     ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)

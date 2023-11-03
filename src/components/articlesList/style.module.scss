@@ -129,7 +129,7 @@
                 align-items: center;
                 column-gap: 20px;
                 color: $dark-shades-100;
-                
+                cursor: pointer;
                 display: grid;
                 // grid-template-columns: 1fr 100px 100px 0.5fr;
                 // grid-template-columns: 1.1fr 100px 100px 0.5fr;
@@ -191,10 +191,6 @@
                         white-space: nowrap;
                         overflow: hidden; 
                         direction: ltr;
-                    }
-
-                    img {
-                        cursor: pointer;
                     }
                 }
 
