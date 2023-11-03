@@ -4,6 +4,7 @@ import SupervisorDashboard from "pages/supervisor/dashboard";
 import ArticlesDataBase from "pages/user/articlesDataBase";
 import UserDashboard from "pages/user/dashboard";
 import { createBrowserRouter } from "react-router-dom";
+import { redirect } from "next/dist/server/api-utils";
 
 export const router = createBrowserRouter([
     {
@@ -11,11 +12,11 @@ export const router = createBrowserRouter([
         errorElement: 'tttest11',
         element: <HomePage />,
     },
-
     {
         path: '/user',
-        element: <Base />,
-        errorElement: 'user test',
+        element: <Base type={'user'}/>,
+        errorElement: 'besik outttttttttttttt',
+        loader: () => (localStorage.getItem('type') !== 'user' ? redirect('/') : null),
         children: [
             {
                 path: 'dashboard',
@@ -30,12 +31,13 @@ export const router = createBrowserRouter([
 
     {
         path: '/supervisor',
-        element: <Base />,
-        errorElement: 'supervisor test',
+        element: <Base type={'supervisor'}/>,
+        errorElement: 'besik biroooooon',
+        loader: () => (localStorage.getItem('type') !== 'supervisor' ? redirect('/') : null),
         children: [
             {
                 path: 'dashboard',
-                element: <SupervisorDashboard />,
+                element: <SupervisorDashboard />,  
             }
         ]
     },

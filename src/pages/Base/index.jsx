@@ -1,32 +1,39 @@
-import Navbar from "components/global/navbar";
-import SideBar from "components/global/sidebar";
-import useInput from "hooks/useInputHandler";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { useBaseActions } from "./hooks/useBaseActions";
+import Navbar from "components/global/navbar";
+import SideBar from "components/global/sidebar";
+import useToast from "hooks/useToast";
 
-export default function Base() {
-
+export default function Base({type}) {
+    
+    const { showToast } = useToast();
+    
     const { checkAuth, checkSupAuth } = useBaseActions();
-
-    const { value: type, setValue: setType } = useInput('');
+    const userType = useSelector(state => state.user.type);
 
     useEffect(() => {
-        checkAuth().then(res => {
-            setType('user')
-        }).catch(err => {
-        })
-
-        checkSupAuth().then(res => {
-            setType('supervisor')
-        }).catch(err => {
-        })
+        if ( userType === type ) {
+            if (userType === 'user') {
+                checkAuth()
+                    .then(res => {})
+                    .catch(err => {
+                        
+                    })
+            }else if (userType === 'supervisor') {
+                checkSupAuth()
+                    .then(res => {})
+                    .catch(err => {
+                })
+            } 
+        }
     }, [])
 
     
     return (
         <>
-            <SideBar type={type}/>
+            <SideBar type={userType}/>
             <Navbar />
 
             <Outlet />

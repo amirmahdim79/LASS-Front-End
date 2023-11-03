@@ -3,6 +3,7 @@ import { CONSTANTS } from "./constants";
 
 const initialState = {
     user: null,
+    type: localStorage.getItem('type'),
     isLoggedIn: false,
     articles: [
         {

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 import { text } from './constants';
 import { useAuthActions } from './hooks/useAuthActions';
 import { default as cs } from 'classnames'
@@ -15,6 +16,7 @@ import Button from 'components/global/button';
 export default function HomePage() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const { value: email, onChange: onChangeEmail } = useInput('');
     const { value: password, onChange: onChangePassword } = useInput('');
@@ -25,14 +27,14 @@ export default function HomePage() {
     const login = () => {
         if (type === 'دانشجو') {
             authenticateUser({ email:email, password:password }).then(res => {
-                console.log("............rrrrrrrrrrrr", res);
+                localStorage.setItem('type', 'user')
                 navigate('/user/dashboard')
             }).catch(err => {
                 console.log("...........eeeeeeeeeeeeeeee", err);
             })
         }else if (type === 'استاد') {
             authenticateSupervisor({ email:email, password:password }).then(res => {
-                console.log("............rrrrrrrrrrrr super", res);
+                localStorage.setItem('type', 'supervisor')
                 navigate('/supervisor/dashboard')
             }).catch(err => {
                 console.log("...........eeeeeeeeeeeeeeee", err);
