@@ -65,7 +65,7 @@ export default function HomePage() {
                             <TextInput 
                                 value={email}
                                 onChange={onChangeEmail}
-                                inputLabel={text.input_1} 
+                                placeholder={text.input_1} 
                                 errorMessage={emailErr}
                                 showError={true}
                                 isValid={!emailErr}
@@ -74,7 +74,7 @@ export default function HomePage() {
                             <TextInput 
                                 value={password}
                                 onChange={onChangePassword}
-                                inputLabel={text.input_2} 
+                                placeholder={text.input_2} 
                                 errorMessage={passwordErr}
                                 showError={true}
                                 isValid={!passwordErr}

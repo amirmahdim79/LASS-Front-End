@@ -23,8 +23,6 @@ export default function SideBar({type}) {
 
     const { value: iconNum, setValue: setIconNum } = useInput('1');
 
-
-
     const onClickIcon1 = () => {
         setIconNum('1')
         if ( type === 'user' ) navigate('/user/dashboard')

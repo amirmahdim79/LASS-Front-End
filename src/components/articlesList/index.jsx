@@ -38,7 +38,7 @@ export default function ArticlesList({data, load}) {
             <div className={cs(styles['header'])}>
                 <div className={cs(styles['row_1'])}>
                     <div className={cs(styles['tools_wrapper'])}>
-                        <div> <SearchBar height={'40px'} borderRadius={'12px'} placeholder={'نام فایل را جست و جو کنید'}/> </div>
+                        <div> <SearchBar height={'40px'} borderRadius={'12px'} placeholder={'نام فایل را جست و جو کنید'} fontSize={'14px'}/> </div>
                         <div className={cs(styles['filter_icon'])}> 
                             <img 
                                 src={filterIcon}

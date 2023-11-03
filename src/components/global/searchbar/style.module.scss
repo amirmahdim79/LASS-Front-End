@@ -41,8 +41,10 @@
     }
 
     .searchInput::placeholder {
-        color: $dark-shades-60;
-        @include mixins.text;
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        font-family: inherit;
     }
     
 }
