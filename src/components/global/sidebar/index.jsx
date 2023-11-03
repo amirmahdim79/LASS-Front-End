@@ -26,16 +26,18 @@ export default function SideBar({type}) {
     const onClickIcon1 = () => {
         setIconNum('1')
         if ( type === 'user' ) navigate('/user/dashboard')
+        else navigate('/supervisor/dashboard')
     }
 
     const onClickIcon3 = () => {
         setIconNum('3')
         if ( type === 'user' ) navigate('/user/articles_database')
+        else navigate('/supervisor/articles_database')
     }
 
     const onClickIcon7 = () => {
-        setIconNum('7')
         // modal for logout
+        setIconNum('7')
         navigate('/')
         REMOVE_TOKEN()
         localStorage.removeItem("type")
@@ -45,6 +47,9 @@ export default function SideBar({type}) {
         if (type === 'user') {
             if (location.pathname === '/user/dashboard') setIconNum('1')
             else if (location.pathname === '/user/articles_database') setIconNum('3')
+        }else {
+            if (location.pathname === '/supervisor/dashboard') setIconNum('1')
+            else if (location.pathname === '/supervisor/articles_database') setIconNum('3')
         }
     })
 

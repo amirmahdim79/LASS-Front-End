@@ -11,7 +11,7 @@ import { useArticlesActions } from './hooks/useArticlesActions'
 import useInput from 'hooks/useInputHandler'
 
 
-export default function UserArticlesDataBase() { 
+export default function SupArticlesDataBase() { 
 
     const articles = useSelector(state => state.user.articles);
     const { value: allPapers, setValue: setAllPapers } = useInput([]);

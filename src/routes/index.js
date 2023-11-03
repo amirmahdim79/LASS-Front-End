@@ -1,10 +1,11 @@
+import { createBrowserRouter } from "react-router-dom";
+import { redirect } from "next/dist/server/api-utils"
 import Base from "pages/Base";
 import HomePage from "pages/home";
 import SupervisorDashboard from "pages/supervisor/dashboard";
-import ArticlesDataBase from "pages/user/articlesDataBase";
 import UserDashboard from "pages/user/dashboard";
-import { createBrowserRouter } from "react-router-dom";
-import { redirect } from "next/dist/server/api-utils";
+import UserArticlesDataBase from "pages/user/articlesDataBase";
+import SupArticlesDataBase from "pages/supervisor/articlesDataBase";
 
 export const router = createBrowserRouter([
     {
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'articles_database',
-                element: <ArticlesDataBase />,
+                element: <UserArticlesDataBase />,
             }
         ]
     },
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
             {
                 path: 'dashboard',
                 element: <SupervisorDashboard />,  
+            },
+            {
+                path: 'articles_database',
+                element: <SupArticlesDataBase />,
             }
         ]
     },
