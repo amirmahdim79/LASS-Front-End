@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { formatFileSize } from 'utils/mapper'
 import { useArticlesActions } from 'pages/user/articlesDataBase/hooks/useArticlesActions'
 import Preloader from 'components/global/preloaders'
+import useInput from 'hooks/useInputHandler'
 
 
 export default function ArticlesList({data, load}) { 
@@ -32,14 +33,6 @@ export default function ArticlesList({data, load}) {
     // }
 
     const downloadPaper = (paper, index) => {
-
-        // console.log("paper", paper);
-        // console.log("index", index);
-        // var link = document.createElement('a');
-        // link.href = paper.url;
-        // link.download = paper.name;
-        // link.dispatchEvent(new MouseEvent('click'));
-
         var link = document.createElement('a');
         link.href = paper.url;
         link.download = paper.name;
@@ -115,6 +108,13 @@ export default function ArticlesList({data, load}) {
                                                     ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)
                                                     : <p>...</p>
                                                 } 
+
+                                                <div className={cs(styles['tooltip'])}>
+                                                    { paper.Tags.length 
+                                                        ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)
+                                                        : <p>...</p>
+                                                    }
+                                                </div>
                                             </span>
                                         </div>
             

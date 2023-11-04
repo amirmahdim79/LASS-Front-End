@@ -178,13 +178,13 @@
 
                 .tags_wrapper {
                     min-width: 0;
-                    // max-width: 190px;
                     display: flex;
                     flex-direction: row-reverse;
                     align-items: center;
                     column-gap: 12px;
                     padding-left: 5px;
                     @include mixins.sub-description;
+                    position: relative;
 
                     .tags {
                         text-overflow: ellipsis;
@@ -192,9 +192,36 @@
                         overflow: hidden; 
                         direction: ltr;
                     }
+
+                    .tags:hover .tooltip{
+                        display: flex;
+                        justify-content: baseline;
+                        flex-wrap: wrap;
+                        gap: 2px;
+                    }
+
+                    .tooltip {
+                        width: fit-content;
+                        min-height: 30px;
+                        max-height: max-content;
+                        background-color: $light-accent-20;
+                        padding: 7px 10px;
+                        border-radius: 12px;
+                        position: absolute;
+                        z-index: 1;
+                        display: none;
+                        left: 14%;
+                        top: 0;
+                    }
+
                 }
 
             }
+
+            .row:hover {
+                background-color: $light-accent-10;
+            }
+
         }
     }
 }
