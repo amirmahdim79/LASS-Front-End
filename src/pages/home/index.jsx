@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { text } from './constants';
 import { useAuthActions } from './hooks/useAuthActions';
 import { default as cs } from 'classnames'
+import { addUser } from "store/userSlice/index"
 import styles from './home.module.scss'
 import Logo from 'components/global/logo';
 import Switch from 'components/global/toggleSwitch';
@@ -11,10 +12,12 @@ import TextInput from 'components/global/inputs/textInput';
 import useInput from 'hooks/useInputHandler';
 import colors from "styles/colors.module.scss"
 import Button from 'components/global/button';
+import { useDispatch } from 'react-redux';
 
 
 export default function HomePage() {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { value: email, onChange: onChangeEmail } = useInput('');
@@ -32,6 +35,7 @@ export default function HomePage() {
     const login = () => {
         if (type === 'دانشجو') {
             authenticateUser({ email:email.replace(/^\s+|\s+$/gm,''), password:password.replace(/^\s+|\s+$/gm,'') }).then(res => {
+                dispatch(addUser(res.data))
                 localStorage.setItem('type', 'user')
                 navigate('/user/dashboard')
             }).catch(err => {
@@ -40,6 +44,7 @@ export default function HomePage() {
         }else if (type === 'استاد') {
             authenticateSupervisor({ email:email.replace(/^\s+|\s+$/gm,''), password:password.replace(/^\s+|\s+$/gm,'') }).then(res => {
                 localStorage.setItem('type', 'supervisor')
+                dispatch(addUser(res.data))
                 navigate('/supervisor/dashboard')
             }).catch(err => {
                 console.log("...........eeeeeeeeeeeeeeee", err);

@@ -6,6 +6,7 @@ import UserDashboard from "pages/user/dashboard";
 import UserArticlesDataBase from "pages/user/articlesDataBase";
 import SupArticlesDataBase from "pages/supervisor/articlesDataBase";
 import Task from "pages/user/task";
+import Profile from "pages/user/profile";
 
 export const router = createBrowserRouter([
     {
@@ -30,7 +31,12 @@ export const router = createBrowserRouter([
             {
                 path: 'task/:id/:type',
                 element: <Task />,
+            },
+            {
+                path: 'my_profile',
+                element: <Profile />,
             }
+            // a user see other user profile
         ]
     },
 
@@ -47,6 +53,10 @@ export const router = createBrowserRouter([
             {
                 path: 'articles_database',
                 element: <SupArticlesDataBase />,
+            },
+            {
+                path: 'user_profile/:id',
+                element: <Profile />,
             }
         ]
     },

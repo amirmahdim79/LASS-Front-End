@@ -1,0 +1,15 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    background-color: $light-shades-100;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    img {
+        width: 93%;
+        height: 93%;
+    }
+}

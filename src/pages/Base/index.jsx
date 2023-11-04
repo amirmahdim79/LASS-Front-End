@@ -1,12 +1,15 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { useBaseActions } from "./hooks/useBaseActions";
+import { addUser } from "store/userSlice/index"
 import Navbar from "components/global/navbar";
 import SideBar from "components/global/sidebar";
 
 export default function Base({type}) {
         
+    const dispatch = useDispatch();
+
     const { checkAuth, checkSupAuth } = useBaseActions();
     const userType = localStorage.getItem('type');
 
@@ -14,11 +17,15 @@ export default function Base({type}) {
         if ( userType === type ) {
             if (userType === 'user') {
                 checkAuth()
-                    .then(res => {})
+                    .then(res => {
+                        dispatch(addUser(res.data))
+                    })
                     .catch(err => { })
             }else if (userType === 'supervisor') {
                 checkSupAuth()
-                    .then(res => {})
+                    .then(res => {
+                        dispatch(addUser(res.data))
+                    })
                     .catch(err => {})
             } 
         }
@@ -28,7 +35,7 @@ export default function Base({type}) {
     return (
         <>
             <SideBar type={userType}/>
-            <Navbar />
+            <Navbar type={type}/>
 
             <Outlet />
         </>

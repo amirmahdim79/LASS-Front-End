@@ -28,6 +28,12 @@
     font-family: 'pinar_semi_bold';
 }
 
+@mixin h2-text {
+    font-size: 35px;
+    font-weight: 600;
+    font-family: 'pinar_semi_bold';
+}
+
 @mixin h3-text {
     font-size: 32px;
     font-weight: 600;

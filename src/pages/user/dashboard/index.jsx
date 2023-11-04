@@ -184,7 +184,6 @@ export default function UserDashboard() {
         })
     }, [])
 
-    console.log("currentMilestone", currentMilestone);
 
     return (
         <div className={cs(styles['container'])}>

@@ -5,7 +5,8 @@ import addIcon from 'assets/icons/essential/add/dark-color.svg'
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
 import sortIcon from 'assets/icons/essential/sort/dark-color.svg'
 import avatar from 'assets/images/avatar.png'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import { useModal } from 'hooks/useModal'
 import AddUserModal from 'pages/supervisor/dashboard/modals/addUserModal'
 import Preloader from 'components/global/preloaders'
@@ -13,6 +14,8 @@ import Preloader from 'components/global/preloaders'
 
 
 export default function UsersList() {
+
+    const navigate = useNavigate();
 
     const [openAddUserModal, showAddUserModal, closeAddUserModal] = useModal();
     const students = useSelector(state => state.lab.Students);
@@ -73,7 +76,7 @@ export default function UsersList() {
                             <Preloader/>
                         : 
                             students && students.map((s, i) => 
-                                <div className={cs(styles['student_data_container'])}>
+                                <div className={cs(styles['student_data_container'])} onClick={() => navigate(`../user_profile/${s._id}`)}>
                                     <div 
                                         style={{background: `url(${avatar})`, backgroundSize:'cover', backgroundRepeat:'no-repeat', backgroundPosition:'center center'}} 
                                         className={cs(styles['avatar'])}

@@ -1,0 +1,17 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    background-color: $light-shades-100;
+    border-radius: 25px;
+    direction: ltr;
+    display: flex;
+    align-items: center;
+
+    .progress_bar {
+        height: 60%;
+        margin: 3px;
+        border-radius: inherit;
+        transition: width  0.7s ease-in-out;
+    }
+}
