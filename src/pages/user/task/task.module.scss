@@ -1,0 +1,132 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    padding: 40px 170px 10px 30px;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    column-gap: 30px;
+
+
+
+    .chart_container {
+        width: 100%;
+        height: 100%;
+        background-color: $dark-accent-30;
+        border-radius: 12px;
+        min-height: 540px;
+        min-height: 420px;
+        padding: 27px 22px 15px;
+        text-align: right;
+        display: grid;
+        grid-template-rows: max-content 85px 1fr max-content;
+        color: #000000;
+
+        .title {
+            @include mixins.h5-text;  
+            padding-bottom: 10px;
+        }
+
+        img {
+            justify-self: center;
+        }
+
+        .subtitle {
+            @include mixins.sub-description;
+            direction: rtl;
+
+            span {
+                color: $main-color_100;
+            }
+        }
+
+        .info {
+            @include mixins.sub-description;  
+            color: $dark-shades-100;
+
+            span {
+                font-weight: bold;
+            }
+        }
+
+    }
+
+    .task_container {
+        width: 100%;
+        color: $dark-shades-100;
+        direction: rtl;
+
+        .title {
+            @include mixins.h3-text;  
+        }
+
+        .date_wrapper {
+            color: #000000;
+            width: 100%;
+            text-align: left;
+            padding-left: 22px;
+            @include mixins.description;
+
+            .date {
+                @include mixins.sub-description;  
+                padding-right: 5px;
+            }
+        }
+
+        .upload_container {
+            width: 100%;
+            padding-top: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            row-gap: 20px;
+
+            .subtitle {
+                @include mixins.text;
+                line-height: normal;
+            }
+
+            .upload_wrapper {
+                width: 100%;
+                height: 100%;
+                min-height: 260px;
+                max-height: 260px;
+                border-radius: 15px;
+            }
+
+            .btn_container {
+                width: 100%;
+                direction: ltr;
+            }
+
+        }
+
+        .reading_articles_container {
+            width: 100%;
+            padding-top: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            row-gap: 20px;
+
+            .desc_container {
+                width: 100%;
+                color: $dark-shades-100;
+                @include mixins.text;
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                justify-content: space-between;
+                padding-left: 22px;
+
+                .desc {
+                    span {
+                        color: $main-color_100;
+                    }
+                }
+            }
+        }
+    }
+}

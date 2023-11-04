@@ -61,7 +61,6 @@
         .folder_icon {
             width: 100%;
             height: 100%;
-            // background-color: rgb(176, 72, 43);
             grid-area: 1 / 1 / span 2 / span 1;
             display: flex;
             display: flex;
@@ -78,7 +77,6 @@
             color: $dark-shades-100;
             @include mixins.text;
             grid-area: 1 / 2 / span 1 / 4;
-            // background-color: greenyellow;
             display: flex;
             align-items: flex-end;
         }

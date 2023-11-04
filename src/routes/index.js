@@ -6,6 +6,7 @@ import SupervisorDashboard from "pages/supervisor/dashboard";
 import UserDashboard from "pages/user/dashboard";
 import UserArticlesDataBase from "pages/user/articlesDataBase";
 import SupArticlesDataBase from "pages/supervisor/articlesDataBase";
+import Task from "pages/user/task";
 
 export const router = createBrowserRouter([
     {
@@ -16,7 +17,7 @@ export const router = createBrowserRouter([
     {
         path: '/user',
         element: <Base type={'user'}/>,
-        errorElement: 'besik outttttttttttttt',
+        errorElement: 'error user pages',
         loader: () => (localStorage.getItem('type') !== 'user' ? redirect('/') : null),
         children: [
             {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
             {
                 path: 'articles_database',
                 element: <UserArticlesDataBase />,
+            },
+            {
+                path: 'task/:id/:type',
+                element: <Task />,
             }
         ]
     },
@@ -33,7 +38,7 @@ export const router = createBrowserRouter([
     {
         path: '/supervisor',
         element: <Base type={'supervisor'}/>,
-        errorElement: 'besik biroooooon',
+        errorElement: 'error supervisor pages',
         loader: () => (localStorage.getItem('type') !== 'supervisor' ? redirect('/') : null),
         children: [
             {

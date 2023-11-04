@@ -10,6 +10,7 @@ import { text } from './constants';
 import { useEffect, useState } from 'react';
 import { useLabActions } from './hooks/useLabsActions';
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { setPath, setMilestone, setCurrentMilestone, setPrevInd } from "store/labSlice/index"
 import Preloader from 'components/global/preloaders';
 import text_preloader from 'assets/gifs/text_preloader.gif'
@@ -18,6 +19,7 @@ import text_preloader from 'assets/gifs/text_preloader.gif'
 export default function UserDashboard() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const title = 'عنوان فاز';
 
@@ -182,6 +184,8 @@ export default function UserDashboard() {
         })
     }, [])
 
+    console.log("currentMilestone", currentMilestone);
+
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['step_progress_container'])}>
@@ -220,7 +224,7 @@ export default function UserDashboard() {
                             ? 
                                 currentMilestone?.Tasks.map((task, index) => {
                                     return (
-                                        <div className={cs(styles['activity-box'])} key={index}>
+                                        <div className={cs(styles['activity-box'])} key={index} onClick={() => navigate(`../task/${task._id}/${task.activity === 'upload' ? 'upload' : 'reading'}`)}>
                                             <div className={cs(styles['activity-data'])}>
                                                 <div className={cs(styles['right-column'])}> 
                                                     <div className={cs(styles['icon'])}>

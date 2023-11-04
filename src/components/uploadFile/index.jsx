@@ -21,7 +21,7 @@ import { GET_TOKEN } from 'utils/tokenHandler';
 
 const $axios = axios.create({
     baseURL: process.env.REACT_APP_API_ROOT,
-    timeout: 60000,
+    timeout: 600000,
     withCredentials: true,
 })
 
