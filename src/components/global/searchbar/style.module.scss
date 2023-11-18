@@ -40,6 +40,17 @@
         @include mixins.text;
     }
 
+    .nonEmptysearchInput {
+        border:none;
+        background: none;
+        outline:none;
+        text-align: right;
+        color: $dark-shades-60;
+        transition: 0.4s;
+        width: 250px;
+        @include mixins.text;
+    }
+
     .searchInput::placeholder {
         color: inherit;
         font-size: inherit;

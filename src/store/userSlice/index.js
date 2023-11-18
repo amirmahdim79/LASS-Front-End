@@ -3,6 +3,8 @@ import { CONSTANTS } from "./constants";
 
 const initialState = {
     user: null,
+    searchedValue: '',
+    navSearchedValue: null,
     isLoggedIn: false,
     articles: [
         {
@@ -93,7 +95,13 @@ export const userSlice = createSlice({
         setArticles: (state, action) => {
             state.articles = [...state.articles,  action.payload]
         },
+        setSearchedValue: (state, action) => {
+            state.searchedValue = action.payload
+        },
+        setNavSearchedValue: (state, action) => {
+            state.navSearchedValue = action.payload
+        },
     }
 })
 
-export const { addUser, clearUser, setArticles } = userSlice.actions;
+export const { addUser, clearUser, setArticles, setSearchedValue, setNavSearchedValue } = userSlice.actions;

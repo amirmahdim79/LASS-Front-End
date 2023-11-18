@@ -9,17 +9,29 @@ import ArticlesList from 'components/articlesList'
 import { useEffect } from 'react'
 import { useArticlesActions } from './hooks/useArticlesActions'
 import useInput from 'hooks/useInputHandler'
-
+import { useSearchParams } from 'react-router-dom';
 
 export default function UserArticlesDataBase() { 
 
+    const [searchParams] = useSearchParams();
+    const searchKeyword = searchParams.get('search');
+
+
     const articles = useSelector(state => state.user.articles);
+    const searchedValue = useSelector(state => state.user.searchedValue);
+
     const { value: allPapers, setValue: setAllPapers } = useInput([]);
 
-    const { getAllPapers, gettingAllPapers, searchTags } = useArticlesActions();
+    const { getAllPapers, gettingAllPapers, searchPaper } = useArticlesActions();
 
     const updatePapers = () => {
         getAllPapers()
+            .then(res => setAllPapers(res.data))
+            .catch(err => console.log(err))
+    }
+
+    const searchPapers = (key) => {
+        searchPaper({}, `?query=${key}`)
             .then(res => setAllPapers(res.data))
             .catch(err => console.log(err))
     }
@@ -28,7 +40,17 @@ export default function UserArticlesDataBase() {
         updatePapers()
     }, [])
 
+    useEffect(() => {
+        if (searchKeyword) searchPapers(searchKeyword)
+        else updatePapers()
+    }, [searchKeyword])
+    
+    useEffect(() => {
+        searchPapers(searchedValue)
+    }, [searchedValue]);
 
+
+        // redux , url update value when api call
     
     
     return (

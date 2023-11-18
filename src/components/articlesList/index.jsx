@@ -8,29 +8,24 @@ import downloadIcon from 'assets/icons/arrow/import/dark-color.svg'
 import CheckBoxV1 from 'components/global/checkbox/v1'
 import { useSelector } from 'react-redux'
 import { formatFileSize } from 'utils/mapper'
-import { useArticlesActions } from 'pages/user/articlesDataBase/hooks/useArticlesActions'
 import Preloader from 'components/global/preloaders'
 import useInput from 'hooks/useInputHandler'
-
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setSearchedValue } from 'store/userSlice'
+import { setNavSearchedValue } from 'store/userSlice'
 
 export default function ArticlesList({data, load}) { 
 
-    const articles = useSelector(state => state.user.articles);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { searchTags } = useArticlesActions();
+    const navSearchedValue = useSelector(state => state.user.navSearchedValue);
+    const searchedValue = useSelector(state => state.user.searchedValue);
 
-    // const dispatch = useDispatch();
-    // const [ openUploadModal, showUploadModal, closeUploadModal ] = useModal();
-
-    // const { value: fileData, setValue: setFileData } = useInput({});
-
-    // const search = () => {
-    //     searchTags({}, `?query=${debouncedTag}`).then(res => {
-    //         console.log("sssssssssssssssss", res);
-    //     }).catch(err => {
-    //         console.log("eeeeeeeeeeeeeeeeeeeeeeeee", err);
-    //     })
-    // }
+    const { value: searchKeyword, setValue: setSearchKeyword } = useInput('');
+    const { value: debouncedsearchKeyword, setValue: setDebouncedSearchKeyword } = useInput('');
 
     const downloadPaper = (paper, index) => {
         var link = document.createElement('a');
@@ -41,6 +36,36 @@ export default function ArticlesList({data, load}) {
         document.body.removeChild(link);
     }
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearchKeyword(searchKeyword);
+        }, 200); 
+    
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [searchKeyword])
+
+    useEffect(() => {
+        // inja update state
+        dispatch(setSearchedValue(debouncedsearchKeyword))
+        
+      }, [debouncedsearchKeyword]);
+
+    useEffect(() => {
+        if (navSearchedValue) {
+            setSearchKeyword('')
+        }
+    }, [navSearchedValue])
+
+    useEffect(() => {
+        if (searchKeyword) {
+            dispatch(setNavSearchedValue(null))
+            navigate(`../articles_database`)
+        }
+    }, [searchedValue]);
+
+
 
     return (
         <div className={cs(styles['container'])}>
@@ -48,7 +73,16 @@ export default function ArticlesList({data, load}) {
             <div className={cs(styles['header'])}>
                 <div className={cs(styles['row_1'])}>
                     <div className={cs(styles['tools_wrapper'])}>
-                        <div> <SearchBar height={'40px'} borderRadius={'12px'} placeholder={'نام فایل را جست و جو کنید'} fontSize={'14px'}/> </div>
+                        <div> 
+                            <SearchBar 
+                                height={'40px'} 
+                                borderRadius={'12px'} 
+                                placeholder={'نام فایل را جست و جو کنید'} 
+                                fontSize={'14px'}
+                                value={searchKeyword}
+                                setValue={setSearchKeyword}
+                            /> 
+                        </div>
                         <div className={cs(styles['filter_icon'])}> 
                             <img 
                                 src={filterIcon}
