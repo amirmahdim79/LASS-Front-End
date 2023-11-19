@@ -11,9 +11,9 @@ import { useEffect, useState } from 'react';
 import { useLabActions } from './hooks/useLabsActions';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { setPath, setMilestone, setCurrentMilestone, setPrevInd } from "store/labSlice/index"
+import { setPath, setMilestone, setCurrentMilestone, setPrevInd, setEvents } from "store/labSlice/index"
 import Preloader from 'components/global/preloaders';
-import text_preloader from 'assets/gifs/text_preloader.gif'
+import UserCalendar from 'components/calendar';
 
 
 export default function UserDashboard() {
@@ -26,6 +26,7 @@ export default function UserDashboard() {
     const path = useSelector(state => state.lab.Paths);
     const milestones = useSelector(state => state.lab.Milestones);
     const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
+    const events = useSelector(state => state.lab.Events);
 
     const tasks = [
         {
@@ -154,21 +155,21 @@ export default function UserDashboard() {
         },
     ]
 
-    const { getMyLabs } = useLabActions();
+    const { getMyLabs, getLabEvents } = useLabActions();
 
 
     useEffect(() => {
         getMyLabs().then(res => {
             dispatch(setPath(res.data.Paths[0]))
             dispatch(setMilestone(res.data.Paths[0].Milestones))
+            // 'all': 'true'
 
-            // for(let [i, milestone] of res.data.Paths[0].Milestones){
-            //     console.log(".........milestone", milestone);
-            //     if (milestone.status[0] === null) {
-            //         dispatch(setCurrentMilestone(milestone))
-            //       break;
-            //     }
-            // }
+            getLabEvents({}, `/${res.data.Paths[0].Lab}`)
+                .then(res => {
+                    dispatch(setEvents(res.data))
+                }).catch(err => {
+                    console.log("...........33333333333333333", err);
+                })
 
             for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
                     if (milestone.status[0] === null) {
@@ -182,12 +183,14 @@ export default function UserDashboard() {
         }).catch(err => {
             console.log("...........eeeeeoeeeeeeeeeee", err);
         })
+
     }, [])
 
 
     return (
         <div className={cs(styles['container'])}>
-            <div className={cs(styles['step_progress_container'])}>
+
+            {/* <div className={cs(styles['step_progress_container'])}>
                 {
                     path?.name
                         ? <h5> {text.t1.title} - {`[${path?.name}]`}</h5>
@@ -210,7 +213,9 @@ export default function UserDashboard() {
                     : <Preloader />
                 }
                
-            </div>
+            </div> */}
+
+            <UserCalendar events={events} />
 
             <div className={cs(styles['upcoming_activities_container'])}>
                 <div className={cs(styles['title'])}>

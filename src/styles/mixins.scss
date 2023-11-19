@@ -40,6 +40,12 @@
     font-family: 'pinar_semi_bold';
 }
 
+@mixin h4-text {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: 'pinar_semi_bold';
+}
+
 @mixin h5-text {
     font-size: 20px;
     font-weight: 600;

@@ -6,6 +6,7 @@ const initialState = {
     Milestones: null,
     Students: null,
     CurrentMilestone: null,
+    Events: null,
     prevId: '',
 }
 
@@ -28,7 +29,10 @@ export const labSlice = createSlice({
         setStudents: (state, action) => {
             state.Students = action.payload
         },
+        setEvents: (state, action) => {
+            state.Events = action.payload
+        },
     }
 })
 
-export const {  setMilestone, setCurrentMilestone, setPath, setStudents, setPrevInd } = labSlice.actions;
+export const {  setMilestone, setCurrentMilestone, setPath, setStudents, setPrevInd, setEvents } = labSlice.actions;

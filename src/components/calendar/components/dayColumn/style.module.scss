@@ -1,0 +1,141 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    // min-width: 100px;
+    // max-width: 150px;
+
+   
+    z-index: 2;
+    // min-width: 9vw;
+
+    // border-left: 1px solid $light-accent-100;
+    // background-color: bisque;
+    
+
+    .header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 8px;
+        padding: 5px;
+        color: $dark-shades-60;
+        border-bottom: 1px solid $light-accent-100;
+        // border-right: 1px solid red;
+        position: relative;
+
+        .day {
+            @include mixins.description;
+        }
+    
+        .date {
+            @include mixins.h4-text;
+            -webkit-text-stroke-width: 0.8px; 
+            -webkit-text-stroke-color: $light-accent-60;
+            paint-order: stroke fill; 
+        }
+
+        hr {
+            position: absolute;
+            top: 71.6px;
+            right: 0;
+            // left: -60px;
+            // width: 60px;
+            width: 20vw;
+            width: 100%;
+            border-bottom: 0.4px solid $light-accent-100;
+            border-bottom: 0.4px solid red;
+            border-top: none;
+        }
+
+    }
+
+    .body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+
+        .cell {
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            border-bottom: 1px solid $light-accent-100;
+            position: relative;
+            border-left: 1px solid $light-accent-100;
+        }
+
+        .time_container {
+            max-width: 20px;
+            min-width: 20px;
+            height: 100%;
+            z-index: 3;
+            position: absolute;
+            left: 0;
+            background-color: deepskyblue;
+        }
+
+        .time {
+            position: absolute;
+            left: -20px;
+            left: -10px;
+            // top: 70%;
+            max-width: 20px;
+            min-width: 20px;
+            max-width: 15px;
+            min-width: 15px;
+            // height: 40px;
+            z-index: 2;
+
+            background-color: chartreuse;
+            border-bottom: 1px solid $light-accent-100;
+            color: $dark-shades-60;
+            @include mixins.sub-description;
+
+            p {
+                position: absolute;
+                top: 80%;
+                right: 22px;
+                right: 16px;
+            }
+        }
+
+        .event {
+            position: absolute;
+            width: 80%;
+            height: 134px;
+            background-color: $main-color_100;
+            border-radius: 12px;
+            color: #ffffff;
+            @include mixins.description;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+
+            .today_flag {
+                width: 125%;
+                height: 3px;
+                background-color: $error-100;
+                position: absolute;
+                top: 15px;
+
+                .circle {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 999999px;
+                    background-color: $error-100;
+                    position: absolute;
+                    bottom: -4px;
+                    left: -4px;
+                }
+            }
+        }
+    }
+}
