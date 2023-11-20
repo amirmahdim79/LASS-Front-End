@@ -47,18 +47,19 @@
         position: relative;
         min-height: 430px;
         max-height: 430px;
-        // overflow-y: auto;
-        // overflow-x: hidden;
 
         // background-color: rgb(255, 197, 176);
+
+
 
         .header_wrapper {
             width: 100%;
             height: 80px;
-            // background-color: crimson;
+            // background-color: rgb(255, 251, 148);
             grid-area: 1 / 1 / 2 / 8;
             direction: ltr;
             display: grid;
+            position: relative;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
             grid-template-columns: 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;
             grid-template-columns: 14% 14.3% 14.3% 14.3% 14.3% 14.3% 14.3%;
@@ -72,6 +73,20 @@
             // flex-direction: row;
             // background-color: yellowgreen;
             // background-color: rgb(255, 198, 136);
+
+            .left_arrow {
+                position: absolute;
+                top: 15px;
+                left: -22px;
+                cursor: pointer;
+            }
+    
+            .right_arrow {
+                position: absolute;
+                top: 15px;
+                right: -22px;
+                cursor: pointer;
+            }
 
 
             .header_data {
@@ -120,6 +135,7 @@
                     width: 5vw;
                     border-bottom: 0.4px solid $light-accent-100;
                     border-top: none;
+                    margin-top: 0.5px;
                 }
             }
         }

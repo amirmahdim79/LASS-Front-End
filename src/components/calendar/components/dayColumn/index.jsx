@@ -4,22 +4,14 @@ import moment from 'moment';
 import 'moment/locale/fa';
 import { weekday } from 'utils/mapper';
 
-export default function Column({today, index, events}) {
+export default function Column({now, index, events}) {
 
-    const date = today.clone().weekday(index)._d.toLocaleDateString('fa-IR').split("/")[2]
+    const date = now.clone().weekday(index)._d.toLocaleDateString('fa-IR')
+    const today = moment();
 
-    console.log("date",date);
+    // console.log("dateeeeeeeee", date);
+    // console.log("now.clone().weekday(index)._d.toLocaleDateString('fa-IR')", now.clone().weekday(index)._d.toLocaleDateString('fa-IR'));
 
-
-    // events.map(e => {
-    //     console.log("eeeeeeeeee", e);
-    //     // console.log("e?.start",  e?.start);
-    //     // console.log("moment",  moment(e?.start));
-    //     // console.log("day",  moment(e?.start).day());
-    //     // console.log("date",  moment(e?.start).date());
-    //     console.log("dddd",  moment(e?.start)._d);
-    //     console.log("horrrrrrrrrrr",  moment(e?.start).minute());
-    // })
 
     return (
         <div className={cs(styles['container'])}>
@@ -56,15 +48,16 @@ export default function Column({today, index, events}) {
                                 className={cs(styles['event'])} 
                                 key={i} 
                                 style={{
-                                    ...(moment(e?.start)._d.toLocaleDateString('fa-IR').split("/")[2] !== date && { display: 'none'}),
+                                    ...(moment(e?.start)._d.toLocaleDateString('fa-IR') !== date && { display: 'none'}),
                                     ...(moment(e?.start).hour() !== 0 && { top: `${ (moment(e?.start).hour()*40)+(Math.ceil(moment(e?.start).minute()*0.6666)) }px`})
 
                                 }}
                             >
                                 {e?.name }
+                                {moment(e?.start).hour()}
 
                                 {
-                                    date === today._d.toLocaleDateString('fa-IR').split("/")[2] && 
+                                    date === today._d.toLocaleDateString('fa-IR') && 
                                         <div className={cs(styles['today_flag'])} >
                                             <div className={cs(styles['circle'])} >
 

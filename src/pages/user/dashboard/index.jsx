@@ -14,9 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import { setPath, setMilestone, setCurrentMilestone, setPrevInd, setEvents } from "store/labSlice/index"
 import Preloader from 'components/global/preloaders';
 import UserCalendar from 'components/calendar';
-
+import moment from 'moment';
+import 'moment/locale/fa';
+import { toEnDigit } from 'utils/mapper';
 
 export default function UserDashboard() {
+
+    moment.locale('fa');
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -27,6 +32,12 @@ export default function UserDashboard() {
     const milestones = useSelector(state => state.lab.Milestones);
     const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
     const events = useSelector(state => state.lab.Events);
+    const { value: now, setValue: setNow } = useInput(moment());
+
+    // let firstday = moment().month(1);
+    // console.log("firstday", firstday);
+
+
 
     const tasks = [
         {
@@ -157,14 +168,14 @@ export default function UserDashboard() {
 
     const { getMyLabs, getLabEvents } = useLabActions();
 
-
     useEffect(() => {
+
         getMyLabs().then(res => {
             dispatch(setPath(res.data.Paths[0]))
             dispatch(setMilestone(res.data.Paths[0].Milestones))
             // 'all': 'true'
 
-            getLabEvents({}, `/${res.data.Paths[0].Lab}`)
+            getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${res.data.Paths[0].Lab}`)
                 .then(res => {
                     dispatch(setEvents(res.data))
                 }).catch(err => {
@@ -184,7 +195,8 @@ export default function UserDashboard() {
             console.log("...........eeeeeoeeeeeeeeeee", err);
         })
 
-    }, [])
+    }, [now])
+
 
 
     return (
@@ -215,7 +227,7 @@ export default function UserDashboard() {
                
             </div> */}
 
-            <UserCalendar events={events} />
+            <UserCalendar events={events} date={now} setDate={setNow}/>
 
             <div className={cs(styles['upcoming_activities_container'])}>
                 <div className={cs(styles['title'])}>

@@ -14,6 +14,19 @@ export const formatFileSize = (bytes,decimalPoint) => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
+export const toEnDigit = (number) => {
+    let persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g]
+    if(typeof number === 'string')
+    {
+        for(let i=0; i<10; i++)
+        {
+        number = number.replace(persianNumbers[i], i);
+        }
+    }
+
+    return number
+}
+
 export const weekday = (dayNum) => {
     if (dayNum === 0) return 'شنبه'
     else if (dayNum === 1) return 'یکشنبه'
@@ -26,14 +39,7 @@ export const weekday = (dayNum) => {
 
 export const month = (monthNum) => {
 
-    let persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g]
-    if(typeof monthNum === 'string')
-    {
-        for(let i=0; i<10; i++)
-        {
-        monthNum = monthNum.replace(persianNumbers[i], i);
-        }
-    }
+    monthNum = toEnDigit(monthNum)
 
     if (monthNum == 1) return 'فروردین'
     else if (monthNum == 2) return 'اردیبهشت'

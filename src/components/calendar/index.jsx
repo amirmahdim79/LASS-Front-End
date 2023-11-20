@@ -9,6 +9,8 @@ import useInput from 'hooks/useInputHandler';
 import Column from './components/dayColumn';
 import { weekday } from 'utils/mapper';
 import { month } from 'utils/mapper';
+import { toEnDigit } from 'utils/mapper';
+import jaMoment from 'jalali-moment'
 
 
 
@@ -23,41 +25,70 @@ function HeaderCell({day, today}) {
     )
 }
 
-export default function UserCalendar({events}) {
-    moment.locale('fa');
-    // console.log("events", events);
+export default function UserCalendar({events, date, setDate}) {
 
-    // let today2 = new Date();
-    // let first2 = today2.getDate() - today2.getDay(); 
-    // let last = first2 + 6; 
+    const { value: num, setValue: setNum } = useInput(0);
 
-    // var firstday = new Date(today2.setDate(first2)).toUTCString();
-    // var lastday = new Date(today2.setDate(last)).toUTCString();
+    const goNextWeek = () => {
+        let value = num;
+        value += 1;
+        setNum(value);
+        setDate(moment(date).day(1*7))
+        // setDate(moment().day(value*7))
+    }
 
-    // console.log("today2", today2);
-    // console.log("firstday", firstday);
-    // console.log("lastday", lastday);
+    console.log("dateeeeeeeeee", date);
+    console.log("dateeeeeeeeee", date.format('l'));
+    console.log("getDate()", date.month());
 
-    // const today = moment();
-    // const localToday = today.locale('fa');
-    
-    // // let first = today.date() - today.day(); 
-    // // const from_date = today.startOf('week');
-    // // const to_date = today.endOf('week');
+    const goPrevWeek = () => {
+        let value = num;
+        value -= 1;
+        setNum(value);
+        setDate(moment(date).day(-1*7))
+        // setDate(moment().day(value*7))
+        // console.log("moment().day(10)", moment().week(7));
+    }
 
-    // // console.log("today", today);
-    // // console.log("first", first);
-    // // console.log("from_date", from_date);
-    // console.log("localToday", localToday);
+    const goNextMonth = () => {
+        let jalaliDate = toEnDigit(date._d.toLocaleDateString('fa-IR'));
+        let newJalaliDate = '';
+        let month = jalaliDate.split('/')[1];
+        if(month === '12') {
+            let year = jalaliDate.split('/')[0];
+            year = Number(year) + 1;
+            newJalaliDate = `${year}/01/01`
+
+        }else {
+            month = Number(month) + 1;
+            month = month >= '10' ? `${month}` : `0${month}`
+            newJalaliDate = `${jalaliDate.split('/')[0]}/${month}/01`
+        }
+        setDate(moment(jaMoment.from(newJalaliDate, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')))
+    }
+
+    const goPrevMonth = () => {
+        let jalaliDate = toEnDigit(date._d.toLocaleDateString('fa-IR'));
+        let newJalaliDate = '';
+        let month = jalaliDate.split('/')[1];
+        if(month === '1') {
+            let year = jalaliDate.split('/')[0];
+            year = Number(year) - 1;
+            newJalaliDate = `${year}/12/01`
+
+        }else {
+            month = Number(month) - 1;
+            month = month >= '10' ? `${month}` : `0${month}`
+            newJalaliDate = `${jalaliDate.split('/')[0]}/${month}/01`
+        }
+        setDate(moment(jaMoment.from(newJalaliDate, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')))
+    }
 
 
+    // let firstday = today.clone().weekday(0)._d.toLocaleDateString('fa-IR');
+    // let lastday = today.clone().weekday(6)._d.toLocaleDateString('fa-IR');
 
-    const today = moment();
-
-    let firstday = today.clone().weekday(0)._d.toLocaleDateString('fa-IR');
-    let lastday = today.clone().weekday(6)._d.toLocaleDateString('fa-IR');
-
-    console.log("today", today._d.toLocaleDateString('fa-IR'));
+    // console.log("today", today._d.toLocaleDateString('fa-IR'));
     // console.log("today._d", today._d);
     // console.log("today._d.toLocaleDateString('fa-IR')", today._d.toLocaleDateString('fa-IR'));
     // console.log("today", today);
@@ -70,27 +101,44 @@ export default function UserCalendar({events}) {
             <div className={cs(styles['header'])}>
                 <p> {text.title} </p>
                 <div> 
-                    <p> {month(today._d.toLocaleDateString('fa-IR').split("/")[1])} </p>
+                    <p> {month(date._d.toLocaleDateString('fa-IR').split("/")[1])} </p>
                     
                     <img
                         src={rightArrow}
                         alt='right arrow'
+                        onClick={() => goNextMonth()}
                     />
                     <img
                         src={leftArrow}
                         alt='left arrow'
+                        onClick={() => goPrevMonth()}
                     />
                 </div>
             </div>
             <div className={cs(styles['content'])}>
 
                 <div className={cs(styles['header_wrapper'])}>
+
+                    <img
+                        src={leftArrow}
+                        className={cs(styles['left_arrow'])}
+                        alt='left arrow'
+                        onClick={() => goPrevWeek()}
+                    />
+
+                    <img
+                        src={rightArrow}
+                        className={cs(styles['right_arrow'])}
+                        alt='right arrow'
+                        onClick={() => goNextWeek()}
+                    />
+
                     { Array.from(Array(7), (e, i) => {
                         return (
                             <div className={cs(styles['header_data'])} >
                                 <div className={cs(styles['header_border'])}/>
                                 <p className={cs(styles['day'])}> {weekday(i)} </p>
-                                <p className={cs(styles['date'])}> {today.clone().weekday(i)._d.toLocaleDateString('fa-IR').split("/")[2]} </p>
+                                <p className={cs(styles['date'])}> {date.clone().weekday(i)._d.toLocaleDateString('fa-IR').split("/")[2]} </p>
 
                                 {
                                     i === 0 &&  <hr className={cs(styles['header_line'])}/>
@@ -104,7 +152,7 @@ export default function UserCalendar({events}) {
                     { Array.from(Array(7), (e, i) => {
                         return (
                             <Column 
-                                today={today}
+                                now={date}
                                 events={events}
                                 key={i} 
                                 index={i}
