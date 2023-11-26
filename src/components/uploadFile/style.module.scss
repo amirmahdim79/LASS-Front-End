@@ -93,7 +93,7 @@
         }
 
         .tags_wrapper {
-            color: $main-color_100;
+            color: $main-color-100;
             @include mixins.sub-title;
             grid-area: 2 / 3 / span 2 / 4;
             display: flex;
@@ -140,7 +140,7 @@
 
 
             .progress_bar {
-                background-color: $main-color_100;
+                background-color: $main-color-100;
                 height: inherit;
                 transition: width  0.1s ease-in-out;
             }
@@ -220,7 +220,7 @@
     
                     .col_3_body {
                         @include mixins.sub-title;   
-                        color: $main-color_100;
+                        color: $main-color-100;
                         display: flex;
                         flex-direction: column;
                         row-gap: 10px;

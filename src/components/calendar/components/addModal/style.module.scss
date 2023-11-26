@@ -1,0 +1,399 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column !important;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 15px 20px 27px 20px;
+
+    // padding-left: 0px;
+
+    .inputs {
+        width: 100%;
+        padding: 20px 10px 7px 0;
+        display: flex;
+        flex-direction: column;
+        row-gap: 19px;
+        border-bottom: 1px solid $light-shades-100;
+
+        p {
+            @include mixins.description;
+            color: $light-shades-100;
+
+        }
+
+        .checkbox_wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            @include mixins.description;
+            color: $light-shades-100;
+    
+            .checkbox {
+                width: max-content;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                column-gap: 10px;
+            }
+        }
+
+
+    }
+
+    .time_warpper {
+        width: 100%;
+        padding: 17px 10px 7px 0;
+        display: flex;
+        align-items: flex-start;
+        column-gap: 27px;
+        border-bottom: 1px solid $light-shades-100;
+
+        .time_inputs{
+            width: 100%;
+            display: flex;
+            column-gap: 75px;
+            color: $light-shades-100;
+            
+
+            .time_input {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 6px;
+                position: relative;
+
+                .time {
+                    width: max-content;
+                    @include mixins.sub-description;
+                    direction: ltr;
+                    cursor: default;
+
+                    input {
+                        background-color: transparent;
+                        text-align: center;
+                    }
+
+                    input:focus {
+                        outline: none !important;
+                        border: none;
+                    }
+
+                    input:hover {
+                        cursor: pointer;
+                    }
+
+                    input::placeholder {
+                        color: $light-shades-100;
+                    }
+                }
+
+                
+                p:nth-child(1) {
+                    @include mixins.description;
+                    padding-bottom: 8px;
+                    cursor: default;
+                }
+                p:nth-child(2) {
+                    @include mixins.sub-description;
+                    cursor: pointer;
+                }
+            }
+
+            .datepicker_wrapper {
+                direction: ltr;
+                position: absolute;
+                top: 50px;
+                z-index: 2;
+
+                .datepicker {
+                    @include mixins.h6-text;
+                    @include mixins.description;
+                }
+            }
+        }
+    }
+
+    .repetition_inputs {
+        width: 100%;
+        padding: 10px 10px 7px 0;
+        color: $light-shades-100;
+        @include mixins.description;
+        position: relative;
+        border-bottom: 1px solid $light-shades-100;
+
+        .title {
+            width: max-content;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            column-gap: 5px;
+
+            span {
+                display: flex;
+                column-gap: 1px;
+            }
+        }
+
+        .checkboxes {
+            width: 97.5%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            // padding-bottom: 20px;
+            padding-top: 6px;
+            -webkit-animation-duration: .5s;
+            animation-duration: .5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-name: bounceInUp;
+            animation-name: bounceInUp;
+
+            .checkbox_wrapper {
+                border-bottom: 1px solid $light-shades-20;
+                padding-bottom: 10px;
+                padding-right: 10px;
+
+
+                .checkbox {
+                    width: max-content;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    column-gap: 10px;
+
+
+                    span {
+                        input {
+                            background-color: transparent;
+                            text-align: center;
+                            min-width: 12px;
+                            color: $main-color-100;
+                        }
+    
+                        input:focus {
+                            outline: none !important;
+                            border: none;
+                        }
+    
+                        input:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                    .date {
+                        display: flex;
+                        align-items: center;
+
+                        input {
+                            color: $light-shades-100;
+                            max-width: 20px;
+                            min-width: unset;
+                            width: unset;
+                        
+                        }
+                    }
+                }
+    
+                .checkbox:hover {
+                    cursor: default;
+                }
+                
+            }
+
+            .checkbox_wrapper:last-child {
+                border-bottom: none;            
+            }
+
+            .weekdays {
+                width: 100%;
+                display: flex;
+                column-gap: 12px;
+                padding: 10px 19px 0 0;
+                animation: slideDown .5s linear;
+                transition: .5s ease-in-out;
+
+                .weekday {
+                    width: 20px;
+                    height: 20px;
+                    border: 1px solid $light-shades-100;
+                    border-radius: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-start;
+                }
+
+                .weekday:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .interval_inputs {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+
+                p:nth-child(1) {
+                    color:$light-glass-100;
+                }
+            }
+
+        }
+
+    }
+
+    .users {
+        width: 100%;
+        width: 100%;
+        padding: 10px 10px 7px 0;
+        color: $light-shades-100;
+        @include mixins.description;
+        position: relative;
+
+        .title {
+            width: max-content;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            column-gap: 5px;
+        }
+
+        .users_list {
+            width: 100%;
+            position: relative;
+            padding-top: 12px;
+
+            .header {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                column-gap: 7px;
+
+                p {
+                    color: $light-glass-100;
+                    position: absolute;
+                    right: 0px;
+                    padding-right: 8px;
+                }
+            }
+
+            .users_name {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+                padding-top: 5px;
+
+                .username {
+                    width: max-content;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    column-gap: 10px;
+                    
+                    .data {
+                        width: max-content;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        column-gap: 5px;
+                        direction: rtl;
+                        @include mixins.sub-description;
+
+                        p:nth-child(1) {
+                            border-left: 1px solid $light-shades-100;
+                            padding-left: 5px;
+                            font-family: 'pinar_medium';
+
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    .btn_container {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 11px;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(startYposition);
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(endYposition);
+    }
+}
+
+@keyframes slideOutUp {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+  
+    to {
+      visibility: hidden;
+      transform: translate3d(0, -100%, 0);
+    }
+  }
+
+@keyframes slideDown2{
+    0%{
+    //   transform: translatey(-10px);
+    //   opacity: 0;
+      height: 50px;
+      overflow: hidden;
+
+    }
+    100%{
+        // opacity: 1;
+        // transform: translatey(0px);
+        height: 100%;
+        overflow: hidden;
+
+    }
+}
+
+
+@keyframes slideDown{
+    0%{
+    //   transform: translatey(-10px);
+    //   opacity: 0;
+      height: 0px;
+      overflow: hidden;
+
+    }
+    100%{
+        // opacity: 1;
+        // transform: translatey(0px);
+        height: 100%;
+        overflow: hidden;
+
+    }
+}
+
+
+@keyframes bounceInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+ 

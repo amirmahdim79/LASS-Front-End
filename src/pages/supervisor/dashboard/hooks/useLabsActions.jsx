@@ -1,3 +1,4 @@
+import { GetLabEventsAPI } from "api/events";
 import { EnrollUserAPI } from "api/labs";
 import { GetMyLabsAPI, CreateLabAPI } from "api/labs";
 import useAPI from "hooks/useAPI"
@@ -40,6 +41,16 @@ export const useLabActions = () => {
             
         },
     })
+
+    const { pending: gettingLabEvents, request: getLabEvents } = useAPI({
+        apiMethod: GetLabEventsAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+        },
+    })
     
     
     return {
@@ -51,5 +62,8 @@ export const useLabActions = () => {
 
         enrollUser,
         userEnrollment,
+
+        getLabEvents,
+        gettingLabEvents,
     }
 }

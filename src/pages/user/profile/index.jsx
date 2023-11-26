@@ -73,7 +73,7 @@ export default function Profile({}) {
                         <p>میزان پیشرفت در راه </p>
                         <img src={routingIcon} alt='route icon'/>
                     </div>
-                    <LinearProgressBar width={'100%'} height={'10px'} progress={40} color={colors['main-color_100']}/>
+                    <LinearProgressBar width={'100%'} height={'10px'} progress={40} color={colors['main-color-100']}/>
                 </div>
 
                 <div className={cs(styles['wrapper'] , styles['user_development_wrapper'])}>

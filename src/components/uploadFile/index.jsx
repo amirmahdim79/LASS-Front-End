@@ -291,14 +291,14 @@ export default function UploadFile({updatePapers}) {
 
                     <div className={cs(styles['btns_container'])}>
                         <Button
-                            color={colors['main-color_100']} 
+                            color={colors['main-color-100']} 
                             onClick={() => submitUpload()}
                             text={text.button_1} 
                             width={'355px'}
                             // disabled={ !state.email }
                         />
                         <Button
-                            color={colors['main-color_100']} 
+                            color={colors['main-color-100']} 
                             outlined={true}
                             onClick={() => cancelUpload()}
                             text={text.button_2} 

@@ -55,7 +55,7 @@ export default function AddUserModal({close}) {
                     
 
                     <Button
-                        color={colors['main-color_100']} 
+                        color={colors['main-color-100']} 
                         onClick={() => submit()}
                         text={text.button} 
                         disabled={ !state.email }

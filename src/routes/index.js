@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
             {
                 path: 'my_profile',
                 element: <Profile />,
-            }
+            },
             // a user see other user profile
         ]
     },
@@ -57,7 +57,7 @@ export const router = createBrowserRouter([
             {
                 path: 'user_profile/:id',
                 element: <Profile />,
-            }
+            },
         ]
     },
 ])

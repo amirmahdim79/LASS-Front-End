@@ -11,6 +11,7 @@ export default function TextAreaV1({
     errorMessage = '',
     fontSize = '20px' ,
     fontWeight = '400',
+    fontFamily = '',
     inputLabel = '' ,
     inputRef ,
     isValid = true ,
@@ -22,9 +23,10 @@ export default function TextAreaV1({
     showError = false,
     value ,
     width = '100%' ,
+    resizable = true,
 }) {
     return (
-        <div className={cs(styles['container'])}>
+        <div className={cs(styles['container'])} style={{width: `calc(${width} + 10px)`, ...(fontFamily ? {fontFamily: fontFamily} : {fontFamily: 'pinar_reg'}),}}>
                 {inputLabel && <label for={name} style={{fontWeight: fontWeight}}> {inputLabel} </label>}
 
                 <textarea 
@@ -38,7 +40,7 @@ export default function TextAreaV1({
                     placeholder={placeholder}
                     disabled={disabled}
                     ref={inputRef}
-                    style={{width:width, opacity:opacity, fontSize:fontSize, height:'100%'}}
+                    style={{width:width, opacity:opacity, fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight, height:'100%', ...(!resizable && {resize:'none'})}}
                 >
                     {value}
                 </textarea>

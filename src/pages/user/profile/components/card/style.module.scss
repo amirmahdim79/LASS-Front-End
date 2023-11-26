@@ -16,7 +16,7 @@
     row-gap: 5px;
 
     .value {
-        color: $main-color_100;
+        color: $main-color-100;
         @include mixins.h2-text;
         line-height: 30px;
     }

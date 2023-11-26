@@ -13,19 +13,22 @@ $dark-accent-30   : #CFCFC6;
 
 $light-shades-100 : #F5F5F0;
 $light-shades-80  : #D4D6D4;
-$light-shades-20  : #4A575C;
+$light-shades-20  : #707B7E;
 
 $dark-shades-100  : #1F2F37;
 $dark-shades-60   : #69767B;
 
+$light-glass-100  : #f5f5f0b1;
+
 $dark-glass-75    : #1f2f37bf;
 
 
-$main-color_100   : #0BAEDD;
+$main-color-100   : #0BAEDD;
 
 $error-100        : #FF0000;
 $error-60         : #F25B5B;
 
+$warning-100      : #FF9D0A;
 $warning-60       : #DEF461;
 
 $success-100      : #4ECC00;
@@ -33,28 +36,31 @@ $success-60       : #87D65B;
 
 
 :export {
-    light-accent-100: $light-accent-100;
-    light-accent-50: $light-accent-50;
-    light-accent-30: $light-accent-30;
-    light-accent-25: $light-accent-25;
-    light-accent-20: $light-accent-20;
+    light-accent-100    : $light-accent-100;
+    light-accent-50     : $light-accent-50;
+    light-accent-30     : $light-accent-30;
+    light-accent-25     : $light-accent-25;
+    light-accent-20     : $light-accent-20;
 
-    dark-accent-100: $dark-accent-100;
+    dark-accent-100     : $dark-accent-100;
 
-    light-shades-100: $light-shades-100;
-    light-shades-20: $light-shades-20;
+    light-shades-100    : $light-shades-100;
+    light-shades-20     : $light-shades-20;
 
-    dark-shades-100: $dark-shades-100;
-    dark-shades-60: $dark-shades-60;
+    dark-shades-100     : $dark-shades-100;
+    dark-shades-60      : $dark-shades-60;
 
-    main-color_100: $main-color_100;
+    light-glass-100     : $light-glass-100;
 
-    error-100: $error-100;
-    error-60: $error-60;
+    main-color-100      : $main-color-100;
 
-    warning-60: $warning-60;
+    error-100           : $error-100;
+    error-60            : $error-60;
 
-    success-100: $success-100;
-    success-60: $success-60;
+    warning-100         : $warning-100;
+    warning-60          : $warning-60;
+
+    success-100         : $success-100;
+    success-60          : $success-60;
 
 }

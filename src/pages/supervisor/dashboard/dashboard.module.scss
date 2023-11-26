@@ -17,15 +17,21 @@
         height: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
         column-gap: 35px;
+        row-gap: 35px;
+
+        .top_container {
+            width: 100%;
+            grid-area: 1 / 1 / 2 / 4;
+        }
 
         .right_container {
-            grid-area: 1 / 3 / span 2 / span 3;
+            grid-area: 2 / 3 / 4 / 4;
         }
 
         .left_container {
-            grid-area: 1 / 1 / span 2 / span 2;
+            grid-area: 2 / 1 / span 3 / span 2;
             display: flex;
             flex-direction: column;
             row-gap: 35px;

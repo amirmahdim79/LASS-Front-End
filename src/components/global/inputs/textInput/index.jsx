@@ -41,12 +41,17 @@ export default function TextInput({
                 className={cs(styles['input_container'])} 
                 style={{...(labelDirection === 'ltr' && {gridTemplateColumns: 'auto 1fr'})}}
             >
-                <div 
-                    className={cs(styles['label_container'])} 
-                    style={{...(labelDirection === 'ltr' && {gridArea:'unset'})}}
-                >
-                    <p className={cs(styles['label'])} style={{fontSize: fontSize, fontWeight: fontWeight}}> {inputLabel} </p>
-                </div>
+                {
+                    inputLabel && (
+                        <div 
+                            className={cs(styles['label_container'])} 
+                            style={{...(labelDirection === 'ltr' && {gridArea:'unset'})}}
+                        >
+                            <p className={cs(styles['label'])} style={{fontSize: fontSize, fontWeight: fontWeight}}> {inputLabel} </p>
+                        </div>
+                    )
+                }
+                
 
                 <div className={cs(styles['input'])} >
                     <input 

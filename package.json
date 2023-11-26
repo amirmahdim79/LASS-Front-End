@@ -22,7 +22,8 @@
     "react-toastify": "^9.1.3",
     "sass": "^1.69.0",
     "scss": "^0.2.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zaman": "^2.0.8"
   },
   "scripts": {
     "start": "react-scripts start",

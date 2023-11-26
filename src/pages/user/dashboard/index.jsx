@@ -11,12 +11,11 @@ import { useEffect, useState } from 'react';
 import { useLabActions } from './hooks/useLabsActions';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { setPath, setMilestone, setCurrentMilestone, setPrevInd, setEvents } from "store/labSlice/index"
+import { setPath, setMilestone, setCurrentMilestone, setPrevInd, setEvents, setLabId, setStudents } from "store/labSlice/index"
 import Preloader from 'components/global/preloaders';
-import UserCalendar from 'components/calendar';
+import Calendar from 'components/calendar';
 import moment from 'moment';
 import 'moment/locale/fa';
-import { toEnDigit } from 'utils/mapper';
 
 export default function UserDashboard() {
 
@@ -32,7 +31,12 @@ export default function UserDashboard() {
     const milestones = useSelector(state => state.lab.Milestones);
     const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
     const events = useSelector(state => state.lab.Events);
+    const labId = useSelector(state => state.lab.labId);
+
     const { value: now, setValue: setNow } = useInput(moment());
+
+
+
 
     // let firstday = moment().month(1);
     // console.log("firstday", firstday);
@@ -168,19 +172,27 @@ export default function UserDashboard() {
 
     const { getMyLabs, getLabEvents } = useLabActions();
 
+    const getEvents= () => {
+        getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
+        .then(res => {
+            dispatch(setEvents(res.data))
+        }).catch(err => {
+            console.log("...........33333333333333333", err);
+        })
+    }
+
+    
+
     useEffect(() => {
 
         getMyLabs().then(res => {
             dispatch(setPath(res.data.Paths[0]))
             dispatch(setMilestone(res.data.Paths[0].Milestones))
+            dispatch(setStudents(res.data.Students))
+            dispatch(setLabId(res.data._id))
             // 'all': 'true'
 
-            getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${res.data.Paths[0].Lab}`)
-                .then(res => {
-                    dispatch(setEvents(res.data))
-                }).catch(err => {
-                    console.log("...........33333333333333333", err);
-                })
+            getEvents()
 
             for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
                     if (milestone.status[0] === null) {
@@ -227,7 +239,7 @@ export default function UserDashboard() {
                
             </div> */}
 
-            <UserCalendar events={events} date={now} setDate={setNow}/>
+            <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
 
             <div className={cs(styles['upcoming_activities_container'])}>
                 <div className={cs(styles['title'])}>

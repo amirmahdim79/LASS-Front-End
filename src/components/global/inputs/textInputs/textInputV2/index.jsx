@@ -10,6 +10,7 @@ export default function TextInputV2({
     errorMessage = '',
     fontSize = '20px' ,
     fontWeight = '400',
+    fontFamily = '',
     height = '48px' ,
     inputLabel = '' ,
     inputRef ,
@@ -28,18 +29,24 @@ export default function TextInputV2({
         <div 
             className={cs(styles['container'])} 
             style={{
-                height: height, opacity: opacity,
+                height: height, opacity: opacity, width: `calc(${width} + 10px)`,
+                ...(fontFamily ? {fontFamily: fontFamily} : {fontFamily: 'pinar_reg'}),
                 ...((!isValid && showError) && {borderBottom:`1px solid ${colors['error-100']}`} )}}>
             <div 
                 className={cs(styles['input_container'])} 
                 style={{...(labelDirection === 'ltr' && {gridTemplateColumns: 'auto 1fr'})}}
             >
-                <div 
-                    className={cs(styles['label_container'])} 
-                    style={{...(labelDirection === 'ltr' && {gridArea:'unset'})}}
-                >
-                    <p className={cs(styles['label'])} style={{fontSize: fontSize, fontWeight: fontWeight}}> {inputLabel} </p>
-                </div>
+                {
+                    inputLabel && (
+                        <div 
+                            className={cs(styles['label_container'])} 
+                            style={{...(labelDirection === 'ltr' && {gridArea:'unset'})}}
+                        >
+                            <p className={cs(styles['label'])} style={{fontSize: fontSize, fontWeight: fontWeight}}> {inputLabel} </p>
+                        </div>
+                    )
+                }
+                
                 <input 
                     defaultValue={defaultValue}
                     dir={(type==='email'|| type==='number' || type==='password') ? 'ltr' : dir} 
@@ -48,7 +55,7 @@ export default function TextInputV2({
                     placeholder={placeholder}
                     ref={inputRef}
                     required={required}
-                    style={{width:width, height:height, fontSize:fontSize}}
+                    style={{width:width, height:height, fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight}}
                     type={type}
                     value={value} 
                 />

@@ -5,29 +5,33 @@ import moment from 'moment';
 import 'moment/locale/fa';
 import leftArrow from 'assets/icons/arrow/arrow-left-dark-color.svg'
 import rightArrow from 'assets/icons/arrow/arrow-right-dark-color.svg'
+import addIcon from 'assets/icons/essential/add/dark-color.svg'
 import useInput from 'hooks/useInputHandler';
 import Column from './components/dayColumn';
 import { weekday } from 'utils/mapper';
 import { month } from 'utils/mapper';
 import { toEnDigit } from 'utils/mapper';
 import jaMoment from 'jalali-moment'
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useModal } from 'hooks/useModal';
+import Modal from 'components/global/modal';
+import AddEventModal from './components/addModal';
 
 
+export default function Calendar({events, date, setDate, getEvents}) {
 
 
-function HeaderCell({day, today}) {
-
-    return (
-        <div className={cs(styles['headerCell'])}>
-            <p className={cs(styles['day'])}> {weekday(day)} </p>
-            <p className={cs(styles['date'])}> {today.clone().weekday(day)._d.toLocaleDateString('fa-IR').split("/")[2]} </p>
-        </div>
-    )
-}
-
-export default function UserCalendar({events, date, setDate}) {
+    const navigate = useNavigate();
 
     const { value: num, setValue: setNum } = useInput(0);
+    const { value: calendar, setValue: setCalendar } = useInput('');
+    const permissions = useSelector(state => state.user.permissions);
+
+    const [ openAddEventModal, showAddEventModal, closeAddEventModal ] = useModal();
+    const [ openCalendar, showCalendar, closeCalendar ] = useModal();
+
+
 
     const goNextWeek = () => {
         let value = num;
@@ -36,10 +40,6 @@ export default function UserCalendar({events, date, setDate}) {
         setDate(moment(date).day(1*7))
         // setDate(moment().day(value*7))
     }
-
-    console.log("dateeeeeeeeee", date);
-    console.log("dateeeeeeeeee", date.format('l'));
-    console.log("getDate()", date.month());
 
     const goPrevWeek = () => {
         let value = num;
@@ -84,6 +84,15 @@ export default function UserCalendar({events, date, setDate}) {
         setDate(moment(jaMoment.from(newJalaliDate, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')))
     }
 
+    const addEvent = () => {
+        showAddEventModal();
+    }
+
+    const closeEventsModal = () => {
+        if(calendar) setCalendar('')
+        else closeAddEventModal()
+    }
+
 
     // let firstday = today.clone().weekday(0)._d.toLocaleDateString('fa-IR');
     // let lastday = today.clone().weekday(6)._d.toLocaleDateString('fa-IR');
@@ -99,8 +108,35 @@ export default function UserCalendar({events, date, setDate}) {
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['header'])}>
-                <p> {text.title} </p>
-                <div> 
+                <div className={cs(styles['title_container'])}>
+                    <p> {text.title} </p>
+                    {
+                        ( localStorage.getItem('type') === 'supervisor' || permissions.includes('events') ) && 
+                            <div className={cs(styles['add_icon_container'])}>
+                                <img 
+                                    src={addIcon}
+                                    alt='add icon'
+                                    onClick={() => addEvent()}
+                                />
+
+                                <Modal
+                                    isOpen={openAddEventModal} 
+                                    close={closeEventsModal} 
+                                    content={
+                                        <div className={cs(styles['add_event_modal'])} style={{display: openAddEventModal ? 'block' : 'none'}} id='#users_modal'>
+                                            <AddEventModal 
+                                                close={closeAddEventModal} 
+                                                type={calendar}
+                                                setType={setCalendar}
+                                                getEvents={getEvents}
+                                            />
+                                        </div>
+                                    }
+                                />
+                            </div>
+                    }                
+                </div>
+                <div  className={cs(styles['month'])}> 
                     <p> {month(date._d.toLocaleDateString('fa-IR').split("/")[1])} </p>
                     
                     <img

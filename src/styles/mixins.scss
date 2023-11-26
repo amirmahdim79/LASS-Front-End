@@ -57,3 +57,22 @@
     font-weight: 600;
     font-family: 'pinar_semi_bold';
 }
+
+@mixin open-modal {
+    z-index: 3;
+    backdrop-filter: blur(2px);
+    position: absolute;
+    top: 14px;
+    right: 13px;
+    animation: opacity_1 0.3s;
+}
+
+
+@keyframes opacity_1 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+  }

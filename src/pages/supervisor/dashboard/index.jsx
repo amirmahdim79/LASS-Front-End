@@ -11,21 +11,31 @@ import { useEffect } from 'react'
 import { useLabActions } from './hooks/useLabsActions'
 import { useReducer } from 'react'
 import { reducer } from './reducers'
-import { setPath, setStudents } from "store/labSlice/index"
+import { setPath, setStudents, setEvents, setLabId } from "store/labSlice/index"
 import { useDispatch, useSelector } from 'react-redux'
 import UsersList from 'components/usersList'
 import LabSummary from 'components/labSummary'
 import OverdueTasks from 'components/overdueTasks'
 import EnrollmentRequests from 'components/global/enrollmentRequests'
+import useInput from 'hooks/useInputHandler'
+import moment from 'moment';
+import 'moment/locale/fa';
+import Calendar from 'components/calendar'
 
 
 
 export default function SupervisorDashboard() {
 
     const dispatchLab = useDispatch();
+    
+    const events = useSelector(state => state.lab.Events);
+    const path = useSelector(state => state.lab.Paths);
+
+
+    const { value: now, setValue: setNow } = useInput(moment());
 
     const [open, show, close] = useModal();
-    const { getMyLabs, createLabs } = useLabActions();
+    const { getMyLabs, createLabs, getLabEvents } = useLabActions();
     
     const initialState = {
         name: '',
@@ -51,27 +61,42 @@ export default function SupervisorDashboard() {
         close();
     }
 
-    console.log();
+    const getEvents = () => {
+        getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${path[0]?.Lab}`)
+            .then(res => {
+                dispatchLab(setEvents(res.data))
+            }).catch(err => {
+                console.log( err);
+            })
+    }
 
 
     useEffect(() => {
         getMyLabs({}, '?sups=true').then(res => {
-            console.log("rrrrrrrrrrrrr", res);
+            // console.log("rrrrrrrrrrrrr", res);
             dispatchLab(setPath(res.data.Paths))
             dispatchLab(setStudents(res.data.Students))
+            dispatchLab(setLabId(res.data._id))
         }).catch(err => {
             console.log("eeeeeeeeeeee", err);
         })
     }, [])
 
-
-
+    useEffect(() => {
+        if (path) {
+            getEvents()
+        }
+    }, [now, path])
 
 
 
     return (
         <div className={cs(styles['container'])} >
             <div className={cs(styles['boxes_container'])}>
+                <div className={cs(styles['top_container'])}>
+                    <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
+                </div>
+
                 <div className={cs(styles['right_container'])}>
                     <UsersList />
                 </div>
@@ -100,7 +125,7 @@ export default function SupervisorDashboard() {
 
                 <div className={cs(styles['button_container'])}>
                     <Button
-                        color={colors['main-color_100']} 
+                        color={colors['main-color-100']} 
                         onClick={() => openLabCreationModal()}
                         text={text.button} 
                         // disabled={!email || !password}
@@ -134,13 +159,13 @@ export default function SupervisorDashboard() {
 
                         <div className={cs(styles['buttons_container'])}>
                             <Button
-                                color={colors['main-color_100']} 
+                                color={colors['main-color-100']} 
                                 onClick={() => createLab()}
                                 text={text.button_1} 
                                 // disabled={!email || !password}
                             />
                             <Button
-                                color={colors['main-color_100']} 
+                                color={colors['main-color-100']} 
                                 onClick={() => cancel()}
                                 text={text.button_2} 
                                 outlined={true}

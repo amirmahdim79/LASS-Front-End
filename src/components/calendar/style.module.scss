@@ -12,7 +12,6 @@
 
     .header {
         width: 100%;
-        @include mixins.h5-text;
         color: $dark-shades-100;
         display: flex;
         flex-direction: row;
@@ -22,7 +21,41 @@
         padding: 0 40px 6px 18px;
         border-bottom: 1px solid $light-accent-100;
 
-        div {
+        .title_container {
+            @include mixins.h5-text;
+            display: flex;
+            align-items: center;
+            column-gap: 15px;
+
+            img:hover {
+                cursor: pointer;
+            }
+            
+            .add_icon_container {
+                position: relative;
+                width: 24px;
+                height: 24px;
+
+                .add_event_modal {
+                    width: 100%;
+                    min-width: 420px;
+                    max-width: 420px;
+                    height: max-content;
+                    min-height: 539px;
+                    // max-height: 539px;
+                    background-color: $dark-glass-75;
+                    border-radius: 12px;
+                    border-top-right-radius: 0px;
+                    // position: absolute;
+                    // top: 14px;
+                    // right: 13px;
+                    @include mixins.open-modal;
+                }
+            }
+            
+        }
+
+        .month {
             display: flex;
             column-gap: 15px;
             @include mixins.h4-text;
@@ -47,6 +80,7 @@
         position: relative;
         min-height: 430px;
         max-height: 430px;
+        z-index: 0;
 
         // background-color: rgb(255, 197, 176);
 
@@ -336,7 +370,7 @@
                 .event {
                     min-width: 145px;
                     max-width: 145px;
-                    background-color: $main-color_100;
+                    background-color: $main-color-100;
                     border-radius: 12px;
                     color: #ffffff;
                     @include mixins.description;

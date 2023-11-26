@@ -50,7 +50,7 @@ export default function Task() {
 
                             <div className={cs(styles['btn_container'])}>
                                 <Button
-                                    color={colors['main-color_100']} 
+                                    color={colors['main-color-100']} 
                                     // onClick={() => createLab()}
                                     text={constantText.btn} 
                                     // disabled={!email || !password}

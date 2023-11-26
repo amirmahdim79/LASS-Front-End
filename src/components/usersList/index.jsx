@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useModal } from 'hooks/useModal'
 import AddUserModal from 'pages/supervisor/dashboard/modals/addUserModal'
 import Preloader from 'components/global/preloaders'
+import Modal from 'components/global/modal'
 
 
 
@@ -43,13 +44,16 @@ export default function UsersList() {
                             alt='add icon'
                             onClick={() => openAddIcon()}
                         />
-                        <div 
-                            className={cs(styles['modal'])} style={{display: openAddUserModal ? 'block' : 'none'}} 
-                            onClick={() => closeUsers()}
+
+                        <Modal 
+                            isOpen={openAddUserModal} 
+                            close={closeUsers} 
+                            content={
+                                <div className={cs(styles['add_user_modal'])} style={{display: openAddUserModal ? 'block' : 'none'}} id='#users_modal'>
+                                    <AddUserModal close={closeUsers}/>
+                                </div>
+                            }
                         />
-                        <div className={cs(styles['add_user_modal'], styles['open_style'])} style={{display: openAddUserModal ? 'block' : 'none'}} id='#users_modal'>
-                            <AddUserModal close={closeUsers}/>
-                        </div>
 
                     </div>
                    

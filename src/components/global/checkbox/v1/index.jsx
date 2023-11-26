@@ -26,11 +26,6 @@ export default function CheckBoxV1({
                 }
             </span>
         </div>
-
-
-      
-
-
     )
 }
 

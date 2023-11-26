@@ -3,6 +3,7 @@ import { CONSTANTS } from "./constants";
 
 const initialState = {
     user: null,
+    permissions: [],
     searchedValue: '',
     navSearchedValue: null,
     isLoggedIn: false,
@@ -101,7 +102,10 @@ export const userSlice = createSlice({
         setNavSearchedValue: (state, action) => {
             state.navSearchedValue = action.payload
         },
+        setPermissions: (state, action) => {
+            state.permissions = action.payload
+        },
     }
 })
 
-export const { addUser, clearUser, setArticles, setSearchedValue, setNavSearchedValue } = userSlice.actions;
+export const { addUser, clearUser, setArticles, setSearchedValue, setNavSearchedValue, setPermissions } = userSlice.actions;
