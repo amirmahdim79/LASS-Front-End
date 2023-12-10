@@ -2,6 +2,7 @@ import useAPI from "hooks/useAPI"
 import useToast from "hooks/useToast";
 import { AuthCheckAPI, AuthCheckSupAPI } from "api/authCheck"
 import { useNavigate } from 'react-router-dom'
+import { GetMyLabsAPI } from "api/labs";
 
 export const useBaseActions = () => {
     const { showToast } = useToast();
@@ -31,6 +32,18 @@ export const useBaseActions = () => {
             showToast('لطفا دوباره وارد شوید', 'error');
         },
     })
+
+    
+    const { pending: gettingMyLabs, request: getMyLabs } = useAPI({
+        apiMethod: GetMyLabsAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+        },
+    })
+
     
     
     return {
@@ -38,6 +51,9 @@ export const useBaseActions = () => {
         checkingAuth,
 
         checkSupAuth,
-        checkingSupAuth
+        checkingSupAuth,
+
+        getMyLabs,
+        gettingMyLabs,
     }
 }

@@ -28,18 +28,20 @@ export default function Navbar({type}) {
 
 
     useEffect(() => {
-        dispatch(setNavSearchedValue(searchKey))
-        const keyDownHandler = event => {    
-          if (event.key === 'Enter') {
-            if (searchKey) navigate(`../user/articles_database/?search=${searchKey}`)
-            else navigate(`../user/articles_database`)
-          }
-        };
-        document.addEventListener('keydown', keyDownHandler);
-    
-        return () => {
-          document.removeEventListener('keydown', keyDownHandler);
-        };
+        if (searchKey) {
+            dispatch(setNavSearchedValue(searchKey))
+            const keyDownHandler = event => {    
+              if (event.key === 'Enter') {
+                if (searchKey) navigate(`../user/articles_database/?search=${searchKey}`)
+                else navigate(`../user/articles_database`)
+              }
+            };
+            document.addEventListener('keydown', keyDownHandler);
+        
+            return () => {
+              document.removeEventListener('keydown', keyDownHandler);
+            };
+        }
     }, [searchKey]);
 
 

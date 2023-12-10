@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { useBaseActions } from "./hooks/useBaseActions";
 import { addUser, setPermissions } from "store/userSlice/index"
+import { setStudents } from "store/labSlice";
 import Navbar from "components/global/navbar";
 import SideBar from "components/global/sidebar";
 
@@ -10,7 +11,7 @@ export default function Base({type}) {
         
     const dispatch = useDispatch();
 
-    const { checkAuth, checkSupAuth } = useBaseActions();
+    const { checkAuth, checkSupAuth, getMyLabs } = useBaseActions();
     const userType = localStorage.getItem('type');
 
     useEffect(() => {
@@ -20,6 +21,9 @@ export default function Base({type}) {
                     .then(res => {
                         dispatch(addUser(res.data))
                         dispatch(setPermissions(res.data?.permissions))
+                        getMyLabs()
+                            .then(res =>  dispatch(setStudents(res.data?.Students)))
+                            .catch(err => console.log(err))
                     })
                     .catch(err => { })
             }else if (userType === 'supervisor') {

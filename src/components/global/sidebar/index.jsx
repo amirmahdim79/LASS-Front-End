@@ -30,6 +30,12 @@ export default function SideBar({type}) {
         else navigate('/supervisor/dashboard')
     }
 
+    const onClickIcon2 = () => {
+        setIconNum('2')
+        if ( type === 'user' ) navigate('/user/forum')
+        else navigate('/supervisor/forum')
+    }
+
     const onClickIcon3 = () => {
         setIconNum('3')
         if ( type === 'user' ) navigate('/user/articles_database')
@@ -63,7 +69,7 @@ export default function SideBar({type}) {
             </div>
 
             <img className={cs(styles['icon'], iconNum === '1' && styles['active'])} src={dashboardLight} alt='dashboard icon' onClick={() => onClickIcon1()} />
-            <img className={cs(styles['icon'])} src={messagesLight} alt='messages icon' />
+            <img className={cs(styles['icon'], iconNum === '2' && styles['active'])} src={messagesLight} alt='messages icon'  onClick={() => onClickIcon2()} />
             <img className={cs(styles['icon'], iconNum === '3' && styles['active'])} src={folderLight} alt='folder icon' onClick={() => onClickIcon3()} />
 
             <div className={cs(styles['divider'])} />
