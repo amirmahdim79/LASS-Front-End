@@ -584,7 +584,7 @@ export default function Forum() {
 
                                     <div className={cs(styles['chatbox'])}>
                                         <div className={cs(styles['content'])}>
-                                            <textarea value={msg} onChange={(e) => setMsg(e.target.value)}/>
+                                            <textarea value={msg} onChange={(e) => setMsg(e.target.value)} placeholder={'محل وارد کردن پیام ...'}/>
                                         </div>
                                         <img 
                                             src={send}

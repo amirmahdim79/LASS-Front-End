@@ -8,6 +8,8 @@ import SupArticlesDataBase from "pages/supervisor/articlesDataBase";
 import Task from "pages/user/task";
 import Profile from "pages/user/profile";
 import Forum from "pages/common/forum";
+import SupSettings from "pages/supervisor/settings";
+import GroupSettings from "pages/supervisor/settings/groupSettings";
 
 export const router = createBrowserRouter([
     {
@@ -74,6 +76,14 @@ export const router = createBrowserRouter([
             {
                 path: 'forum/:id',
                 element: <Forum />,
+            },
+            {
+                path: 'settings',
+                element: <SupSettings />,
+            },
+            {
+                path: 'settings/group/:id',
+                element: <GroupSettings />,
             },
         ]
     },

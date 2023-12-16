@@ -25,10 +25,13 @@ export default function Base({type}) {
                             .then(res =>  dispatch(setStudents(res.data?.Students)))
                             .catch(err => console.log(err))
                     })
-                    .catch(err => { })
+                    .catch(err => console.log(err))
             }else if (userType === 'supervisor') {
                 checkSupAuth()
                     .then(res => {
+                        getMyLabs({}, '?sups=true')
+                            .then(res =>  dispatch(setStudents(res.data?.Students)))
+                            .catch(err => console.log(err))
                         dispatch(addUser(res.data))
                     })
                     .catch(err => {})

@@ -4,7 +4,7 @@ import avatar from 'assets/avatar.svg';
 import user1 from 'assets/user1.svg';
 import user3 from 'assets/user3.svg';
 import user4 from 'assets/user4.svg';
-import editIcon from 'assets/icons/contents/edit/dark-color.svg';
+import editIcon from 'assets/icons/contents/edit_1/dark-color.svg';
 import routingIcon from 'assets/icons/location/routing-2/dark-color.svg';
 import infoIcon from 'assets/icons/essential/info-circle/dark-color.svg';
 import activities from 'assets/user-activities.svg';

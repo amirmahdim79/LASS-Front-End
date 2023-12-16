@@ -42,6 +42,12 @@ export default function SideBar({type}) {
         else navigate('/supervisor/articles_database')
     }
 
+    const onClickIcon4 = () => {
+        setIconNum('4')
+        if ( type === 'user' ) navigate('/user/settings')
+        else navigate('/supervisor/settings')
+    }
+
     const onClickIcon7 = () => {
         // modal for logout
         setIconNum('7')
@@ -76,7 +82,7 @@ export default function SideBar({type}) {
 
             <img className={cs(styles['icon'])} src={clipboardLight} alt='clipboard icon' />
             <img className={cs(styles['icon'])} src={chartLight} alt='chart icon' />
-            <img className={cs(styles['icon'])} src={settingsLight} alt='settings icon' />
+            <img className={cs(styles['icon'])} src={settingsLight} alt='settings icon' onClick={() => onClickIcon4()}/>
             
             <div className={cs(styles['dark-mode'])}>
                 <img src={moonLight} alt='moon icon' className={cs(styles['dark-mode-icon'], iconNum === '7' && styles['active'])} onClick={() => onClickIcon7()}/>

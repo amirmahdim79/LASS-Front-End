@@ -69,10 +69,8 @@ export default function UsersList() {
                         alt='sort icon'
                     />
                 </div>
-
-                
-            
             </div>
+            
             <div className={cs(styles['students_list'])}>
                 {
                     !students
