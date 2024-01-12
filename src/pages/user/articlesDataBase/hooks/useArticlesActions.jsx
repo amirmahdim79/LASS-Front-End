@@ -2,6 +2,7 @@ import useAPI from "hooks/useAPI"
 import useToast from "hooks/useToast";
 import { GetAllPapersAPI, AddNewPaperAPI, SearchPaperAPI } from "api/files";
 import { SearchTagsAPI } from "api/tags";
+import { AddUserRecentFileAPI } from "api/users";
 
 export const useArticlesActions = () => {
     const { showToast } = useToast();
@@ -56,6 +57,18 @@ export const useArticlesActions = () => {
         },
     })
 
+    const { pending: addingRecentFile, request: addRecentFile } = useAPI({
+        apiMethod: AddUserRecentFileAPI,
+
+        successCallback: (res) => {
+
+        },
+        
+        failedCallback: (e) => {
+            console.log("sarcg paper errrrrrrrrrrrrrr", e);
+        },
+    })
+
     
 
     
@@ -73,5 +86,7 @@ export const useArticlesActions = () => {
         searchPaper,
         searchingPaper,
 
+        addRecentFile,
+        addingRecentFile,
     }
 }

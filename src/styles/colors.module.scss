@@ -1,22 +1,24 @@
 
 $light-accent-100 : #81A2B1;
-$light-accent-60  : #A6BCC5;
-$light-accent-50  : #BBCBD1;
-$light-accent-30  : #D2DCDD;
-$light-accent-25  : #81a2b140;
-$light-accent-20  : #DEE4E3;
-$light-accent-10  : #eaf0ef;
+$light-accent-60  : #A6BCC5; //#A6BCC5;
+$light-accent-50  : #BBCBD1; //#BBCBD1;
+$light-accent-30  : #D2DCDD; //#D2DCDD;
+$light-accent-25  : #81a2b140; 
+$light-accent-20  : #DEE4E3; //#DEE4E3;
+$light-accent-10  : #eaf0ef; //#eaf0ef;
 
 $dark-accent-100  : #777765;
-$dark-accent-30   : #CFCFC6;
-$dark-accent-20   : #DCDCD4;
+$dark-accent-50   : #77776580;
+$dark-accent-30   : #7777654d; //#CFCFC6;
+$dark-accent-20   : #77776533; //#DCDCD4;
 
 $light-shades-100 : #F5F5F0;
-$light-shades-80  : #D4D6D4;
-$light-shades-20  : #707B7E;
+$light-shades-80  : #f5f5f0cc; //#D4D6D4;
+$light-shades-20  : #f5f5f033; //#707B7E;
 
 $dark-shades-100  : #1F2F37;
-$dark-shades-60   : #69767B;
+$dark-shades-80   : #545a5d;
+$dark-shades-60   : #1f2f3799; //69767B;
 
 $light-glass-100  : #f5f5f0b1;
 
@@ -26,13 +28,13 @@ $dark-glass-75    : #1f2f37bf;
 $main-color-100   : #0BAEDD;
 
 $error-100        : #FF0000;
-$error-60         : #F25B5B;
+$error-60         : #ff000099; //#F25B5B;
 
 $warning-100      : #FF9D0A;
-$warning-60       : #DEF461;
+$warning-60       : #ff9d0a99; //#DEF461;
 
 $success-100      : #4ECC00;
-$success-60       : #87D65B;
+$success-60       : #4ecc0099; //#87D65B;
 
 
 :export {
@@ -43,6 +45,7 @@ $success-60       : #87D65B;
     light-accent-20     : $light-accent-20;
 
     dark-accent-100     : $dark-accent-100;
+    dark-accent-50      : $dark-accent-50;
     dark-accent-30      : $dark-accent-30;
     dark-accent-20      : $dark-accent-20;
 
@@ -50,6 +53,7 @@ $success-60       : #87D65B;
     light-shades-20     : $light-shades-20;
 
     dark-shades-100     : $dark-shades-100;
+    dark-shades-80      : $dark-shades-80;
     dark-shades-60      : $dark-shades-60;
 
     light-glass-100     : $light-glass-100;

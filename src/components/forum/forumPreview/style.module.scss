@@ -23,6 +23,7 @@
         display: flex;
         column-gap: 6px;
         align-items: center;
+        align-items: flex-start;
         justify-content: center;
         grid-area: 1 / 2 / 2 / 3;
         direction: rtl;
@@ -59,10 +60,11 @@
         grid-area: 2 / 2 / 3 / 3;
         direction: rtl;
 
-        span:first-of-type {
+        .desc_container {
             @include mixins.sub-description;
             border-left: 1px solid $dark-shades-100;
             padding-left: 3px;
+            display: flex;
         }
 
         span:nth-of-type(2) {
@@ -81,16 +83,12 @@
         justify-content: flex-start;
         position: relative;
 
-        .avatar {
-            width: 100%;
-            max-width: 50px;
-            min-width: 50px;
-            height: 100%;
-            max-height: 50px;
-            min-height: 50px;
-            border-radius: 100%;
-            position: absolute;
-        }
+
+        display: flex;
+        align-self: center;
+        align-items: center;
+        justify-content: flex-start;
+        position: relative;
     }
 }
 

@@ -9,6 +9,10 @@ const initialState = {
     Events: null,
     prevId: '',
     labId: '',
+    labGroups: [],
+    labForums: undefined,
+    forum: undefined,
+    labGroupNewName: undefined,
 }
 
 export const labSlice = createSlice({
@@ -30,13 +34,37 @@ export const labSlice = createSlice({
         setLabId: (state, action) => {
             state.labId = action.payload
         },
+        setLabGroups: (state, action) => {
+            state.labGroups = action.payload
+        },
+        setLabForums: (state, action) => {
+            state.labForums = action.payload
+        },
+        setForum: (state, action) => {
+            state.forum = action.payload
+        },
         setStudents: (state, action) => {
             state.Students = action.payload
         },
         setEvents: (state, action) => {
             state.Events = action.payload
         },
+        setNewName: (state, action) => {
+            state.labGroupNewName = action.payload
+        },
     }
 })
 
-export const {  setMilestone, setCurrentMilestone, setPath, setStudents, setPrevInd, setEvents, setLabId } = labSlice.actions;
+export const {  
+    setMilestone, 
+    setCurrentMilestone, 
+    setPath, 
+    setStudents, 
+    setPrevInd, 
+    setEvents, 
+    setLabId, 
+    setLabGroups,
+    setLabForums,
+    setForum,
+    setNewName,
+} = labSlice.actions;

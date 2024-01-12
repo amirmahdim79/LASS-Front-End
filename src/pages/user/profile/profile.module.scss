@@ -1,4 +1,5 @@
 @use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
 @import "styles/colors.module.scss";
 
 .container {
@@ -15,7 +16,7 @@
         height: 100%;
         background-color: $light-accent-20;
         border-radius: 12px;
-        padding: 10px 20px 15px 20px;
+        padding: 20px 20px 15px 20px;
         grid-area: 1 / 1 / 3 / 2;
         direction: rtl;
         display: flex;
@@ -44,6 +45,28 @@
                 column-gap: 3px;
                 @include mixins.h6-text;
 
+                .edit_icon_container {
+                    position: relative;
+                    width: 24px;
+                    height: 24px;
+    
+                    .edit_info_modal {
+                        width: 100%;
+                        min-width: 340px;
+                        max-width: 340px;
+                        height: max-content;
+                        min-height: 59px;
+                        // max-height: 539px;
+                        background-color: $dark-glass-75;
+                        border-radius: 12px;
+                        border-top-left-radius: 0px;
+                        // position: absolute;
+                        // top: 14px;
+                        // right: 13px;
+                        @include mixins.open-modal-from-left;
+                    }
+                }
+
                 .edit_icon {
                     width: 24px;
                     height: 24px;
@@ -60,13 +83,24 @@
                 }
  
             }
-        
+
+            .is_loading_name {
+                @include functions.skeletonLoadingStyles($height: 24px, $radius: 5px);
+            }
 
             .education_info {
                 @include mixins.sub-description;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+
+                .is_loading_type {
+                    @include functions.skeletonLoadingStyles(95px, 18px, 5px);
+                }
+
+                .is_loading_SID {
+                    @include functions.skeletonLoadingStyles(55px, 18px, 5px);
+                }
             }
         }
 
@@ -83,6 +117,14 @@
                     height: 20px;
                 }
             }
+
+            .is_loading_progress_title {
+                @include functions.skeletonLoadingStyles(120px, 20px, 5px);
+            }
+
+            .is_loading_progress_bar {
+                @include functions.skeletonLoadingStyles($height: 10px, $radius: 25px);
+            }
         }
 
         .user_development_wrapper {
@@ -93,6 +135,14 @@
                 grid-template-columns: 30% 30% 30%;
                 justify-content: space-between;
                 height: 80px;
+            }
+
+            .is_loading_dev_title {
+                @include functions.skeletonLoadingStyles(70px, 18px, 5px);
+            }
+
+            .is_loading_card {
+                @include functions.skeletonLoadingStyles($height: 88px, $radius: 12px);
             }
         }
 
@@ -111,7 +161,16 @@
 
                 .title {
                     @include mixins.description;
-                    padding-bottom: 5px;
+                    margin-bottom: 5px;
+                }
+
+                .is_loading_activity_title {
+                    @include functions.skeletonLoadingStyles(85px, 18px, 5px);
+                    margin-bottom: 5px;
+                }
+
+                .is_loading_activity_subtitle {
+                    @include functions.skeletonLoadingStyles(85px, 18px, 5px);
                 }
             }
 
@@ -123,7 +182,16 @@
                 @include mixins.sub-description;
 
                 p:nth-child(1) {
-                    padding-bottom: 5px;
+                    margin-bottom: 5px;
+                }
+
+                .is_loading_activity_title {
+                    @include functions.skeletonLoadingStyles(60px, 18px, 5px);
+                    margin-bottom: 5px;
+                }
+
+                .is_loading_activity_subtitle {
+                    @include functions.skeletonLoadingStyles(60px, 18px, 5px);
                 }
             }
         }
@@ -256,10 +324,7 @@
             }
 
         }
-    
-
     }
-
 }
 
 

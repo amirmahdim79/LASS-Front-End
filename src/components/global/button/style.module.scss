@@ -41,6 +41,10 @@
     position: relative; 
     overflow: hidden; 
     width: 100%;
+    font-family: 'pinar_reg';
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes ripple { 

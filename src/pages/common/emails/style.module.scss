@@ -1,0 +1,102 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 15px 140px 10px 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    column-gap: 30px;
+
+    .page_content {
+        width: 100%;
+    }
+
+    .email_sidebar {
+        width: 100%;
+        background-color: $dark-accent-20;
+        min-width: 300px;
+        max-width: 300px;
+        min-height: 716px;
+        max-height: 716px;
+        border-radius: 12px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 8px;
+        padding-top: 30px;
+
+        .sidebar_item {
+            width: 100%;
+            max-height: 50px;
+            min-height: 50px;
+            border-radius: 12px;
+            display: flex;
+            direction: rtl;
+            align-items: center;
+            column-gap: 8px;
+            padding: 12px 16px 14px;
+            @include mixins.h6-text;
+            color: $dark-shades-100;
+        }
+
+        .active {
+            background-color: $main-color-100;
+            color: $light-shades-100;
+        }
+
+        .sidebar_item:hover {
+            cursor: pointer;
+        }
+
+        .help_section {
+            width: 96%;
+            border-top: 1px solid $light-accent-100;
+            margin-top: 12px;
+            padding: 27px 10px 0 13px;
+            color: $dark-shades-100;
+
+            .header {
+                display: flex;
+                direction: rtl;
+                column-gap: 8px;
+                padding-bottom: 9px;
+                @include mixins.h6-text;
+            }
+
+            .help_text {
+                width: 100%;
+                @include mixins.sub-description;
+                direction: rtl;
+                display: flex;
+                flex-direction: column;
+                row-gap: 3px;
+
+                span {
+                    text-align: justify;
+                    line-height: 25px;
+                }
+
+                ul {
+                    padding-right: 10px;
+
+                    li {
+                        list-style: none;
+                    }
+                    
+                    li:before {
+                        content: "·";
+                        font-size: 30px;
+                        vertical-align: top;
+                        line-height: 25px;
+                    }
+                    
+                }
+            }
+
+        }
+    }
+
+}

@@ -13,7 +13,7 @@ import { useReducer } from 'react'
 import { reducer } from './reducers'
 import { setPath, setStudents, setEvents, setLabId } from "store/labSlice/index"
 import { useDispatch, useSelector } from 'react-redux'
-import UsersList from 'components/usersList'
+import { useNavigate } from 'react-router-dom';
 import LabSummary from 'components/labSummary'
 import OverdueTasks from 'components/overdueTasks'
 import EnrollmentRequests from 'components/global/enrollmentRequests'
@@ -21,15 +21,18 @@ import useInput from 'hooks/useInputHandler'
 import moment from 'moment';
 import 'moment/locale/fa';
 import Calendar from 'components/calendar'
+import UsersList from 'components/usersListG'
 
 
 
 export default function SupervisorDashboard() {
 
     const dispatchLab = useDispatch();
-    
+    const navigate = useNavigate();
+
     const events = useSelector(state => state.lab.Events);
     const path = useSelector(state => state.lab.Paths);
+    const students = useSelector(state => state.lab.Students);
 
 
     const { value: now, setValue: setNow } = useInput(moment());
@@ -88,6 +91,11 @@ export default function SupervisorDashboard() {
         }
     }, [now, path])
 
+    const openUserProfile = (uId) => {
+        navigate(`../user_profile/${uId}`)
+        // dispatch(addUser(res.data))
+    }
+
 
 
     return (
@@ -98,7 +106,17 @@ export default function SupervisorDashboard() {
                 </div>
 
                 <div className={cs(styles['right_container'])}>
-                    <UsersList />
+                    {/* <UsersList /> */}
+                    <UsersList
+                        students={students}
+                        width={'unset'}
+                        hasMoreInfo={true}
+                        moreInfo={'تاریخ تحویل نمونه'}
+                        userHasClickOption={true}
+                        userOnClickHandler={(uId) => openUserProfile(uId)}
+                        userDataMaxWidth={'14vw'}
+                    />
+
                 </div>
 
                 <div className={cs(styles['left_container'])}>

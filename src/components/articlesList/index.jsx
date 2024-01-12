@@ -16,7 +16,12 @@ import { useNavigate } from 'react-router-dom';
 import { setSearchedValue } from 'store/userSlice'
 import { setNavSearchedValue } from 'store/userSlice'
 
-export default function ArticlesList({data, load}) { 
+export default function ArticlesList({
+    data, 
+    load, 
+    userType='user', 
+    addRecentFile=() => {}
+}) { 
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -28,12 +33,15 @@ export default function ArticlesList({data, load}) {
     const { value: debouncedsearchKeyword, setValue: setDebouncedSearchKeyword } = useInput('');
 
     const downloadPaper = (paper, index) => {
+        addRecentFile(paper._id);
         var link = document.createElement('a');
         link.href = paper.url;
         link.download = paper.name;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+
+        
     }
 
     useEffect(() => {
@@ -61,7 +69,7 @@ export default function ArticlesList({data, load}) {
     useEffect(() => {
         if (searchKeyword) {
             dispatch(setNavSearchedValue(null))
-            navigate(`../articles_database`)
+            navigate(`../articles-database`)
         }
     }, [searchedValue]);
 

@@ -58,7 +58,7 @@
     font-family: 'pinar_semi_bold';
 }
 
-@mixin open-modal {
+@mixin open-modal-from-right {
     z-index: 3;
     backdrop-filter: blur(2px);
     position: absolute;
@@ -66,6 +66,33 @@
     right: 13px;
     animation: opacity_1 0.3s;
 }
+
+@mixin open-modal-from-left {
+    z-index: 3;
+    backdrop-filter: blur(2px);
+    position: absolute;
+    top: 14px;
+    left: 13px;
+    animation: opacity_1 0.3s;
+}
+
+@mixin shine {
+    @keyframes shine {
+        to {
+          background-position-x: -200%;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 @keyframes opacity_1 {
@@ -75,4 +102,23 @@
     to {
         opacity: 100;
     }
+}
+
+@keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+    
+    30%, 50%, 70% {
+      transform: translate3d(-2px, 0, 0);
+    }
+    40%, 60% {
+      transform: translate3d(2px, 0, 0);
   }
+}
+
+
+  

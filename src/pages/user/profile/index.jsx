@@ -18,19 +18,19 @@ import Card from './components/card';
 import { useParams } from 'react-router-dom';
 import useInput from 'hooks/useInputHandler';
 import { useEffect } from 'react';
+import { useModal } from 'hooks/useModal';
+import Modal from 'components/global/modal';
+import EditUserModal from './components/editUserModal';
 
 
 
-export default function Profile({}) {  
+export default function Profile({editable=false}) {  
 
     const params = useParams();
     const userInfo = useSelector(state => state.user.user);
 
-    const { value: edit, setValue: setEdit } = useInput(false);
+    const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
 
-    useEffect(() => {
-        if(params?.id === undefined) setEdit(true)
-    }, [params])
 
     const topUsers = [
         {
@@ -54,51 +54,95 @@ export default function Profile({}) {
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['user_data'])}>
-                <ProfileV1 profile={avatar} width={'17vw'} height={'17vw'}/>
+                <ProfileV1 profile={userInfo?.profilePicture} />
                 
                 <div className={cs(styles['wrapper'], styles['name_wrapper'])}>
-                    <div className={cs(styles['name'])}>
-                        {/* <p> {userInfo?.firstName} {userInfo?.lastName} </p> */}
-                        <p> امیرمهدی محمدیان </p>
-                        <img src={editIcon} alt='edit icon' className={cs(styles['edit_icon'], edit && styles['edit_mode'])}/>
+
+                    <div className={cs(styles['name'], !userInfo && styles['is_loading_name'])}>
+                        <p> {userInfo?.firstName} {userInfo?.lastName} </p>
+                        {
+                            userInfo && (
+                                <div className={cs(styles['edit_icon_container'])}>
+                                    <img 
+                                        src={editIcon} 
+                                        alt='edit icon' 
+                                        className={cs(styles['edit_icon'], editable && styles['edit_mode'])} 
+                                        onClick={() => showEditInfoModal()}
+                                    />
+                                    <Modal
+                                        isOpen={openEditInfoModal} 
+                                        close={closeEditInfoModal} 
+                                        content={
+                                            <div className={cs(styles['edit_info_modal'])} style={{display: openEditInfoModal ? 'block' : 'none'}} id='#users_modal'>
+                                                <EditUserModal 
+                                                    close={closeEditInfoModal} 
+                                                />
+                                            </div>
+                                        }
+                                    />
+                                </div>
+                            )
+                        }                        
+                        
                     </div>
+
                     <div className={cs(styles['education_info'])}>
-                        <p> دانشجوی کارشناسی </p>
-                        <p> 810197664 </p>
+                        {userInfo ? <p> دانشجوی کارشناسی </p> : <div className={cs(styles['is_loading_type'])}/>}
+                        {userInfo ? <p> 810197664 </p> : <div className={cs(styles['is_loading_SID'])}/>}
                     </div>
                 </div>
 
                 <div className={cs(styles['wrapper'] , styles['development_wrapper'])}>
-                    <div className={cs(styles['title'])}>
-                        <p>میزان پیشرفت در راه </p>
-                        <img src={routingIcon} alt='route icon'/>
+                    <div className={cs(userInfo ? styles['title'] : styles['is_loading_progress_title'])}>
+                        {userInfo && (
+                            <>
+                                <p>میزان پیشرفت در راه </p>
+                                <img src={routingIcon} alt='route icon'/>
+                            </>
+                        )}
                     </div>
-                    <LinearProgressBar width={'100%'} height={'10px'} progress={40} color={colors['main-color-100']}/>
+                    { userInfo && <LinearProgressBar width={'100%'} height={'10px'} progress={40} color={colors['main-color-100']}/> }
+                    { !userInfo && <div className={cs(styles['is_loading_progress_bar'])}/> }
                 </div>
 
                 <div className={cs(styles['wrapper'] , styles['user_development_wrapper'])}>
-                    <div className={cs(styles['title'])}>
-                        <p> توسعه دانشجو </p>
-                    </div>
+                    {userInfo ? <p> توسعه دانشجو </p> : <div className={cs(styles['is_loading_dev_title'])}/>}
+                    
                     <div className={cs(styles['cards'])}>
-                        <Card value={35} title={'سکه'}/>
-                        <Card value={17} title={'مقاله'}/>
-                        <Card value={8}  title={'استریک'}/>
+                        {userInfo 
+                            ? (
+                                <>
+                                    <Card value={35} title={'سکه'}/>
+                                    <Card value={17} title={'مقاله'}/>
+                                    <Card value={8}  title={'استریک'}/>
+                                </>
+                            ) : (
+                                <>
+                                    <div className={cs(styles['is_loading_card'])}/>
+                                    <div className={cs(styles['is_loading_card'])}/>
+                                    <div className={cs(styles['is_loading_card'])}/>
+                                </>
+                            )
+                        }
                     </div>
                 </div>
 
                 <div className={cs(styles['wrapper'] , styles['last_activity_wrapper'])}>
                     <div className={cs(styles['right_column'])}>
-                        <p className={cs(styles['title'])}> آخرین فعالیت‌ها </p>
-                        <p> تحویل نمونه اولیه </p>
-                        <p> تحویل گزارش کار </p>
-                        <p> مطالعه مقاله </p>
+                        {userInfo 
+                            ? <p className={cs(styles['title'])}> آخرین فعالیت‌ها </p>
+                            : <div className={cs(styles['is_loading_activity_title'])}/>
+                        }
+                        {userInfo ? <p> تحویل نمونه اولیه </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {userInfo ? <p> تحویل گزارش کار </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {userInfo ? <p> مطالعه مقاله </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }  
                     </div>
+
                     <div className={cs(styles['left_column'])}>
-                        <p> تاریخ </p>
-                        <p> 1402/08/29 </p>
-                        <p> 1402/08/29 </p>
-                        <p> 1402/08/29 </p>
+                        {userInfo ? <p> تاریخ </p> : <div className={cs(styles['is_loading_activity_title'])}/> }
+                        {userInfo ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {userInfo ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {userInfo ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
                     </div>
                 </div>
             </div>

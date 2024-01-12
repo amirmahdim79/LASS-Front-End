@@ -8,6 +8,7 @@ export default function Button({
     disabled = false,
     fontSize = '20px',
     fontWeight = 'normal',
+    fontFamily = 'pinar_reg',
     height = '48px',
     onClick = () => {},
     outlined = false,
@@ -39,7 +40,7 @@ export default function Button({
         <button 
             className={outlined ? cs(styles['btn_outlined']) : cs(styles['btn'])} 
             disabled={ load || disabled }
-            onClick={onClick}
+            onClick={() => onClick()}
             style={{
                 backgroundColor: outlined ? 'transparent' : ((load || disabled) ? `${color}33`  : color), 
                 border: outlined ? `1px solid ${color}` : 'none',
@@ -47,6 +48,7 @@ export default function Button({
                 cursor: !disabled && 'pointer',
                 fontSize: fontSize, 
                 fontWeight: fontWeight, 
+                fontFamily: fontFamily,
                 width: width, 
                 height: height
             }}

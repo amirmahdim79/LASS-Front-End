@@ -1,0 +1,64 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.emails_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    row-gap: 10px;
+
+    .header {
+        width: 100%;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        direction: rtl;
+
+        h5 {
+            @include mixins.h5-text;
+            color: $dark-shades-100;
+            text-align: right;
+        }
+
+        .icons_container {
+            width: max-content;
+            display: flex;
+            column-gap: 12px;
+        }
+
+        img {
+            width: 24px;
+            height: 24px;
+        }
+
+        img:hover {
+            cursor: pointer;
+        }
+    }
+
+    .emails {
+        width: 100%;
+        max-height: 677px;
+        min-height: 677px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        direction: rtl;
+        padding-left: 10px;
+
+        &::-webkit-scrollbar {
+            width: 7px;
+            background-color: #eeeeee;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background:  #3dbbff;
+            border-radius: 10px;
+        }
+    }
+
+}

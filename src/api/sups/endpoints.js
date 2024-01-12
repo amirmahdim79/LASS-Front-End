@@ -1,0 +1,1 @@
+export const SUPS_RECENT_FILES = '/api-lass/supervisor/recent'

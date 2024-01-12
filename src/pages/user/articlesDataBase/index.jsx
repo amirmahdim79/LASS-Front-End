@@ -4,14 +4,17 @@ import downloadIcon from 'assets/icons/contents/download/main-color.svg'
 import moreIcon from 'assets/icons/essential/more/dark-color.svg'
 import styles from './articlesDataBase.module.scss'
 import { text } from './constants'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ArticlesList from 'components/articlesList'
 import { useEffect } from 'react'
 import { useArticlesActions } from './hooks/useArticlesActions'
 import useInput from 'hooks/useInputHandler'
 import { useSearchParams } from 'react-router-dom';
+import { setArticles } from 'store/userSlice'
 
 export default function UserArticlesDataBase() { 
+
+    const dispatch = useDispatch();
 
     const [searchParams] = useSearchParams();
     const searchKeyword = searchParams.get('search');
@@ -22,7 +25,7 @@ export default function UserArticlesDataBase() {
 
     const { value: allPapers, setValue: setAllPapers } = useInput([]);
 
-    const { getAllPapers, gettingAllPapers, searchPaper } = useArticlesActions();
+    const { getAllPapers, gettingAllPapers, searchPaper, addRecentFile } = useArticlesActions();
 
     const updatePapers = () => {
         getAllPapers()
@@ -34,6 +37,16 @@ export default function UserArticlesDataBase() {
         searchPaper({}, `?query=${key}`)
             .then(res => setAllPapers(res.data))
             .catch(err => console.log(err))
+    }
+
+    const addRecentFiles = (id) => {
+        addRecentFile({File: id})
+            .then(res => {
+                console.log("---res.data",res.data);
+                dispatch(setArticles(res.data))
+            }).catch(err => {
+                console.log("eeeeeeeeeeee", err);
+            })
     }
 
     useEffect(() => {
@@ -52,6 +65,7 @@ export default function UserArticlesDataBase() {
 
         // redux , url update value when api call
     
+        console.log("articles", articles);
     
     return (
         <div className={cs(styles['container'])}>
@@ -61,16 +75,16 @@ export default function UserArticlesDataBase() {
                 </div>
 
                 <div className={cs(styles['all_articles'])}>
-                    <ArticlesList data={allPapers} load={gettingAllPapers}/>
+                    <ArticlesList data={allPapers} load={gettingAllPapers} userType={'user'} addRecentFile={addRecentFiles}/>
                 </div>
             </div>
             <div className={cs(styles['current_articles_container'])}>
                 <h6> {text.current_articles} </h6>
                 {
-                    articles && 
+                    articles[0] && 
                         <div className={cs(styles['articles'])}>
                             {
-                                articles.map((article, i) => 
+                                articles[0].map((article, i) => 
                                     <div className={cs(styles['article_wrapper'])} key={i}>
                                         <div className={cs(styles['icon_wrapper'])}>
                                             <img src={downloadIcon} alt='download icon'/>

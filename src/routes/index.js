@@ -10,6 +10,7 @@ import Profile from "pages/user/profile";
 import Forum from "pages/common/forum";
 import SupSettings from "pages/supervisor/settings";
 import GroupSettings from "pages/supervisor/settings/groupSettings";
+import Email from "pages/common/emails";
 
 export const router = createBrowserRouter([
     {
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
                 element: <UserDashboard />,
             },
             {
-                path: 'articles_database',
+                path: 'articles-database',
                 element: <UserArticlesDataBase />,
             },
             {
@@ -36,8 +37,8 @@ export const router = createBrowserRouter([
                 element: <Task />,
             },
             {
-                path: 'my_profile',
-                element: <Profile />,
+                path: 'my-profile',
+                element: <Profile editable={true}/>,
             },
             // a user see other user profile
             {
@@ -47,6 +48,22 @@ export const router = createBrowserRouter([
             {
                 path: 'forum/:id',
                 element: <Forum />,
+            },
+            {
+                path: 'new-email',
+                element: <Email />,
+            },
+            {
+                path: 'received-emails',
+                element: <Email />,
+            },
+            {
+                path: 'received-emails/:id',
+                element: <Email />,
+            },
+            {
+                path: 'email-settings',
+                element: <Email />,
             },
         ]
     },
@@ -62,7 +79,7 @@ export const router = createBrowserRouter([
                 element: <SupervisorDashboard />,  
             },
             {
-                path: 'articles_database',
+                path: 'articles-database',
                 element: <SupArticlesDataBase />,
             },
             {
@@ -84,6 +101,23 @@ export const router = createBrowserRouter([
             {
                 path: 'settings/group/:id',
                 element: <GroupSettings />,
+            },
+
+            {
+                path: 'new-email',
+                element: <Email />,
+            },
+            {
+                path: 'received-emails',
+                element: <Email />,
+            },
+            {
+                path: 'received-emails/:id',
+                element: <Email />,
+            },
+            {
+                path: 'email-settings',
+                element: <Email />,
             },
         ]
     },

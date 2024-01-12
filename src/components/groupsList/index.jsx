@@ -22,10 +22,16 @@ import addIcon from 'assets/icons/essential/add/dark-color.svg'
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
 import sortIcon from 'assets/icons/essential/sort/dark-color.svg'
 import editIcon from 'assets/icons/contents/edit_2/dark-color.svg';
+import UserAvatarCollage from 'components/global/usersAvatarCollage'
 
 export default function Groups() { 
 
     const navigate = useNavigate();
+
+    const labGroups = useSelector(state => state.lab.labGroups);
+
+    console.log("labGroups", labGroups);
+
 
 
     // const articles = useSelector(state => state.user.articles);
@@ -220,16 +226,16 @@ export default function Groups() {
                 
             </div>
             <div className={cs(styles['groups'])}>
-                { groups && groups.map((group, i) => 
+                { labGroups && labGroups.map((group, i) => 
                     <div className={cs(styles['group_container'])}>
                         <div className={cs(styles['groups_data'])}>
-                            <p> {group.type} </p>
-                            <div style={{minWidth: '95px', backgroundColor:'yellow'}}> . </div>
+                            <p> {group.name} </p>
+                            <UserAvatarCollage avatars={group.Users.map(u => u.avatar)} size={'25px'}/>
                         </div>
                         <img 
                             src={editIcon}
                             alt='edit icon'
-                            onClick={() => navigate(`./group/${group.id}`)}
+                            onClick={() => navigate(`./group/${group._id}`)}
                         />
                     </div>
                 )}

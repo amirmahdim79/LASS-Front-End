@@ -54,3 +54,10 @@ export const month = (monthNum) => {
     else if (monthNum == 11) return 'بهمن'
     else if (monthNum == 12) return 'اسفند'
 }
+
+export const getFirstLetters = (inputString) => {
+    const words = inputString.split(' ');
+    const firstLetters = words.map(word => word[0]);
+    return firstLetters.join(' ');
+}
+

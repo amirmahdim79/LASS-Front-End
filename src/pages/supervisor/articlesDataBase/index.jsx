@@ -4,19 +4,22 @@ import downloadIcon from 'assets/icons/contents/download/main-color.svg'
 import moreIcon from 'assets/icons/essential/more/dark-color.svg'
 import styles from './articlesDataBase.module.scss'
 import { text } from './constants'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ArticlesList from 'components/articlesList'
 import { useEffect } from 'react'
 import { useArticlesActions } from './hooks/useArticlesActions'
 import useInput from 'hooks/useInputHandler'
+import { setArticles } from 'store/userSlice'
 
 
 export default function SupArticlesDataBase() { 
 
+    const dispatch = useDispatch();
+
     const articles = useSelector(state => state.user.articles);
     const { value: allPapers, setValue: setAllPapers } = useInput([]);
 
-    const { getAllPapers, gettingAllPapers, searchTags } = useArticlesActions();
+    const { getAllPapers, gettingAllPapers, addRecentFile } = useArticlesActions();
 
     const updatePapers = () => {
         getAllPapers()
@@ -24,10 +27,20 @@ export default function SupArticlesDataBase() {
             .catch(err => console.log(err))
     }
 
+    const addRecentFiles = (id) => {
+        addRecentFile({File: id})
+            .then(res => {
+                dispatch(setArticles(res.data))
+            }).catch(err => {
+                console.log("eeeeeeeeeeee", err);
+            })
+    }
+
     useEffect(() => {
         updatePapers()
     }, [])
-
+    
+console.log("articles", articles);
 
     
     
@@ -39,7 +52,7 @@ export default function SupArticlesDataBase() {
                 </div>
 
                 <div className={cs(styles['all_articles'])}>
-                    <ArticlesList data={allPapers} load={gettingAllPapers}/>
+                    <ArticlesList data={allPapers} load={gettingAllPapers} userType={'supervisor'} addRecentFile={addRecentFiles}/>
                 </div>
             </div>
             <div className={cs(styles['current_articles_container'])}>

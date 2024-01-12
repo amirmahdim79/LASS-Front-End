@@ -3,6 +3,9 @@ import useToast from "hooks/useToast";
 import { AuthCheckAPI, AuthCheckSupAPI } from "api/authCheck"
 import { useNavigate } from 'react-router-dom'
 import { GetMyLabsAPI } from "api/labs";
+import { GetLabGroupsAPI } from "api/groups";
+import { GetLabForumsAPI } from "api/forum";
+import { GetOneForumDataAPI } from "api/forum";
 
 export const useBaseActions = () => {
     const { showToast } = useToast();
@@ -44,6 +47,36 @@ export const useBaseActions = () => {
         },
     })
 
+    const { pending: gettingLabGroups, request: getLabGroups } = useAPI({
+        apiMethod: GetLabGroupsAPI,
+
+        successCallback: (res) => {},
+        
+        failedCallback: (err) => {
+            console.log(err);
+        },
+    })
+
+    const { pending: gettingLabForums, request: getLabForums } = useAPI({
+        apiMethod: GetLabForumsAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+        },
+        initialLoading: true
+    })
+
+    const { pending: gettingOneForum, request: getOneForum } = useAPI({
+        apiMethod: GetOneForumDataAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+        },
+    })
     
     
     return {
@@ -55,5 +88,14 @@ export const useBaseActions = () => {
 
         getMyLabs,
         gettingMyLabs,
+
+        getLabGroups,
+        gettingLabGroups,
+
+        getLabForums,
+        gettingLabForums,
+
+        getOneForum,
+        gettingOneForum
     }
 }

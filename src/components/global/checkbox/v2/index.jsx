@@ -5,39 +5,25 @@ import icon from "assets/icons/checkmark/success.svg"
 
 
 export default function CheckBoxV2({
-    checked = false, 
     width = '20px', 
     height = '20px',
+    bgColor = 'transparent',
+    // border
     value,
     onClick,
+    name = 'name',
+    id = 'id',
 
 }) {
 
 
     return (
-        // <div 
-        //     className={cs(styles['container'])} 
-        //     style={{width: width, height: height, minWidth: width, minHeight: height, maxWidth: width, maxHeight: height}}
-        // >
-        //     <input type="checkbox" defaultChecked={checked} />
-        //     <span className={cs(styles['checkmark'])} style={{...(checked && {borderColor: colors['success-100']}) }}>
-        //         {
-        //             checked && 
-        //                 <img 
-        //                     src={icon}
-        //                     alt='icon'
-        //                 />
-        //         }
-        //     </span>
-        // </div>
-        // display: value ? 'block' : 'none',
-        // width: '0px', height: '0px'
         <div 
             className={cs(styles['container'])} 
             style={{width: width, height: height, minWidth: width, minHeight: height, maxWidth: width, maxHeight: height}}
         >
-            <input type="checkbox" defaultChecked={checked} value={value} />
-            <span className={cs(styles['checkmark'])} onClick={onClick}>
+            <input type="checkbox"  value={value} name={name} id={id}/>
+            <span className={cs(styles['checkmark'])} style={{backgroundColor: bgColor}} onClick={onClick}>
                 <div className={cs(styles['checkmark_value'])} style={{ ...(!value && {scale: 0})}}  />
             </span>
         </div>

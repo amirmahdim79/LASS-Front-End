@@ -1,0 +1,20 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+
+.container {
+    position: relative;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    // align-items: flex-start;
+    
+    .avatar {
+        position: absolute;
+        @include functions.avatarStyles(50px, 100%);
+    }
+
+    .empty_avatar {
+        @include functions.emptyAvatarStyles();
+        @include mixins.h6-text;
+    }
+}

@@ -1,0 +1,91 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    max-width: 340px;
+    min-width: 340px;
+    background-color: $dark-accent-20;
+    border-radius: 12px;
+    padding: 18px 18px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+
+    .header {
+        width: 100%;
+        direction: rtl;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: $dark-shades-100;
+        @include mixins.h6-text;
+        padding-left: 10px;
+    }
+
+    .content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+
+        .data_container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 85px 1fr;
+            column-gap: 10px;
+            align-items: start;
+
+            .icons {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                grid-area: 1 / 1 / 2 / 2;
+
+                img:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .user_data {
+                width: 100%;
+                display: flex;
+                align-items: flex-start;
+                column-gap: 10px;
+                direction: rtl;
+
+                .avatar {
+                    @include functions.avatarStyles(50px, 50%);
+                }
+    
+                .empty_avatar {
+                    @include functions.emptyAvatarStyles();
+                    @include mixins.h6-text;
+                }
+
+                .info {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    color: $dark-shades-100;
+
+                    .name {
+                        @include mixins.h6-text;
+                    }
+
+                    .degree {
+                        @include mixins.sub-description;
+                    }
+                }
+            }
+
+            .user_data:hover {
+                cursor: pointer;
+            }
+
+        }
+
+    }
+}

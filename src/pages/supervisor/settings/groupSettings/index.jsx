@@ -4,7 +4,7 @@ import delIcon from 'assets/icons/essential/trash/error-color.svg'
 import ways from 'assets/ways.svg'
 import styles from './style.module.scss'
 import { text } from './constants'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ArticlesList from 'components/articlesList'
 import { useEffect } from 'react'
 import useInput from 'hooks/useInputHandler'
@@ -27,23 +27,40 @@ import TextInputV2 from 'components/global/inputs/textInputs/textInputV2'
 import SearchBar from 'components/global/searchbar'
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
 import CheckBoxV1 from 'components/global/checkbox/v1'
+import CheckBoxV2 from 'components/global/checkbox/v2'
 import { useModal } from 'hooks/useModal'
 import Modal from 'components/global/modal'
 import DeleteModal from './components/deleteModal'
+import { useSettingsActions } from '../hooks/useSettingsActions'
+import { setNewName } from 'store/labSlice'
+import useToast from 'hooks/useToast'
 
 
 export default function GroupSettings() { 
 
     const params = useParams();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const [openDeleteModal, showDeleteModal, closeDeleteModal] = useModal();
+    const { 
+        deleteLabGroup, deletingLabGroup, 
+        updateLabGroup, updatingLabGroup 
+    } = useSettingsActions();
+
 
     const articles = useSelector(state => state.user.articles);
     const students = useSelector(state => state.lab.Students);
+    const labGroups = useSelector(state => state.lab.labGroups);
+    const groupName = useSelector(state => state.lab.labGroupNewName);
 
-    const { value: allPapers, setValue: setAllPapers } = useInput([]);
 
-    const navigate = useNavigate();
+    const { value: deleteType, setValue: setDeleteType } = useInput('');
+    const { value: groupData, setValue: setGroupData } = useInput({});
+    const { value: checkk, setValue: setCheckk } = useInput(false);
+    const { value: userId, setValue: setUserId } = useInput(undefined);
+
 
     const groups = [
         {
@@ -270,13 +287,48 @@ export default function GroupSettings() {
         
     ]
 
-    const cancelDelete = () => {
-        closeDeleteModal()
+    const onClickDeleteMember = (id) => {
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        showDeleteModal();
+        setUserId(id);
+        setDeleteType('user')
     }
 
-    const SubmitDelete = () => {
-        closeDeleteModal()
+    
+    const submitDelete = () => {
+        if (deleteType === 'group') {
+            deleteLabGroup({Group: params.id})
+                .then(() => {
+                    navigate('../settings')
+                })
+                .catch(err => console.log(err))
+                .finally(() => {
+                    closeDeleteModal();
+                })
+        }else {
+            updateLabGroup({ Group: params.id, User: userId})
+                .then((res) => {
+                    setGroupData(res.data);
+                    showToast('کاربر با موفقیت از گروه حذف شد', 'success');
+                })
+                .catch(() => showToast('مشکلی پیش اومده', 'error'))
+                .finally(() => {
+                    closeDeleteModal();
+                })
+        }  
     }
+
+
+    useEffect(() => {
+        if(labGroups.length) {
+            let data = labGroups.find(x => x._id === params.id);
+            setGroupData(data);
+        }
+    }, [labGroups])
+
+    useEffect(() => {
+        dispatch(setNewName(undefined))
+    }, [])
 
     return (
         <div className={cs(styles['container'])}>
@@ -286,17 +338,18 @@ export default function GroupSettings() {
                     <img 
                         src={delIcon}
                         alt='trash icon'
-                        onClick={() => showDeleteModal()}
+                        onClick={() => {showDeleteModal(); setDeleteType('group')}}
                     />
                 </div>
                 <div className={cs(styles['data_container'])}>
                     <TextInputV2 
                         fontFamily={'pinar_reg'}
-                        // onChange={} 
-                        // placeholder={''}
-                        value={groups[params.id].type}
+                        onChange={(e) => dispatch(setNewName(e.target.value))}
+                        placeholder={groupData?.name}
+                        value={groupName ?? groupName}
                         width={'255px'}
                         dir={'rtl'}
+                        opacity={'0.7'}
                     />
 
                     <div className={cs(styles['users_container'])}>
@@ -325,7 +378,7 @@ export default function GroupSettings() {
                         </div>
                         <div className={cs(styles['table_body'])}>
                             <div className={cs(styles['col_1'])}>
-                                <CheckBoxV1 checked={false}/>
+                                <CheckBoxV2 checked={false} bgColor={colors['light-accent-20']}/>
                                 <p> {text.header_1} </p>
                             </div>
                             <div className={cs(styles['col_2'])}>
@@ -335,7 +388,11 @@ export default function GroupSettings() {
                                 {users.map((user, i) => 
                                     <div key={i} className={cs(styles['row'])} >
                                         <div className={cs(styles['name_wrapper'])}>
-                                            <CheckBoxV1 checked={user.checked}/>
+                                            <CheckBoxV2 
+                                                value={checkk} 
+                                                onClick={() => setCheckk(!checkk)}
+                                                bgColor={colors['light-accent-20']}
+                                            />
                                             <div 
                                                 style={{backgroundImage: `url(${avatar})`}} 
                                                 className={cs(styles['avatar'])}
@@ -357,11 +414,15 @@ export default function GroupSettings() {
                 title={'اعضای فعلی'}
                 btnText={'ذخیره تغییرات گروه'}
                 btnColor={colors['dark-shades-100']}
-                students={groups[params.id].users}
+                students={groupData.Users}
                 canDeleteMember={true}
                 hasSubmitBtn={true}
                 btnDisabled={false}
-                btnLoad={false}
+                btnLoad={updatingLabGroup}
+                submitHandler={updateLabGroup}
+                deleteOnClickHandler={onClickDeleteMember}
+                userHasClickOption={true}
+                userOnClickHandler={(uId) => navigate(`../user_profile/${uId}`)}
             />
 
             <Modal
@@ -370,8 +431,10 @@ export default function GroupSettings() {
                 content={
                     <div className={cs(styles['delete_modal'])} style={{display: openDeleteModal ? 'block' : 'none'}} >
                         <DeleteModal
-                            onCancel={cancelDelete}
-                            onSubmit={SubmitDelete}
+                            onCancel={closeDeleteModal}
+                            onSubmit={submitDelete}
+                            submitLoad={deleteType === 'group' ? deletingLabGroup : updatingLabGroup}
+                            title={deleteType === 'group' ? 'آیا از حذف گروه مطمئینید؟' : 'آیا از حذف کاربر مطمئنید؟'}
                         />
                     </div>
                 }

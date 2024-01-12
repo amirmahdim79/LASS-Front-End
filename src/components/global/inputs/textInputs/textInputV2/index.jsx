@@ -55,7 +55,7 @@ export default function TextInputV2({
                     placeholder={placeholder}
                     ref={inputRef}
                     required={required}
-                    style={{width:width, height:height, fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight}}
+                    style={{width:width, height: 'max-content', fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight}}
                     type={type}
                     value={value} 
                 />
