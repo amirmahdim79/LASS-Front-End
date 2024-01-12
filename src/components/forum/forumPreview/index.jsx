@@ -17,9 +17,10 @@ export default function ForumPreview({data, onClick}) {
 
     const { value: unreadMsgs, setValue: setUnreadMsgs } = useInput(0);
 
+
     useEffect(() => {
-        if (data.MessagesStatus) {
-            const index = data.Messages.findIndex(msg => msg._id === data.MessagesStatus[userInfo._id].lastMessageSeen)
+        if (data.MessagesStatus && userInfo) {
+            const index = data.Messages.findIndex(msg => msg._id ===  data.MessagesStatus[userInfo._id]?.lastMessageSeen)
             setUnreadMsgs(data.Messages.length -1 - index)
         }
     }, [data])

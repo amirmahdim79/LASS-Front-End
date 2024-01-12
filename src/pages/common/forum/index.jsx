@@ -268,9 +268,12 @@ export default function Forum() {
                     )
             }
 
-            { (params.id && forum && permissions.includes('forums')) 
-                ? <PresenceList updatePresenceList={updatePresenceList} setMsg={setMsg}/> 
-                : <div className={cs(styles['is_loading_presence_list'])}/> 
+            { (permissions.includes('forums') && params.id) && (
+                forum
+                    ? <PresenceList updatePresenceList={updatePresenceList} setMsg={setMsg}/> 
+                    : <div className={cs(styles['is_loading_presence_list'])}/> 
+            )
+                
             }           
         </div>
     )
