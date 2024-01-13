@@ -7,7 +7,7 @@ import UploadPreloader from 'components/global/button/preloaders'
 
 
 
-export default function ProfileV1({profile}) {  
+export default function ProfileV1({profile, loading, editable}) {  
 
     const {uploading , uploadFile } = useUpload(2000000)
 
@@ -17,15 +17,14 @@ export default function ProfileV1({profile}) {
         // input.value = '';
     }
 
-
     return (
         <div className={cs(styles['container'])} >
             {/* <img src={profile} alt='avatar' className={cs(styles['avatar'])}/> */}
 
             {
-                profile 
-                    ? <div style={{backgroundImage:  `url(${profile})`}}  className={cs(styles['avatar'])}/>
-                    : <div className={cs(styles['is_loading_avatar'])} />
+                loading 
+                    ? <div className={cs(styles['is_loading_avatar'])} />
+                    : <div style={{backgroundImage:  `url(${profile})`}}  className={cs(styles['avatar'])}/>
             }
 
             {
@@ -36,7 +35,7 @@ export default function ProfileV1({profile}) {
                             
                         </div>
                     ) : ( 
-                        profile && (
+                        (profile && editable) && (
                             <div className={cs(styles['circle_container'])}>
                                 <div className={cs(styles['circle'])}>
                                     <img src={cameraIcon} alt='camera icon' />     

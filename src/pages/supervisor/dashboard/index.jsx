@@ -40,7 +40,7 @@ export default function SupervisorDashboard() {
     const { value: now, setValue: setNow } = useInput(moment());
 
     const [open, show, close] = useModal();
-    const { getMyLabs, createLabs, getLabEvents } = useLabActions();
+    const { getMyLabs, createLabs, getLabEvents, getLabStudentInfo } = useLabActions();
     
     const initialState = {
         name: '',
@@ -96,9 +96,11 @@ export default function SupervisorDashboard() {
     // }, [now, path])
 
     const openUserProfile = (uId) => {
+        console.log("iddddddddd", uId);
         navigate(`../user_profile/${uId}`)
         // dispatch(addUser(res.data))
     }
+
 
 
 

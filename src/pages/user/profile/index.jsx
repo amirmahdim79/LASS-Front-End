@@ -21,15 +21,38 @@ import { useEffect } from 'react';
 import { useModal } from 'hooks/useModal';
 import Modal from 'components/global/modal';
 import EditUserModal from './components/editUserModal';
-
+import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions';
 
 
 export default function Profile({editable=false}) {  
 
     const params = useParams();
     const userInfo = useSelector(state => state.user.user);
+    const labId = useSelector(state => state.lab.labId);
 
     const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
+    const { getLabStudentInfo } = useLabActions();
+    const { value: userData, setValue: setUserData } = useInput({});
+
+    const getUserInfo = () => {
+        if (labId) {
+            getLabStudentInfo({}, `?lab=${labId}&id=${params.id}`)
+                .then(res => {
+                    setUserData(res.data)
+                })
+                .catch(err => {
+                    console.log( err);
+                })
+        }
+    }
+
+
+    useEffect(() => {
+        if (!editable) {
+            getUserInfo();
+        }
+    }, [labId])
+
 
 
     const topUsers = [
@@ -54,14 +77,18 @@ export default function Profile({editable=false}) {
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['user_data'])}>
-                <ProfileV1 profile={userInfo?.profilePicture} />
+                <ProfileV1 
+                    profile={editable ? userInfo?.profilePicture : userData?.profilePicture} 
+                    loading={(editable ? userInfo : userData) ? false : true}
+                    editable={editable}
+                />
                 
                 <div className={cs(styles['wrapper'], styles['name_wrapper'])}>
 
-                    <div className={cs(styles['name'], !userInfo && styles['is_loading_name'])}>
-                        <p> {userInfo?.firstName} {userInfo?.lastName} </p>
+                    <div className={cs(styles['name'], (editable ? !userInfo : !userData) && styles['is_loading_name'])}>
+                        <p> {editable ? userInfo?.firstName : userData?.firstName} {editable ? userInfo?.lastName : userData?.lastName} </p>
                         {
-                            userInfo && (
+                            (editable && userInfo) && (
                                 <div className={cs(styles['edit_icon_container'])}>
                                     <img 
                                         src={editIcon} 
@@ -87,34 +114,34 @@ export default function Profile({editable=false}) {
                     </div>
 
                     <div className={cs(styles['education_info'])}>
-                        {userInfo ? <p> دانشجوی کارشناسی </p> : <div className={cs(styles['is_loading_type'])}/>}
-                        {userInfo ? <p> 810197664 </p> : <div className={cs(styles['is_loading_SID'])}/>}
+                        {userInfo || userData ? <p> دانشجوی کارشناسی </p> : <div className={cs(styles['is_loading_type'])}/>}
+                        {userInfo || userData ? <p> 810197664 </p> : <div className={cs(styles['is_loading_SID'])}/>}
                     </div>
                 </div>
 
                 <div className={cs(styles['wrapper'] , styles['development_wrapper'])}>
-                    <div className={cs(userInfo ? styles['title'] : styles['is_loading_progress_title'])}>
-                        {userInfo && (
+                    <div className={cs((userInfo || userData) ? styles['title'] : styles['is_loading_progress_title'])}>
+                        {(userInfo || userData) && (
                             <>
                                 <p>میزان پیشرفت در راه </p>
                                 <img src={routingIcon} alt='route icon'/>
                             </>
                         )}
                     </div>
-                    { userInfo && <LinearProgressBar width={'100%'} height={'10px'} progress={40} color={colors['main-color-100']}/> }
-                    { !userInfo && <div className={cs(styles['is_loading_progress_bar'])}/> }
+                    { (userInfo || userData) && <LinearProgressBar width={'100%'} height={'10px'} progress={40} color={colors['main-color-100']}/> }
+                    { !(userInfo || userData) && <div className={cs(styles['is_loading_progress_bar'])}/> }
                 </div>
 
                 <div className={cs(styles['wrapper'] , styles['user_development_wrapper'])}>
-                    {userInfo ? <p> توسعه دانشجو </p> : <div className={cs(styles['is_loading_dev_title'])}/>}
+                    {(userInfo || userData) ? <p> توسعه دانشجو </p> : <div className={cs(styles['is_loading_dev_title'])}/>}
                     
                     <div className={cs(styles['cards'])}>
-                        {userInfo 
+                        {(userInfo || userData) 
                             ? (
                                 <>
-                                    <Card value={35} title={'سکه'}/>
-                                    <Card value={17} title={'مقاله'}/>
-                                    <Card value={8}  title={'استریک'}/>
+                                    <Card type={'smarties'} value={editable ? userInfo?.smarties : userData?.smarties}/>
+                                    <Card type={'sand'}  value={editable ? userInfo?.sand : userData?.sand}/>
+                                    <Card type={'streak'}  value={editable ? userInfo?.streak : userData?.streak}/>
                                 </>
                             ) : (
                                 <>
@@ -129,20 +156,20 @@ export default function Profile({editable=false}) {
 
                 <div className={cs(styles['wrapper'] , styles['last_activity_wrapper'])}>
                     <div className={cs(styles['right_column'])}>
-                        {userInfo 
+                        {(userInfo || userData) 
                             ? <p className={cs(styles['title'])}> آخرین فعالیت‌ها </p>
                             : <div className={cs(styles['is_loading_activity_title'])}/>
                         }
-                        {userInfo ? <p> تحویل نمونه اولیه </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {userInfo ? <p> تحویل گزارش کار </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {userInfo ? <p> مطالعه مقاله </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }  
+                        {(userInfo || userData) ? <p> تحویل نمونه اولیه </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(userInfo || userData) ? <p> تحویل گزارش کار </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(userInfo || userData) ? <p> مطالعه مقاله </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }  
                     </div>
 
                     <div className={cs(styles['left_column'])}>
-                        {userInfo ? <p> تاریخ </p> : <div className={cs(styles['is_loading_activity_title'])}/> }
-                        {userInfo ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {userInfo ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {userInfo ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(userInfo || userData) ? <p> تاریخ </p> : <div className={cs(styles['is_loading_activity_title'])}/> }
+                        {(userInfo || userData) ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(userInfo || userData) ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(userInfo || userData) ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
                     </div>
                 </div>
             </div>

@@ -169,7 +169,7 @@ export default function UsersList({
             <div className={cs(styles['users_list'])} style={{rowGap: listItemSpacing}}>
                 {
                     !students 
-                        ? <Preloader/>
+                        ? <div className={cs(styles['loader_container'])}> <Preloader/> </div>
                         : (students && students.map((s, i) => 
                                 <div 
                                     className={cs(styles['user_data_container'])}
