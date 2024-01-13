@@ -51,28 +51,43 @@ export default function Column({now, index, events}) {
 
                         }
                         return (
-                            <div 
-                                className={cs(styles['event'])} 
-                                key={i} 
-                                style={{
-                                    ...(moment(e?.start)._d.toLocaleDateString('fa-IR') !== date && { display: 'none'}),
-                                    ...(moment(e?.start).hour() !== 0 && { top: `${ (moment(e?.start).hour()*40)+(Math.ceil(moment(e?.start).minute()*0.6666)) }px`}),
-                                    ...(moment(e?.end).hour() !== 0 && { 
-                                        height:`${ ((moment.duration(moment(e?.end).diff(moment(e?.start)))._data.hours)*40)+(moment.duration(moment(e?.end).diff(moment(e?.start)))._data.minutes*0.6666)}px`
-                                    }),
-                                }}
-                            >
-                                {e?.name }
+                            <>
+                                <div 
+                                    className={cs(styles['event'])} 
+                                    key={i} 
+                                    style={{
+                                        ...(moment(e?.start)._d.toLocaleDateString('fa-IR') !== date && { display: 'none'}),
+                                        ...(moment(e?.start).hour() !== 0 && { top: `${ (moment(e?.start).hour()*40)+(Math.ceil(moment(e?.start).minute()*0.6666)) }px`}),
+                                        ...(moment(e?.end).hour() !== 0 && { 
+                                            height:`${ ((moment.duration(moment(e?.end).diff(moment(e?.start)))._data.hours)*40)+(moment.duration(moment(e?.end).diff(moment(e?.start)))._data.minutes*0.6666)}px`
+                                        }),
+                                    }}
+                                >
+                                    {e?.name }
+                                </div>
                                 {
                                     date === today._d.toLocaleDateString('fa-IR') && 
-                                        <div className={cs(styles['today_flag'])} >
-                                            <div className={cs(styles['circle'])} >
-
-                                            </div>
+                                        <div 
+                                            className={cs(styles['today_flag'])} 
+                                            style={{
+                                                ...(moment(e?.start)._d.toLocaleDateString('fa-IR') !== date && { display: 'none'}),
+                                                ...(
+                                                    moment(e?.start).hour() !== 0 
+                                                        && { 
+                                                            top: `${ 
+                                                                    (moment(e?.start).hour()*40)+(Math.ceil(moment(e?.start).minute()*0.6666))
+                                                                    + (
+                                                                        ((moment.duration(moment(e?.end).diff(moment(e?.start)))._data.hours)*40)+
+                                                                        (moment.duration(moment(e?.end).diff(moment(e?.start)))._data.minutes*0.6666)
+                                                                    ) / 2
+                                                        }px`}
+                                                ),
+                                            }}
+                                        >
+                                            <div className={cs(styles['circle'])} />
                                         </div>
                                 }
-
-                            </div>
+                            </>
                         )
                     })
                 }

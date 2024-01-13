@@ -15,7 +15,6 @@ export const useCreateEventActions = () => {
         
         failedCallback: (e) => {
             console.error(e)
-            console.log("eeeeee", e);
             showToast('مشکلی پیش اومده', 'error')
         },
     })
@@ -23,12 +22,12 @@ export const useCreateEventActions = () => {
     const { pending: eventCreation, request: createEvent } = useAPI({
         apiMethod: CreateLabEventAPI,
 
-        successCallback: (res) => {
+        successCallback: () => {
+            showToast('رویداد با موفقیت اضافه شد', 'success')
         },
         
         failedCallback: (e) => {
-            console.error(e)
-            console.log("eeeeee", e);
+            console.log("createEvent failed", e)
             showToast('مشکلی پیش اومده', 'error')
         },
     })

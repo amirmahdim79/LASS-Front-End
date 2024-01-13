@@ -268,7 +268,7 @@ export default function Forum() {
                     )
             }
 
-            { (permissions.includes('forums') && params.id) && (
+            { ((permissions.includes('forums') || userType === 'supervisor' ) && params.id) && (
                 forum
                     ? <PresenceList updatePresenceList={updatePresenceList} setMsg={setMsg}/> 
                     : <div className={cs(styles['is_loading_presence_list'])}/> 

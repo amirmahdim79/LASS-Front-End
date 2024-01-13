@@ -31,21 +31,27 @@ export default function Calendar({events, date, setDate, getEvents}) {
     const [ openAddEventModal, showAddEventModal, closeAddEventModal ] = useModal();
     const [ openCalendar, showCalendar, closeCalendar ] = useModal();
 
-
+    console.log("---events--", events);
 
     const goNextWeek = () => {
         let value = num;
         value += 1;
         setNum(value);
-        setDate(moment(date).day(1*7))
+        setDate(moment(date).weekday(+1*7))
+
+        // setDate(moment(date).day(+1*7))
+
         // setDate(moment().day(value*7))
     }
 
     const goPrevWeek = () => {
         let value = num;
         value -= 1;
+
         setNum(value);
-        setDate(moment(date).day(-1*7))
+        setDate(moment(date).weekday(-1*7))
+        // setDate(moment(date).day(-1*7))
+
         // setDate(moment().day(value*7))
         // console.log("moment().day(10)", moment().week(7));
     }

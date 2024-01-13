@@ -172,13 +172,12 @@ export default function UserDashboard() {
 
     const { getMyLabs, getLabEvents } = useLabActions();
 
-    const getEvents= () => {
+    const getEvents= (labId) => {
         getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
         .then(res => {
-            dispatch(setEvents(res.data))
-        }).catch(err => {
-            console.log("...........33333333333333333", err);
-        })
+            // console.log("gettttt successs", res.data);
+            dispatch(setEvents(res.data))})
+        .catch(err => console.log(err))
     }
 
     
@@ -192,7 +191,7 @@ export default function UserDashboard() {
             dispatch(setLabId(res.data._id))
             // 'all': 'true'
 
-            getEvents()
+            getEvents(res.data._id)
 
             for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
                     if (milestone.status[0] === null) {
@@ -204,11 +203,12 @@ export default function UserDashboard() {
             }
 
         }).catch(err => {
-            console.log("...........eeeeeoeeeeeeeeeee", err);
+            console.log(err);
         })
 
     }, [now])
 
+    // console.log("---events--", events);
 
 
     return (

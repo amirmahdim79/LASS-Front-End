@@ -26,12 +26,14 @@ import { reducer } from './reducer'
 import CheckBoxV2 from 'components/global/checkbox/v2'
 import { useSelector } from 'react-redux'
 import { useCreateEventActions } from './hooks/useCreateEventActions'
+import useToast from 'hooks/useToast'
 
 
 
 export default function AddEventModal({close, type, setType, getEvents}) {
 
     const { createEvent } = useCreateEventActions();
+    const { showToast } = useToast();
 
     const path = useSelector(state => state.lab.Paths);
     const userInfo = useSelector(state => state.user.user);
@@ -68,9 +70,9 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         repetitionValue: '',
         repetitionBtn1: true,
         repetitionBtn2: false,
-        repetitionBtn3: false,
+        // repetitionBtn3: false,
 
-        weekDay: '',
+        // weekDay: '',
         weekDayNum: undefined,
 
         intervalBtn: false,
@@ -93,6 +95,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     // console.log(".....aa", new Date(initValue.year(), initValue.month(), initValue.date(), state.initHour, state.initMin, state.initSec));
 
     // console.log("fuck", moment(`${initValue.date()}/${initValue.month()}/${initValue.year()} 09:15:00`, "DD MM YYYY hh:mm:ss"));
+
 
 
 
@@ -151,35 +154,35 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         if (btnNum === 1) {
             dispatch({payload: {type: 'repetitionBtn1', value: !state.repetitionBtn1}})
             dispatch({payload: {type: 'repetitionBtn2', value: false}})
-            dispatch({payload: {type: 'repetitionBtn3', value: false}})
-            dispatch({payload: {type: 'weekDay', value: ''}})
+            // dispatch({payload: {type: 'repetitionBtn3', value: false}})
+            // dispatch({payload: {type: 'weekDay', value: ''}})
         }
         else if (btnNum === 2) {
             dispatch({payload: {type: 'repetitionBtn2', value: !state.repetitionBtn2}})
             dispatch({payload: {type: 'repetitionBtn1', value: false}})
-            dispatch({payload: {type: 'repetitionBtn3', value: false}})
+            // dispatch({payload: {type: 'repetitionBtn3', value: false}})
         }
-        else if (btnNum === 3) {
-            dispatch({payload: {type: 'repetitionBtn3', value: !state.repetitionBtn3}})
-            dispatch({payload: {type: 'repetitionBtn1', value: false}})
-            dispatch({payload: {type: 'repetitionBtn2', value: false}})
-            dispatch({payload: {type: 'weekDay', value: ''}})
-        }
+        // else if (btnNum === 3) {
+        //     dispatch({payload: {type: 'repetitionBtn3', value: !state.repetitionBtn3}})
+        //     dispatch({payload: {type: 'repetitionBtn1', value: false}})
+        //     dispatch({payload: {type: 'repetitionBtn2', value: false}})
+        //     // dispatch({payload: {type: 'weekDay', value: ''}})
+        // }
     }
 
-    const onClickWeekDay = (day, num) => {
-        dispatch({payload: {type: 'weekDay', value: day}})
-        dispatch({payload: {type: 'weekDayNum', value: num}})
-    }
+    // const onClickWeekDay = (day, num) => {
+    //     dispatch({payload: {type: 'weekDay', value: day}})
+    //     dispatch({payload: {type: 'weekDayNum', value: num}})
+    // }
 
     const displayWeek = (weekday) => {
-        if(weekday === 'ش') return 'شنبه'
-        else if(weekday === 'ی') return 'یکشنبه'
-        else if(weekday === 'د') return 'دو شنبه'
-        else if(weekday === 'س') return 'سه شنبه'
-        else if(weekday === 'چ') return 'چهارشنبه'
-        else if(weekday === 'پ') return 'پنج شنبه'
-        else if(weekday === 'ج') return 'جمعه'
+        if(weekday === 0) return 'شنبه'
+        else if(weekday === 1) return 'یکشنبه'
+        else if(weekday === 2) return 'دو شنبه'
+        else if(weekday === 3) return 'سه شنبه'
+        else if(weekday === 4) return 'چهارشنبه'
+        else if(weekday === 5) return 'پنج شنبه'
+        else if(weekday === 6) return 'جمعه'
     }
 
     const submitIntervalData = () => {
@@ -202,26 +205,16 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     }
 
 
-        // let fuck = moment(initValue);
-        // fuck.set('hour', state.initHour); 
-        // fuck.set('minute', state.initMin); 
-        // fuck.set('second', state.initSec); 
-        // console.log("fuck", fuck);
-    
-        // console.log('moment',moment(fuck).toISOString());
-
     const addEvent = () => {
         let start = moment(initValue);
         start.set('hour', state.initHour); 
         start.set('minute', state.initMin); 
         start.set('second', state.initSec ? state.initSec : '00'); 
-        console.log("start", start);
 
         let end = moment(endValue);
         end.set('hour', state.endHour); 
         end.set('minute', state.endMin); 
         end.set('second', state.endSec ? state.endSec : '00'); 
-        console.log("end", end);
 
 
         let data = {
@@ -231,21 +224,20 @@ export default function AddEventModal({close, type, setType, getEvents}) {
             end: moment(end).toISOString(),
             Collaborators: state.usersList,
             type: state.repetitionBtn1 ? 'fixed' : (state.repetitionBtn2 ? 'weekly' : 'monthly'),
-            interval: state.repetitionBtn2 ? state.weekDayNum : initValue.date(),
+            interval: state.repetitionBtn2 ? start.weekday() : initValue.date(),
             target: state.intervalBtn ? jaMoment.from(`14${state.year}/${state.month}/${state.day}`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD') : undefined,
             notifyMe: true,
             Lab: labId,
             activity: state.activity
         }
 
-        console.log("data", data);
         createEvent({...data})
-            .then(res => {
-                console.log("succcccc", res.data);
-                getEvents();
-            }).catch(err => {
-                console.log("eeeeeeee" , err);
-            }).finally(() => close())
+            .then((res) => {
+                // console.log("res successs", res.data);
+                getEvents(labId)
+            })
+            .catch(err => console.log("err", err))
+            .finally(() => close())
     }
 
 
@@ -258,8 +250,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     const checkSubmitIsDisable = () => {
         return (
             isEmpty(state.name) || isEmpty(state.initHour) || isEmpty(state.initMin) || isEmpty(state.endHour) || isEmpty(state.endMin) ||
-            (state.repetitionBtn2 && isEmpty(state.weekDay)) || state.usersList.length === 0 || 
-            (state.intervalBtn && (isEmpty(state.year) || isEmpty(state.month) || isEmpty(state.day)))            
+            state.usersList.length === 0 || (state.intervalBtn && (isEmpty(state.year) || isEmpty(state.month) || isEmpty(state.day)))            
         )
     }
 
@@ -413,7 +404,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                     : (
                                         <span>
                                             هر
-                                            {state.repetitionBtn2 ? displayWeek(state.weekDay) : <span> ماه</span>}
+                                            {state.repetitionBtn2 ? displayWeek(moment(initValue).weekday()) : <span> ماه</span>}
                                             {state.intervalBtn ? <span>تا تاریخ {state.day} {month(state.month)} تکرار شود</span> : <span> تکرار شود </span> }
                                         </span> 
                                     )
@@ -439,7 +430,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                     <CheckBoxV2 checked={true} value={state.repetitionBtn2} onClick={() => onClickRepetitionButtons(2)}/>
                                     {text.input_6}
                                 </div>
-                                {
+                                {/* {
                                     state.repetitionBtn2 && (
                                         <div className={cs(styles['weekdays'])} >
                                             <div className={cs(styles['weekday'])} style={{...(state.weekDay === 'ش' && {borderColor: colors['main-color-100'], color: colors['main-color-100']})}} onClick={() => onClickWeekDay('ش', 0)}>ش</div>
@@ -451,54 +442,58 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                             <div className={cs(styles['weekday'])} style={{...(state.weekDay === 'ج' && {borderColor: colors['main-color-100'], color: colors['main-color-100']})}} onClick={() => onClickWeekDay('ج', 6)}>ج</div>
                                         </div>
                                     )
-                                }
+                                } */}
                             </div>
 
-                            <div className={cs(styles['checkbox_wrapper'])}>
+                            {/* <div className={cs(styles['checkbox_wrapper'])}>
                                 <div className={cs(styles['checkbox'])} onClick={() => onClickRepetitionButtons(3)}>
                                     <CheckBoxV2 checked={true} value={state.repetitionBtn3} onClick={() => onClickRepetitionButtons(3)}/>
                                     {text.input_7}
                                 </div>
-                            </div>
-        
-                            <div className={cs(styles['interval_inputs'])}>
-                                <p> {text.title_2} </p>
+                            </div> */}
 
-                                <div className={cs(styles['checkbox_wrapper'])}>
-                                    <div className={cs(styles['checkbox'])} >
-                                        <CheckBoxV2 checked={true} value={state.intervalBtn}  onClick={() => dispatch({payload: {type: 'intervalBtn', value: !state.intervalBtn}})}/>
-                                        {
-                                            state.intervalBtn
-                                                ? 
-                                                    <span className={cs(styles['date'])}>
-                                                        <span style={{paddingLeft: '2px', minWidth: '35px'}}>تا تاریخ</span>
-                                                        <div style={{direction:'ltr'}}>
-                                                            <input 
-                                                                placeholder='--'
-                                                                value={state.year}
-                                                                onChange={(e) => dispatch({payload: {type: 'year', value: e.target.value}})}
-                                                            />
-                                                            / 
-                                                            <input 
-                                                                placeholder='--'
-                                                                value={state.month}
-                                                                onChange={(e) => dispatch({payload: {type: 'month', value: e.target.value}})}
-                                                            />
-                                                            / 
-                                                            <input 
-                                                                placeholder='--'
-                                                                value={state.day}
-                                                                onChange={(e) => dispatch({payload: {type: 'day', value: e.target.value}})}
-                                                            />
-                                                        </div>
-                                                    </span>
-                                                : 
-                                                    <p >{text.input_9}</p>
-                                                
-                                        }
+                            {
+                                state.repetitionBtn2 && (
+                                    <div className={cs(styles['interval_inputs'])}>
+                                        <p> {text.title_2} </p>
+        
+                                        <div className={cs(styles['checkbox_wrapper'])}>
+                                            <div className={cs(styles['checkbox'])} >
+                                                <CheckBoxV2 checked={true} value={state.intervalBtn}  onClick={() => dispatch({payload: {type: 'intervalBtn', value: !state.intervalBtn}})}/>
+                                                {
+                                                    state.intervalBtn
+                                                        ? 
+                                                            <span className={cs(styles['date'])}>
+                                                                <span style={{paddingLeft: '2px', minWidth: '35px'}}>تا تاریخ</span>
+                                                                <div style={{direction:'ltr'}}>
+                                                                    <input 
+                                                                        placeholder='--'
+                                                                        value={state.year}
+                                                                        onChange={(e) => dispatch({payload: {type: 'year', value: e.target.value}})}
+                                                                    />
+                                                                    / 
+                                                                    <input 
+                                                                        placeholder='--'
+                                                                        value={state.month}
+                                                                        onChange={(e) => dispatch({payload: {type: 'month', value: e.target.value}})}
+                                                                    />
+                                                                    / 
+                                                                    <input 
+                                                                        placeholder='--'
+                                                                        value={state.day}
+                                                                        onChange={(e) => dispatch({payload: {type: 'day', value: e.target.value}})}
+                                                                    />
+                                                                </div>
+                                                            </span>
+                                                        : 
+                                                            <p >{text.input_9}</p>
+                                                        
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                )
+                            }
                         </div>
                     )
                 }
