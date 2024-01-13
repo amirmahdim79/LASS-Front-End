@@ -11,13 +11,14 @@ import moonLight from 'assets/icons/weather/moon/light-color.svg';
 import useInput from 'hooks/useInputHandler';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 
 export default function SideBar({type}) { 
     
     const navigate = useNavigate();
     const location = useLocation()
-
+    const permissions = useSelector(state => state.user.permissions);
 
     const { value: iconNum, setValue: setIconNum } = useInput('1');
 
@@ -69,15 +70,18 @@ export default function SideBar({type}) {
             else if (location.pathname === '/user/articles-database') setIconNum('3')
             else if (location.pathname === '/user/new-email' || location.pathname === '/user/received-emails' || location.pathname === '/user/email-settings') setIconNum('4')
             else if (location.pathname === '/user/my-profile') setIconNum('5')
-            else if (location.pathname === '/user/settings') setIconNum('6')
+            else if (location.pathname.includes('user/settings')) setIconNum('6')
         }else {
             if (location.pathname === '/supervisor/dashboard' || location.pathname.includes('user_profile')) setIconNum('1')
             else if (location.pathname.includes('forum')) setIconNum('2')
             else if (location.pathname === '/supervisor/articles-database') setIconNum('3')
             else if (location.pathname === '/supervisor/new-email' || location.pathname === '/supervisor/received-emails' || location.pathname === '/supervisor/email-settings') setIconNum('4')
-            else if (location.pathname === '/supervisor/settings') setIconNum('6')
+            else if (location.pathname.includes('supervisor/settings')) setIconNum('6')
         }
     }, [location.pathname])
+
+    // console.log("permissions", permissions);
+
 
 
     return (
@@ -94,6 +98,7 @@ export default function SideBar({type}) {
 
             <img className={cs(styles['icon'], iconNum === '4' && styles['active'])} src={emailLight} alt='email icon' onClick={() => openEmails()} />
             <img className={cs(styles['icon'], iconNum === '5' && styles['active'])} src={profileLight} alt='profile icon' onClick={() => openProfile()} />
+            {/* {  } */}
             <img className={cs(styles['icon'], iconNum === '6' && styles['active'])} src={settingsLight} alt='settings icon' onClick={() => openSettings()}/>
             
             <div className={cs(styles['dark-mode'])}>

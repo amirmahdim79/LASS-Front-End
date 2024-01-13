@@ -25,26 +25,7 @@ export default function ReceivedEmails() {
             desc: 'لورم ایپسوم یک سری توضیحات که چی شد این تاپیک را درست کردیم',
             creationDate: 'در تاریخ 16 آذر 1402 ساخته شد',
             participators: [
-                {
-                    name: 'علیرضا ابراهیمی',
-                    avatar: user5,
-                },
-                {
-                    name: 'علیرضا ابراهیمی',
-                    avatar: user6,
-                },
-                {
-                    name: 'علیرضا ابراهیمی',
-                    avatar: user7,
-                },
-                {
-                    name: 'علیرضا ابراهیمی',
-                    avatar: user1,
-                },
-                {
-                    name: 'علیرضا ابراهیمی',
-                    avatar: user2,
-                },
+                
                 {
                     name: 'علیرضا ابراهیمی',
                     avatar: user3,
@@ -65,6 +46,7 @@ export default function ReceivedEmails() {
                     name: 'علیرضا ابراهیمی',
                     avatar: user7,
                 },
+
             ]
         },
         {

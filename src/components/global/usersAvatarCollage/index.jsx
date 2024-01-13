@@ -9,26 +9,29 @@ export default function UserAvatarCollage({
     size = '50px',
     fontSize = '16px',
     alignment = 'center',
+    maxNum = 10
 }) {
+
+    let list = users.length > maxNum ? users.slice(0, maxNum) : users
 
     return (
         
         <div className={cs(styles['container'])} style={{alignItems: alignment}}>
             {
-                users.map((user, i) => 
+                list.length !== 0 && list.map((user, i) => 
                     <div 
                         className={cs(styles['avatar'], !user?.profilePicture && styles['empty_avatar'])}
                         style={{
                             background: user?.profilePicture && `url(${user?.profilePicture})`, 
                             backgroundSize:'cover', backgroundRepeat:'no-repeat', backgroundPosition:'center center', 
-                            left: `${(users.length - i - 1) * ((+size.slice(0, -2)/2) + 1.5 )}px`,
-                            zIndex: users.length - i,
+                            left: `${(list.length - i - 1) * ((+size.slice(0, -2)/2) + 1.5 )}px`,
+                            zIndex: list.length - i,
                             maxWidth: size, minWidth: size, maxHeight: size, minHeight: size,
                         }} 
                         
                         key={i}
                     >
-                    {!user?.profilePicture && <p style={{fontSize: fontSize}}>{getFirstLetters(`${user?.firstName} ${user?.lastName}`)}</p> }
+                        {!user?.profilePicture && <p style={{fontSize: fontSize}}>{getFirstLetters(`${user?.firstName} ${user?.lastName}`)}</p> }
                     </div>
                 )
             }

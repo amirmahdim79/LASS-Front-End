@@ -8,20 +8,60 @@
     align-items: center;
     justify-content: space-between;
     padding: 19px 140px 10px 55px;
-
-
-
-    .icons_container {
+    
+    .left_container {
+        width: max-content;
         display: flex;
-        column-gap: 20px;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 60px;
 
-        .icon {
-            padding: 12px;
+        .icons_container {
+            display: flex;
+            column-gap: 20px;
+    
+            .icon {
+                padding: 12px;
+                border-radius: 15px;
+                background-color: $light-accent-25;
+                cursor: pointer;
+            }
+        }
+
+        .smarties_container {
+            display: flex;
+            column-gap: 25px;
+            border: 1px solid $light-accent-25;
             border-radius: 15px;
-            background-color: $light-accent-25;
-            cursor: pointer;
+            padding: 0 10px;
+
+            .data {
+                width: max-content;
+                height: 48px;
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+                column-gap: 3px;
+            }
+    
+            img {
+                width: 24px;
+                max-width: 24px;
+                min-width: 24px;
+                height: 24px;
+                max-height: 24px;
+                min-height: 24px;
+            }
+
+            p {
+                @include mixins.description;
+            }
         }
     }
+
+
+
+    
 
 
 

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
 import { useBaseActions } from "./hooks/useBaseActions";
-import { addUser, setPermissions } from "store/userSlice/index"
+import { addUser } from "store/userSlice/index"
 import { setStudents } from "store/labSlice";
 import Navbar from "components/global/navbar";
 import SideBar from "components/global/sidebar";
@@ -10,6 +10,7 @@ import { setLabId } from "store/labSlice";
 import { setLabGroups, setLabForums } from "store/labSlice";
 import { setArticles } from "store/userSlice";
 import { setForum } from "store/labSlice";
+import { setPermissions } from "store/userSlice";
 
 export default function Base({type}) {
         

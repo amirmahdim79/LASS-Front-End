@@ -32,9 +32,13 @@ export const userSlice = createSlice({
             state.navSearchedValue = action.payload
         },
         setPermissions: (state, action) => {
+            console.log('action.payload',action.payload);
             state.permissions = action.payload
         },
     }
 })
 
-export const { addUser, clearUser, setArticles, setSearchedValue, setNavSearchedValue, setPermissions } = userSlice.actions;
+export const { 
+    addUser, clearUser, setArticles, setSearchedValue, 
+    setNavSearchedValue, setPermissions 
+} = userSlice.actions;
