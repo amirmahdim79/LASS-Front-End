@@ -44,7 +44,7 @@ export default function SupSettings() {
     useEffect(() => {
         getLabGroups({}, `/${labId}`)
         .then(res => {
-            console.log("///////////////////////", res.data);
+            // console.log("///////////////////////", res.data);
             dispatch(setLabGroups(res.data))
         }).catch(err => {
             console.log(err);
@@ -80,6 +80,7 @@ export default function SupSettings() {
                 canDeleteMember={true}
                 students={students}
                 userHasClickOption={true}
+                height={'770px'}
                 userOnClickHandler={(uId) => navigate(`../user_profile/${uId}`)}
             />
         </div>

@@ -30,8 +30,6 @@ export default function Groups() {
 
     const labGroups = useSelector(state => state.lab.labGroups);
 
-    console.log("labGroups", labGroups);
-
 
 
     // const articles = useSelector(state => state.user.articles);
@@ -230,7 +228,7 @@ export default function Groups() {
                     <div className={cs(styles['group_container'])}>
                         <div className={cs(styles['groups_data'])}>
                             <p> {group.name} </p>
-                            <UserAvatarCollage avatars={group.Users.map(u => u.avatar)} size={'25px'}/>
+                            <UserAvatarCollage users={group.Users} size={'25px'} alignment={'flex-start'} fontSize={'12px'}/>
                         </div>
                         <img 
                             src={editIcon}

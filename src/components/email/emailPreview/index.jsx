@@ -17,7 +17,7 @@ export default function EmailPreview({data, onClick=()=>{}}) {
                 <span> {data?.desc}...{data?.creationDate} </span>
             </div>
             <div className={cs(styles['users'])}>
-                <UserAvatarCollage avatars={data.participators.map(u => u.avatar)} />
+                <UserAvatarCollage users={data.participators} />
             </div>
         </div>
     )

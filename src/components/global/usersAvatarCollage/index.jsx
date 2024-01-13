@@ -6,12 +6,14 @@ import styles from './style.module.scss'
 
 export default function UserAvatarCollage({
     users, 
-    size = '50px'
+    size = '50px',
+    fontSize = '16px',
+    alignment = 'center',
 }) {
 
     return (
         
-        <div className={cs(styles['container'])}>
+        <div className={cs(styles['container'])} style={{alignItems: alignment}}>
             {
                 users.map((user, i) => 
                     <div 
@@ -26,7 +28,7 @@ export default function UserAvatarCollage({
                         
                         key={i}
                     >
-                    {!user?.profilePicture && <p>{getFirstLetters(`${user?.firstName} ${user?.lastName}`)}</p> }
+                    {!user?.profilePicture && <p style={{fontSize: fontSize}}>{getFirstLetters(`${user?.firstName} ${user?.lastName}`)}</p> }
                     </div>
                 )
             }
