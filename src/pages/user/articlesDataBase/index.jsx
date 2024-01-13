@@ -27,7 +27,6 @@ export default function UserArticlesDataBase() {
     const { getAllPapers, gettingAllPapers, searchPaper, addRecentFile } = useArticlesActions();
 
     const updatePapers = () => {
-        console.log(" allllll");
         getAllPapers()
             .then(res => setAllPapers(res.data))
             .catch(err => console.log(err))

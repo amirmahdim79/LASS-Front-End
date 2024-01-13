@@ -67,7 +67,7 @@ export default function SupArticlesDataBase() {
             // else updatePapers()
             updatePapers()
         }
-    }, [])
+    }, [searchParams])
 
     // useEffect(() => {
     //     if (searchKeyword) searchPapers(searchKeyword)
@@ -86,10 +86,8 @@ export default function SupArticlesDataBase() {
     useEffect(() => {
         if (searchParams.size !== 0){
             if (searchKeyword) {
-                console.log("in usdeefect 2 ley", searchKeyword);
                 searchPapers(searchKeyword)
             }else {
-                console.log("tttttttttttttttttttttttttttttt", searchKeyword);
                 updatePapers()
             }
             // if (searchKeyword) searchPapers(searchKeyword)
