@@ -64,13 +64,20 @@ export default function SideBar({type}) {
 
     useEffect(() => {
         if (type === 'user') {
-            if (location.pathname === '/user/dashboard') setIconNum('1')
+            if (location.pathname === '/user/dashboard' || location.pathname.includes('task')) setIconNum('1')
+            else if (location.pathname.includes('forum')) setIconNum('2')
             else if (location.pathname === '/user/articles-database') setIconNum('3')
+            else if (location.pathname === '/user/new-email' || location.pathname === '/user/received-emails' || location.pathname === '/user/email-settings') setIconNum('4')
+            else if (location.pathname === '/user/my-profile') setIconNum('5')
+            else if (location.pathname === '/user/settings') setIconNum('6')
         }else {
-            if (location.pathname === '/supervisor/dashboard') setIconNum('1')
+            if (location.pathname === '/supervisor/dashboard' || location.pathname.includes('user_profile')) setIconNum('1')
+            else if (location.pathname.includes('forum')) setIconNum('2')
             else if (location.pathname === '/supervisor/articles-database') setIconNum('3')
+            else if (location.pathname === '/supervisor/new-email' || location.pathname === '/supervisor/received-emails' || location.pathname === '/supervisor/email-settings') setIconNum('4')
+            else if (location.pathname === '/supervisor/settings') setIconNum('6')
         }
-    })
+    }, [location.pathname])
 
 
     return (
