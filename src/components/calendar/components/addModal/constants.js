@@ -14,6 +14,7 @@ export const text = {
 
     input_10: 'جلسه',
     input_11: 'گزارش',
+    input_12: 'مرا خبر کن',
 
     title_1: 'تکرار',
     title_2: 'مدت',

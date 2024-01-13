@@ -43,7 +43,15 @@
             }
         }
 
-
+        .notifyMe {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            column-gap: 10px;
+            @include mixins.description;
+            color: $light-shades-100;
+        }
     }
 
     .time_warpper {

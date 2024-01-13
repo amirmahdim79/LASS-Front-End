@@ -82,6 +82,8 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         month: '',
         day: '',
 
+        notifyMe: false,
+
         selectedUser: '',
         usersList: []
 
@@ -95,6 +97,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     // console.log(".....aa", new Date(initValue.year(), initValue.month(), initValue.date(), state.initHour, state.initMin, state.initSec));
 
     // console.log("fuck", moment(`${initValue.date()}/${initValue.month()}/${initValue.year()} 09:15:00`, "DD MM YYYY hh:mm:ss"));
+
 
 
 
@@ -208,14 +211,13 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     const addEvent = () => {
         let start = moment(initValue);
         start.set('hour', state.initHour); 
-        start.set('minute', state.initMin); 
+        start.set('minute', state.initMin ? state.initMin : '00'); 
         start.set('second', state.initSec ? state.initSec : '00'); 
 
         let end = moment(endValue);
         end.set('hour', state.endHour); 
-        end.set('minute', state.endMin); 
+        end.set('minute', state.endMin ? state.endMin : '00'); 
         end.set('second', state.endSec ? state.endSec : '00'); 
-
 
         let data = {
             name: state.name,
@@ -226,21 +228,19 @@ export default function AddEventModal({close, type, setType, getEvents}) {
             type: state.repetitionBtn1 ? 'fixed' : (state.repetitionBtn2 ? 'weekly' : 'monthly'),
             interval: state.repetitionBtn2 ? start.weekday() : initValue.date(),
             target: state.intervalBtn ? jaMoment.from(`14${state.year}/${state.month}/${state.day}`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD') : undefined,
-            notifyMe: true,
+            notifyMe: state.notifyMe,
             Lab: labId,
             activity: state.activity
         }
 
+
         createEvent({...data})
             .then((res) => {
-                // console.log("res successs", res.data);
                 getEvents(labId)
             })
-            .catch(err => console.log("err", err))
+            .catch(err => console.log(err))
             .finally(() => close())
     }
-
-
 
 
     const isEmpty = (data) => {
@@ -248,9 +248,20 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     }
 
     const checkSubmitIsDisable = () => {
+        let start = moment(initValue);
+        start.set('hour', state.initHour); 
+        start.set('minute', state.initMin ? state.initMin : '00'); 
+        start.set('second', state.initSec ? state.initSec : '00'); 
+
+        let end = moment(endValue);
+        end.set('hour', state.endHour); 
+        end.set('minute', state.endMin ? state.endMin : '00'); 
+        end.set('second', state.endSec ? state.endSec : '00'); 
+
         return (
-            isEmpty(state.name) || isEmpty(state.initHour) || isEmpty(state.initMin) || isEmpty(state.endHour) || isEmpty(state.endMin) ||
-            state.usersList.length === 0 || (state.intervalBtn && (isEmpty(state.year) || isEmpty(state.month) || isEmpty(state.day)))            
+            isEmpty(state.name) || isEmpty(state.initHour) || isEmpty(state.endHour)  ||
+            state.usersList.length === 0 || (state.intervalBtn && (isEmpty(state.year) || 
+            isEmpty(state.month) || isEmpty(state.day))) || (end.hour() !== 0 ? start >= end : false)          
         )
     }
 
@@ -302,6 +313,10 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                     resizable={false}
                 />
 
+                <div className={cs(styles['notifyMe'])} onClick={() => dispatch({payload: {type: 'notifyMe', value: !state.notifyMe}})}>
+                    <CheckBoxV2 checked={state.notifyMe} value={state.notifyMe} onClick={() => dispatch({payload: {type: 'notifyMe', value: !state.notifyMe}})}/>
+                    {text.input_12}
+                </div>
 
             </div>
             

@@ -172,6 +172,11 @@
                     margin-top: 0.5px;
                 }
             }
+
+            .disabled_header_data {
+                color: $light-accent-50;
+            }
+
         }
 
         .body {
@@ -380,6 +385,23 @@
                 }
                
             }
+        }
+
+        .show_event_modal {
+            width: 100%;
+            min-width: 420px;
+            max-width: 420px;
+            height: max-content;
+            min-height: max-content;
+            // max-height: 539px;
+            background-color: $dark-glass-75;
+            border-radius: 12px;
+            // position: absolute;
+            // top: 14px;
+            // right: 13px;
+            @include mixins.open-modal-from-right;
+            top: 3%;
+            right:  auto;
         }
     }
     

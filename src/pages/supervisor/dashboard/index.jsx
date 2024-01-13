@@ -27,6 +27,8 @@ import UsersList from 'components/usersListG'
 
 export default function SupervisorDashboard() {
 
+    moment.locale('fa');
+
     const dispatchLab = useDispatch();
     const navigate = useNavigate();
 
@@ -64,8 +66,8 @@ export default function SupervisorDashboard() {
         close();
     }
 
-    const getEvents = () => {
-        getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${path[0]?.Lab}`)
+    const getEvents = (labId) => {
+        getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
             .then(res => {
                 dispatchLab(setEvents(res.data))
             }).catch(err => {
@@ -80,16 +82,18 @@ export default function SupervisorDashboard() {
             dispatchLab(setPath(res.data.Paths))
             dispatchLab(setStudents(res.data.Students))
             dispatchLab(setLabId(res.data._id))
+
+            getEvents(res.data.Paths[0]?.Lab)
         }).catch(err => {
             console.log("eeeeeeeeeeee", err);
         })
     }, [])
 
-    useEffect(() => {
-        if (path) {
-            getEvents()
-        }
-    }, [now, path])
+    // useEffect(() => {
+    //     if (path) {
+    //         getEvents()
+    //     }
+    // }, [now, path])
 
     const openUserProfile = (uId) => {
         navigate(`../user_profile/${uId}`)

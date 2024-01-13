@@ -28,6 +28,7 @@
 
         .right_container {
             grid-area: 2 / 3 / 4 / 4;
+            z-index: -1;
         }
 
         .left_container {

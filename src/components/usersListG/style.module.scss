@@ -13,6 +13,8 @@
     grid-template-rows: 35px auto 50px;
     background-color: $light-accent-20;
 
+    z-index: initial;
+
     img {
         @include functions.setIconStyles(24px);
     }

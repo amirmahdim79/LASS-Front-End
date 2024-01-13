@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useModal } from 'hooks/useModal';
 import Modal from 'components/global/modal';
 import AddEventModal from './components/addModal';
+import ShowEventDataModal from './components/showEventDataModal';
 
 
 export default function Calendar({events, date, setDate, getEvents}) {
@@ -26,12 +27,12 @@ export default function Calendar({events, date, setDate, getEvents}) {
 
     const { value: num, setValue: setNum } = useInput(0);
     const { value: calendar, setValue: setCalendar } = useInput('');
+    const { value: event, setValue: setEvent } = useInput({});
     const permissions = useSelector(state => state.user.permissions);
 
     const [ openAddEventModal, showAddEventModal, closeAddEventModal ] = useModal();
-    const [ openCalendar, showCalendar, closeCalendar ] = useModal();
+    const [ openShowMoreModal, showShowMoreModal, closeShowMoreModal ] = useModal();
 
-    console.log("---events--", events);
 
     const goNextWeek = () => {
         let value = num;
@@ -100,15 +101,9 @@ export default function Calendar({events, date, setDate, getEvents}) {
     }
 
 
-    // let firstday = today.clone().weekday(0)._d.toLocaleDateString('fa-IR');
-    // let lastday = today.clone().weekday(6)._d.toLocaleDateString('fa-IR');
-
-    // console.log("today", today._d.toLocaleDateString('fa-IR'));
-    // console.log("today._d", today._d);
-    // console.log("today._d.toLocaleDateString('fa-IR')", today._d.toLocaleDateString('fa-IR'));
-    // console.log("today", today);
-    // console.log("today._d", today._d.toLocaleDateString('fa-IR'));
-
+    const showMore = () => {
+        showShowMoreModal();
+    }
 
 
     return (
@@ -177,10 +172,16 @@ export default function Calendar({events, date, setDate, getEvents}) {
 
                     { Array.from(Array(7), (e, i) => {
                         return (
-                            <div className={cs(styles['header_data'])} >
+                            <div 
+                                className={cs(styles['header_data'], 
+                                    date.clone().weekday(i)._d.toLocaleDateString('fa-IR').split("/")[1] !== date._d.toLocaleDateString('fa-IR').split("/")[1] && styles['disabled_header_data']
+                                )} 
+                            >
                                 <div className={cs(styles['header_border'])}/>
                                 <p className={cs(styles['day'])}> {weekday(i)} </p>
-                                <p className={cs(styles['date'])}> {date.clone().weekday(i)._d.toLocaleDateString('fa-IR').split("/")[2]} </p>
+                                <p className={cs(styles['date'])}> 
+                                    {date.clone().weekday(i)._d.toLocaleDateString('fa-IR').split("/")[2]} 
+                                </p>
 
                                 {
                                     i === 0 &&  <hr className={cs(styles['header_line'])}/>
@@ -198,6 +199,8 @@ export default function Calendar({events, date, setDate, getEvents}) {
                                 events={events}
                                 key={i} 
                                 index={i}
+                                showMore={showMore}
+                                setEvent={setEvent}
                             />
                         )}) 
                     }
@@ -214,20 +217,19 @@ export default function Calendar({events, date, setDate, getEvents}) {
                     </div>
                 </div>
 
-                
-
-                
-
-                {/* { Array.from(Array(7), (e, i) => {
-                    return (
-                        <Column 
-                            today={today}
-                            events={events}
-                            key={i} 
-                            index={i}
+                {
+                    openShowMoreModal && (
+                        <Modal
+                            isOpen={openShowMoreModal} 
+                            close={closeShowMoreModal} 
+                            content={
+                                <div className={cs(styles['show_event_modal'])} style={{display: openShowMoreModal ? 'block' : 'none'}} id='#events_modal'>
+                                    <ShowEventDataModal event={event}/>
+                                </div>
+                            }
                         />
-                    )}) 
-                } */}
+                    )
+                }
 
             </div>
         </div>
