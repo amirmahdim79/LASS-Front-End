@@ -11,6 +11,7 @@ import { setLabGroups, setLabForums } from "store/labSlice";
 import { setArticles } from "store/userSlice";
 import { setForum } from "store/labSlice";
 import { setPermissions } from "store/userSlice";
+import { sortForum } from "utils/mapper";
 
 export default function Base({type}) {
         
@@ -68,11 +69,15 @@ export default function Base({type}) {
             const interval = setInterval(() => {
                 if (userType === 'supervisor') {
                     getLabForums({}, `/${labId}`)
-                        .then(res => dispatch(setLabForums(res.data.reverse())))
+                        .then(res => {
+                            dispatch(setLabForums(sortForum(res.data)))
+                        })
                         .catch(err => console.log(err))
                 }else {
                     getLabForums({}, `/user/${labId}`)
-                        .then(res => dispatch(setLabForums(res.data.reverse())))
+                        .then(res => {
+                            dispatch(setLabForums(sortForum(res.data)))
+                        })
                         .catch(err => console.log(err))
                 }
             }, 60000);

@@ -20,6 +20,7 @@ import { getFirstLetters } from 'utils/mapper';
 import { setForum } from 'store/labSlice';
 import PresenceList from './components/presenceList';
 import Preloader from 'components/global/preloaders'
+import { sortForum } from 'utils/mapper';
 
 
 export default function Forum() {
@@ -60,11 +61,11 @@ export default function Forum() {
     const getForums = () => {
         if (userType === 'supervisor') {
             getLabForums({}, `/${labId}`)
-                .then(res => dispatch(setLabForums(res.data.reverse())))
+                .then(res =>  dispatch(setLabForums(sortForum(res.data))))
                 .catch(err => console.log(err))
         }else {
             getLabForums({}, `/user/${labId}`)
-                .then(res => dispatch(setLabForums(res.data.reverse())))
+                .then(res =>  dispatch(setLabForums(sortForum(res.data))))
                 .catch(err => console.log(err))
         }
     }
@@ -135,6 +136,8 @@ export default function Forum() {
             getForumData();
         }        
     }, [params.id])
+
+
 
     return (
         <div className={cs(styles['container'])}>
@@ -246,10 +249,6 @@ export default function Forum() {
                                 
                             </div>
 
-                            {
-
-                            }
-
                             <div className={cs(styles['forums'])}>
                                 {
                                     forums 
@@ -272,9 +271,7 @@ export default function Forum() {
                 forum
                     ? <PresenceList updatePresenceList={updatePresenceList} setMsg={setMsg}/> 
                     : <div className={cs(styles['is_loading_presence_list'])}/> 
-            )
-                
-            }           
+            )}           
         </div>
     )
 }

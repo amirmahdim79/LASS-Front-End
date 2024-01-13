@@ -1,3 +1,6 @@
+import moment from 'moment';
+import 'moment/locale/fa';
+
 export const truncateText = (string, length) => {
     if (string.length > length)
         return string.substring(0,length)+'...';
@@ -61,3 +64,14 @@ export const getFirstLetters = (inputString) => {
     return firstLetters.join(' ');
 }
 
+export const sortForum = (arr) => {
+    let sortedArr = [...arr].sort(function(a, b) {
+        let keyA = moment(a.start);
+        let keyB = moment(b.start);
+        if (keyA > keyB) return -1;
+        if (keyA < keyB) return 1;
+        return 0;
+    });
+
+    return sortedArr
+}
