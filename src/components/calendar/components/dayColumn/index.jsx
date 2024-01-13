@@ -80,36 +80,51 @@ export default function Column({now, index, events, showMore, setEvent}) {
                                 >
                                    <p>  {e?.name } </p>
                                 </div>
-                                {
-                                    date === today._d.toLocaleDateString('fa-IR') && 
+                                {/* {
+                                    
                                         <div 
                                             className={cs(styles['today_flag'])} 
-                                            style={{
-                                                ...((
-                                                    !(
-                                                        (moment(e?.start)._d.toLocaleDateString('fa-IR') === today._d.toLocaleDateString('fa-IR')) && 
-                                                        ( today._d.getTime() >= moment(e?.start)._d.getTime() && today._d.getTime() <= moment(e?.end)._d.getTime())
-                                                    )
-                                                ) && { display: 'none'}),
-                                                ...(
-                                                    moment(e?.start).hour() !== 0 
-                                                        && { 
-                                                            top: `${ 
-                                                                    (moment(e?.start).hour()*40)+(Math.ceil(moment(e?.start).minute()*0.6666))
+                                            // style={{
+                                            //     // ...((
+                                            //     //     !(
+                                            //     //         (moment(e?.start)._d.toLocaleDateString('fa-IR') === today._d.toLocaleDateString('fa-IR')) && 
+                                            //     //         ( today._d.getTime() >= moment(e?.start)._d.getTime() && today._d.getTime() <= moment(e?.end)._d.getTime())
+                                            //     //     )
+                                            //     // ) && { display: 'none'}),
+                                            //     // ...(
+                                            //     //     // moment(e?.start).hour() !== 0 
+                                            //     //    true && {top: '10px'}
+
+                                                        && { top: `${(moment(e?.start).hour()*40)+(Math.ceil(moment(e?.start).minute()*0.6666))
                                                                     + (
                                                                         ((moment.duration(moment(e?.end).diff(moment(e?.start)))._data.hours)*40)+
                                                                         (moment.duration(moment(e?.end).diff(moment(e?.start)))._data.minutes*0.6666)
                                                                     ) / 2
                                                         }px`}
-                                                ),
-                                            }}
+                                            //     // ),
+                                            // }}
                                         >
-                                            <div className={cs(styles['circle'])} />
+                                            <div className={cs(styles['circle'])} >a </div>
                                         </div>
-                                }
+                                } */}
                             </>
                         )
                     })
+                }
+ {/* + ( ((moment.duration(moment(e?.end).diff(moment(e?.start)))._data.hours)*40)+(moment.duration(moment(e?.end).diff(moment(e?.start)))._data.minutes*0.6666)) / 2 */}
+                {
+                    date === today._d.toLocaleDateString('fa-IR') && (
+                        <div 
+                            className={cs(styles['today_flag'])}
+                            style={{
+                                top: `
+                                    ${(today.hour()*40)+(Math.ceil(today.minute()*0.5))
+                                    }px`
+                            }}
+                        >
+                            <div className={cs(styles['circle'])} />
+                        </div>
+                    )
                 }
 
             </div>
