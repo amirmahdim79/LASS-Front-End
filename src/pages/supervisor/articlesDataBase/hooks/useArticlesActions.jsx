@@ -65,7 +65,11 @@ export const useArticlesActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("reeeeeeeeeeeccccccc", e);
+            if (e.response.data !== 'File is already added.') {
+                showToast('مشکلی پیش اومده', 'error')
+                console.log(e);
+            }
+           
         },
     })
 

@@ -41,7 +41,7 @@ export const useArticlesActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("tags errrrrrrrrrrrrrr", e);
+            console.log(e);
         },
     })
 
@@ -53,7 +53,7 @@ export const useArticlesActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("sarcg paper errrrrrrrrrrrrrr", e);
+            console.log(e);
         },
     })
 
@@ -65,7 +65,10 @@ export const useArticlesActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("sarcg paper errrrrrrrrrrrrrr", e);
+            if (e.response.data !== 'File is already added.') {
+                showToast('مشکلی پیش اومده', 'error')
+                console.log(e);
+            }
         },
     })
 

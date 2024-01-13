@@ -24,49 +24,71 @@ export default function UserArticlesDataBase() {
     const searchedValue = useSelector(state => state.user.searchedValue);
 
     const { value: allPapers, setValue: setAllPapers } = useInput([]);
-
     const { getAllPapers, gettingAllPapers, searchPaper, addRecentFile } = useArticlesActions();
 
     const updatePapers = () => {
+        console.log(" allllll");
         getAllPapers()
             .then(res => setAllPapers(res.data))
             .catch(err => console.log(err))
     }
 
     const searchPapers = (key) => {
+
         searchPaper({}, `?query=${key}`)
-            .then(res => setAllPapers(res.data))
+            .then(res => {
+                setAllPapers(res.data)
+            })
             .catch(err => console.log(err))
     }
 
     const addRecentFiles = (id) => {
         addRecentFile({File: id})
             .then(res => {
-                console.log("---res.data",res.data);
-                dispatch(setArticles(res.data))
+                // console.log("---res.data",res.data);
+                dispatch(setArticles(res.data.reverse()))
             }).catch(err => {
-                console.log("eeeeeeeeeeee", err);
+                // console.log("eeeeeeeeeeee", err);
             })
     }
 
     useEffect(() => {
-        updatePapers()
+        if (searchParams.size === 0) {
+            // if (searchKeyword) searchPapers(searchKeyword)
+            // else updatePapers()
+            updatePapers()
+        }
     }, [])
 
     useEffect(() => {
-        if (searchKeyword) searchPapers(searchKeyword)
-        else updatePapers()
+        if (searchParams.size === 0) {
+            // if (searchKeyword) searchPapers(searchKeyword)
+            // else updatePapers()
+            updatePapers()
+        }
+    }, [searchParams])
+
+
+    useEffect(() => {
+        if (searchParams.size !== 0){
+            if (searchKeyword) {
+                searchPapers(searchKeyword)
+            }else {
+                updatePapers()
+            }
+            // if (searchKeyword) searchPapers(searchKeyword)
+            // else updatePapers()
+        }
     }, [searchKeyword])
     
-    useEffect(() => {
-        searchPapers(searchedValue)
-    }, [searchedValue]);
+    // useEffect(() => {
+    //     console.log("use effect3", searchedValue);
+    //     searchPapers(searchedValue)
+    // }, [searchedValue]);
 
 
         // redux , url update value when api call
-    
-        console.log("articles", articles);
-    
+        
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['articles_container'])}>
@@ -81,10 +103,10 @@ export default function UserArticlesDataBase() {
             <div className={cs(styles['current_articles_container'])}>
                 <h6> {text.current_articles} </h6>
                 {
-                    articles[0] && 
+                    articles && 
                         <div className={cs(styles['articles'])}>
                             {
-                                articles[0].map((article, i) => 
+                                articles.map((article, i) => 
                                     <div className={cs(styles['article_wrapper'])} key={i}>
                                         <div className={cs(styles['icon_wrapper'])}>
                                             <img src={downloadIcon} alt='download icon'/>
@@ -100,7 +122,9 @@ export default function UserArticlesDataBase() {
                             }
                         </div>
                 }
-                
+
+                { (articles && articles.length!==0) && <div className={cs(styles['border_bottom'])}/> }
+
             </div>
 
         </div>

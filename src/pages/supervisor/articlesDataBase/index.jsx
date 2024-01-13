@@ -10,16 +10,21 @@ import { useEffect } from 'react'
 import { useArticlesActions } from './hooks/useArticlesActions'
 import useInput from 'hooks/useInputHandler'
 import { setArticles } from 'store/userSlice'
+import { useSearchParams } from 'react-router-dom';
 
 
 export default function SupArticlesDataBase() { 
 
     const dispatch = useDispatch();
 
-    const articles = useSelector(state => state.user.articles);
-    const { value: allPapers, setValue: setAllPapers } = useInput([]);
+    const [searchParams] = useSearchParams();
+    const searchKeyword = searchParams.get('search');
 
-    const { getAllPapers, gettingAllPapers, addRecentFile } = useArticlesActions();
+    const articles = useSelector(state => state.user.articles);
+    const searchedValue = useSelector(state => state.user.searchedValue);
+
+    const { value: allPapers, setValue: setAllPapers } = useInput([]);
+    const { getAllPapers, gettingAllPapers, addRecentFile, searchPaper } = useArticlesActions();
 
     const updatePapers = () => {
         getAllPapers()
@@ -27,22 +32,76 @@ export default function SupArticlesDataBase() {
             .catch(err => console.log(err))
     }
 
+    const searchPapers = (key) => {
+        searchPaper({}, `?query=${key}`)
+            .then(res => setAllPapers(res.data))
+            .catch(err => console.log(err))
+    }
+
     const addRecentFiles = (id) => {
         addRecentFile({File: id})
             .then(res => {
-                dispatch(setArticles(res.data))
+                // console.log("---res.data",res.data);
+                dispatch(setArticles(res.data.reverse()))
             }).catch(err => {
-                console.log("eeeeeeeeeeee", err);
+                // console.log("eeeeeeeeeeee", err);
             })
     }
 
-    useEffect(() => {
-        updatePapers()
-    }, [])
-    
-console.log("articles", articles);
+    // useEffect(() => {
+    //     if (searchKeyword) searchPapers(searchKeyword)
+    //     else updatePapers()
+    // }, [])
 
+    useEffect(() => {
+        if (searchParams.size === 0) {
+            // if (searchKeyword) searchPapers(searchKeyword)
+            // else updatePapers()
+            updatePapers()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (searchParams.size === 0) {
+            // if (searchKeyword) searchPapers(searchKeyword)
+            // else updatePapers()
+            updatePapers()
+        }
+    }, [])
+
+    // useEffect(() => {
+    //     if (searchKeyword) searchPapers(searchKeyword)
+    //     else updatePapers()
+    // }, [searchKeyword])
+
+    // useEffect(() => {
+    //     if (searchParams.size !== 0 && searchKeyword){
+    //         console.log("in usdeefect 2 ley", searchKeyword);
+    //         searchPapers(searchKeyword)
+    //         // if (searchKeyword) searchPapers(searchKeyword)
+    //         // else updatePapers()
+    //     }
+    // }, [searchKeyword])
+
+    useEffect(() => {
+        if (searchParams.size !== 0){
+            if (searchKeyword) {
+                console.log("in usdeefect 2 ley", searchKeyword);
+                searchPapers(searchKeyword)
+            }else {
+                console.log("tttttttttttttttttttttttttttttt", searchKeyword);
+                updatePapers()
+            }
+            // if (searchKeyword) searchPapers(searchKeyword)
+            // else updatePapers()
+        }
+    }, [searchKeyword])
     
+    // useEffect(() => {
+    //     searchPapers(searchedValue)
+    // }, [searchedValue]);
+
+      
     
     return (
         <div className={cs(styles['container'])}>
@@ -77,7 +136,8 @@ console.log("articles", articles);
                             }
                         </div>
                 }
-                
+
+                {(articles && articles.length!==0) && <div className={cs(styles['border_bottom'])}/> }
             </div>
 
         </div>

@@ -36,8 +36,8 @@ export default function Navbar({type}) {
             dispatch(setNavSearchedValue(searchKey))
             const keyDownHandler = event => {    
               if (event.key === 'Enter') {
-                if (searchKey) navigate(`../user/articles-database/?search=${searchKey}`)
-                else navigate(`../user/articles-database`)
+                if (searchKey) navigate(`../${localStorage.getItem('type')}/articles-database/?search=${searchKey}`)
+                else navigate(`../${localStorage.getItem('type')}/articles-database`)
               }
             };
             document.addEventListener('keydown', keyDownHandler);

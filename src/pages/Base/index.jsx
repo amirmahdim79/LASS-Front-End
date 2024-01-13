@@ -29,6 +29,7 @@ export default function Base({type}) {
                         // console.log("111111111111111111111111111111", res.data);
                         dispatch(addUser(res.data))
                         dispatch(setLabId(res.data.Labs[0]))
+                        dispatch(setArticles(res.data?.RecentFiles.reverse()))
                         dispatch(setPermissions(res.data?.permissions))
                         getMyLabs()
                             .then(res =>  dispatch(setStudents(res.data?.Students)))
@@ -38,12 +39,12 @@ export default function Base({type}) {
             }else if (userType === 'supervisor') {
                 checkSupAuth()
                     .then(res => {
+                        dispatch(setArticles(res.data?.RecentFiles.reverse()))
                         getMyLabs({}, '?sups=true')
                             .then(res =>  {
                                 // console.log("sssssssssssssss", res.data);
                                 dispatch(setStudents(res.data?.Students))
                                 dispatch(setLabId(res.data._id))
-                                dispatch(setArticles(res.data?.Supervisor?.RecentFiles))
 
                                 getLabGroups({}, `/${res.data._id}`)
                                     .then(res => {
