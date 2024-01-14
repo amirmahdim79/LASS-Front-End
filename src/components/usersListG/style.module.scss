@@ -44,7 +44,12 @@
 
             .add_icon_container {
                 position: relative;
+                
+                .icon:hover {
+                    cursor: pointer;
+                }
             }
+
         }
 
         .add_user_modal {
@@ -53,6 +58,7 @@
             border-top-right-radius: 0px;
             background-color: $dark-glass-75;
             @include mixins.open-modal-from-right;
+            z-index: 6;
         }
     }
 

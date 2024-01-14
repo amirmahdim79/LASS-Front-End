@@ -9,7 +9,8 @@
     row-gap: 30px;
     width: 100%;
     height: 100vh;
-
+    z-index: 0;
+    position: relative;
 
 
     .boxes_container {
@@ -20,27 +21,38 @@
         grid-template-rows: 1fr 1fr 1fr;
         column-gap: 35px;
         row-gap: 35px;
+        z-index: -2;
+        position: relative;
 
         .top_container {
             width: 100%;
             grid-area: 1 / 1 / 2 / 4;
+            z-index: -2;
+            position: relative;
         }
 
         .right_container {
             grid-area: 2 / 3 / 4 / 4;
-            z-index: -1;
+            z-index: -3;
+            position: relative;
         }
 
         .left_container {
-            grid-area: 2 / 1 / span 3 / span 2;
+            grid-area: 2 / 1 / 3 / span 2;
             display: flex;
             flex-direction: column;
             row-gap: 35px;
+            position: relative;
+            z-index: -5;
+            height: 100%;
 
             .inner_container {
                 width: 100%;
                 display: flex;
                 column-gap: 25px;  
+                position: relative;
+                z-index: -5;
+
             }
 
         }

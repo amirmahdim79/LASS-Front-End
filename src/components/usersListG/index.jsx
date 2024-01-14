@@ -63,6 +63,10 @@ export default function UsersList({
 
     hasMoreInfo = false,
     moreInfo = '',
+
+
+    openedddddd=false,
+    setOpenedddddd=() => {}
 }) {
 
     const params = useParams();
@@ -122,7 +126,7 @@ export default function UsersList({
                             <img 
                                 src={addIcon}
                                 alt='add icon'
-                                onClick={() => showAddMemberModal()}
+                                onClick={() => {showAddMemberModal(); setOpenedddddd(prev => !prev)}}
                                 className={cs(styles['icon'])}
                             />
                             <Modal 

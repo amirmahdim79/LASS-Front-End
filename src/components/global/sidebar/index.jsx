@@ -80,30 +80,37 @@ export default function SideBar({type}) {
         }
     }, [location.pathname])
 
-    // console.log("permissions", permissions);
-
 
 
     return (
         <aside className={cs(styles['container'])}>
-            <div className={cs(styles['logo'])}>
-                <Logo />
-            </div>
 
-            <img className={cs(styles['icon'], iconNum === '1' && styles['active'])} src={dashboardLight} alt='dashboard icon' onClick={() => openDashboard()} />
-            <img className={cs(styles['icon'], iconNum === '2' && styles['active'])} src={messagesLight} alt='messages icon'  onClick={() => openForum()} />
-            <img className={cs(styles['icon'], iconNum === '3' && styles['active'])} src={folderLight} alt='folder icon' onClick={() => openArticlesDatabase()} />
+            {
+                type && (
+                    <>
+                        <div className={cs(styles['logo'])}>
+                            <Logo />
+                        </div>
 
-            <div className={cs(styles['divider'])} />
+                        <img className={cs(styles['icon'], iconNum === '1' && styles['active'])} src={dashboardLight} alt='dashboard icon' onClick={() => openDashboard()} />
+                        <img className={cs(styles['icon'], iconNum === '2' && styles['active'])} src={messagesLight} alt='messages icon'  onClick={() => openForum()} />
+                        <img className={cs(styles['icon'], iconNum === '3' && styles['active'])} src={folderLight} alt='folder icon' onClick={() => openArticlesDatabase()} />
 
-            <img className={cs(styles['icon'], iconNum === '4' && styles['active'])} src={emailLight} alt='email icon' onClick={() => openEmails()} />
-            <img className={cs(styles['icon'], iconNum === '5' && styles['active'])} src={profileLight} alt='profile icon' onClick={() => openProfile()} />
-            {/* {  } */}
-            <img className={cs(styles['icon'], iconNum === '6' && styles['active'])} src={settingsLight} alt='settings icon' onClick={() => openSettings()}/>
-            
-            <div className={cs(styles['dark-mode'])}>
-                <img src={moonLight} alt='moon icon' className={cs(styles['dark-mode-icon'], iconNum === '7' && styles['active'])} onClick={() => enableDarkMode()}/>
-            </div>
+                        <div className={cs(styles['divider'])} />
+
+                        <img className={cs(styles['icon'], iconNum === '4' && styles['active'])} src={emailLight} alt='email icon' onClick={() => openEmails()} />
+                        <img className={cs(styles['icon'], iconNum === '5' && styles['active'])} src={profileLight} alt='profile icon' onClick={() => openProfile()} />
+                        {(type === 'user' && permissions.includes('events')) &&
+                            <img className={cs(styles['icon'], iconNum === '6' && styles['active'])} src={settingsLight} alt='settings icon' onClick={() => openSettings()}/>
+                        }
+                        
+                        <div className={cs(styles['dark-mode'])}>
+                            <img src={moonLight} alt='moon icon' className={cs(styles['dark-mode-icon'], iconNum === '7' && styles['active'])} onClick={() => enableDarkMode()}/>
+                        </div>
+                    </>
+                )
+            }
+
         </aside>
     )
 }

@@ -46,10 +46,12 @@
                     background-color: $dark-glass-75;
                     border-radius: 12px;
                     border-top-right-radius: 0px;
+
                     // position: absolute;
                     // top: 14px;
                     // right: 13px;
                     @include mixins.open-modal-from-right;
+                    z-index: 6;
                 }
             }
             

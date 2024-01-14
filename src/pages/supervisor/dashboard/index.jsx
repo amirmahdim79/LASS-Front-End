@@ -38,6 +38,8 @@ export default function SupervisorDashboard() {
 
 
     const { value: now, setValue: setNow } = useInput(moment());
+    const { value: openedddddd, setValue: setOpenedddddd } = useInput(false);
+    const { value: openeddddddcaaaa, setValue: setOpeneddddddcaaaaa } = useInput(false);
 
     const [open, show, close] = useModal();
     const { getMyLabs, createLabs, getLabEvents, getLabStudentInfo } = useLabActions();
@@ -46,6 +48,8 @@ export default function SupervisorDashboard() {
         name: '',
         desc: '',
     }
+
+    console.log("openedddddd", openedddddd);
 
     const [ state , dispatch] = useReducer( reducer, initialState );
 
@@ -107,11 +111,11 @@ export default function SupervisorDashboard() {
     return (
         <div className={cs(styles['container'])} >
             <div className={cs(styles['boxes_container'])}>
-                <div className={cs(styles['top_container'])}>
-                    <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
+                <div className={cs(styles['top_container'])} style={ openedddddd ? {zIndex: '-2'} : {zIndex: '-3'}}>
+                    <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents} setOpeneddddddcaaaaa={setOpeneddddddcaaaaa}/>
                 </div>
 
-                <div className={cs(styles['right_container'])}>
+                <div className={cs(styles['right_container'])} style={ openeddddddcaaaa ? {zIndex: '-4'} : {zIndex: '-4'}}>
                     {/* <UsersList /> */}
                     <UsersList
                         students={students}
@@ -121,6 +125,7 @@ export default function SupervisorDashboard() {
                         userHasClickOption={true}
                         userOnClickHandler={(uId) => openUserProfile(uId)}
                         userDataMaxWidth={'14vw'}
+                        canAddMember={true}
                     />
 
                 </div>

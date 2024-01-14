@@ -12,6 +12,8 @@
     padding-left: 0px;
     row-gap: 22px;
 
+    align-items: flex-start;
+
     .title {
         @include mixins.h6-text;
         font-size: 17px;
