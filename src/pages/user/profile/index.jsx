@@ -22,6 +22,7 @@ import { useModal } from 'hooks/useModal';
 import Modal from 'components/global/modal';
 import EditUserModal from './components/editUserModal';
 import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions';
+import ProgressTracker from 'components/progressTracker';
 
 
 export default function Profile({editable=false}) {  
@@ -29,6 +30,9 @@ export default function Profile({editable=false}) {
     const params = useParams();
     const userInfo = useSelector(state => state.user.user);
     const labId = useSelector(state => state.lab.labId);
+    const path = useSelector(state => state.lab.Paths);
+    const milestones = useSelector(state => state.lab.Milestones);
+
 
     const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
     const { getLabStudentInfo } = useLabActions();
@@ -53,6 +57,7 @@ export default function Profile({editable=false}) {
         }
     }, [labId])
 
+    console.log("userData", userData);
 
 
     const topUsers = [
@@ -179,7 +184,17 @@ export default function Profile({editable=false}) {
                 <img src={activities} alt='activities chart'/>
             </div>
             <div className={cs(styles['user_path'])}>
-                user_path
+                {
+                    (userInfo || userData) 
+                        ? 
+                            <>
+                                <p className={cs(styles['title'])}> {`مسیر راه  - ${editable ? path.name : userData?.path?.name}`} </p>
+                                <ProgressTracker milestones={editable ? milestones : userData?.path?.Milestones}/> 
+                            </>
+                        : <div/>
+
+                }
+
             </div>
             <div  className={cs(styles['righ_col'])}>
                 <div className={cs(styles['leaderboard'])}>

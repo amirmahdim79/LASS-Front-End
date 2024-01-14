@@ -225,8 +225,10 @@ export default function AddEventModal({close, type, setType, getEvents}) {
             start: moment(start).toISOString(),
             end: moment(end).toISOString(),
             Collaborators: state.usersList,
-            type: state.repetitionBtn1 ? 'fixed' : (state.repetitionBtn2 ? 'weekly' : 'monthly'),
-            interval: state.repetitionBtn2 ? start.weekday() : initValue.date(),
+            // type: state.repetitionBtn1 ? 'fixed' : (state.repetitionBtn2 ? 'weekly' : 'monthly'),
+            type: 'fixed',
+            // interval: state.repetitionBtn2 ? start.weekday() : initValue.date(),
+            interval: initValue.date(),
             target: state.intervalBtn ? jaMoment.from(`14${state.year}/${state.month}/${state.day}`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD') : undefined,
             notifyMe: state.notifyMe,
             Lab: labId,
@@ -237,6 +239,9 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         createEvent({...data})
             .then((res) => {
                 getEvents(labId)
+                dispatch({payload: {type: 'reset', value: initialState}})
+                setInitValue(moment())
+                setEndValue(moment())
             })
             .catch(err => console.log(err))
             .finally(() => close())
@@ -407,7 +412,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                 </div>
             </div>
 
-            <div className={cs(styles['repetition_inputs'])}>
+            {/* <div className={cs(styles['repetition_inputs'])}>
                 <div className={cs(styles['title'])} onClick={() =>  !showInterval && setShowInterval(true)} style={{cursor: showInterval ? 'default' : 'pointer' }}>
                     <img src={repeatIcon} alt='repeat icon' />
                     {
@@ -445,7 +450,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                     <CheckBoxV2 checked={true} value={state.repetitionBtn2} onClick={() => onClickRepetitionButtons(2)}/>
                                     {text.input_6}
                                 </div>
-                                {/* {
+                                {
                                     state.repetitionBtn2 && (
                                         <div className={cs(styles['weekdays'])} >
                                             <div className={cs(styles['weekday'])} style={{...(state.weekDay === 'ش' && {borderColor: colors['main-color-100'], color: colors['main-color-100']})}} onClick={() => onClickWeekDay('ش', 0)}>ش</div>
@@ -457,15 +462,15 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                             <div className={cs(styles['weekday'])} style={{...(state.weekDay === 'ج' && {borderColor: colors['main-color-100'], color: colors['main-color-100']})}} onClick={() => onClickWeekDay('ج', 6)}>ج</div>
                                         </div>
                                     )
-                                } */}
+                                }
                             </div>
 
-                            {/* <div className={cs(styles['checkbox_wrapper'])}>
+                            <div className={cs(styles['checkbox_wrapper'])}>
                                 <div className={cs(styles['checkbox'])} onClick={() => onClickRepetitionButtons(3)}>
                                     <CheckBoxV2 checked={true} value={state.repetitionBtn3} onClick={() => onClickRepetitionButtons(3)}/>
                                     {text.input_7}
                                 </div>
-                            </div> */}
+                            </div>
 
                             {
                                 state.repetitionBtn2 && (
@@ -516,7 +521,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
 
 
                 
-            </div>
+            </div> */}
 
             <div className={cs(styles['users'])}>
                 <div className={cs(styles['title'])} onClick={() =>  !showUsers && setShowUsers(true)} style={{cursor: showUsers ? 'default' : 'pointer' }}>

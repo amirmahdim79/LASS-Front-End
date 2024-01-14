@@ -228,8 +228,15 @@
         height: 100%;
         background-color: $light-accent-20;
         border-radius: 12px;
-        padding: 20px 10px 35px 10px;
+        padding: 20px 20px 35px 20px;
         grid-area: 2 / 2 / 3 / 3;
+
+        .title {
+            direction: rtl;
+            color: $dark-shades-100;
+            @include mixins.h5-text;
+            align-self: flex-end;
+        }
     }
 
     .righ_col {

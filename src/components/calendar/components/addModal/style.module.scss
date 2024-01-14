@@ -134,6 +134,7 @@
         @include mixins.description;
         position: relative;
         border-bottom: 1px solid $light-shades-100;
+        background-color: rebeccapurple;
 
         .title {
             width: max-content;

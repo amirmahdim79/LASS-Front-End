@@ -10,10 +10,9 @@ import arrowRight from "assets/icons/arrow/arrow-right-accent.svg"
 import arrowLeft from "assets/icons/arrow/arrow-left-accent.svg"
 
 
-export default function ProgressTracker() {
+export default function ProgressTracker({milestones}) {
 
     const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
-    const milestones = useSelector(state => state.lab.Milestones);
     const prevId = useSelector(state => state.lab.prevId);
 
     // console.log("currentMilestone", currentMilestone);
@@ -136,7 +135,7 @@ export default function ProgressTracker() {
     const [width, setWidth] = useState(0)
     // const totalSteps = steps.length
 
-    // console.log("activeStep", activeStep);
+    console.log("milestones", milestones);
 
 
     useEffect(() => {
@@ -203,7 +202,7 @@ export default function ProgressTracker() {
 
         <div className={cs(styles['main_container'])}>
             {
-                milestones.length > 5 &&
+                milestones && milestones.length > 3 &&
                     <button className={cs(styles['arrow_left'])} onClick={leftScroll}>
                         <img 
                             src={arrowLeft}
@@ -215,7 +214,7 @@ export default function ProgressTracker() {
 
             <div className={cs(styles['steps_container'])} id='#steps_container'>
                 
-                {milestones.map((m,i) => 
+                {milestones && milestones.map((m,i) => 
                     <DataContainer 
                         name={m.name} 
                         tasks={m?.Tasks} 
@@ -231,7 +230,7 @@ export default function ProgressTracker() {
             </div>
 
             {
-                milestones.length > 5 &&
+                milestones && milestones.length > 3 &&
                     <button className={cs(styles['arrow_right'])} onClick={rightScroll}>
                         <img 
                             src={arrowRight}

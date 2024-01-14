@@ -26,7 +26,9 @@ export default function ShowEventDataModal({event}) {
             <div className={cs(styles['time_container'])}>
                <div className={cs(styles['interval_container'])}>
                     <img src={clockIcon} alt='clock icon'/>
-                    <p>{'تکرار:' + '\xa0\xa0' + (event?.type === 'fixed' ? 'تکرار نمی شود' : `هر ${weekday(event.interval)} تکرار می شود `)} </p>
+                    {/* <p>{'تکرار:' + '\xa0\xa0' + (event?.type === 'fixed' ? 'تکرار نمی شود' : `هر ${weekday(event.interval)} تکرار می شود `)} </p> */}
+                    {/* <p>{'تکرار:'} </p> */}
+                    
                </div>
                 <div className={cs(styles['time'])}>
                     <p>{'زمان شروع:' + '\xa0\xa0' + weekday(startDate.weekday()) + '-' + startDate._i.split('/')[2] + month(startDate._i.split('/')[1])} </p>

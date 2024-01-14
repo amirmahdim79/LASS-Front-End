@@ -12,6 +12,8 @@ import { setArticles } from "store/userSlice";
 import { setForum } from "store/labSlice";
 import { setPermissions } from "store/userSlice";
 import { sortForum } from "utils/mapper";
+import { setPath } from "store/labSlice";
+import { setMilestone } from "store/labSlice";
 
 export default function Base({type}) {
         
@@ -31,13 +33,18 @@ export default function Base({type}) {
                         // console.log("111111111111111111111111111111", res.data);
                         dispatch(addUser(res.data))
                         dispatch(setLabId(res.data.Labs[0]))
-                        dispatch(setArticles(res.data?.RecentFiles.reverse()))
+                        dispatch(setArticles([...res.data?.RecentFiles].reverse()))
                         dispatch(setPermissions(res.data?.permissions))
+
                         getMyLabs()
-                            .then(res =>  dispatch(setStudents(res.data?.Students)))
-                            .catch(err => console.log(err))
+                            .then(res =>  {
+                                dispatch(setStudents(res.data?.Students))
+                                dispatch(setPath(res.data?.Paths[0]))
+                                dispatch(setMilestone(res.data.Paths[0]?.Milestones))
+                            })
+                            .catch(err => console.log("err", err))
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => console.log("err", err))
             }else if (userType === 'supervisor') {
                 checkSupAuth()
                     .then(res => {
