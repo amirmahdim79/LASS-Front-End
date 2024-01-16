@@ -32,14 +32,17 @@ import useToast from 'hooks/useToast'
 
 export default function AddEventModal({close, type, setType, getEvents}) {
 
-    const { createEvent } = useCreateEventActions();
+    const { 
+        createEvent, eventCreation, 
+        getLabGroups 
+    } = useCreateEventActions();
     const { showToast } = useToast();
 
     const path = useSelector(state => state.lab.Paths);
     const userInfo = useSelector(state => state.user.user);
     const students = useSelector(state => state.lab.Students);
     const labId = useSelector(state => state.lab.labId);
-
+    const labGroups = useSelector(state => state.lab.labGroups);
     
     const { value: initValue, setValue: setInitValue } = useInput(moment());
     const { value: endValue, setValue: setEndValue } = useInput(moment());
@@ -57,6 +60,11 @@ export default function AddEventModal({close, type, setType, getEvents}) {
 
     const initialState = {
         activity: '',
+
+        hasForum: true,
+        hasTask: false,
+        taskType: 'upload',
+        smarties: '5',
         name: '',
         desc: '',
 
@@ -85,7 +93,9 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         notifyMe: false,
 
         selectedUser: '',
-        usersList: []
+        usersList: [],
+        labGroups: [],
+        selectAllUsers: false,
 
     }
 
@@ -97,10 +107,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     // console.log(".....aa", new Date(initValue.year(), initValue.month(), initValue.date(), state.initHour, state.initMin, state.initSec));
 
     // console.log("fuck", moment(`${initValue.date()}/${initValue.month()}/${initValue.year()} 09:15:00`, "DD MM YYYY hh:mm:ss"));
-
-
-
-
 
 
     useEffect(() => {
@@ -123,6 +129,17 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     useEffect(() => {
         if (state.repetitionBtn1)  dispatch({payload: {type: 'intervalBtn', value: false}})
     }, [state.repetitionBtn1])
+
+    useEffect(() => {
+        if (state.selectAllUsers) {
+            let result = students.map(s => s._id);
+            dispatch({payload: {type: 'usersList', value: result}})
+        }else {
+            dispatch({payload: {type: 'usersList', value: []}})
+        }
+
+    }, [state.selectAllUsers])
+
 
     const onClickModal = (e) => {
         if (type) {
@@ -153,44 +170,44 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         }
     }
 
-    const onClickRepetitionButtons = (btnNum) => {
-        if (btnNum === 1) {
-            dispatch({payload: {type: 'repetitionBtn1', value: !state.repetitionBtn1}})
-            dispatch({payload: {type: 'repetitionBtn2', value: false}})
-            // dispatch({payload: {type: 'repetitionBtn3', value: false}})
-            // dispatch({payload: {type: 'weekDay', value: ''}})
-        }
-        else if (btnNum === 2) {
-            dispatch({payload: {type: 'repetitionBtn2', value: !state.repetitionBtn2}})
-            dispatch({payload: {type: 'repetitionBtn1', value: false}})
-            // dispatch({payload: {type: 'repetitionBtn3', value: false}})
-        }
-        // else if (btnNum === 3) {
-        //     dispatch({payload: {type: 'repetitionBtn3', value: !state.repetitionBtn3}})
-        //     dispatch({payload: {type: 'repetitionBtn1', value: false}})
-        //     dispatch({payload: {type: 'repetitionBtn2', value: false}})
-        //     // dispatch({payload: {type: 'weekDay', value: ''}})
-        // }
-    }
+    // const onClickRepetitionButtons = (btnNum) => {
+    //     if (btnNum === 1) {
+    //         dispatch({payload: {type: 'repetitionBtn1', value: !state.repetitionBtn1}})
+    //         dispatch({payload: {type: 'repetitionBtn2', value: false}})
+    //         // dispatch({payload: {type: 'repetitionBtn3', value: false}})
+    //         // dispatch({payload: {type: 'weekDay', value: ''}})
+    //     }
+    //     else if (btnNum === 2) {
+    //         dispatch({payload: {type: 'repetitionBtn2', value: !state.repetitionBtn2}})
+    //         dispatch({payload: {type: 'repetitionBtn1', value: false}})
+    //         // dispatch({payload: {type: 'repetitionBtn3', value: false}})
+    //     }
+    //     // else if (btnNum === 3) {
+    //     //     dispatch({payload: {type: 'repetitionBtn3', value: !state.repetitionBtn3}})
+    //     //     dispatch({payload: {type: 'repetitionBtn1', value: false}})
+    //     //     dispatch({payload: {type: 'repetitionBtn2', value: false}})
+    //     //     // dispatch({payload: {type: 'weekDay', value: ''}})
+    //     // }
+    // }
 
     // const onClickWeekDay = (day, num) => {
     //     dispatch({payload: {type: 'weekDay', value: day}})
     //     dispatch({payload: {type: 'weekDayNum', value: num}})
     // }
 
-    const displayWeek = (weekday) => {
-        if(weekday === 0) return 'شنبه'
-        else if(weekday === 1) return 'یکشنبه'
-        else if(weekday === 2) return 'دو شنبه'
-        else if(weekday === 3) return 'سه شنبه'
-        else if(weekday === 4) return 'چهارشنبه'
-        else if(weekday === 5) return 'پنج شنبه'
-        else if(weekday === 6) return 'جمعه'
-    }
+    // const displayWeek = (weekday) => {
+    //     if(weekday === 0) return 'شنبه'
+    //     else if(weekday === 1) return 'یکشنبه'
+    //     else if(weekday === 2) return 'دو شنبه'
+    //     else if(weekday === 3) return 'سه شنبه'
+    //     else if(weekday === 4) return 'چهارشنبه'
+    //     else if(weekday === 5) return 'پنج شنبه'
+    //     else if(weekday === 6) return 'جمعه'
+    // }
 
-    const submitIntervalData = () => {
-        setShowInterval(false)
-    }
+    // const submitIntervalData = () => {
+    //     setShowInterval(false)
+    // }
 
     const submitUsersList = () => {
         setShowUsers(false)
@@ -207,6 +224,19 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         dispatch({payload: {type: 'usersList', value: users}})
     }
 
+    const addGroup = (group) => {
+        let groups = state.labGroups;
+
+        const index = state.labGroups.findIndex(g => g._id === group._id);
+        if (index === -1) {
+            groups.push(group);
+        }else {
+            groups.splice(index, 1);
+        }
+
+        dispatch({payload: {type: 'labGroups', value: groups}})
+    }
+
 
     const addEvent = () => {
         let start = moment(initValue);
@@ -219,12 +249,20 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         end.set('minute', state.endMin ? state.endMin : '00'); 
         end.set('second', state.endSec ? state.endSec : '00'); 
 
+        let groupsUsersId = state.labGroups.map(g => g.Users.map(u => u._id));
+        groupsUsersId = [].concat(...groupsUsersId)
+        let allUsersId = [...groupsUsersId, ...state.usersList]
+
         let data = {
             name: state.name,
             desc: state.desc ? state.desc : undefined,
             start: moment(start).toISOString(),
             end: moment(end).toISOString(),
-            Collaborators: state.usersList,
+            Collaborators: [...new Set(allUsersId)],
+            hasForum: state.hasForum,
+            taskType: state.hasTask && state.taskType,
+            smarties: state.hasTask && Number(state.smarties),
+
             // type: state.repetitionBtn1 ? 'fixed' : (state.repetitionBtn2 ? 'weekly' : 'monthly'),
             type: 'fixed',
             // interval: state.repetitionBtn2 ? start.weekday() : initValue.date(),
@@ -232,12 +270,13 @@ export default function AddEventModal({close, type, setType, getEvents}) {
             target: state.intervalBtn ? jaMoment.from(`14${state.year}/${state.month}/${state.day}`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD') : undefined,
             notifyMe: state.notifyMe,
             Lab: labId,
-            activity: state.activity
+            activity: 'meeting'
         }
 
 
         createEvent({...data})
             .then((res) => {
+                console.log("rrrrrrr", res.data);
                 getEvents(labId)
                 dispatch({payload: {type: 'reset', value: initialState}})
                 setInitValue(moment())
@@ -256,12 +295,10 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         let start = moment(initValue);
         start.set('hour', state.initHour); 
         start.set('minute', state.initMin ? state.initMin : '00'); 
-        start.set('second', state.initSec ? state.initSec : '00'); 
 
         let end = moment(endValue);
         end.set('hour', state.endHour); 
         end.set('minute', state.endMin ? state.endMin : '00'); 
-        end.set('second', state.endSec ? state.endSec : '00'); 
 
         return (
             isEmpty(state.name) || isEmpty(state.initHour) || isEmpty(state.endHour)  ||
@@ -278,18 +315,44 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         <div className={cs(styles['container'])} onClick={(e) => onClickModal(e)}>
             <img src={infoIcon} alt='info icon'/>
 
-            <div className={cs(styles['inputs'])}>
-                <p> نوع المان </p>
-                
+            <div className={cs(styles['inputs'])}>                
                 <div className={cs(styles['checkbox_wrapper'])}>
-                    <div className={cs(styles['checkbox'])} onClick={() => onClickActivity('meeting')}>
-                        <CheckBoxV2 checked={true} value={state.activity === 'meeting'}  onClick={() => onClickActivity('meeting')}/>
+                    <div className={cs(styles['checkbox'])} onClick={() => dispatch({payload: {type: 'hasForum', value: !state.hasForum}})}>
+                        <CheckBoxV2 value={state.hasForum}  onClick={() => dispatch({payload: {type: 'hasForum', value: !state.hasForum}})}/>
                         {text.input_10}
                     </div>
-                    <div className={cs(styles['checkbox'])} onClick={() => onClickActivity('upload')}>
-                        <CheckBoxV2 checked={true} value={state.activity === 'upload'}  onClick={() => onClickActivity('upload')}/>
+                    <div className={cs(styles['checkbox'])} onClick={() => dispatch({payload: {type: 'hasTask', value: !state.hasTask}})}>
+                        <CheckBoxV2 value={state.hasTask}  onClick={() => dispatch({payload: {type: 'hasTask', value: !state.hasTask}})}/>
                         {text.input_11}
                     </div>
+                    {
+                        state.hasTask && (
+                            <div className={cs(styles['task_types_container'])}>
+                                <div className={cs(styles['task_types'])}>     
+                                    <div className={cs(styles['checkbox'])} onClick={() => dispatch({payload: {type: 'taskType', value: 'upload'}})}>
+                                        <CheckBoxV2 value={state.taskType === 'upload'}  onClick={() => dispatch({payload: {type: 'taskType', value: 'upload'}})}/>
+                                        {text.input_13}
+                                    </div>
+                                    <div className={cs(styles['checkbox'])} onClick={() => dispatch({payload: {type: 'taskType', value: 'paper'}})}>
+                                        <CheckBoxV2 value={state.taskType === 'paper'}  onClick={() => dispatch({payload: {type: 'taskType', value: 'paper'}})}/>
+                                        {text.input_14}
+                                    </div>
+                                    <TextInputV2 
+                                        value={state.smarties}
+                                        onChange={(e)=>dispatch({payload: {type: 'smarties', value: e.target.value}})}
+                                        placeholder={text.input_15} 
+                                        dir={'rtl'}
+                                        opacity={'0.8'}
+                                        width={'230px'}
+                                        fontFamily={'pinar_light'}
+                                        fontWeight={'300'}
+                                        fontSize={'16px'}
+                                    />
+                                </div>
+                                <p className={cs(styles['task_info'])}> {text.desc} </p>
+                            </div>
+                        )
+                    }
                 </div>
 
                 <TextInputV2 
@@ -345,13 +408,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                 onChange={(e) => onChangeTime(e.target.value, 'm', true)}
                                 style={{width: state.initHour ? '15px' : '12px'}}
                             />
-                            :
-                            <input 
-                                placeholder='_'
-                                value={state.initSec}
-                                onChange={(e) => onChangeTime(e.target.value, 's', true)}
-                                style={{width: state.initHour ? '15px' : '12px'}}
-                            />
                         </div>
                         {
                             type === 'init' && (
@@ -386,13 +442,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                 onChange={(e) => onChangeTime(e.target.value, 'm', false)}
                                 style={{width: state.endMin ? '15px' : '12px'}}
                             />
-                            :
-                            <input 
-                                placeholder='_'
-                                value={state.endSec}
-                                onChange={(e) => onChangeTime(e.target.value, 's', false)}
-                                style={{width: state.endSec ? '15px' : '12px'}}
-                            />
                         </div>
                         {
                             type === 'end' && (
@@ -411,6 +460,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                     </div>
                 </div>
             </div>
+
 
             {/* <div className={cs(styles['repetition_inputs'])}>
                 <div className={cs(styles['title'])} onClick={() =>  !showInterval && setShowInterval(true)} style={{cursor: showInterval ? 'default' : 'pointer' }}>
@@ -517,28 +567,48 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                         </div>
                     )
                 }
-                
-
-
-                
             </div> */}
 
             <div className={cs(styles['users'])}>
-                <div className={cs(styles['title'])} onClick={() =>  !showUsers && setShowUsers(true)} style={{cursor: showUsers ? 'default' : 'pointer' }}>
+                {/* <div className={cs(styles['title'])} onClick={() =>  !showUsers && setShowUsers(true)} style={{cursor: showUsers ? 'default' : 'pointer' }}>
                     <img src={usersIcon} alt='users icon' />
                     <p> {text.title_3} </p>
                     {showUsers && 
                         <img src={tickIcon} onClick={() => submitUsersList()} alt='tick icon' style={{cursor: !showUsers ? 'default' : 'pointer',position: 'absolute', left:'0px'}}/>
                     }
-                </div>
+                </div> */}
+
+                <div className={cs(styles['title'])}>
+                    <img src={usersIcon} alt='users icon' />
+                    <p> {text.title_3} </p>
+                </div>  
 
                 {
-                    showUsers && (
+                    true && (
                         <div className={cs(styles['users_list'])}>
+
+
                             <div className={cs(styles['header'])}>
+                                <p> {text.title_5} </p>
+                            </div>
+                            <div className={cs(styles['users_name'])}>
+                                {
+                                    labGroups && labGroups.map((group, ind) => 
+                                        <div className={cs(styles['username'])} key={ind}>
+                                            <CheckBoxV2 value={state.labGroups.findIndex(g => g._id === group._id) !== -1} onClick={() => addGroup(group)}/>
+                                            <p> {group?.name} </p>
+                                        </div>
+                                    )
+                                }
+                            </div>
+
+
+                            <div className={cs(styles['header'])} style={{paddingTop: '20px'}}>
                                 <p> {text.title_4} </p>
-                                <img src={filterIcon} alt='filter icon'/>
-                                <img src={sortIcon} alt='sort icon'/>
+                                <div className={cs(styles['checkbox'])} onClick={() => dispatch({payload: {type: 'selectAllUsers', value: !state.selectAllUsers}})}>
+                                    <CheckBoxV2 value={state.selectAllUsers}  onClick={() => dispatch({payload: {type: 'selectAllUsers', value: !state.selectAllUsers}})}/>
+                                    {text.input_16}
+                                </div>
                             </div>
                             <div className={cs(styles['users_name'])}>
                                 {
@@ -552,8 +622,8 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                         </div>
                                     )
                                 }
-
                             </div>
+
                         </div>
                     )
                 }
@@ -567,121 +637,9 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                     text={text.button} 
                     width={'255px'}
                     disabled={checkSubmitIsDisable()}
+                    load={eventCreation}
                 />
             </div>
         </div>
     )
 }
-
-
-// import { default as cs } from 'classnames'
-// import Button from 'components/global/button'
-// import TextInputV2 from 'components/global/inputs/textInputs/textInputV2'
-// import { useEffect, useReducer } from 'react'
-// import styles from './style.module.scss'
-// import colors from "styles/colors.module.scss"
-// import { text } from './constants'
-// import TextAreaV1 from 'components/global/inputs/textareas/textareaV1'
-// import { Calendar, CalendarProvider } from "zaman";
-// import moment from 'moment';
-// import 'moment/locale/fa';
-// import infoIcon from 'assets/icons/essential/info-circle/light-color.svg';
-// import clockIcon from 'assets/icons/time/clock/light-color.svg';
-// import { useState } from 'react'
-// import useInput from 'hooks/useInputHandler'
-// import { useModal } from 'hooks/useModal'
-// import { weekday } from 'utils/mapper'
-// import { month } from 'utils/mapper'
-
-
-
-// export default function AddEventModal({close, openCalendar, showCalendar, closeCalendar}) {
-
-
-//     const { value: calendarValue, setValue: setCalendarValue } = useInput(moment());
-//     const { value: initDay, setValue: setInitDay } = useInput('');
-//     const { value: initDate, setValue: setInitDate } = useInput('');
-//     const { value: endDay, setValue: setEndDay } = useInput('');
-//     const { value: endDate, setValue: setEndDate } = useInput('');
-
-//     useEffect(() => {
-//         let todayDay = weekday(calendarValue.day());
-//         let todayDate = `${calendarValue._d.toLocaleDateString('fa-IR').split('/')[2]}  ${month(calendarValue._d.toLocaleDateString('fa-IR').split('/')[1])} `;
-//         setInitDay(todayDay);
-//         setEndDay(todayDay);
-//         setInitDate(todayDate);
-//         setEndDate(todayDate);
-//     }, [])
-
-
-//     // console.log("calendarValue", calendarValue);
-//     // console.log("to localllll", calendarValue.toLocaleDateString('fa-IR'));
-    
-//     const setCalendar = (day) => {
-//         setCalendarValue(moment(day))
-//     }
-
-//     return (
-//         <div className={cs(styles['container'])} onClick={() => openCalendar && closeCalendar() }>
-//             <img src={infoIcon} alt='info icon'/>
-
-//             <div className={cs(styles['inputs'])}>
-//                 <TextInputV2 
-//                     // value={state.email}
-//                     // onChange={(e)=>dispatch({payload: {type: 'email', value: e.target.value}})}
-//                     placeholder={text.input_1} 
-//                     dir={'rtl'}
-//                     opacity={'0.8'}
-//                     width={'255px'}
-//                     fontFamily={'pinar_light'}
-//                     fontWeight={'300'}
-//                     fontSize={'16px'}
-//                 />
-
-//                 <TextAreaV1 
-//                     name={'description'}
-//                     // value={state.desc}
-//                     // onChange={(e)=>dispatch({payload: {type: 'desc', value: e.target.value}})}
-//                     placeholder={text.input_2} 
-//                     rows={'6'}
-//                     opacity={'0.8'}
-//                     width={'363px'}
-//                     fontFamily={'pinar_light'}
-//                     fontWeight={'300'}
-//                     fontSize={'16px'}
-//                     resizable={false}
-//                 />
-
-
-//             </div>
-            
-//             <div className={cs(styles['time'])}>
-//                 <img src={clockIcon} alt='clock icon'/>
-//                 <div className={cs(styles['time_inputs'])}>
-//                     <div className={cs(styles['time_input'])}>
-//                         <p> {text.input_3} </p>
-//                         <p onClick={() => showCalendar()}> {`${initDay} - ${initDate}`} </p>
-//                         {
-//                             openCalendar && (
-//                                 <div className={cs(styles['datepicker_wrapper'])}>
-//                                     <CalendarProvider locale='fa' accentColor={colors['main-color-100']} direction='ltr' round="x2">
-//                                         <Calendar
-//                                             defaultValue={calendarValue}
-//                                             onChange={(day) => setCalendar(day)}
-//                                             weekends={[6]}
-//                                             className={cs(styles['datepicker'])}
-//                                         />
-//                                     </CalendarProvider>
-//                                 </div>
-//                             )
-//                         }
-//                     </div>
-//                     <div className={cs(styles['time_input'])}>
-//                         <p> {text.input_4} </p>
-//                         <div className={cs(styles['time_input'])}></div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }

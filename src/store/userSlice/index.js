@@ -32,7 +32,6 @@ export const userSlice = createSlice({
             state.navSearchedValue = action.payload
         },
         setPermissions: (state, action) => {
-            console.log('action.payload',action.payload);
             state.permissions = action.payload
         },
     }

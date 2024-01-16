@@ -38,11 +38,20 @@ export default function Base({type}) {
 
                         getMyLabs()
                             .then(res =>  {
+                                // console.log("22222222222222", res.data);
                                 dispatch(setStudents(res.data?.Students))
                                 dispatch(setPath(res.data?.Paths[0]))
                                 dispatch(setMilestone(res.data.Paths[0]?.Milestones))
                             })
                             .catch(err => console.log("err", err))
+
+                        getLabGroups({}, `/${res.data.Labs[0]}`)
+                            .then(res => {
+                                // console.log("///////////////////////", res.data);
+                                dispatch(setLabGroups(res.data))
+                            }).catch(err => {
+                                console.log(err);
+                            })
                     })
                     .catch(err => console.log("err", err))
             }else if (userType === 'supervisor') {

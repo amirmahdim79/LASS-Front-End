@@ -12,9 +12,12 @@
 
     // padding-left: 0px;
 
+
+
     .inputs {
         width: 100%;
         padding: 20px 10px 7px 0;
+        padding: 20px 10px 13px 0;
         display: flex;
         flex-direction: column;
         row-gap: 19px;
@@ -41,6 +44,50 @@
                 justify-content: flex-start;
                 column-gap: 10px;
             }
+
+            .task_types_container {
+                width: max-content;
+                margin-right: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                row-gap: 10px;
+                
+                .task_types {
+                    width: max-content;
+                    padding-right: 25px;
+                    display: flex;
+                    gap: 9px;
+                    flex-direction: column;
+                    align-items: flex-start;
+    
+    
+                    padding-right: 20px;
+                    display: flex;
+                    gap: 10px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    // margin-right: 9px;
+                    border-right: 1px solid $light-shades-20;
+    
+    
+                    padding-right: 14px;
+                    display: flex;
+                    gap: 10px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    // margin-right: 10px;
+                }
+
+                .task_info {
+                    @include mixins.sub-description;
+                    font-size: 9px;
+                    word-spacing: 1px;
+                    color: $light-shades-80;
+                }
+            }
+
+            
         }
 
         .notifyMe {
@@ -277,6 +324,12 @@
             width: 100%;
             position: relative;
             padding-top: 12px;
+            padding-right: 20px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 5px;
 
             .header {
                 width: 100%;
@@ -284,6 +337,7 @@
                 justify-content: flex-end;
                 align-items: center;
                 column-gap: 7px;
+                min-height: 24px;
 
                 p {
                     color: $light-glass-100;
@@ -291,6 +345,16 @@
                     right: 0px;
                     padding-right: 8px;
                 }
+
+                .checkbox {
+                    width: max-content;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    column-gap: 5px;
+                }
+
+                
             }
 
             .users_name {
@@ -299,6 +363,21 @@
                 flex-direction: column;
                 row-gap: 10px;
                 padding-top: 5px;
+
+                min-height: 90px;
+                max-height: 110px;
+                overflow-y: auto;
+                overflow-x: hidden;
+
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    background-color: #eeeeee53;
+                }
+        
+                &::-webkit-scrollbar-thumb {
+                    background:  #3dbbff;
+                    border-radius: 5px;
+                }
 
                 .username {
                     width: max-content;
@@ -315,6 +394,7 @@
                         column-gap: 5px;
                         direction: rtl;
                         @include mixins.sub-description;
+                        
 
                         p:nth-child(1) {
                             border-left: 1px solid $light-shades-100;

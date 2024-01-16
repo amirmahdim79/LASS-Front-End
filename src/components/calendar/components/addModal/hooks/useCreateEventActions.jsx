@@ -33,6 +33,7 @@ export const useCreateEventActions = () => {
     })
 
 
+
     
     
     return {
@@ -41,5 +42,6 @@ export const useCreateEventActions = () => {
 
         createEvent,
         eventCreation,
+
     }
 }
