@@ -23,6 +23,8 @@ import Modal from 'components/global/modal';
 import EditUserModal from './components/editUserModal';
 import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions';
 import ProgressTracker from 'components/progressTracker';
+import Leaderboard from 'components/leaderboard';
+import { useProfileActions } from './hooks/useProfileActions';
 
 
 export default function Profile({editable=false}) {  
@@ -36,7 +38,9 @@ export default function Profile({editable=false}) {
 
     const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
     const { getLabStudentInfo } = useLabActions();
+    const { getLeaderboard } = useProfileActions();
     const { value: userData, setValue: setUserData } = useInput({});
+    const { value: leaderboard, setValue: setLeaderboard } = useInput([]);
 
     const getUserInfo = () => {
         if (labId) {
@@ -50,14 +54,26 @@ export default function Profile({editable=false}) {
         }
     }
 
+    const getLeaderboardData = () => {
+        getLeaderboard({}, `?lab=${labId}`)
+            .then(res => {
+                // console.log("leader b", res.data);
+                setLeaderboard(res.data);
+            })
+            .catch(err => {
+                console.log("leader err", err);
+            })
+    }
+
 
     useEffect(() => {
-        if (!editable) {
-            getUserInfo();
+        if (labId) {
+            if (!editable) {
+                getUserInfo();
+            }
+            getLeaderboardData()
         }
     }, [labId])
-
-    console.log("userData", userData);
 
 
     const topUsers = [
@@ -188,7 +204,7 @@ export default function Profile({editable=false}) {
                     (userInfo || userData) 
                         ? 
                             <>
-                                <p className={cs(styles['title'])}> {`مسیر راه  - ${editable ? path.name : userData?.path?.name}`} </p>
+                                <p className={cs(styles['title'])}> {`مسیر راه  - ${editable ? path?.name : userData?.path?.name}`} </p>
                                 <ProgressTracker milestones={editable ? milestones : userData?.path?.Milestones}/> 
                             </>
                         : <div/>
@@ -196,13 +212,22 @@ export default function Profile({editable=false}) {
                 }
 
             </div>
+
             <div  className={cs(styles['righ_col'])}>
                 <div className={cs(styles['leaderboard'])}>
                     <div className={cs(styles['title'])}>
-                        <p> لیدربورد </p>
-                        <img src={infoIcon} alt='info icon'/>
+                        {
+                            userInfo ? 
+                                <>
+                                    <p> لیدربورد </p>
+                                    <img src={infoIcon} alt='info icon'/>
+                                </>
+                             : <div className={cs(styles['is_loading_leaderboard_title'])}/>
+                        }
+                        
                     </div>
-                    <img src={leaderboard} alt='leaderboard chart'/>
+                   
+                    {/* <img src={leaderboard} alt='leaderboard chart'/>
                     <div className={cs(styles['top_users'])}>
                         {
                             topUsers.map((user, i) => 
@@ -214,7 +239,8 @@ export default function Profile({editable=false}) {
                             )
                         }
                         
-                    </div>
+                    </div> */}
+                    <Leaderboard list={leaderboard}/>
                 </div>
                 <div className={cs(styles['development_chart'])}>
                     <p> نمودار توسعه </p>

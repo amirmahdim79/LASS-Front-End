@@ -273,7 +273,13 @@
                     width: 24px;
                     height: 24px;
                 }
+
+                .is_loading_leaderboard_title {
+                    @include functions.skeletonLoadingStyles(80px, 24px, 5px);
+                }
             }
+
+ 
 
             .top_users {
                 width: 100%;

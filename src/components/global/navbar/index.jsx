@@ -90,7 +90,7 @@ export default function Navbar({type}) {
                         <div className={cs(styles['smarties_container'])}>
                             <div className={cs(styles['data'])}>
                                 <img src={streak} alt='streak icon'/>
-                                <p style={{color: colors['warning-100']}}> {'-'} </p>
+                                <p style={{color: colors[' warning-dark-100']}}> {'-'} </p>
                             </div>
                             <div className={cs(styles['data'])}>
                                 <img src={sand} alt='sand icon'/>

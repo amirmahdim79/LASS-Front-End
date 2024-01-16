@@ -19,7 +19,7 @@ export default function TaskStatusBar({type}) {
             }
         }else {
             return {
-                'background-color': colors['warning-60'],
+                'background-color': colors['wwarning-dark-60'],
                 'color': colors['dark-shades-100']
             }
         }
@@ -30,7 +30,7 @@ export default function TaskStatusBar({type}) {
         //     }
         // } else if (type === text.status_2) {
         //     return {
-        //         'background-color': colors['warning-60'],
+        //         'background-color': colors['warning-dark-60'],
         //         'color': colors['dark-shades-100']
         //     }
         // } else if (type === text.status_3) {

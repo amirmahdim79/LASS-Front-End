@@ -1,0 +1,316 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+    // background-color: rgba(171, 188, 143, 0.305);
+
+    .chart {
+        width: 100%;
+        height: max-content;
+        min-height: 200px;
+        // background-color: rgba(255, 255, 0, 0.393);
+
+        border-bottom: 1px solid $light-accent-100;
+        opacity: 0;
+
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        animation-delay: .5s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation-name: fadeIn;
+        animation-name: fadeIn;
+        animation-timing-function: ease-in-out;
+
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-end;
+        justify-content: center;
+
+        .champion_podium {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+
+        .champion_podium_1 {
+            width: 80px;
+            height: 160px;
+            background-color: $main-color-100;
+            // animation: bounce-out-down 5s ease-in-out infinite;
+
+            animation: bounce-out-down 4s cubic-bezier(1, -1.09, 1, 1.26) infinite;
+            animation: bounce-out-down 2s cubic-bezier(0.28, 0.26, 0, 1.39) ;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            animation-delay: .3s;
+            // cubic-bezier(0.28, 0.26, 0, 1.42)
+
+            img {
+                position: absolute;
+                top: -28px;
+            }
+
+            .shining_star {
+                position: absolute;
+                width: 0; 
+                height: 0;
+                left: -2px; 
+                top: -2px;
+                // opacity: 0;
+                -webkit-animation: shine .7s;
+                animation: shine .7s;
+            }
+        }
+
+        .champion_podium_2 {
+            width: 58px;
+            height: 120px;
+            background-color: $light-accent-100;
+            // animation: bounce-out-down 5s ease-in-out infinite;
+
+            animation: bounce-out-down 4s cubic-bezier(1, -1.09, 1, 1.26) infinite;
+            animation: bounce-out-down 2s cubic-bezier(0.28, 0.26, 0, 1.39);
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            animation-delay: 0.5s;
+        }
+
+        .champion_podium_3 {
+            width: 58px;
+            height: 90px;
+            background-color: $dark-accent-100;
+            // animation: bounce-out-down 5s ease-in-out infinite;
+
+            animation: bounce-out-down 4s cubic-bezier(1, -1.09, 1, 1.26) infinite;
+            animation: bounce-out-down 2s cubic-bezier(0.28, 0.26, 0, 1.39);
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            animation-delay: .7s;
+        }
+
+        .name {
+            color: $dark-shades-100;
+            @include mixins.sub-description;
+            text-align: center;
+            padding-top: 60%;
+        }
+
+        .score {
+            color: $warning-100;
+            @include mixins.description;
+            position: absolute;
+            bottom: 0;
+        }
+
+        // .shine {
+        //     // width: 30px;
+        //     // height: 30px;
+        //     // -webkit-animation-duration: 1s;
+        //     // animation-duration: 1s;
+        //     // animation-delay: .5s;
+        //     // -webkit-animation-fill-mode: both;
+        //     // animation-fill-mode: both;
+        //     // -webkit-animation-name: fadeIn;
+        //     // animation-name: fadeIn;
+        //     // animation-timing-function: ease-in-out;
+
+        //     // -webkit-animation: shine 3s infinite;
+        //     // animation: shine 3s ease-in-out infinite;
+
+
+        //     -webkit-animation-duration: 1s;
+        //     animation-duration: 1s;
+        //     // animation-delay: .5s;
+        //     -webkit-animation-fill-mode: both;
+        //     animation-fill-mode: both;
+        //     -webkit-animation-name: glow;
+        //     animation-name: glow;
+        //     animation-timing-function: ease-in-out;
+        //     position: absolute;
+
+        //     animation: glow 5s ease-in-out infinite;
+        //     animation-direction: alternate;
+
+        //     width: 35px;
+        //     height: 35px;
+        //     position: absolute;
+        //     top: -33px;
+        //     left: 22px;
+        //     border-radius: 100%;
+        //     z-index: 2;
+        //     background-color: transparent;
+
+
+        //     width: 27px;
+        //     height: 27px;
+        //     position: absolute;
+        //     top: -29px;
+        //     left: 26px;
+
+
+            
+
+        // }
+
+    }
+
+    .top_users {
+        width: 100%;
+        height: calc(100% - 210px);
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
+        padding-top: 17px;
+
+        .user {
+            direction: rtl;
+            color: $dark-shades-100;
+            @include mixins.sub-description;
+            display: grid;
+            align-items: center;
+            grid-template-columns: 10px 35px auto;
+            column-gap: 10px;
+            padding: 2px 10px 2px 5px;
+
+            -webkit-animation-duration: 1.3s;
+            animation-duration: 1.3s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-name: bounceInUp;
+            animation-name: bounceInUp;
+
+            .num {
+                align-self: start;
+                margin-top: 3px;
+            }
+
+            .avatar {
+                @include functions.avatarStyles(35px, 100%);
+
+                .user_name {
+                    font-size: 10px;
+                }
+            }
+        
+            .empty_avatar {
+                @include functions.emptyAvatarStyles();
+                @include mixins.h6-text;
+            }
+        }
+
+        .user:hover {
+            cursor: pointer;
+        }
+
+        .user_is_logged_in {
+            background-color: $light-accent-100;
+            border-radius: 12px;
+            color: $light-shades-100;
+        }
+
+        .user_is_logged_in:hover {
+            cursor: default;
+        }
+    }
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    } 
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce-out-down {
+    0% { 
+        transform: translateY(100px); 
+        opacity: 0;
+    }
+    30% { 
+        transform: translateY(50px); 
+        opacity: 0;
+    }
+    55% {
+      transform: translateY(-30px);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+}
+
+@-webkit-keyframes shine {
+    0% {
+    //   transform: scale(0);
+    } 
+    50% {
+        // transform: scale(1.2);
+    }
+    100% {
+    //   transform: scale(0.7);
+    }
+}
+
+// @keyframes shine {
+//     0% {
+//     //   transform: scale(0.0);
+
+//         // transform: scale(.2) translate(0, 0);
+//         opacity: 0;
+//     } 
+//     // 50% {
+//     //     // transform: scale(1.2);
+//     //     transform: scale(.5) translate(-10px, -10px);
+//     // }
+//     // 70% {
+//     //     // transform: scale(0.7);
+//     //     transform: scale(.4) translate(-6px, -4px);
+//     // }
+//     100% {
+//         // transform: scale(0.7);
+//         // transform: scale(1) translate(0px, 0px);
+//         opacity: 1;
+//     }
+// }
+
+
+@keyframes glow {
+    0% { 
+        box-shadow: 1px 1px 1px 1px #ffffff;
+        box-shadow: 1px 1px 15px 7px #d3f5ff5b;
+        box-shadow: none;
+        background-color: transparent;
+    }
+    100% { 
+        // box-shadow: 1px 1px 16px 12px #ffffff;
+        box-shadow: 1px 1px 20px 10px #d3f5ffb3;
+        box-shadow: 1px 1px 20px 10px #ffffff6e;
+        box-shadow: 1px 1px 20px 13px rgb(255 255 255 / 44%);
+        background-color: #f0f8ff61;
+    }
+
+}
+
+@keyframes bounceInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+ 
+  
+  

@@ -1,7 +1,7 @@
 import { apiRequestObject } from "..";
 import { TRANSFORMER } from "./transformer"
 import { GET_REQUEST, POST_REQUEST } from "../constants";
-import { GET_MY_LABS, CREATE_LAB, ENROLL_USER, SPECIFIC_LAB, LABS_STUDENT_INFO, GET_LABS_STUDENTS } from "./endpoints";
+import { GET_MY_LABS, CREATE_LAB, ENROLL_USER, SPECIFIC_LAB, LABS_STUDENT_INFO, GET_LABS_STUDENTS, GET_LEADERBOARD } from "./endpoints";
 
 
 export const GetMyLabsAPI = apiRequestObject({
@@ -39,3 +39,10 @@ export const GetLabStudentsAPI = apiRequestObject({
     requestType: GET_REQUEST,
     transformer: TRANSFORMER,
 })
+
+export const GetLeaderboardAPI = apiRequestObject({
+    url: GET_LEADERBOARD,
+    requestType: GET_REQUEST,
+    transformer: TRANSFORMER,
+})
+

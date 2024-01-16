@@ -36,8 +36,10 @@ $pink-100         : #EE64AE;
 $error-100        : #FF0000;
 $error-60         : #ff000099; //#F25B5B;
 
-$warning-100      : #FF9D0A;
-$warning-60       : #ff9d0a99; //#DEF461;
+$warning-dark-100 : #FF9D0A;
+$warning-dark-60  : #ff9d0a99; //#DEF461;
+
+$warning-100      : #DEFF0A;
 
 $success-100      : #4ECC00;
 $success-60       : #4ecc0099; //#87D65B;
@@ -71,7 +73,9 @@ $success-60       : #4ecc0099; //#87D65B;
     error-60            : $error-60;
 
     warning-100         : $warning-100;
-    warning-60          : $warning-60;
+
+    warning-dark-100    : $warning-dark-100;
+    warning-dark-60     : $warning-dark-60;
 
     success-100         : $success-100;
     success-60          : $success-60;

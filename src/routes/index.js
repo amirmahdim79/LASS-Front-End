@@ -40,8 +40,10 @@ export const router = createBrowserRouter([
                 path: 'my-profile',
                 element: <Profile editable={true}/>,
             },
-            // a user see other user profile
             {
+                path: 'user_profile/:id',
+                element: <Profile />,
+            },            {
                 path: 'forum',
                 element: <Forum />,
             },

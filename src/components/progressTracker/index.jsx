@@ -135,7 +135,7 @@ export default function ProgressTracker({milestones}) {
     const [width, setWidth] = useState(0)
     // const totalSteps = steps.length
 
-    console.log("milestones", milestones);
+    // console.log("milestones", milestones);
 
 
     useEffect(() => {
