@@ -17,6 +17,10 @@
     } 
 }
 
+.container:hover {
+    cursor: pointer;
+}
+
 .checkmark {
     position: absolute;
     top: 0;
@@ -29,6 +33,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 5px;
+
+    img {
+        width: inherit;
+        height: inherit;
+    }
+
 }
 
 .container:hover input ~ .checkmark {

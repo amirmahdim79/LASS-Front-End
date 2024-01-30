@@ -1,0 +1,312 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+    background-color: $light-accent-20;
+    border-radius: 12px;
+    padding: 19px 10px;
+    min-height: 300px;
+
+    .header {
+        width: 100%;
+        height: 100%;
+        min-height: 100px;
+        max-height: 100px;
+        border-radius: inherit;
+        border: 1px solid $light-accent-100;
+        padding: 10px;
+
+        .row_1 {
+            width: 100%;
+            border-bottom: 1px solid $light-accent-100;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .items {
+                display: flex;
+                align-items: center;
+                @include mixins.h6-text;
+                color: $dark-shades-100;
+            }
+
+            .titles_wrapper {
+                justify-content: flex-start;
+                column-gap: 25px;
+
+                .current_users {
+                    // color: $main-color-100;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    column-gap: 5px;
+
+                    .add_icon_container {
+                        position: relative;
+                        
+                        .icon:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                    .add_user_modal {
+                        width:340px; 
+                        height:265px; 
+                        border-radius: 12px;
+                        border-top-right-radius: 0px;
+                        background-color: $dark-glass-75;
+                        @include mixins.open-modal-from-right;
+                    }
+                }
+
+                .clicked_title {
+                    color: $main-color-100;
+                }
+            }
+
+            .titles_wrapper > p:hover, .titles_wrapper .current_users > p:hover {
+                cursor: pointer;
+            }
+
+            .tools_wrapper {
+                justify-content: flex-end;
+                column-gap: 23px;
+
+                .filter_icon {
+                    width: 48px;
+                    height: 40px;
+                    border-radius: 12px;
+                    padding: 12px;
+                    background-color: $light-accent-25;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+
+        .row_2 {
+            width: 100%;
+            padding-top: 8px;
+            padding-right: 10px;
+            display: grid;
+            column-gap: 20px;
+            grid-template-columns: 0.9fr 60px 115px 1fr;
+            grid-template-columns: 36% 60px 115px 1fr;
+            grid-template-columns: 30% 60px 115px 1fr;
+            .cols {
+                display: flex;
+                align-items: center;
+                column-gap: 10px;
+                @include mixins.description;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+
+            .col_1 {
+                color: $dark-shades-60; 
+                // background-color: rgb(83, 163, 83);               
+            }
+
+            .col_2 {
+                color: $main-color-100;
+                column-gap: 2px;
+                // background-color: rgb(160, 236, 238);
+                // justify-content: center;
+            }
+
+            .col_3 {
+                color: $pink-100;
+                column-gap: 4px;
+                // background-color: indianred;
+                // justify-content: center;
+            }
+
+            .col_4 {
+                color: $dark-shades-60;     
+                column-gap: 4px;
+
+                .info_icon_container {
+                    position: relative;
+
+                    img:hover {
+                        cursor: pointer;
+                    }
+
+                    .info_box {
+                        width: 208px; 
+                        height: 315px; 
+                        border-radius: 12px;
+                        border-top-right-radius: 0px;
+                        background-color: $dark-glass-75;
+                        @include mixins.open-modal-from-right;
+
+                        .info_text_container {
+                            width: 100%;
+                            padding: 20px 15px;
+                            text-align: justify;
+                            direction: rtl;
+                            white-space: pre-line;
+                            word-spacing: 2px;
+                            line-height: 21px;
+                            color: $light-shades-80;
+                            @include mixins.description;
+                        }
+                    }
+                }
+
+
+                // background-color: khaki;
+            }
+
+        }
+
+    }
+
+    .data {
+        width: 100%;
+        height: 100%;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+
+        min-height: 330px;
+        max-height: 330px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        // background-color: plum;
+
+        .row {
+            height: max-content;
+            column-gap: 32px;
+            column-gap: 34px;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: 0.75fr 101px 101px 0.35fr;
+            grid-template-columns: 0.9fr 60px 115px 1fr;
+            grid-template-columns: 36% 55px 95px 1fr;
+            grid-template-columns: 30% 60px 113px 1fr;
+            grid-template-columns: 30% 55px 95px 1fr;
+
+            .user_info_container {
+                width: 100%;
+                display: flex;
+                column-gap: 10px;
+                color: $dark-shades-100;
+                // background-color: rgb(83, 163, 83);
+                @include mixins.h6-text;
+
+                .avatar {
+                    @include functions.avatarStyles(50px, 50%);
+                }
+    
+                .empty_avatar {
+                    @include functions.emptyAvatarStyles();
+                    @include mixins.h6-text;
+                }
+
+                .name_container {
+                    width: 100%;
+                    max-width: 200px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                }
+                
+                .name_container > p:nth-child(2) {
+                    @include mixins.sub-description;
+                }
+            }
+
+
+            .recent_activities {
+                cursor: default;
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr max-content;
+                column-gap: 8px;
+                padding-left: 31px;
+
+                .status_boxes {
+                    width: 100%;
+                    height: 40px;
+                    display: flex;
+                    column-gap: 6px;
+                    overflow: hidden;
+                    padding-left: 3px;
+                    // direction: ltr;
+                    
+                    &::-webkit-scrollbar {
+                        height: 5px;
+                        background-color: #eeeeee8f;
+                    }
+            
+                    &::-webkit-scrollbar-thumb {
+                        background:  #3dbbff;
+                        border-radius: 10px;
+                    }
+                }
+        
+                .status_boxes:hover {
+                    overflow-x: auto;
+                }
+            }
+
+            .recent_activities > p {
+                color: $error-100;
+                @include mixins.h6-text;
+                line-height: unset;
+                padding-top: 2px;
+            }
+
+            
+        }
+
+        .row > p:nth-of-type(1) {
+            color: $success-100;
+            direction: ltr;
+            // text-align: center;
+            @include mixins.h6-text;
+            // background-color: rgb(160, 236, 238);
+
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 6px;    
+        }
+
+        .row > div:nth-of-type(2) {
+            color: $pink-100;
+            // text-align: center;
+            @include mixins.h6-text;
+            // background-color: indianred;
+
+            p {
+                width: 40px;
+                text-align: center;
+            }
+        }
+
+
+
+
+        
+        
+
+        
+
+        // .recent_activities::-webkit-scrollbar {
+        //     display: none;
+        // }
+    }
+}

@@ -8,6 +8,10 @@ export default function CheckBoxV1({
     checked = false, 
     width = '20px', 
     height = '20px',
+    value,
+    onClick,
+    name = 'name',
+    id = 'id',
 }) {
 
     return (
@@ -15,10 +19,10 @@ export default function CheckBoxV1({
             className={cs(styles['container'])} 
             style={{width: width, height: height, minWidth: width, minHeight: height, maxWidth: width, maxHeight: height}}
         >
-            <input type="checkbox" defaultChecked={checked} />
-            <span className={cs(styles['checkmark'])} style={{...(checked && {borderColor: colors['success-100']}) }}>
+            <input type="checkbox" value={value} name={name} id={id}/>
+            <span className={cs(styles['checkmark'])} style={{...(checked && {borderColor: colors['success-100']})}} onClick={onClick}>
                 {
-                    checked && 
+                    value && 
                         <img 
                             src={icon}
                             alt='icon'

@@ -75,3 +75,14 @@ export const sortForum = (arr) => {
 
     return sortedArr
 }
+
+export const isEmptyObject = (obj) => {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+export const isBefore = (date) => {
+    const today = moment();
+    if (moment(date).diff(today) < 0) return true;
+    else return false
+}
+  

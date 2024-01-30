@@ -1,0 +1,55 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.btn_container {
+    width: max-content;
+
+    .switch {
+        display: inline-block;
+        width: 53px;
+        height: 27px; 
+        margin: 4px;
+        // transform: translateY(50%);
+        position: relative;
+
+        input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 30px;
+            box-shadow: 0 0 0 2px $light-accent-100, 0 0 4px $light-accent-100;
+            cursor: pointer;
+            border: 4px solid transparent;
+            overflow: hidden;
+            transition: 0.2s;
+            background-color: $dark-shades-100;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: $light-accent-100;
+            border-radius: 30px;
+            transform: translateX(-25px); 
+            transition: 0.2s;
+        }
+
+
+        .checked_input + .slider:before{
+            transform: translateX(25px); 
+            background-color: $main-color-100;
+        }
+
+        .checked_input + .slider{
+            box-shadow: 0 0 0 2px $main-color-100, 0 0 8px $main-color-100;
+        }
+    }
+}

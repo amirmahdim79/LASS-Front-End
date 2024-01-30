@@ -51,7 +51,6 @@
                     // top: 14px;
                     // right: 13px;
                     @include mixins.open-modal-from-right;
-                    z-index: 6;
                 }
             }
             
@@ -404,6 +403,7 @@
             @include mixins.open-modal-from-right;
             top: 3%;
             right:  auto;
+            white-space: pre-line;
         }
     }
     

@@ -6,10 +6,12 @@ const initialState = {
     Milestones: null,
     Students: null,
     CurrentMilestone: null,
+    userTasks: [],
     Events: null,
     prevId: '',
     labId: '',
     labGroups: [],
+    labStudentsTasks: [],
     labForums: undefined,
     forum: undefined,
     labGroupNewName: undefined,
@@ -52,6 +54,12 @@ export const labSlice = createSlice({
         setNewName: (state, action) => {
             state.labGroupNewName = action.payload
         },
+        setUserTasks:  (state, action) => {
+            state.userTasks = action.payload
+        },
+        setLabStudentsTasks:  (state, action) => {
+            state.labStudentsTasks = action.payload
+        },
     }
 })
 
@@ -67,4 +75,6 @@ export const {
     setLabForums,
     setForum,
     setNewName,
+    setUserTasks,
+    setLabStudentsTasks,
 } = labSlice.actions;

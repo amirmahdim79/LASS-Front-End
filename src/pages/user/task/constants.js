@@ -9,7 +9,7 @@ export const text = {
             title: 'گزارش کار‌های تحویل شده',
         },        
     },
-    reading: {
+    paper: {
         title: 'مطالعه مقالات',
         date: 'موعد انجام',
 

@@ -35,9 +35,11 @@ $pink-100         : #EE64AE;
 
 $error-100        : #FF0000;
 $error-60         : #ff000099; //#F25B5B;
+$error-50         : #EF7272;
 
 $warning-dark-100 : #FF9D0A;
 $warning-dark-60  : #ff9d0a99; //#DEF461;
+$warning-dark-50  : #EFC177; //#DEF461;
 
 $warning-100      : #DEFF0A;
 
@@ -67,15 +69,21 @@ $success-60       : #4ecc0099; //#87D65B;
     light-glass-100     : $light-glass-100;
 
     main-color-100      : $main-color-100;
+    main-color-90       : $main-color-90;
+    main-color-50       : $main-color-50;
+    main-color-30       : $main-color-30;
+
     pink-100            : $pink-100;
 
     error-100           : $error-100;
+    error-50            : $error-50;
     error-60            : $error-60;
 
     warning-100         : $warning-100;
 
     warning-dark-100    : $warning-dark-100;
     warning-dark-60     : $warning-dark-60;
+    warning-dark-50     : $warning-dark-50;
 
     success-100         : $success-100;
     success-60          : $success-60;

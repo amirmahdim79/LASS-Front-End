@@ -1,0 +1,10 @@
+@use "styles/mixins.scss";
+// @use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+    border: 1px solid $light-accent-100;
+}

@@ -20,7 +20,7 @@ import AddEventModal from './components/addModal';
 import ShowEventDataModal from './components/showEventDataModal';
 
 
-export default function Calendar({events, date, setDate, getEvents, setOpeneddddddcaaaaa=()=> {}}) {
+export default function Calendar({events, date, setDate, getEvents}) {
 
 
     const navigate = useNavigate();
@@ -93,7 +93,6 @@ export default function Calendar({events, date, setDate, getEvents, setOpenedddd
 
     const addEvent = () => {
         showAddEventModal();
-        setOpeneddddddcaaaaa(prev => !prev)
     }
 
     const closeEventsModal = () => {

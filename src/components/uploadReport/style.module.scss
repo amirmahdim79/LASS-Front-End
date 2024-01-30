@@ -1,127 +1,138 @@
 @use "styles/mixins.scss";
 @import "styles/colors.module.scss";
 
-.container {
+.wrapper {
     width: 100%;
-    height: 100%;
-    background-color: $light-accent-20;
-    border-radius: inherit;
+    height: max-content;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    justify-content: flex-end;
-    position: relative;
-    row-gap: 30px;
-    padding: 40px 0 15px 0;
+    row-gap: 20px;
+    /* justify-content: center; */
+    direction: ltr;
 
-    .upload_btn_wrapper {
-        position: relative;
-        overflow: hidden;
+    .container {
+        width: 100%;
+        height: 100%;
+        background-color: $light-accent-20;
+        border-radius: 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        row-gap: 12px;
-        cursor: pointer;
-
-        img {
-            width: 128px;
-            height: 128px;
-        }
-
-        .btn_wrapper {
+        justify-content: flex-end;
+        position: relative;
+        row-gap: 30px;
+        padding: 40px 0 15px 0;
+    
+        .upload_btn_wrapper {
+            position: relative;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            row-gap: 10px;
-
-            .btn {
-                width: max-content;
-                @include mixins.sub-title;
-                color: $dark-shades-100;
+            justify-content: center;
+            row-gap: 12px;
+            cursor: pointer;
+    
+            img {
+                width: 128px;
+                height: 128px;
             }
     
-            .upload_info {
-                @include mixins.sub-description;
-            }
-        }
-
-        .btn_wrapper input[type=file] {
-            font-size: 100px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-        } 
-
+            .btn_wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                row-gap: 10px;
+    
+                .btn {
+                    width: max-content;
+                    @include mixins.sub-title;
+                    color: $dark-shades-100;
+                }
         
-    }
-
-    .upload_progress_bar_wrapper {
-        width: 98%;
-        background-color: $light-shades-100;
-        height: 90px;
-        border-radius: 12px;
-        display: grid;
-        grid-template-columns: 35px 1fr;
-        grid-template-rows: 42px 34px;
-        padding: 10px 20px;
-        column-gap: 10px;
-        direction: ltr;
-        position: relative;
-
-        .folder_icon {
-            width: 100%;
-            height: 100%;
-            grid-area: 1 / 1 / span 2 / span 1;
-            display: flex;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            img {
-                width: 32px;
-                height: 32px;
+                .upload_info {
+                    @include mixins.sub-description;
+                }
             }
+    
+            .btn_wrapper input[type=file] {
+                font-size: 100px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                opacity: 0;
+            } 
+    
+            
         }
-
-        .file_name {
-            color: $dark-shades-100;
-            @include mixins.text;
-            grid-area: 1 / 2 / span 1 / 4;
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .progress_data {
-            color: $dark-shades-100;
-            @include mixins.sub-title;
-            grid-area: 2/2/span 2/3;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
+    
+        .upload_progress_bar_wrapper {
+            width: 98%;
+            background-color: $light-shades-100;
+            height: 90px;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 35px 1fr;
+            grid-template-rows: 42px 34px;
+            padding: 10px 20px;
             column-gap: 10px;
-            min-width: 120px;
-        }
-
-        .progress_bar_wrapper {
-            width: 97%;
-            height: 1px;
-            position:absolute;
-            bottom: 0px;
-            justify-self: center;
-
-
-            .progress_bar {
-                background-color: $main-color-100;
-                height: inherit;
-                transition: width  0.1s ease-in-out;
+            direction: ltr;
+            position: relative;
+    
+            .folder_icon {
+                width: 100%;
+                height: 100%;
+                grid-area: 1 / 1 / span 2 / span 1;
+                display: flex;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+    
+                img {
+                    width: 32px;
+                    height: 32px;
+                }
             }
+    
+            .file_name {
+                color: $dark-shades-100;
+                @include mixins.text;
+                grid-area: 1 / 2 / span 1 / 4;
+                display: flex;
+                align-items: flex-end;
+            }
+    
+            .progress_data {
+                color: $dark-shades-100;
+                @include mixins.sub-title;
+                grid-area: 2/2/span 2/3;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                column-gap: 10px;
+                min-width: 120px;
+            }
+    
+            .progress_bar_wrapper {
+                width: 97%;
+                height: 1px;
+                position:absolute;
+                bottom: 0px;
+                justify-self: center;
+    
+    
+                .progress_bar {
+                    background-color: $main-color-100;
+                    height: inherit;
+                    transition: width  0.1s ease-in-out;
+                }
+            }
+    
         }
-
+    
+    
     }
-
-
 }
+

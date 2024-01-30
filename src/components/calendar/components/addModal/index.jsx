@@ -337,6 +337,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                         <CheckBoxV2 value={state.taskType === 'paper'}  onClick={() => dispatch({payload: {type: 'taskType', value: 'paper'}})}/>
                                         {text.input_14}
                                     </div>
+                                    {state.taskType === 'paper' && <p className={cs(styles['task_info'])}> {text.desc_2} </p>}
                                     <TextInputV2 
                                         value={state.smarties}
                                         onChange={(e)=>dispatch({payload: {type: 'smarties', value: e.target.value}})}
@@ -349,7 +350,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                         fontSize={'16px'}
                                     />
                                 </div>
-                                <p className={cs(styles['task_info'])}> {text.desc} </p>
+                                <p className={cs(styles['task_info'])}> {text.desc_1} </p>
                             </div>
                         )
                     }

@@ -1,7 +1,7 @@
 import { apiRequestObject } from "..";
 import { TRANSFORMER } from "./transformer"
 import { POST_REQUEST } from "../constants";
-import { SUPS_RECENT_FILES } from "./endpoints";
+import { ADD_PERMISSIONS, SUPS_RECENT_FILES } from "./endpoints";
 
 
 export const AddSupRecentFileAPI = apiRequestObject({
@@ -10,3 +10,8 @@ export const AddSupRecentFileAPI = apiRequestObject({
     transformer: TRANSFORMER,
 })
 
+export const AddPermissionToUserAPI = apiRequestObject({
+    url: ADD_PERMISSIONS,
+    requestType: POST_REQUEST,
+    transformer: TRANSFORMER,
+})

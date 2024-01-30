@@ -58,7 +58,6 @@
             border-top-right-radius: 0px;
             background-color: $dark-glass-75;
             @include mixins.open-modal-from-right;
-            z-index: 6;
         }
     }
 
@@ -79,7 +78,7 @@
             position: relative;
 
             display: grid;
-            grid-template-columns: max-content auto 24px;
+            grid-template-columns: max-content auto 24px 24px;
 
             .avatar {
                 @include functions.avatarStyles(50px, 50%);
@@ -94,6 +93,7 @@
             .info {
                 width: 100%;
                 height: 100%;
+                height: max-content;
                 display: flex;
                 flex-direction: column;
                 row-gap: 4px;
@@ -101,73 +101,83 @@
                 .top {
                     width: 100%;
                     height: 100%;
-                    display: flex;
+                    // display: inline-flex;
                     justify-content: flex-start;
-                    flex-wrap: wrap;
+                    // flex-wrap: wrap;
                     color: $dark-shades-100;
+                    direction: rtl !important;
+                    max-width: 135px;
+                    min-width: auto;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 165px;
+                    min-width: 0;
+                }
+
+                .top > div:first-of-type {
+                    @include mixins.h6-text;
+                    width: max-content;
+                    white-space: nowrap;
+                    border-left: 1px solid $dark-shades-100;
+                    padding-left: 4px;
+                    margin-left: 4px;
+                    display: inline;
                     direction: rtl;
-    
-                    span:first-of-type {
-                        @include mixins.h6-text;
-                        width: max-content;
-                        white-space: nowrap;
-                        border-left: 1px solid $dark-shades-100;
-                        padding-left: 4px;
-                        max-width: 135px;
-                        min-width: auto;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                    }
+                    // max-width: 135px;
+                    // min-width: auto;
+                    // white-space: nowrap;
+                    // overflow: hidden;
+                    // text-overflow: ellipsis;
+                }
 
-                    span:first-of-type:hover  {
-                        cursor: pointer;
-                    }
+                div:first-of-type:hover  {
+                    cursor: pointer;
+                }
 
-                    span:first-of-type:hover .tooltip{
-                        display: block;
-                        justify-content: baseline;
-                        flex-wrap: wrap;
-                    }
+                div:first-of-type:hover .tooltip{
+                    display: block;
+                    justify-content: baseline;
+                    flex-wrap: wrap;
+                }
 
-                    .tooltip {
-                        width: fit-content;
-                        min-height: 30px;
-                        max-height: max-content;
-                        background-color: $light-accent-50;
-                        padding: 7px 10px;
-                        border-radius: 12px;
+                .tooltip {
+                    width: fit-content;
+                    min-height: 30px;
+                    max-height: max-content;
+                    background-color: $light-accent-50;
+                    padding: 7px 10px;
+                    border-radius: 12px;
+                    position: absolute;
+                    z-index: 1;
+                    display: none;
+                    left: 9%;
+                    top: 0;
+                    max-width: 211px;
+                    min-width: 211px;
+                    white-space: break-spaces;
+                    box-shadow: 1px 1px 3px 1px #c7c4cba8;
+                    box-shadow: 1px 1px 3px 1px rgb(197 197 197 / 50%);
+
+                    .arrow {
                         position: absolute;
-                        z-index: 1;
-                        display: none;
-                        left: 9%;
-                        top: 0;
-                        max-width: 211px;
-                        min-width: 211px;
-                        white-space: break-spaces;
-                        box-shadow: 1px 1px 3px 1px #c7c4cba8;
-                        box-shadow: 1px 1px 3px 1px rgb(197 197 197 / 50%);
-
-                        .arrow {
-                            position: absolute;
-                            right: -10px;
-                            top: 15px;
-                            width: 0;
-                            height: 0;
-                            border-top: 8px solid transparent;
-                            border-left: 10px solid  $light-accent-50;
-                            border-bottom: 8px solid transparent;
-                        }
-
-                        .type {
-                            @include mixins.sub-title;
-                        }
+                        right: -10px;
+                        top: 15px;
+                        width: 0;
+                        height: 0;
+                        border-top: 8px solid transparent;
+                        border-left: 10px solid  $light-accent-50;
+                        border-bottom: 8px solid transparent;
                     }
 
-                    p:last-of-type {
+                    .type {
                         @include mixins.sub-title;
-                        padding-right: 4px;
                     }
+                }
+
+                p:last-of-type {
+                    @include mixins.sub-title;
+                    padding-right: 4px;
                 }
 
                 .bottom {
@@ -180,6 +190,14 @@
             .trash_icon {
                 position: absolute;
                 left: 0;
+            }
+
+            .edit_icon_container {
+                position: relative;
+                
+                .icon:hover {
+                    cursor: pointer;
+                }
             }
         }
 
@@ -202,4 +220,6 @@
         align-items: center;
         justify-content: center;
     }
+
+
 }

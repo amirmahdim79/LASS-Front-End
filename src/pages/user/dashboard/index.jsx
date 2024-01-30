@@ -11,11 +11,12 @@ import { useEffect, useState } from 'react';
 import { useLabActions } from './hooks/useLabsActions';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { setPath, setMilestone, setCurrentMilestone, setPrevInd, setEvents, setLabId, setStudents } from "store/labSlice/index"
+import { setPath, setMilestone, setCurrentMilestone, setPrevInd, setEvents, setLabId, setStudents, setUserTasks } from "store/labSlice/index"
 import Preloader from 'components/global/preloaders';
 import Calendar from 'components/calendar';
 import moment from 'moment';
 import 'moment/locale/fa';
+import TaskPreview from './components';
 
 export default function UserDashboard() {
 
@@ -30,6 +31,7 @@ export default function UserDashboard() {
     const path = useSelector(state => state.lab.Paths);
     const milestones = useSelector(state => state.lab.Milestones);
     const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
+    const userTasks = useSelector(state => state.lab.userTasks);
     const events = useSelector(state => state.lab.Events);
     const labId = useSelector(state => state.lab.labId);
 
@@ -39,7 +41,8 @@ export default function UserDashboard() {
 
 
     // let firstday = moment().month(1);
-    // console.log("firstday", firstday);
+    // console.log("currentMilestone?.Tasks", currentMilestone?.Tasks);
+    // console.log("userTasks", userTasks);
 
 
 
@@ -170,7 +173,7 @@ export default function UserDashboard() {
         },
     ]
 
-    const { getMyLabs, getLabEvents } = useLabActions();
+    const { getMyLabs, getLabEvents, getUserTasks } = useLabActions();
 
     const getEvents= (labId) => {
         getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
@@ -180,10 +183,7 @@ export default function UserDashboard() {
         .catch(err => console.log(err))
     }
 
-    
-
     useEffect(() => {
-
         getMyLabs().then(res => {
             dispatch(setPath(res.data.Paths[0]))
             dispatch(setMilestone(res.data.Paths[0].Milestones))
@@ -202,43 +202,22 @@ export default function UserDashboard() {
                     }
             }
 
+            getUserTasks()
+                .then(res => {
+                    dispatch(setUserTasks(res.data))
+                })
+                .catch(err => console.log(err))
+
         }).catch(err => {
             console.log(err);
         })
 
     }, [now])
 
-    // console.log("---events--", events);
 
 
     return (
         <div className={cs(styles['container'])}>
-
-            {/* <div className={cs(styles['step_progress_container'])}>
-                {
-                    path?.name
-                        ? <h5> {text.t1.title} - {`[${path?.name}]`}</h5>
-                        : 
-                            <div className={cs(styles['title_container'])}>
-                                <h5> {text.t1.title} - </h5>
-                                <span> 
-                                    {'['} 
-                                    <img
-                                        src={text_preloader}
-                                        alt='loading'
-                                    />
-                                    {']'} 
-                                </span>
-                            </div>
-                }
-                
-                { milestones 
-                    ? <ProgressTracker/> 
-                    : <Preloader />
-                }
-               
-            </div> */}
-
             <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
 
             <div className={cs(styles['upcoming_activities_container'])}>
@@ -250,26 +229,11 @@ export default function UserDashboard() {
                     {
                         currentMilestone
                             ? 
-                                currentMilestone?.Tasks.map((task, index) => {
-                                    return (
-                                        <div className={cs(styles['activity-box'])} key={index} onClick={() => navigate(`../task/${task._id}/${task.activity === 'upload' ? 'upload' : 'reading'}`)}>
-                                            <div className={cs(styles['activity-data'])}>
-                                                <div className={cs(styles['right-column'])}> 
-                                                    <div className={cs(styles['icon'])}>
-                                                        <img src={taskIcon} alt='icon'/>
-                                                    </div>
-                                                    <p className={cs(styles['activity-title'])}> {task.name} </p>
-                                                    {task?.type && <TaskStatusBar type={task?.type}/>}                                            
-                                                </div>
-        
-                                                <div className={cs(styles['activity-deadline'])}> {task?.type === 'fixed' ? '-' : 'نداریم فهلا'} </div>
-                                            </div>
-                                            <p className={cs(styles['activity-text'])}> {task.desc} </p>
-                                        </div>
-                                    )
-                                })
-                            :
-                                <Preloader />
+                               <>
+                                    {currentMilestone?.Tasks.map((task, index) => <TaskPreview task={task} key={index}/>)}
+                                    {userTasks.map((task, index) => <TaskPreview task={task} type={'usertask'} key={index}/>) }
+                               </>
+                            : <Preloader />
                     }
                 </div>
 

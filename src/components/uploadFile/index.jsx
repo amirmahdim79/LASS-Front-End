@@ -77,6 +77,10 @@ export default function UploadFile({updatePapers}) {
         const formData = new FormData();
         formData.append('file', fileData.data)
 
+
+        console.log("formData", formData);
+        console.log("fileData", fileData);
+
         fileData.tags
             .filter((item, index) => fileData.tags.indexOf(item) === index)
             .forEach((t) => formData.append("tags[]", t))
@@ -86,6 +90,7 @@ export default function UploadFile({updatePapers}) {
                 'x-auth-token': GET_TOKEN()
             },
             onUploadProgress: data => {
+                console.log("ddddddddd", data);
                 setProgress(Math.round((100 * data.loaded) / data.total))
             }
         })
@@ -248,12 +253,15 @@ export default function UploadFile({updatePapers}) {
 
                                         <div className={cs(styles['tags_modal'])}>
                                             <div className={cs(styles['header'])}>
-                                                <img 
-                                                    src={DarkAdd}
-                                                    alt='close icon'
-                                                    className={cs(styles['active_add_icon'])}
-                                                    onClick={() => setTag('')}
-                                                /> 
+                                                { tag && 
+                                                    <img 
+                                                        src={DarkAdd}
+                                                        alt='close icon'
+                                                        className={cs(styles['active_add_icon'])}
+                                                        onClick={() => setTag('')}
+                                                    /> 
+                                                }
+                                               
                                                 <TextInput
                                                     value={tag}
                                                     onChange={onChangeTag}

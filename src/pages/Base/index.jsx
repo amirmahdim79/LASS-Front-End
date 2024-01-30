@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { useBaseActions } from "./hooks/useBaseActions";
 import { addUser } from "store/userSlice/index"
 import { setStudents } from "store/labSlice";
@@ -23,7 +23,7 @@ export default function Base({type}) {
     const userType = localStorage.getItem('type');
     const labId = useSelector(state => state.lab.labId);
     const params = useParams();
-
+    const location = useLocation()
 
     useEffect(() => {
         if ( userType === type ) {
@@ -103,16 +103,18 @@ export default function Base({type}) {
     }, []);
 
     useEffect(() => {
-        if (params.id) {
-            const interval = setInterval(() => {
-                getOneForum({}, `/${params.id}?type=${userType === 'supervisor' ? 'Supervisor' : 'User'}`)
-                .then(res => dispatch(setForum(res.data)))
-                .catch(err => console.log(err))
-            }, 10000);
-    
-            return () => clearInterval(interval);
+        if (location.pathname.includes('forum')) {
+            if (params.id) {
+                const interval = setInterval(() => {
+                    getOneForum({}, `/${params.id}?type=${userType === 'supervisor' ? 'Supervisor' : 'User'}`)
+                    .then(res => dispatch(setForum(res.data)))
+                    .catch(err => console.log(err))
+                }, 10000);
+        
+                return () => clearInterval(interval);
+            }
         }
-    }, [params.id]);
+    }, [params.id, location.pathname]);
 
     
     return (

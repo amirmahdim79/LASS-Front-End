@@ -11,7 +11,7 @@ import { useEffect } from 'react'
 import { useLabActions } from './hooks/useLabsActions'
 import { useReducer } from 'react'
 import { reducer } from './reducers'
-import { setPath, setStudents, setEvents, setLabId } from "store/labSlice/index"
+import { setPath, setStudents, setEvents, setLabId, setLabStudentsTasks } from "store/labSlice/index"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import LabSummary from 'components/labSummary'
@@ -21,7 +21,9 @@ import useInput from 'hooks/useInputHandler'
 import moment from 'moment';
 import 'moment/locale/fa';
 import Calendar from 'components/calendar'
-import UsersList from 'components/usersListG'
+import ToDos from '../../../components/toDos'
+// import UsersList from 'components/usersListG'
+import UsersList from 'components/usersListPro'
 
 
 
@@ -38,18 +40,16 @@ export default function SupervisorDashboard() {
 
 
     const { value: now, setValue: setNow } = useInput(moment());
-    const { value: openedddddd, setValue: setOpenedddddd } = useInput(false);
-    const { value: openeddddddcaaaa, setValue: setOpeneddddddcaaaaa } = useInput(false);
 
     const [open, show, close] = useModal();
-    const { getMyLabs, createLabs, getLabEvents, getLabStudentInfo } = useLabActions();
+    const { getMyLabs, createLabs, getLabEvents, getLabStudentsTasks } = useLabActions();
     
     const initialState = {
         name: '',
         desc: '',
     }
 
-    console.log("openedddddd", openedddddd);
+    // console.log("openedddddd", openedddddd);
 
     const [ state , dispatch] = useReducer( reducer, initialState );
 
@@ -79,6 +79,17 @@ export default function SupervisorDashboard() {
             })
     }
 
+    const getStudentsTasks = (labId) => {
+        getLabStudentsTasks({}, `?lab=${labId}`)
+            .then(res => {
+                // console.log("tasks", res.data);
+                dispatchLab(setLabStudentsTasks(res.data));
+            })
+            .catch(err => {
+                console.log(" tasks eeeeeeeeeeee", err);
+            })
+    }
+
 
     useEffect(() => {
         getMyLabs({}, '?sups=true').then(res => {
@@ -87,7 +98,8 @@ export default function SupervisorDashboard() {
             dispatchLab(setStudents(res.data.Students))
             dispatchLab(setLabId(res.data._id))
 
-            getEvents(res.data.Paths[0]?.Lab)
+            getEvents(res.data._id)
+            getStudentsTasks(res.data._id)
         }).catch(err => {
             console.log("eeeeeeeeeeee", err);
         })
@@ -100,7 +112,7 @@ export default function SupervisorDashboard() {
     // }, [now, path])
 
     const openUserProfile = (uId) => {
-        console.log("iddddddddd", uId);
+        // console.log("iddddddddd", uId);
         navigate(`../user_profile/${uId}`)
         // dispatch(addUser(res.data))
     }
@@ -111,12 +123,33 @@ export default function SupervisorDashboard() {
     return (
         <div className={cs(styles['container'])} >
             <div className={cs(styles['boxes_container'])}>
-                <div className={cs(styles['top_container'])} style={ openedddddd ? {zIndex: '-2'} : {zIndex: '-3'}}>
-                    <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents} setOpeneddddddcaaaaa={setOpeneddddddcaaaaa}/>
+                <div className={cs(styles['calendar_container'])}>
+                    <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents} />
                 </div>
 
-                <div className={cs(styles['right_container'])} style={ openeddddddcaaaa ? {zIndex: '-4'} : {zIndex: '-4'}}>
-                    {/* <UsersList /> */}
+                <div className={cs(styles['users_container'])}>
+                    <UsersList />
+                    {/* <UsersList canAddMember={true}/> */}
+
+                    <ToDos/>
+                </div>
+
+                
+            {/* <UsersList
+                students={students}
+                width={'unset'}
+                hasMoreInfo={true}
+                moreInfo={'تاریخ تحویل نمونه'}
+                userHasClickOption={true}
+                userOnClickHandler={(uId) => openUserProfile(uId)}
+                userDataMaxWidth={'14vw'}
+                canAddMember={true}
+            /> */}
+                {/* <div className={cs(styles['top_container'])}>
+                    <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents} />
+                </div> */}
+
+                {/* <div className={cs(styles['right_container'])} >
                     <UsersList
                         students={students}
                         width={'unset'}
@@ -128,16 +161,20 @@ export default function SupervisorDashboard() {
                         canAddMember={true}
                     />
 
-                </div>
+                </div> */}
 
-                <div className={cs(styles['left_container'])}>
+                {/* <div className={cs(styles['left_container'])}>
                     <LabSummary />
                     <div className={cs(styles['inner_container'])}>
                         <OverdueTasks />
                         <EnrollmentRequests />
                     </div>
-                </div>                
+                </div>                 */}
+
+
+
             </div>
+
 
 
 

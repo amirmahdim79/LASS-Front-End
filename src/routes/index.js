@@ -8,9 +8,9 @@ import SupArticlesDataBase from "pages/supervisor/articlesDataBase";
 import Task from "pages/user/task";
 import Profile from "pages/user/profile";
 import Forum from "pages/common/forum";
-import SupSettings from "pages/supervisor/settings";
 import GroupSettings from "pages/supervisor/settings/groupSettings";
 import Email from "pages/common/emails";
+import Settings from "pages/common/settings";
 
 export const router = createBrowserRouter([
     {
@@ -37,6 +37,10 @@ export const router = createBrowserRouter([
                 element: <Task />,
             },
             {
+                path: 'usertask/:id/:type',
+                element: <Task />,
+            },
+            {
                 path: 'my-profile',
                 element: <Profile editable={true}/>,
             },
@@ -50,6 +54,14 @@ export const router = createBrowserRouter([
             {
                 path: 'forum/:id',
                 element: <Forum />,
+            },
+            {
+                path: 'settings',
+                element: <Settings />,
+            },
+            {
+                path: 'settings/group/:id',
+                element: <GroupSettings />,
             },
             {
                 path: 'new-email',
@@ -98,7 +110,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'settings',
-                element: <SupSettings />,
+                element: <Settings />,
             },
             {
                 path: 'settings/group/:id',

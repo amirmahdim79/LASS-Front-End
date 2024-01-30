@@ -17,6 +17,7 @@ import Modal from 'components/global/modal'
 import addIcon from 'assets/icons/essential/add/dark-color.svg'
 import delIcon from 'assets/icons/essential/trash/dark-color.svg'
 import delRedIcon from 'assets/icons/essential/trash/error-color.svg'
+import editIcon from 'assets/icons/contents/edit_2/dark-color.svg'
 import Button from 'components/global/button'
 import useInput from 'hooks/useInputHandler'
 import useToast from 'hooks/useToast'
@@ -61,12 +62,11 @@ export default function UsersList({
     canDeleteMember = false,
     deleteOnClickHandler = () => {},
 
+    canEditPermissions = false,
+    onClickEditPermissions = () => {},
+
     hasMoreInfo = false,
     moreInfo = '',
-
-
-    openedddddd=false,
-    setOpenedddddd=() => {}
 }) {
 
     const params = useParams();
@@ -126,7 +126,7 @@ export default function UsersList({
                             <img 
                                 src={addIcon}
                                 alt='add icon'
-                                onClick={() => {showAddMemberModal(); setOpenedddddd(prev => !prev)}}
+                                onClick={() => showAddMemberModal()}
                                 className={cs(styles['icon'])}
                             />
                             <Modal 
@@ -195,17 +195,17 @@ export default function UsersList({
 
                                     <div className={cs(styles['info'])}>
                                         <div className={cs(styles['top'])} style={{alignItems: !hasMoreInfo ? 'center' : 'flex-start'}}>
-                                            <span style={{maxWidth: userDataMaxWidth}}> 
-                                                {s?.firstName} {s?.lastName}
+                                            <div style={{maxWidth: userDataMaxWidth}}> 
+                                                <span>{s?.firstName} {s?.lastName}</span>
                                                 <div className={cs(styles['tooltip'])}> 
                                                     <div className={cs(styles['arrow'])} />
                                                     {s?.firstName} {s?.lastName}   
                                                     <p className={cs(styles['type'])}> {s?.type} </p>
                                                 </div>
-                                            </span>
-
-                                            <p> {s?.type} </p>
+                                            </div>
+                                            <div style={{display:'inline', direction:'rtl'}}>{s?.type}</div>
                                         </div>
+
                                         {hasMoreInfo && (
                                             <div className={cs(styles['bottom'])}>
                                                 <p> {moreInfo}</p>
@@ -222,6 +222,17 @@ export default function UsersList({
                                             onMouseEnter={() => handleMouseEnter(i)}
                                             onMouseLeave={() => handleMouseLeave(i)}
                                         />
+                                    )}
+                                    
+                                    { canEditPermissions && (
+                                        // <div className={cs(styles['edit_icon_container'])}>
+                                            <img 
+                                                src={editIcon}
+                                                alt='edit icon'
+                                                onClick={(e) => {e.stopPropagation(); onClickEditPermissions(s)}}
+                                                className={cs(styles['icon'])}
+                                            />
+                                        // </div>
                                     )}
                                 </div>
                             )

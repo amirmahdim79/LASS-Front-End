@@ -77,6 +77,7 @@
 
             overflow-y: auto;
             overflow-x: hidden;
+            scrollbar-gutter: stable;
 
             &::-webkit-scrollbar {
                 width: 10px;

@@ -1,0 +1,25 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 1px;
+
+    .row_header {
+        width: 100%;
+        @include mixins.h6-text;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 16px;
+    }
+}
+
+.row > p {
+    @include mixins.sub-description;
+    word-spacing: 1px;
+    opacity: 0.9;
+}

@@ -1,0 +1,73 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 5px 118px 10px 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    column-gap: 30px;
+
+    .settings_main_panel {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1.5fr 0.7fr;
+        grid-template-rows: 1fr 1fr;
+        column-gap: 20px;
+        row-gap: 10px;
+
+        .goups_container {
+            width: 100%;
+            height: 380px;
+            grid-area: 1 / 2 / 2 / 3;
+            border-radius: 12px;
+            background-color: $light-accent-20;
+            padding: 21px 19px;
+        }
+
+        .path_container {
+            width: 100%;
+            height: 380px;
+            grid-area: 1 / 1 / 2 / 2;
+            border-radius: 12px;
+            background-color: $light-accent-20;
+            padding: 20px 20px 10px;
+
+
+            @include mixins.h5-text;
+            direction: rtl;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            row-gap: 16px;
+
+            p {
+                width: 100%;
+            }
+
+        }
+
+        .calendar_container {
+            width: 100%;
+            border-radius: 12px;
+            background-color: $light-accent-20;
+            grid-area: 2 / 1 / 3 / 3;
+        }
+
+    }
+
+    .permissions_modal {
+        width: 100%;
+        height: 100%;
+        background-color: $dark-glass-75;
+        border-radius: 15px;
+        @include mixins.open-modal-from-right;
+        @include  functions.setFixedSize(757px, 530px);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
