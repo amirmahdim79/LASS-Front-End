@@ -208,7 +208,6 @@ export default function SupervisorDashboard() {
                                     onChange={(e)=>dispatch({payload: {type: 'name', value: e.target.value}})}
                                     placeholder={text.input_1} 
                                     dir={'rtl'}
-                                    opacity={'0.7'}
                                 />
                             </div>
                             <div>
@@ -218,7 +217,6 @@ export default function SupervisorDashboard() {
                                     onChange={(e)=>dispatch({payload: {type: 'desc', value: e.target.value}})}
                                     placeholder={text.input_2} 
                                     rows={'4'}
-                                    opacity={'0.7'}
                                 />
                             </div>
                         </div>

@@ -343,7 +343,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                         onChange={(e)=>dispatch({payload: {type: 'smarties', value: e.target.value}})}
                                         placeholder={text.input_15} 
                                         dir={'rtl'}
-                                        opacity={'0.8'}
                                         width={'230px'}
                                         fontFamily={'pinar_light'}
                                         fontWeight={'300'}
@@ -361,7 +360,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                     onChange={(e)=>dispatch({payload: {type: 'name', value: e.target.value}})}
                     placeholder={text.input_1} 
                     dir={'rtl'}
-                    opacity={'0.8'}
                     width={'255px'}
                     fontFamily={'pinar_light'}
                     fontWeight={'300'}
@@ -374,7 +372,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                     onChange={(e)=>dispatch({payload: {type: 'desc', value: e.target.value}})}
                     placeholder={text.input_2} 
                     rows={'6'}
-                    opacity={'0.8'}
                     width={'363px'}
                     fontFamily={'pinar_light'}
                     fontWeight={'300'}

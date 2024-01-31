@@ -1,0 +1,205 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 5px 118px 10px 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    column-gap: 30px;
+    background-color: orange;
+
+
+    .sidebar {
+        width: 100%;
+        min-width: 290px;
+        max-width: 290px;
+        height: calc(100vh - 92px);
+        // max-height: 700px;
+        background-color: $dark-accent-100;
+        color: $light-shades-100;
+        position: fixed;
+        border-radius: 12px;
+        left: 20px;
+        // min-height: 200px;
+        padding: 25px 20px;    
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: flex-end;
+
+        .items_list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            row-gap: 10px;
+
+            .item {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                row-gap: 5px;
+
+                .header {
+                    width: 100%;
+                    @include mixins.h6-text;
+                    display: flex;
+                    direction: rtl;
+                    align-items: center;
+                    column-gap: 10px;
+
+    
+                    .icon {
+                        padding: 8px;
+                        border-radius: 12px;
+                    }
+                }
+            }
+
+            .item > p {
+                @include mixins.sub-description;
+                direction: rtl;
+                padding-right: 40px;
+                line-height: 25px;
+            }
+            
+            .item:first-child {
+                border-bottom: 1px solid $light-shades-50;
+                padding-bottom: 5px;
+            }
+
+            .item:nth-child(1) .header .icon {
+                background-color: $main-color-100;
+            }
+
+            .item:nth-child(2) .header .icon {
+                background-color: $light-accent-100;
+            }
+
+            .item:nth-child(3) .header .icon {
+                background-color: $warning-dark-100;
+            }
+        }
+
+
+    }
+
+    .sidebar > p:first-of-type {
+        direction: rtl;
+        @include mixins.h5-text;
+    }
+
+    .main_panel {
+        width: 100%;
+        height: calc(100vh - 92px);
+        margin-left: calc(290px + 30px);
+        border-radius: 12px;
+        background-color: $light-accent-20;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        row-gap: 20px;
+
+        .inputs_container {
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            align-items: flex-start;
+            justify-content: space-between;
+            border-bottom: 1.5px solid $light-shades-100;
+            padding-bottom: 22px;
+        }
+
+        .inputs_container > div:first-child {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            row-gap: 12px;
+        }
+
+        .buttons_container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            row-gap: 20px;
+
+            .new_milestone {
+                width: 100%;
+                background-color: rgb(184, 54, 165);
+
+                .header {
+                    width: 100%;
+                    display: flex;
+                    background-color: yellow;
+                    justify-content: space-between;
+                    flex-direction: row-reverse;
+                    align-items: center;
+
+                    .title_container {
+                        width: max-content;
+                        @include mixins.h6-text;
+                        display: flex;
+                        direction: rtl;
+                        align-items: center;
+                        position: relative;
+        
+                        .icon {
+                            padding: 8px;
+                            border-radius: 12px;
+                            background-color: $main-color-100;
+                        }
+    
+                        .milestone_modal {
+                            width: 100%;
+                            background-color: $dark-glass-75;
+                            border-radius: 12px;
+                            border-top-right-radius: 0px;
+                            @include mixins.open-modal-from-right;
+                            @include  functions.setFixedSize(650px, 424px);
+                            top: 7px;
+                            right: 47px;
+                        }
+                    }
+
+                    .title_container > p {
+                        padding-right: 10px;
+                    }
+
+                    .title_container:hover {
+                        cursor: pointer;
+                    }
+
+                    .edit_buttons {
+                        width: max-content;
+                        display: flex;
+                        flex-direction: row-reverse;
+                        align-items: center;
+                        column-gap: 4px;
+
+                        img:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .button_container {
+                    width: 100%;
+                    padding-right: 40px;
+
+                }
+            }
+        }
+    }
+
+    .main_panel > p {
+        color: $dark-shades-100;
+        @include mixins.h5-text;
+    }
+
+}

@@ -11,10 +11,11 @@ const SelectInputV2 = ({
     type = 'text',
     title = '',
     width = '100%',
+    height = '52px',
     dir = 'rtl',
-    opacity = '1',
     fontSize = '20px' ,
     fontWeight = '400',
+    fontFamily = '',
     isValid = true,
     showError = true,
     disabled = false,
@@ -76,17 +77,21 @@ const SelectInputV2 = ({
     }, [suggestions]);
 
     return ( 
-        <div ref={inputElement} className= {cs(styles['container'])} style={{ width:width , direction:dir}} >
+        <div 
+            ref={inputElement} 
+            className= {cs(styles['container'])} 
+            style={{ width:width , direction:dir, ...(fontFamily ? {fontFamily: fontFamily} : {fontFamily: 'pinar_reg'}),}} 
+        >
             { title &&  <p style={{fontSize:fontSize, fontWeight:fontWeight}}> {title} </p> }
             
-            <div onClick={openToggle} className={cs(styles['input_container'])}  scrollbar={true} style={{ opacity: opacity}}>
+            <div onClick={openToggle} className={cs(styles['input_container'])}  scrollbar={true} style={{height: height, ...(toggle && {boxShadow: '0px 6px 10px -5px #00000012'})}}>
                 <input 
                     value={value} 
                     type={type} 
                     onChange={filter} 
                     ref={ref} 
                     className={cs(styles['input'])} 
-                    style={{fontSize: fontSize}}
+                    style={{fontSize: fontSize, fontFamily: fontFamily}}
                     disabled={disabled} 
                     placeholder={placeholder}
                 />
@@ -97,14 +102,20 @@ const SelectInputV2 = ({
                     />
                 </div>
             </div>
-            {toggle && <div className={cs(styles['choices'])} style={{...(title.trim().length === 0 ? {top: '55px'} : {top: '88px'})}}>
+            {toggle && <div className={cs(styles['choices'])} style={{...(title.trim().length === 0 ? {top: height} : {top: '88px'}), ...(toggle && {boxShadow: '0px 6px 10px -2px #00000012'})}}>
                 {possibleChoices && possibleChoices.map((e, i) => {
-                    return (
-                        <div className={cs(styles['choice'])} key={i} onClick={()=>{handleChangeSelect(e)}}>
-                            <button disabled={addedOptions.includes(e)} className={cs(styles['choice_content'])}> {e} </button>
-                        </div>
-                    )
-                })}
+                        return (
+                            <div className={cs(styles['choice'])} key={i} onClick={()=>{handleChangeSelect(e)}}>
+                                <button 
+                                    disabled={addedOptions.includes(e)} 
+                                    className={cs(styles['choice_content'])}
+                                    style={{...(i === possibleChoices.length - 1 && {borderBottom: 'none'})}}
+                                > 
+                                    {e} 
+                                </button>
+                            </div>
+                        )
+                    })}
             </div>}
             
             {(!isValid && showError) && <p className={cs(styles['error_text'])}>{errorMessage}</p>}

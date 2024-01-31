@@ -19,6 +19,7 @@ import { useModal } from 'hooks/useModal'
 import PermissionsModal from './modals/permissions'
 import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions'
 import { setStudents } from 'store/labSlice'
+import addIcon from 'assets/icons/essential/add/dark-color.svg'
 
 export default function Settings() { 
 
@@ -39,12 +40,14 @@ export default function Settings() {
 
     const students = useSelector(state => state.lab.Students);
     const labId = useSelector(state => state.lab.labId);
+    const permissions = useSelector(state => state.user.permissions);
 
     const [openEditPermissionsModal, showEditPermissionsModal, closeEditPermissionsModal] = useModal();
 
     const { value: selectedStudent, setValue: setSelectedStudent } = useInput({});
     const { value: permissionsList, setValue: setPermissionsList } = useInput([]);
 
+    const userType = localStorage.getItem('type');
 
     const onClickUser = (userId) => {
         navigate(`../user_profile/${userId}`)
@@ -99,7 +102,16 @@ export default function Settings() {
                     <Groups />
                 </div>
                 <div className={cs(styles['path_container'])}>
-                    <p> مسیر‌راه‌ها </p>
+                    <div className={cs(styles['header'])}>
+                        <p> مسیر‌راه‌ها </p>
+                        { (userType === 'supervisor' || (userType === 'user' && permissions.include('lab'))) && 
+                            <img 
+                                src={addIcon}
+                                alt='add icon'
+                                onClick={() => navigate('../create-path')}
+                            />
+                        }
+                    </div>
 
                     <Carousel 
                         name = 'path-ways'    
@@ -113,7 +125,7 @@ export default function Settings() {
             </div>
             <UsersList 
                 canDeleteMember={true}
-                canEditPermissions={localStorage.getItem('type') === 'supervisor'}
+                canEditPermissions={userType === 'supervisor'}
                 onClickEditPermissions={onClickEditPermissions}
                 students={students}
                 userHasClickOption={true}

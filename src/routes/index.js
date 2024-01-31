@@ -11,6 +11,7 @@ import Forum from "pages/common/forum";
 import GroupSettings from "pages/supervisor/settings/groupSettings";
 import Email from "pages/common/emails";
 import Settings from "pages/common/settings";
+import PathCreation from "pages/common/pathCreation";
 
 export const router = createBrowserRouter([
     {
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
             {
                 path: 'settings/group/:id',
                 element: <GroupSettings />,
+            },
+            {
+                path: 'create-path',
+                element: <PathCreation />,
             },
             {
                 path: 'new-email',
@@ -116,7 +121,10 @@ export const router = createBrowserRouter([
                 path: 'settings/group/:id',
                 element: <GroupSettings />,
             },
-
+            {
+                path: 'create-path',
+                element: <PathCreation />,
+            },
             {
                 path: 'new-email',
                 element: <Email />,

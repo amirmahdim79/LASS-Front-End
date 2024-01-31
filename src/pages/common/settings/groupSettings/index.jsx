@@ -349,7 +349,6 @@ export default function GroupSettings() {
                         value={groupName ?? groupName}
                         width={'255px'}
                         dir={'rtl'}
-                        opacity={'0.7'}
                     />
 
                     <div className={cs(styles['users_container'])}>

@@ -4,7 +4,9 @@
 .container{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
+    height: max-content;
     // font-size: 16px;
     // font-weight: 400;
     // font-family: 'inter';
@@ -24,8 +26,10 @@
         column-gap: 5px;
         padding: 0 5px;
         color: #000000;
-        background-color: $light-shades-100;
+        background-color: $light-shades-80;
         border-radius: 15px;
+        position: relative;
+        z-index: 2;
 
         .input{
             width:calc(100% - 30px);
@@ -35,10 +39,12 @@
             background-color: transparent;
             padding-right: 10px;
             border-radius: 15px;
+            color: $dark-shades-100;
+            line-height: normal;
         }
 
         input::placeholder {
-            color: $dark-shades-100;
+            color: $dark-shades-80;
         }
 
         input:focus {
@@ -52,6 +58,7 @@
             display: flex;
             align-items: center;
             justify-content: end;
+            cursor: pointer;
         }
 
         .upside {
@@ -68,7 +75,9 @@
     }
 
     .choices {
-        width: 100%;
+        width: 90%;
+        position: absolute;
+        z-index: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -76,11 +85,10 @@
         overflow-x: hidden;
         max-height: 150px;
         min-height: auto;
-        position: absolute;
-        z-index: 1;
-        margin-top: 3px;
-        background-color: #c4c7c5;
-        border-radius: 15px;
+        border-radius: 12px;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        background-color: $light-shades-80;
 
         &::-webkit-scrollbar {
             width: 10px;
@@ -93,11 +101,12 @@
             border-radius: 0px;
         }
 
+
         .choice {
             width: inherit;
-            height: 50px;
-            max-height: 50px;
-            min-height: 50px;
+            height: 40px;
+            max-height: 40px;
+            min-height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -107,27 +116,26 @@
             .choice_content {
                 width: 95%;
                 height: 100%;
-                max-height: 50px;
-                min-height: 50px;
+                max-height: 40px;
+                min-height: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-                border-bottom: 1px solid #F7F5F8;
-
+                border-bottom: 1px solid $dark-shades-20;
             }
 
             .choice_content:disabled {
                 color: #E5E5E5;
             }
+        }
 
-            .choice_content:hover {
-                background-color: rgba($color: #f3f6f7, $alpha: 1.0);
-                width: 100%;
-                padding-right: 9px;
-            }
-
+        .choice:hover  {
+            color: $main-color-100;
+            font-weight: bold;
         }
     }
+        
+    
 
     .error_text{
         color: #E82323;

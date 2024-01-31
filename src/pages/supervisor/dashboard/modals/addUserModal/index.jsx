@@ -50,7 +50,6 @@ export default function AddUserModal({close}) {
                         onChange={(e)=>dispatch({payload: {type: 'email', value: e.target.value}})}
                         placeholder={text.input_1} 
                         dir={'rtl'}
-                        opacity={'0.7'}
                     />
                     
 

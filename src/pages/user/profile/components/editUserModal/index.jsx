@@ -58,7 +58,6 @@ export default function EditUserModal({close}) {
                         onChange={(e)=>dispatchData({payload: {type: 'firstName', value: e.target.value}})}
                         placeholder={text.input_1} 
                         dir={'rtl'}
-                        opacity={'0.7'}
                         width={'245px'}
                         fontFamily={'pinar_light'}
                         fontWeight={'300'}
@@ -69,7 +68,6 @@ export default function EditUserModal({close}) {
                         onChange={(e)=>dispatchData({payload: {type: 'lastName', value: e.target.value}})}
                         placeholder={text.input_2} 
                         dir={'rtl'}
-                        opacity={'0.7'}
                         width={'245px'}
                         fontFamily={'pinar_light'}
                         fontWeight={'300'}

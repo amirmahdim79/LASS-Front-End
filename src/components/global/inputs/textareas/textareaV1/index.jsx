@@ -17,7 +17,6 @@ export default function TextAreaV1({
     isValid = true ,
     name,
     onChange = ()=>{} , 
-    opacity = '1',
     placeholder = '' ,
     rows,
     showError = false,
@@ -40,7 +39,7 @@ export default function TextAreaV1({
                     placeholder={placeholder}
                     disabled={disabled}
                     ref={inputRef}
-                    style={{width:width, opacity:opacity, fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight, height:'100%', ...(!resizable && {resize:'none'})}}
+                    style={{width:width, fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight, height:'100%', ...(!resizable && {resize:'none'})}}
                 >
                     {value}
                 </textarea>

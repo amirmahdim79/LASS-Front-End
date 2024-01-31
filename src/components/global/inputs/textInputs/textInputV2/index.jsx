@@ -17,7 +17,6 @@ export default function TextInputV2({
     isValid = true ,
     labelDirection = 'rtl' ,
     onChange = ()=>{} , 
-    opacity = '1',
     placeholder = '' ,
     required = false ,
     showError = false,
@@ -29,7 +28,7 @@ export default function TextInputV2({
         <div 
             className={cs(styles['container'])} 
             style={{
-                height: height, opacity: opacity, width: `calc(${width} + 10px)`,
+                height: height, width: `calc(${width} + 10px)`,
                 ...(fontFamily ? {fontFamily: fontFamily} : {fontFamily: 'pinar_reg'}),
                 ...((!isValid && showError) && {borderBottom:`1px solid ${colors['error-100']}`} )}}>
             <div 
