@@ -1,6 +1,7 @@
 import { GetLabEventsAPI } from "api/events";
 import { EnrollUserAPI } from "api/labs";
 import { GetLabStudentsTasksAPI } from "api/labs";
+import { GetLabAlumniAPI } from "api/labs";
 import { GetLabStudentInfoAPI } from "api/labs";
 import { GetMyLabsAPI, CreateLabAPI } from "api/labs";
 import useAPI from "hooks/useAPI"
@@ -73,6 +74,16 @@ export const useLabActions = () => {
         failedCallback: (e) => {
         },
     })
+
+    const { pending: gettingLabAlumni, request: getLabAlumni } = useAPI({
+        apiMethod: GetLabAlumniAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+        },
+    })
     
     
     
@@ -94,5 +105,8 @@ export const useLabActions = () => {
 
         getLabStudentsTasks,
         gettingLabStudentsTasks,
+
+        getLabAlumni,
+        gettingLabAlumni,
     }
 }

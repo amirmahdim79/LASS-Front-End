@@ -18,6 +18,7 @@ import StatusBox from './components/statusBox'
 import { isBefore } from 'utils/mapper'
 import { useEffect } from 'react'
 import { useRef } from 'react'
+import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions'
 
 export default function UsersList() {
 
@@ -31,6 +32,11 @@ export default function UsersList() {
 
     const { value: listType, setValue: setListType } = useInput('current');
     const { value: searchKey, setValue: setSearchKey } = useInput('');
+    const { value: alumni, setValue: setAlumni } = useInput([]);
+    const { value: users, setValue: setUsers } = useInput(students);
+
+    const { getLabAlumni } = useLabActions();
+
 
     const calcUnCompletedTasks = (userData) => {
         let num = 0;
@@ -69,6 +75,17 @@ export default function UsersList() {
             };
         }
     }, [searchKey]);
+
+    useEffect(() => {
+        getLabAlumni()
+            .then(res => setAlumni(res.data))
+            .catch(err => console.log(err))
+    }, [])
+
+    useEffect(() => {
+        if (listType === 'current') setUsers(students)
+        else setUsers(alumni)
+    }, [listType])
 
     
 
@@ -169,7 +186,7 @@ export default function UsersList() {
             </div>
             <div className={cs(styles['data'])}>
                 {
-                    students && students.map((s,i) => 
+                    users && users.map((s,i) => 
                         <div key={i} className={cs(styles['row'])}>
                             <div className={cs(styles['user_info_container'])}>
                                 <div 
