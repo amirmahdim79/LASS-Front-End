@@ -20,7 +20,7 @@ const $axios = axios.create({
     withCredentials: true,
 })
 
-export default function UploadReport({text, info, btnText}) {
+export default function UploadReport({text, info, btnText, type}) {
 
     const { showToast } = useToast();
 
@@ -36,16 +36,17 @@ export default function UploadReport({text, info, btnText}) {
         const input = document.getElementById('file-input');
         const formData = new FormData();
         formData.append('file', fileData.data)
-        formData.append('UserTask', params.id);
+        if (type === 'usertask') formData.append('UserTask', params.id);
+        else formData.append('Task', params.id);
+
 
         setLoading(true);
-        $axios.post('/api-lass/userTasks/upload', formData, {
+        $axios.post(`/api-lass/${type === 'usertask' ? 'userTasks' : 'task'}/upload`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'x-auth-token': GET_TOKEN()
             },
             onUploadProgress: data => {
-                console.log("ddddddddd", data);
                 setProgress(Math.round((100 * data.loaded) / data.total))
             }
         })

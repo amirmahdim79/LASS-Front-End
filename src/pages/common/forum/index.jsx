@@ -233,7 +233,7 @@ export default function Forum() {
                                                 <img 
                                                     src={addIcon}
                                                     alt='add icon'
-                                                    // onClick={() => openAddIcon()}
+                                                    onClick={() => navigate('../create-forum')}
                                                 />
                                                 <img 
                                                     src={filterIcon}

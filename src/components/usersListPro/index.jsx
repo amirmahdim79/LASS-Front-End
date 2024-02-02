@@ -87,6 +87,14 @@ export default function UsersList() {
         else setUsers(alumni)
     }, [listType])
 
+    useEffect(() => {
+        if (listType === 'current') setUsers(students)
+    }, [students])
+
+    // console.log("ssssss",students );
+    // console.log("users",users );
+    // console.log("alumni",alumni );
+
     
 
 

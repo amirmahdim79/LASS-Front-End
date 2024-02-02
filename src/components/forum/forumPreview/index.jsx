@@ -26,6 +26,65 @@ export default function ForumPreview({data, onClick}) {
     }, [data])
 
 
+    const groups = [
+        {
+            type: 'کارشناسی',
+            Users: [
+                
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+        
+                                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+        
+                
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+                
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+        
+                
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+        
+                
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+        
+                
+
+        
+            ],
+            id: '0'
+        },
+    ]
+
+
     return (
         <div className={cs(styles['container'])} onClick={onClick}>
             <div className={cs(styles['header_container'])}>

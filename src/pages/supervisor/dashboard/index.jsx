@@ -11,7 +11,7 @@ import { useEffect } from 'react'
 import { useLabActions } from './hooks/useLabsActions'
 import { useReducer } from 'react'
 import { reducer } from './reducers'
-import { setPath, setStudents, setEvents, setLabId, setLabStudentsTasks } from "store/labSlice/index"
+import { setPath, setStudents, setEvents, setLabId, setLabStudentsTasks, setSupsTasks } from "store/labSlice/index"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import LabSummary from 'components/labSummary'
@@ -42,14 +42,13 @@ export default function SupervisorDashboard() {
     const { value: now, setValue: setNow } = useInput(moment());
 
     const [open, show, close] = useModal();
-    const { getMyLabs, createLabs, getLabEvents, getLabStudentsTasks } = useLabActions();
+    const { getMyLabs, createLabs, getLabEvents, getLabStudentsTasks, getSupsTasks } = useLabActions();
     
     const initialState = {
         name: '',
         desc: '',
     }
 
-    // console.log("openedddddd", openedddddd);
 
     const [ state , dispatch] = useReducer( reducer, initialState );
 
@@ -90,6 +89,17 @@ export default function SupervisorDashboard() {
             })
     }
 
+    const getTasks = () => {
+        getSupsTasks()
+            .then(res => {
+                // console.log("sups tasks", res.data);
+                dispatchLab(setSupsTasks(res.data))
+            })
+            .catch(err => {
+                console.log("eeeee tasks", err);
+            })
+    }
+
 
     useEffect(() => {
         getMyLabs({}, '?sups=true').then(res => {
@@ -100,6 +110,7 @@ export default function SupervisorDashboard() {
 
             getEvents(res.data._id)
             getStudentsTasks(res.data._id)
+            getTasks()
         }).catch(err => {
             console.log("eeeeeeeeeeee", err);
         })

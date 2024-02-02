@@ -39,165 +39,72 @@ export default function Groups() {
         {
             type: 'کارشناسی',
             users: [
+                
                 {
                     firstName: 'علیرضا',
                     lastName: 'ابراهیمی',
-                    avatar: user1,
+                    // avatar: user7,
+                },
+                
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
                 },
                 {
                     firstName: 'علیرضا',
                     lastName: 'ابراهیمی',
-                    avatar: user2,
+                    // avatar: user7,
                 },
                 {
                     firstName: 'علیرضا',
                     lastName: 'ابراهیمی',
-                    avatar: user3,
+                    // avatar: user7,
                 },
                 {
                     firstName: 'علیرضا',
                     lastName: 'ابراهیمی',
-                    avatar: user4,
+                    // avatar: user7,
                 },
                 {
                     firstName: 'علیرضا',
                     lastName: 'ابراهیمی',
-                    avatar: user5,
+                    // avatar: user7,
                 },
                 {
                     firstName: 'علیرضا',
                     lastName: 'ابراهیمی',
-                    avatar: user6,
+                    // avatar: user7,
                 },
+
                 {
                     firstName: 'علیرضا',
                     lastName: 'ابراهیمی',
-                    avatar: user7,
+                    // avatar: user7,
                 },
+
+
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+
+                {
+                    firstName: 'علیرضا',
+                    lastName: 'ابراهیمی',
+                    // avatar: user7,
+                },
+
+
+
+
+
             ],
             id: '0'
         },
-        {
-            type: 'ارشد',
-            users: [
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user1,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user2,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user3,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user4,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user5,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user6,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user7,
-                    type: 'کارشناسی',
-                },
-            ],
-            id: '1'
-        },
-        {
-            type: 'i-lab',
-            users: [
-                {
-                    firstName: 'فاطمه',
-                    lastName: 'اسماعیلی',
-                    avatar: user1,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'امیرمهدی',
-                    lastName: 'محمدیان',
-                    avatar: user2,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user3,
-                    type: 'کارشناسی',
-                },
-            ],
-            id: '2'
-        },
-        {
-            type: 'دکتری',
-            users: [
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user1,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user2,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user3,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user4,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user5,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user6,
-                    type: 'کارشناسی',
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    avatar: user7,
-                    type: 'کارشناسی',
-                },
-            ],
-            id: '3'
-        },
     ]
+
 
 
     return (
@@ -228,7 +135,7 @@ export default function Groups() {
                     <div className={cs(styles['group_container'])}>
                         <div className={cs(styles['groups_data'])}>
                             <p> {group.name} </p>
-                            <UserAvatarCollage users={group.Users} size={'25px'} alignment={'flex-start'} fontSize={'12px'}/>
+                            <UserAvatarCollage users={group.Users} size={'25px'} alignment={'flex-start'} fontSize={'12px'} maxNum={9}/>
                         </div>
                         <img 
                             src={editIcon}

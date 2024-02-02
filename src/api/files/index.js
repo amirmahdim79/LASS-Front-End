@@ -1,7 +1,7 @@
 import { apiRequestObject } from "..";
 import { TRANSFORMER } from "./transformer"
 import { GET_REQUEST, POST_REQUEST } from "../constants";
-import { FILES, SEARCH_PAPER } from "./endpoints";
+import { FILES, FIND_FILE, SEARCH_PAPER } from "./endpoints";
 
 
 export const GetAllPapersAPI = apiRequestObject({
@@ -18,6 +18,12 @@ export const AddNewPaperAPI = apiRequestObject({
 
 export const SearchPaperAPI = apiRequestObject({
     url: SEARCH_PAPER,
+    requestType: GET_REQUEST,
+    transformer: TRANSFORMER,
+})
+
+export const FindFileAPI = apiRequestObject({
+    url: FIND_FILE,
     requestType: GET_REQUEST,
     transformer: TRANSFORMER,
 })

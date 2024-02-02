@@ -12,11 +12,21 @@ export default function UserAvatarCollage({
     maxNum = 10
 }) {
 
-    let list = users.length > maxNum ? users.slice(0, maxNum) : users
-
+    let list = users.length >= maxNum ? users.slice(0, maxNum) : users
+    let sizeNum = +size.substring(0,size.lastIndexOf("px"));
+    
     return (
         
-        <div className={cs(styles['container'])} style={{alignItems: alignment}}>
+        <div 
+            className={cs(styles['container'])} 
+            style={{
+                alignItems: alignment, 
+                // width: `${users.length > maxNum ? (sizeNum/2 * maxNum) + 12 : (((sizeNum/2) * list.length) + (11 - list.length))}px`,
+                // width: `${users.length > maxNum ? (sizeNum/2 * maxNum) + 12 : (((sizeNum/2) * list.length) + (11 - list.length))}px`,
+                width: `${sizeNum + ((list.length - 1) * ((+size.slice(0, -2)/2) + 1.5 ))}px`,
+                height: size,
+            }} 
+        >
             {
                 list.length !== 0 && list.map((user, i) => 
                     <div 

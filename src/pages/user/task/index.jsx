@@ -23,25 +23,32 @@ export default function Task() {
 
     const constantText = text[params.type]
 
-    const { getUserTask, completeReadingPapers } = useTasksActions();
+    const { getUserTask, completeReadingPapers, getMilestoneTask } = useTasksActions();
     const { value: task, setValue: setTask } = useInput({});
     const { value: done, setValue: setDone } = useInput(false);
 
-    // console.log("task", task);
+    console.log("--task",task);
 
 
     const getTaskData = () => {
         getUserTask({}, `/${params.id}`)
+            .then(res => setTask(res.data))
+            .catch(err => console.log(err))
+    }
+
+    const getMilestoneTaskData = () => {
+        getMilestoneTask({}, `?id=${params.id}`)
             .then(res => {
-                setTask(res.data)
-            }).catch(err => {
-                console.log(err);
+                console.log("-rrrr", res.data);
+                setTask(res.data.Task)
             })
+            .catch(err =>console.log(err))
     }
 
 
     useEffect(() => {
         if (params.id && location.pathname.includes('usertask')) getTaskData();
+        else if (params.id && location.pathname.includes('milestone-task')) getMilestoneTaskData();
     }, [params.id, location.pathname])
 
 
@@ -90,6 +97,7 @@ export default function Task() {
                                     text={'برای آپلود فایل کلیک کنید یا فایل را بر روی مستطیل بکشید'}
                                     info={'فرمت‌های قابل قبول عبارتند از: pdf، docx'}
                                     btnText={constantText.btn}
+                                    type={location.pathname.includes('milestone-task') ? 'milestone-task' : 'usertask'}
                                 />
                             </div>
 

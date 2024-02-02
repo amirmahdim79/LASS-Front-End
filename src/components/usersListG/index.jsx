@@ -23,6 +23,7 @@ import useInput from 'hooks/useInputHandler'
 import useToast from 'hooks/useToast'
 import { getFirstLetters } from 'utils/mapper'
 import { setNewName } from 'store/labSlice'
+import { degreeMapper } from 'utils/mapper'
 
 
 export default function UsersList({
@@ -200,10 +201,10 @@ export default function UsersList({
                                                 <div className={cs(styles['tooltip'])}> 
                                                     <div className={cs(styles['arrow'])} />
                                                     {s?.firstName} {s?.lastName}   
-                                                    <p className={cs(styles['type'])}> {s?.type} </p>
+                                                    <p className={cs(styles['type'])}> {degreeMapper(s?.type)} </p>
                                                 </div>
                                             </div>
-                                            <div style={{display:'inline', direction:'rtl'}}>{s?.type}</div>
+                                            <div style={{display:'inline', direction:'rtl'}}>{degreeMapper(s?.type)}</div>
                                         </div>
 
                                         {hasMoreInfo && (
@@ -215,12 +216,13 @@ export default function UsersList({
 
                                     { canDeleteMember && (
                                         <img 
-                                            src={imageHoverStates[i] ? delRedIcon : delIcon}
+                                            // src={imageHoverStates[i] ? delRedIcon : delIcon}
+                                            src={delIcon}
                                             alt='trash icon'
                                             className={cs(styles['trash_icon'], styles['icon'])}
                                             onClick={(e) => {e.stopPropagation(); deleteOnClickHandler(s._id)}}
-                                            onMouseEnter={() => handleMouseEnter(i)}
-                                            onMouseLeave={() => handleMouseLeave(i)}
+                                            // onMouseEnter={() => handleMouseEnter(i)}
+                                            // onMouseLeave={() => handleMouseLeave(i)}
                                         />
                                     )}
                                     

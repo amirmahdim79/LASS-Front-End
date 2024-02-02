@@ -4,6 +4,9 @@ import { GetLabStudentsTasksAPI } from "api/labs";
 import { GetLabAlumniAPI } from "api/labs";
 import { GetLabStudentInfoAPI } from "api/labs";
 import { GetMyLabsAPI, CreateLabAPI } from "api/labs";
+import { GetSupsTaskAPI } from "api/tasks";
+import { AcceptSupsTaskAPI } from "api/tasks";
+import { GetSupsTasksAPI } from "api/tasks";
 import useAPI from "hooks/useAPI"
 import useToast from "hooks/useToast";
 
@@ -84,7 +87,37 @@ export const useLabActions = () => {
         failedCallback: (e) => {
         },
     })
-    
+
+    const { pending: gettingSupsTasks, request: getSupsTasks } = useAPI({
+        apiMethod: GetSupsTasksAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+        },
+    })
+
+    const { pending: gettingSupsTask, request: getSupsTask } = useAPI({
+        apiMethod: GetSupsTaskAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+        },
+    })
+
+    const { pending: supsTaskAcceptance, request: acceptSupsTask } = useAPI({
+        apiMethod: AcceptSupsTaskAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+        },
+    })
+
     
     
     return {
@@ -108,5 +141,15 @@ export const useLabActions = () => {
 
         getLabAlumni,
         gettingLabAlumni,
+
+        getSupsTasks,
+        gettingSupsTasks,
+
+        getSupsTask,
+        gettingSupsTask,
+
+        acceptSupsTask,
+        supsTaskAcceptance,
+
     }
 }

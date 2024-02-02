@@ -3,14 +3,22 @@ import { text } from './constants'
 import styles from './style.module.scss'
 import closeIcon from 'assets/icons/essential/add/light-color.svg';
 import TextInputV2 from 'components/global/inputs/textInputs/textInputV2';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { reducer } from 'pages/common/pathCreation/reducer';
 import TextAreaV1 from 'components/global/inputs/textareas/textareaV1';
 import Button from 'components/global/button';
 import colors from "styles/colors.module.scss"
+import { isEmptyObject } from 'utils/mapper';
 
 
-export default function MilestoneInfo({close, milestones, setMilestones, id}) { 
+export default function MilestoneInfo({
+    close, 
+    milestones, 
+    setMilestones, 
+    id, 
+    editingMilestone, 
+    setEditingMileStone,
+}) { 
 
     const initialState = {
         name: '',
@@ -21,26 +29,36 @@ export default function MilestoneInfo({close, milestones, setMilestones, id}) {
     const [ state , dispatch] = useReducer( reducer, initialState );
 
     const saveMilestone = () => {
-        let data = milestones;
+        let data = [...milestones];
         data[id] = {
+            ...data[id],
             name: state.name,
             sandGain: state.sandGain,
             desc: state.desc,
         }
-        setMilestones(data)
+        setMilestones(data);
+        close();
     }
+
+    useEffect(() => {
+        if (!isEmptyObject(editingMilestone)) {
+            dispatch({payload: {type: 'name', value: editingMilestone.name}})
+            dispatch({payload: {type: 'sandGain', value: editingMilestone.sandGain}})
+            dispatch({payload: {type: 'desc', value: editingMilestone.desc}})
+        }
+    }, [editingMilestone])
 
 
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['header'])}>
                 <p> {text.title} </p>
-                <img 
+                {/* <img 
                     src={closeIcon}
                     alt='close icon'
                     className={cs(styles['icon'])}
                     onClick={() => close()}
-                />
+                /> */}
             </div>
 
             <div className={cs(styles['inputs'])}>
@@ -85,7 +103,7 @@ export default function MilestoneInfo({close, milestones, setMilestones, id}) {
                     onClick={() => saveMilestone()}
                     text={text.button} 
                     width={'255px'}
-                    // disabled={checkSubmitIsDisable()}
+                    disabled={!state.name.trim().length || !state.sandGain.trim().length}
                     // load={eventCreation}
                 />
             </div>

@@ -38,7 +38,7 @@
 
         .users_container {
             width: 100%;
-            position: relative;
+            // position: relative;
             display: flex;
             // background-color: dodgerblue;
 
@@ -49,7 +49,7 @@
 
 
             display: grid;
-            grid-template-columns: auto 340px ;
+            // grid-template-columns: auto 340px ;
             grid-template-columns: auto 26% ;
             direction: rtl;
         }

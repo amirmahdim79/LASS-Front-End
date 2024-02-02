@@ -12,6 +12,8 @@ import GroupSettings from "pages/supervisor/settings/groupSettings";
 import Email from "pages/common/emails";
 import Settings from "pages/common/settings";
 import PathCreation from "pages/common/pathCreation";
+import ApproveMilestones from "pages/supervisor/milestonesApproval";
+import ForumCreation from "pages/common/forum/forumCreation";
 
 export const router = createBrowserRouter([
     {
@@ -34,7 +36,7 @@ export const router = createBrowserRouter([
                 element: <UserArticlesDataBase />,
             },
             {
-                path: 'task/:id/:type',
+                path: 'milestone-task/:id/:type',
                 element: <Task />,
             },
             {
@@ -110,6 +112,10 @@ export const router = createBrowserRouter([
                 element: <Forum />,
             },
             {
+                path: 'create-forum',
+                element: <ForumCreation />,
+            },
+            {
                 path: 'forum/:id',
                 element: <Forum />,
             },
@@ -124,6 +130,10 @@ export const router = createBrowserRouter([
             {
                 path: 'create-path',
                 element: <PathCreation />,
+            },
+            {
+                path: 'approve-milsetone/:id',
+                element: <ApproveMilestones />,
             },
             {
                 path: 'new-email',

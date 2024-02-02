@@ -1,5 +1,6 @@
 import moment from 'moment';
 import 'moment/locale/fa';
+import colors from "styles/colors.module.scss"
 
 export const truncateText = (string, length) => {
     if (string.length > length)
@@ -84,5 +85,71 @@ export const isBefore = (date) => {
     const today = moment();
     if (moment(date).diff(today) < 0) return true;
     else return false
+}
+
+export const degreeMapper = (degree) => {
+    switch (degree) {
+        case 'کارشناسی':
+            return 'undergrad'
+        case 'کارشناسی ارشد':
+            return 'masters'
+        case 'دکترا':
+            return 'phd'
+        case 'فوق دکترا':
+            return 'postDoc'
+        case 'کارآموز':
+            return 'intern'
+        case 'undergrad':
+            return 'کارشناسی'
+        case 'masters':
+            return 'کارشناسی ارشد'
+        case 'phd':
+            return 'دکترا'
+        case 'postDoc':
+            return 'فوق دکترا'
+        case 'intern':
+            return 'کارآموز'
+        default:
+            return 'کارشناسی'
+    }
+}
+
+export const waitingTimeColorDecider = (time) => {
+    const today = moment();
+
+    let diff = moment.duration(moment(time).diff(moment(today)));
+
+    if (diff._data.years !== 0) {
+        return {
+            text: `${Math.abs(diff._data.years)} سال`,
+            color: `${colors['error-100']}`
+        }
+    } else if (diff._data.months !== 0) {
+        return {
+            text: `${Math.abs(diff._data.months)} ماه`,
+            color: `${colors['error-100']}`
+        }
+    } else if (diff._data.days !== 0) {
+        let ms = Math.abs(diff._milliseconds)
+        return {
+            text: `${Math.abs(diff._data.days)} روز`,
+            color: `${ ms >= 604800000 ? `${colors['error-100']}` : ( ms >= 172800000 ?  `${colors['warning-dark-100']}` : `${colors['success-100']}`)}`
+        }
+    } else if (diff._data.hours !== 0) {
+        return {
+            text: `${Math.abs(diff._data.hours)} ساعت`,
+            color: `${colors['success-100']}`
+        }
+    } else if (diff._data.minutes !== 0) {
+        return {
+            text: `${Math.abs(diff._data.minutes)} دقیقه`,
+            color: `${colors['success-100']}`
+        }
+    } else if (diff._data.seconds !== 0) {
+        return {
+            text: `${Math.abs(diff._data.seconds)} ثانیه`,
+            color: `${colors['success-100']}`
+        }
+    }
 }
   

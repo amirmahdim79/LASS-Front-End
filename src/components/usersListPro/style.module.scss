@@ -99,6 +99,7 @@
             grid-template-columns: 0.9fr 60px 115px 1fr;
             grid-template-columns: 36% 60px 115px 1fr;
             grid-template-columns: 30% 60px 115px 1fr;
+            
             .cols {
                 display: flex;
                 align-items: center;
@@ -113,20 +114,20 @@
 
             .col_1 {
                 color: $dark-shades-60; 
-                // background-color: rgb(83, 163, 83);               
+                background-color: rgb(83, 163, 83);               
             }
 
             .col_2 {
                 color: $main-color-100;
                 column-gap: 2px;
-                // background-color: rgb(160, 236, 238);
+                background-color: rgb(160, 236, 238);
                 // justify-content: center;
             }
 
             .col_3 {
                 color: $pink-100;
                 column-gap: 4px;
-                // background-color: indianred;
+                background-color: indianred;
                 // justify-content: center;
             }
 
@@ -164,7 +165,7 @@
                 }
 
 
-                // background-color: khaki;
+                background-color: khaki;
             }
 
         }
@@ -179,8 +180,8 @@
         flex-direction: column;
         row-gap: 15px;
 
-        min-height: 330px;
-        max-height: 330px;
+        min-height: 535px;
+        max-height: 535px;
         overflow-y: auto;
         overflow-x: hidden;
 
@@ -203,7 +204,7 @@
                 display: flex;
                 column-gap: 10px;
                 color: $dark-shades-100;
-                // background-color: rgb(83, 163, 83);
+                background-color: rgb(83, 163, 83);
                 @include mixins.h6-text;
 
                 .avatar {
@@ -237,6 +238,7 @@
                 grid-template-columns: 1fr max-content;
                 column-gap: 8px;
                 padding-left: 31px;
+                background-color: khaki;
 
                 .status_boxes {
                     width: 100%;
@@ -278,7 +280,7 @@
             direction: ltr;
             // text-align: center;
             @include mixins.h6-text;
-            // background-color: rgb(160, 236, 238);
+            background-color: rgb(160, 236, 238);
 
             display: flex;
             justify-content: flex-end;
@@ -289,7 +291,7 @@
             color: $pink-100;
             // text-align: center;
             @include mixins.h6-text;
-            // background-color: indianred;
+            background-color: indianred;
 
             p {
                 width: 40px;

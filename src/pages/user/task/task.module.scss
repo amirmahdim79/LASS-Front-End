@@ -83,6 +83,7 @@
             justify-content: center;
             align-items: center;
             row-gap: 20px;
+            align-items: flex-start;
 
             .subtitle {
                 @include mixins.text;

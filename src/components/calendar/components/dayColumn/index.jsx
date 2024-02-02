@@ -8,6 +8,19 @@ export default function Column({now, index, events, showMore, setEvent}) {
     const date = now.clone().weekday(index)._d.toLocaleDateString('fa-IR')
     const today = moment();
 
+
+    events && events.map(e => {
+        console.log("eeeeeee", e);
+        console.log("name", e.name);
+        console.log("start", e.start);
+        console.log("moemnt", moment(e)._d);
+        console.log("date/first day of week", date);
+        console.log("now", now);
+        console.log("----------------------------------------------------------------------------------------------");
+    })
+
+
+
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['body'])}>
@@ -28,6 +41,8 @@ export default function Column({now, index, events, showMore, setEvent}) {
 
                 {
                     events && events.map((e, i) => {
+
+
                         // if ((moment(e?.start)._d.toLocaleDateString('fa-IR') === today._d.toLocaleDateString('fa-IR')) && 
                         //     ( today._d.getTime() >= moment(e?.start)._d.getTime() && today._d.getTime() <= moment(e?.end)._d.getTime())) {
                         //     // console.log("ssss", moment(e?.start)._d);
@@ -80,6 +95,8 @@ export default function Column({now, index, events, showMore, setEvent}) {
                                 >
                                    <p>  {e?.name } </p>
                                 </div>
+
+
                                 {/* {
                                     
                                         <div 

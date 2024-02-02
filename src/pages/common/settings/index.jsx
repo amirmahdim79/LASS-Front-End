@@ -94,6 +94,7 @@ export default function Settings() {
 
 
 
+    // console.log("--permissions", permissions);
     
     return (
         <div className={cs(styles['container'])}>

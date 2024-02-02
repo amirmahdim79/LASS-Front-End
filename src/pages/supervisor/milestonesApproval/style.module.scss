@@ -1,0 +1,366 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 30px 140px 10px 50px;
+    // display: flex;
+    // flex-direction: row-reverse;
+    // column-gap: 30px;
+    color: $dark-shades-100;
+    // background-color: orange;
+    direction: rtl;
+
+    .header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 15px;
+        padding-bottom: 28px;
+    }
+
+    .header > p:first-child {
+        @include mixins.h3-text;
+    }
+
+    .header > p:nth-child(2) {
+        @include mixins.text;
+    }
+
+    .milestones_list {
+        width: 100%;
+        // background-color: lightcoral;
+
+        .list_header {
+            width: 100%;
+            height: 100%;
+            min-height: 100px;
+            max-height: 100px;
+            border-radius: 12px;
+            border: 1px solid $light-accent-100;
+            padding: 10px;
+
+            .row_1 {
+                width: 100%;
+                border-bottom: 1px solid $light-accent-100;
+                padding-bottom: 5px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .items {
+                    display: flex;
+                    align-items: center;
+                    @include mixins.h6-text;
+                    color: $dark-shades-100;
+                }
+
+                .titles_wrapper {
+                    justify-content: flex-start;
+                    column-gap: 15px;
+                }
+
+                .tools_wrapper {
+                    justify-content: flex-end;
+                    column-gap: 20px;
+    
+                    .filter_icon {
+                        width: 48px;
+                        height: 40px;
+                        border-radius: 12px;
+                        padding: 12px;
+                        background-color: $light-accent-25;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+
+            
+            .row_2 {
+                width: 100%;
+                padding-top: 8px;
+                padding-right: 10px;
+                display: grid;
+                column-gap: 20px;
+                column-gap: 22px;
+                column-gap: 19px;
+                column-gap: 20px;
+                column-gap: 22px;
+                column-gap: 11px;
+                // column-gap: 16px;
+                grid-template-columns: 0.9fr 60px 115px 1fr;
+                grid-template-columns: 36% 60px 115px 1fr;
+                grid-template-columns: 30% 100px 1fr 1fr 87px 40px;
+                grid-template-columns: 25% 100px 1fr 1fr 87px 40px;
+                grid-template-columns: 1fr 100px 1fr 1fr 87px 40px;
+                grid-template-columns: 1fr 0.4fr 1fr 1fr 87px 40px;
+                grid-template-columns: 25% 100px 1fr 1fr 88px 40px;
+                grid-template-columns: 25% 100px 25% 25% 88px 40px;
+                grid-template-columns: minmax(185px, 25%) minmax(55px, 100px) minmax(22%, 26%) minmax(22%, 25%) 88px 40px;
+                grid-template-columns: minmax(185px, 25%) minmax(56px, 100px) minmax(23%, 26%) minmax(20%, 25%) 88px 40px;
+                grid-template-columns: minmax(185px, 25%) minmax(56px, 100px) 20px 20px 88px 40px;
+
+                grid-template-columns: minmax(145px, 19%) minmax(56px, 100px) 20px 20px 88px 40px;
+                grid-template-columns: minmax(145px, 18%) minmax(56px, 100px) 20px 20px 88px 40px;
+                grid-template-columns: minmax(145px, 17%) minmax(56px, 100px) 20px 20px 88px 40px;
+
+                grid-template-columns: max-content  max-content max-content max-content max-content max-content;
+
+                grid-template-columns: minmax(175px, 15.2vw) minmax(27px, 6.5vw) minmax(125px, 22vw) minmax(125px, 19vw) minmax(27px, 6.5vw) minmax(53px, 53px);
+                grid-template-columns: 16vw minmax(65px, 8vw) 26.5% 25.5% auto minmax(53px, 53px);
+                grid-template-columns: 16vw minmax(65px, 8vw) 26.5% 23.5% auto minmax(53px, 53px);
+                .cols {
+                    display: flex;
+                    align-items: center;
+                    column-gap: 10px;
+                    @include mixins.description;
+                    color: $dark-shades-60; 
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+
+                .col_1 {
+                    // background-color: rgb(83, 163, 83);  
+                    // min-width: 175px;
+                    // width: 15vw;             
+                    // width: 15.2vw;             
+                    // width: 14.86vw;             
+                }
+
+                .col_2 {
+                    column-gap: 2px;
+                    // background-color: rgb(160, 236, 238);
+                    // justify-content: center;
+
+
+                    // min-width: 27px;
+                    // width: 3.7vw;   
+                    
+                    // min-width: 27px;
+                    // width: 6.5vw;     
+                }
+
+                .col_3 {
+                    column-gap: 4px;
+                    // background-color: indianred;
+                    // justify-content: center;
+
+                    // min-width: 125px;
+                    // width: 10.9vw;
+                    // width: 18.9vw;
+                    // width: 19vw;
+                    // width: 22vw;
+                }
+
+                .col_4 {
+                    column-gap: 4px;
+                    // background-color: khaki;
+
+                    // min-width: 125px;
+                    // width: 18.9vw;
+                    // width: 19vw;
+                }
+
+                .col_5 {
+                    column-gap: 4px;
+                    // background-color: rgb(205, 76, 134);
+
+                    // min-width: 27px;
+                    // width: 6.5vw;  
+                }
+
+                .col_6 {
+                    column-gap: 4px;
+                    // background-color: rgb(29, 213, 223);
+                   justify-content: center;
+                    
+                    // min-width: 53px;
+                    // max-width: 53px;
+                    // width: 100%;
+                }
+
+            }
+
+            
+        }
+
+        .data {
+            width: 100%;
+            height: 100%;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+    
+            // min-height: 535px;
+            // max-height: 535px;
+            // overflow-y: auto;
+            // overflow-x: hidden;
+            // background-color: rgb(66, 141, 19);
+
+            .row {
+                height: max-content;
+                padding-left: 10px;
+                column-gap: 32px;
+                column-gap: 34px;
+                column-gap: 25px;
+                column-gap: 22px;
+                column-gap: 20px;
+                column-gap: 13px;
+                cursor: default;
+                color: $dark-shades-100;
+                display: grid;
+                grid-template-columns: 30% 55px 95px 1fr;
+                grid-template-columns: 25.5% 100px 1fr 1fr 70px 60px;
+                grid-template-columns: 1fr 100px 1fr 1fr 70px 60px;
+                grid-template-columns: 1fr 0.4fr 1fr 1fr 70px 60px;
+                grid-template-columns: 25.5% 100px 1fr 1fr 73px 60px;
+
+                grid-template-columns: minmax(200px, 25.5%) minmax(50px, 100px) minmax(21%, 24%) minmax(20%, 25%) 73px 60px;
+                grid-template-columns: minmax(200px, 25.5%) minmax(50px, 100px) minmax(21%, 24%) minmax(18%, 25%) 73px 60px;
+                grid-template-columns: minmax(205px, 26%) minmax(50px, 100px) 20px 20px 73px 60px;
+
+                grid-template-columns: minmax(155px, 20%) minmax(5%, 67px) 20px 20px 73px 60px;
+                grid-template-columns: minmax(170px, 20%) minmax(5%, 67px) 20px 20px 73px 60px;
+                grid-template-columns: minmax(170px, 18.5%) minmax(5%, 67px) 20px 20px 73px 60px;
+                grid-template-columns: minmax(170px, 18%) minmax(45px, 67px) 20px 20px 73px 60px;
+                grid-template-columns: max-content  max-content 25.5% 24.5% auto minmax(53px, 53px);
+                grid-template-columns: max-content  max-content 25.7% 24.8% auto minmax(53px, 53px);
+                grid-template-columns: max-content  max-content 25.7% 23% auto minmax(53px, 53px);
+
+                border-bottom: 1px solid $light-accent-20;
+
+                .user_info_container {
+                    width: calc(16vw + 20px);
+
+                    // width: 16.5vw;
+                    // min-width: 195px;
+
+                    display: flex;
+                    align-items: center;
+                    column-gap: 10px;
+                    // background-color: rgb(83, 163, 83);
+                    @include mixins.h6-text;
+                    // background-color: rgb(83, 163, 83); 
+
+
+    
+                    .avatar {
+                        @include functions.avatarStyles(50px, 50%);
+                    }
+        
+                    .empty_avatar {
+                        @include functions.emptyAvatarStyles();
+                        @include mixins.h6-text;
+                    }
+    
+                    .name_container {
+                        width: 100%;
+                        max-width: 200px;
+                    }
+                }
+
+
+                
+
+                .degree {
+                    width: 100%;
+                    @include mixins.sub-title;
+                    // background-color: rgb(160, 236, 238);
+                    display: flex;
+                    align-items: center;
+
+                    // width: 4vw;
+                    // min-width: 30px;
+
+                    // width: 4vw;
+                    // min-width: 43px;
+
+                    width: 8vw;
+                    // min-width: 65px;
+                }
+
+                .task_name {
+                    width: 100%;
+                    @include mixins.sub-title;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    // background-color: indianred;
+
+                    // min-width: 125px;
+                    // width: 11vw;      
+                    // width: 19vw;      
+                    // width: 22vw;      
+
+                    word-break: break-all;
+                }
+
+                .file_name {
+                    // background-color: khaki;
+                    @include mixins.description;
+                    display: flex;
+                    flex-direction: row-reverse;
+                    justify-content: flex-end;
+                    /* direction: ltr; */
+                    align-items: center;
+                    word-break: break-all;
+                    // width: 11vw;      
+                    // width: 19vw;   
+
+                    a {
+                        padding-right: 7px;
+                    }
+
+                    a:hover, img:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                .waiting_time {
+                    // background-color: rgb(205, 76, 134);
+                    @include mixins.sub-description;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    text-align: center;
+
+                    // min-width: 27px;
+                    // width: 6.5vw;  
+
+                    
+                }
+
+                .buttons_container {
+                    // background-color: rgb(29, 213, 223);
+                    display: flex;
+                    flex-direction: row-reverse;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: space-between;
+                    // column-gap: 5px;
+
+                    // min-width: 53px;
+                    // max-width: 53px;
+
+                    img:hover {
+                        cursor: pointer;
+                    }
+                }
+
+            }
+        }
+
+    }
+
+
+}

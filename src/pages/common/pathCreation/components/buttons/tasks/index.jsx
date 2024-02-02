@@ -6,14 +6,17 @@ import { useModal } from 'hooks/useModal';
 import Modal from 'components/global/modal';
 import ElementsList from '../../modals/elementsList';
 import useInput from 'hooks/useInputHandler';
+import TasksList from '../../modals/tasksList';
 
-export default function AddTaskButton({milestones, setMilestones}) { 
+export default function AddTaskButton({milestoneId, milestones, setMilestones, taskInfo, setTaskInfo}) { 
 
     const [ openTasksModal, showAddTasksModal, closeTasksModal ] = useModal();
 
-    const addNewTask = (e) => {
-        e.stopPropagation()
-        // setMilestones([...milestones, {}])
+    const addNewTask = (type) => {
+        let newMilestones = [...milestones];
+        newMilestones[milestoneId].Tasks = [ ...newMilestones[milestoneId].Tasks, {activity: type, name: undefined, desc: undefined, type: 'fixed'}]
+        setTaskInfo({milestoneId: milestoneId, taskId: newMilestones[milestoneId].Tasks.length - 1})
+        setMilestones(newMilestones);
         closeTasksModal()
     }
 
@@ -28,15 +31,15 @@ export default function AddTaskButton({milestones, setMilestones}) {
         <div className={cs(styles['button'])} id='#add_btn' onClick={(e) => onClickTasksListModal(e)}>
             <div className={cs(styles['text_container'])}> 
                 <p> {text.button_txt} </p> 
-                {/* <Modal
+                <Modal
                     isOpen={openTasksModal} 
                     close={closeTasksModal} 
                     content={
                         <div className={cs(styles['tasks_list_modal'])} style={{display: openTasksModal ? 'block' : 'none'}} id='#tasks_modal'>
-                            <ElementsList onClick={addNewMilestone}/>
+                            <TasksList onClick={addNewTask}/>
                         </div>
                     }
-                /> */}
+                />
             </div>
             <img src={importIcon} alt='import icon'/>
         </div>

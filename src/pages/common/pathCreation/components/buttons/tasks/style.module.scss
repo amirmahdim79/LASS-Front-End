@@ -4,22 +4,22 @@
 
 .button {
     width: 100%;
-    height: 50px;
+    min-height: 50px;
+    max-height: 50px;
     background-color: $light-shades-80;
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row-reverse;
-    column-gap: 36px;
+    column-gap: 20px;
     color: $dark-shades-100;
     @include mixins.description;
 }
 
 .text_container {
-    position: relative;
+    // position: relative;
 
-    .elements_list_modal {
+    .tasks_list_modal {
         width: 100%;
         height: 100%;
         background-color: $dark-glass-75;
@@ -27,11 +27,14 @@
         height: 100%;
         background-color: $dark-glass-75;
         border-radius: 12px;
-        border-top-right-radius: 0px;
-        @include  functions.setFixedSize(160px, 80px);
+        // border-top-right-radius: 0px;
+        @include  functions.setFixedSize(185px, 132px);
         @include mixins.open-modal-from-right;
-        top: 16px;
-        right: 95px;
+        // top: 16px;
+        // right: 95px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         position: absolute;
     }
 }

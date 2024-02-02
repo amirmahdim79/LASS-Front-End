@@ -11,8 +11,10 @@ export default function ColoredString ({
       <div>
         {parts && parts.map((part, index) => (
             index % 2 === 0 
-                ? <span  key={index} style={{fontSize: 'inherit'}}>{part}</span> 
-                : <span  key={index} style={{fontSize: 'inherit', color: color, ...(clickableWord && {cursor: 'pointer'})}} onClick={() => onClickColoredWord(part)}>{part}</span>
+                ? <span key={index} style={{fontSize: 'inherit'}}>{part}</span> 
+                : <span key={index} style={{fontSize: 'inherit', color: color, ...(clickableWord && {cursor: 'pointer'})}} onClick={() => onClickColoredWord(part)}>
+                    {part}
+                </span>
         ))}
       </div>
     );

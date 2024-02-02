@@ -7,13 +7,16 @@ import Modal from 'components/global/modal';
 import ElementsList from '../../modals/elementsList';
 import useInput from 'hooks/useInputHandler';
 
-export default function AddElementButton({milestones, setMilestones}) { 
+export default function AddElementButton({milestones, setMilestones, openModal}) { 
 
     const [ openElementsModal, showElementsModal, closeElementsModal ] = useModal();
 
     const addNewMilestone = (e) => {
-        e.stopPropagation()
-        setMilestones([...milestones, {}])
+        e.stopPropagation();
+        openModal();
+        setMilestones([...milestones, {Tasks: []}])
+        // setMilestones([...milestones])
+
         closeElementsModal()
     }
 

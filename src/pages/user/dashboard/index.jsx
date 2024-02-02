@@ -41,7 +41,7 @@ export default function UserDashboard() {
 
 
     // let firstday = moment().month(1);
-    // console.log("currentMilestone?.Tasks", currentMilestone?.Tasks);
+    // console.log("currentMilestone", currentMilestone);
     // console.log("userTasks", userTasks);
 
 
@@ -191,6 +191,8 @@ export default function UserDashboard() {
             dispatch(setLabId(res.data._id))
             // 'all': 'true'
 
+            // console.log("res.data", res.data);
+
             getEvents(res.data._id)
 
             for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
@@ -204,6 +206,7 @@ export default function UserDashboard() {
 
             getUserTasks()
                 .then(res => {
+                    console.log("innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
                     dispatch(setUserTasks(res.data))
                 })
                 .catch(err => console.log(err))
@@ -227,7 +230,7 @@ export default function UserDashboard() {
                 </div>
                 <div className={cs(styles['activities'])}>
                     {
-                        currentMilestone
+                        (currentMilestone || userTasks)
                             ? 
                                <>
                                     {currentMilestone?.Tasks.map((task, index) => <TaskPreview task={task} key={index}/>)}
