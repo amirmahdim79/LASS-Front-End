@@ -76,9 +76,10 @@
             column-gap: 10px;
             direction: rtl;
             position: relative;
-
+            cursor: default;
             display: grid;
             grid-template-columns: max-content auto 24px 24px;
+            background-color: aquamarine;
 
             .avatar {
                 @include functions.avatarStyles(50px, 50%);
@@ -199,6 +200,10 @@
                     cursor: pointer;
                 }
             }
+        }
+
+        .user_data_container:hover {
+            cursor: default;
         }
 
         .loader_container {

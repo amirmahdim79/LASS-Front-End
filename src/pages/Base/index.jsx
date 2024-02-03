@@ -14,12 +14,13 @@ import { setPermissions } from "store/userSlice";
 import { sortForum } from "utils/mapper";
 import { setPath } from "store/labSlice";
 import { setMilestone } from "store/labSlice";
+import { setLeaderboard } from "store/labSlice";
 
 export default function Base({type}) {
         
     const dispatch = useDispatch();
 
-    const { checkAuth, checkSupAuth, getMyLabs, getLabGroups, getLabForums, getOneForum } = useBaseActions();
+    const { checkAuth, checkSupAuth, getMyLabs, getLabGroups, getLabForums, getOneForum, getLeaderboard } = useBaseActions();
     const userType = localStorage.getItem('type');
     const labId = useSelector(state => state.lab.labId);
     const params = useParams();
@@ -52,6 +53,10 @@ export default function Base({type}) {
                             }).catch(err => {
                                 console.log(err);
                             })
+
+                        getLeaderboard({}, `?lab=${res.data.Labs[0]}`)
+                            .then(res => dispatch(setLeaderboard(res.data)))
+                            .catch(err => console.log("leader err", err))
                     })
                     .catch(err => console.log("err", err))
             }else if (userType === 'supervisor') {
@@ -71,6 +76,11 @@ export default function Base({type}) {
                                     }).catch(err => {
                                         console.log(err);
                                     })
+
+                                
+                                getLeaderboard({}, `?lab=${res.data._id}`)
+                                    .then(res => dispatch(setLeaderboard(res.data)))
+                                    .catch(err => console.log("leader err", err))
                             })
                             .catch(err => console.log(err))
                         dispatch(addUser(res.data))

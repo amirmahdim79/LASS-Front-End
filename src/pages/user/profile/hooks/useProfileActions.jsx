@@ -1,4 +1,3 @@
-import { GetLeaderboardAPI } from "api/labs";
 import { UpdateUserInfoAPI } from "api/users";
 import useAPI from "hooks/useAPI"
 import useToast from "hooks/useToast";
@@ -19,25 +18,10 @@ export const useProfileActions = () => {
         },
     })
 
-    const { pending: gettingLeaderboard, request: getLeaderboard } = useAPI({
-        apiMethod: GetLeaderboardAPI,
-
-        successCallback: () => {
-        },
-        
-        failedCallback: (err) => {
-            console.log(err);
-        },
-    })
-
-
     
     return {
         updateUserInfo,
         updatingUserInfo,
-
-        getLeaderboard,
-        gettingLeaderboard
 
     }
 }

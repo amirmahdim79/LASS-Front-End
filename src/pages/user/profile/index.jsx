@@ -34,13 +34,12 @@ export default function Profile({editable=false}) {
     const labId = useSelector(state => state.lab.labId);
     const path = useSelector(state => state.lab.Paths);
     const milestones = useSelector(state => state.lab.Milestones);
+    const leaderboard = useSelector(state => state.lab.leaderboard);
 
 
     const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
     const { getLabStudentInfo } = useLabActions();
-    const { getLeaderboard } = useProfileActions();
     const { value: userData, setValue: setUserData } = useInput({});
-    const { value: leaderboard, setValue: setLeaderboard } = useInput([]);
 
     const getUserInfo = () => {
         if (labId) {
@@ -55,17 +54,6 @@ export default function Profile({editable=false}) {
         }
     }
 
-    const getLeaderboardData = () => {
-        getLeaderboard({}, `?lab=${labId}`)
-            .then(res => {
-                // console.log("leader b", res.data);
-                setLeaderboard(res.data);
-            })
-            .catch(err => {
-                console.log("leader err", err);
-            })
-    }
-
     
     useEffect(() => {
         if (labId) {
@@ -75,9 +63,11 @@ export default function Profile({editable=false}) {
             if (params.id) {
                 getUserInfo();
             }
-            getLeaderboardData()
         }
     }, [params.id])
+
+
+
 
     // useEffect(() => {
     //     if (labId) {
@@ -91,9 +81,9 @@ export default function Profile({editable=false}) {
     //     }
     // }, [labId, params.id])
 
-    console.log("labId", labId);
-    console.log("userData", userData);
-    console.log("params.id", params.id);
+    // console.log("labId", labId);
+    // console.log("userData", userData);
+    // console.log("params.id", params.id);
 
 
     return (

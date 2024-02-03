@@ -6,6 +6,7 @@ import { GetMyLabsAPI } from "api/labs";
 import { GetLabGroupsAPI } from "api/groups";
 import { GetLabForumsAPI } from "api/forum";
 import { GetOneForumDataAPI } from "api/forum";
+import { GetLeaderboardAPI } from "api/labs";
 
 export const useBaseActions = () => {
     const { showToast } = useToast();
@@ -77,6 +78,17 @@ export const useBaseActions = () => {
         failedCallback: (e) => {
         },
     })
+
+    const { pending: gettingLeaderboard, request: getLeaderboard } = useAPI({
+        apiMethod: GetLeaderboardAPI,
+
+        successCallback: () => {
+        },
+        
+        failedCallback: (err) => {
+            console.log(err);
+        },
+    })
     
     
     return {
@@ -96,6 +108,9 @@ export const useBaseActions = () => {
         gettingLabForums,
 
         getOneForum,
-        gettingOneForum
+        gettingOneForum,
+
+        getLeaderboard,
+        gettingLeaderboard,
     }
 }

@@ -77,8 +77,11 @@ export default function UsersList({
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const userType = localStorage.getItem('type');
+
     const { showToast } = useToast();
     const groupName = useSelector(state => state.lab.labGroupNewName);
+    const permissions = useSelector(state => state.user.permissions);
 
     const [openAddMemberModal, showAddMemberModal, closeAddMemberModal] = useModal();
     
@@ -189,10 +192,10 @@ export default function UsersList({
                                     className={cs(styles['user_data_container'])}
                                     style={{
                                         alignItems: !hasMoreInfo ? 'center' : 'flex-start',
-                                        ...(userHasClickOption && {cursor: 'pointer'}),
+                                        ...((userHasClickOption && ((userType === 'user' && permissions && permissions.indexOf('lab') > -1) || userType === 'supervisor')) && {cursor: 'pointer'}),
                                         ...(!canDeleteMember && {gridTemplateColumns: 'max-content auto'}),
                                     }} 
-                                    onClick={() => userOnClickHandler(s._id)}
+                                    onClick={() => userType === 'user' ? (permissions && permissions.indexOf('lab') > -1 ? userOnClickHandler(s._id) : {}) : {}}
                                 >
                                     <div 
                                         style={s?.profilePicture && {backgroundImage: `url(${s?.profilePicture})`}} 
