@@ -115,8 +115,8 @@ export default function Leaderboard({list}) {
     const userType = localStorage.getItem('type');
 
 
-    console.log("----permissions && permissions.indexOf('lab') ", permissions && permissions.indexOf('lab') );
-    console.log("----userInfo", userInfo);
+    // console.log("----permissions && permissions.indexOf('lab') ", permissions && permissions.indexOf('lab') );
+    // console.log("----userInfo", userInfo);
 
     return (
         <div className={cs(styles['container'])}>

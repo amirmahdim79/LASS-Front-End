@@ -67,6 +67,10 @@ export default function Profile({editable=false}) {
     }, [params.id])
 
 
+    useEffect(() => {
+        console.log("22222222222222222222222222222");
+    }, [])
+
 
 
     // useEffect(() => {

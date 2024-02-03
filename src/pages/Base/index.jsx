@@ -57,6 +57,10 @@ export default function Base({type}) {
                         getLeaderboard({}, `?lab=${res.data.Labs[0]}`)
                             .then(res => dispatch(setLeaderboard(res.data)))
                             .catch(err => console.log("leader err", err))
+
+                        // if (location.pathname === '/user/my-profile') {
+
+                        // }
                     })
                     .catch(err => console.log("err", err))
             }else if (userType === 'supervisor') {

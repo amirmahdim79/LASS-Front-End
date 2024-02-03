@@ -7,6 +7,7 @@ import { GetLabGroupsAPI } from "api/groups";
 import { GetLabForumsAPI } from "api/forum";
 import { GetOneForumDataAPI } from "api/forum";
 import { GetLeaderboardAPI } from "api/labs";
+import { GetMyActivitiesAPI } from "api/activity";
 
 export const useBaseActions = () => {
     const { showToast } = useToast();
@@ -89,6 +90,17 @@ export const useBaseActions = () => {
             console.log(err);
         },
     })
+
+    const { pending: gettingMyActivities, request: getMyActivities } = useAPI({
+        apiMethod: GetMyActivitiesAPI,
+
+        successCallback: () => { },
+        
+        failedCallback: (err) => {
+            console.log(err);
+        },
+    })
+    
     
     
     return {
@@ -112,5 +124,8 @@ export const useBaseActions = () => {
 
         getLeaderboard,
         gettingLeaderboard,
+
+        getMyActivities,
+        gettingMyActivities
     }
 }
