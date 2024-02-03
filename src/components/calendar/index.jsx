@@ -18,6 +18,8 @@ import { useModal } from 'hooks/useModal';
 import Modal from 'components/global/modal';
 import AddEventModal from './components/addModal';
 import ShowEventDataModal from './components/showEventDataModal';
+import { useCreateEventActions } from './components/addModal/hooks/useCreateEventActions';
+import DeleteModal from './components/deleteModal';
 
 
 export default function Calendar({events, date, setDate, getEvents}) {
@@ -29,9 +31,13 @@ export default function Calendar({events, date, setDate, getEvents}) {
     const { value: calendar, setValue: setCalendar } = useInput('');
     const { value: event, setValue: setEvent } = useInput({});
     const permissions = useSelector(state => state.user.permissions);
+    const labId = useSelector(state => state.lab.labId);
 
     const [ openAddEventModal, showAddEventModal, closeAddEventModal ] = useModal();
     const [ openShowMoreModal, showShowMoreModal, closeShowMoreModal ] = useModal();
+    const [ openDeleteModal, showDeleteModal, closeDeleteModal ] = useModal();
+
+    const { deleteEvent, deletingEvent} = useCreateEventActions();
 
 
     const goNextWeek = () => {
@@ -100,9 +106,20 @@ export default function Calendar({events, date, setDate, getEvents}) {
         else closeAddEventModal()
     }
 
-
     const showMore = () => {
         showShowMoreModal();
+    }
+
+    const removeEvent = () => {
+        deleteEvent({Event: event._id})
+            .then(() => getEvents(labId))
+            .catch(err => {
+                console.log(err);
+            })
+            .finally(() => {
+                closeDeleteModal();
+                closeShowMoreModal();
+            })
     }
 
 
@@ -224,7 +241,26 @@ export default function Calendar({events, date, setDate, getEvents}) {
                             close={closeShowMoreModal} 
                             content={
                                 <div className={cs(styles['show_event_modal'])} style={{display: openShowMoreModal ? 'block' : 'none'}} id='#events_modal'>
-                                    <ShowEventDataModal event={event}/>
+                                    <ShowEventDataModal event={event} showDeleteModal={showDeleteModal}/>
+                                </div>
+                            }
+                        />
+                    )
+                }
+
+                {
+                    openDeleteModal && (
+                        <Modal
+                            isOpen={openDeleteModal} 
+                            close={closeDeleteModal} 
+                            content={
+                                <div className={cs(styles['delete_modal'])} style={{display: openDeleteModal ? 'block' : 'none'}} >
+                                    <DeleteModal
+                                        onCancel={closeDeleteModal}
+                                        onSubmit={removeEvent}
+                                        submitLoad={deletingEvent}
+                                        data={event.name}
+                                    />
                                 </div>
                             }
                         />

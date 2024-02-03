@@ -1,4 +1,5 @@
 
+import { DeleteLabEventAPI } from "api/events";
 import { CreateLabEventAPI } from "api/events";
 import { GetSpecificLabDataAPI } from "api/labs";
 import useAPI from "hooks/useAPI"
@@ -32,9 +33,19 @@ export const useCreateEventActions = () => {
         },
     })
 
+    const { pending: deletingEvent, request: deleteEvent } = useAPI({
+        apiMethod: DeleteLabEventAPI,
 
+        successCallback: () => {
+            showToast('رویداد با موفقیت حذف شد', 'success')
+        },
+        
+        failedCallback: (e) => {
+            console.log("createEvent failed", e)
+            showToast('مشکلی پیش اومده', 'error')
+        },
+    })
 
-    
     
     return {
         getLabData,
@@ -42,6 +53,9 @@ export const useCreateEventActions = () => {
 
         createEvent,
         eventCreation,
+
+        deleteEvent,
+        deletingEvent
 
     }
 }

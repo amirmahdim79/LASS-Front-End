@@ -42,6 +42,6 @@ export const GetSupsTaskAPI = apiRequestObject({
 
 export const AcceptSupsTaskAPI = apiRequestObject({
     url: ACCEPT_TASK,
-    requestType: GET_REQUEST,
+    requestType: POST_REQUEST,
     transformer: TRANSFORMER,
 })

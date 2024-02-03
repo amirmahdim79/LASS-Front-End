@@ -55,6 +55,10 @@ export const router = createBrowserRouter([
                 element: <Forum />,
             },
             {
+                path: 'create-forum',
+                element: <ForumCreation />,
+            },
+            {
                 path: 'forum/:id',
                 element: <Forum />,
             },

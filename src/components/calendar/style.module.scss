@@ -1,4 +1,5 @@
 @use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
 @import "styles/colors.module.scss";
 
 .container {
@@ -404,6 +405,18 @@
             top: 3%;
             right:  auto;
             white-space: pre-line;
+        }
+
+        .delete_modal {
+            width: 100%;
+            height: 100%;
+            background-color: $dark-glass-75;
+            border-radius: 15px;
+            @include mixins.open-modal-from-right;
+            @include  functions.setFixedSize(570px, 162px);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
     
