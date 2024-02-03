@@ -21,3 +21,9 @@ export const UpdateLabGroupAPI = apiRequestObject({
     requestType: POST_REQUEST,
     transformer: TRANSFORMER,
 })
+
+export const CreateLabGroupAPI = apiRequestObject({
+    url: GROUPS,
+    requestType: POST_REQUEST,
+    transformer: TRANSFORMER,
+})

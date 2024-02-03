@@ -25,6 +25,10 @@
             h2 {
                 @include mixins.h5-text;
             }
+
+            img:hover {
+                cursor: pointer;
+            }
         } 
     }
 

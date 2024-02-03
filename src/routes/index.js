@@ -14,6 +14,7 @@ import Settings from "pages/common/settings";
 import PathCreation from "pages/common/pathCreation";
 import ApproveMilestones from "pages/supervisor/milestonesApproval";
 import ForumCreation from "pages/common/forum/forumCreation";
+import GroupCreation from "pages/common/settings/groupCreation";
 
 export const router = createBrowserRouter([
     {
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
             {
                 path: 'settings/group/:id',
                 element: <GroupSettings />,
+            },
+            {
+                path: 'settings/create-group',
+                element: <GroupCreation />,
             },
             {
                 path: 'create-path',
@@ -130,6 +135,10 @@ export const router = createBrowserRouter([
             {
                 path: 'settings/group/:id',
                 element: <GroupSettings />,
+            },
+            {
+                path: 'settings/create-group',
+                element: <GroupCreation />,
             },
             {
                 path: 'create-path',

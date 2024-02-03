@@ -115,7 +115,7 @@ export default function Groups() {
                     <img 
                         src={addIcon}
                         alt='add icon'
-                        // onClick={() => showAddMemberModal()}
+                        onClick={() => navigate(`./create-group`)}
                     />
                 </div>
                 <div className={cs(styles['column'])}>

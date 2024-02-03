@@ -1,3 +1,4 @@
+import { CreateLabGroupAPI } from "api/groups";
 import { UpdateLabGroupAPI } from "api/groups";
 import { DeleteLabGroupAPI, GetLabGroupsAPI } from "api/groups";
 import { GetPermissionsListAPI } from "api/labs";
@@ -63,9 +64,20 @@ export const useSettingsActions = () => {
         },
     })
 
+    const { pending: groupCreation, request: createGroup } = useAPI({
+        apiMethod: CreateLabGroupAPI,
 
-
-    
+        successCallback: () => {
+            showToast('گروه با موفقیت ساخته شد', 'success')
+        },
+        
+        failedCallback: (err) => {
+            console.log(err);
+            if (err.message === 'Network Error') showToast('لطفا دوباره امتحان کنید', 'error');
+            else if (err.response.data === 'You must at least add two users to a group.') showToast('شما باید حداقل دو کاربر را به یک گروه اضافه کنید', 'error');
+        },
+    })
+ 
     
     return {
         deleteLabGroup,
@@ -82,5 +94,8 @@ export const useSettingsActions = () => {
 
         getPermissions,
         gettingPermissions,
+
+        createGroup,
+        groupCreation
     }
 }
