@@ -102,7 +102,7 @@ export default function UsersList({
     const submitChanges = () => {
         if (type === 'editGroup') {
             if (groupName && groupName.trim().length) {
-                submitHandler({ Group: params.id, name: groupName, add: newList})
+                submitHandler({ Group: params.id, name: groupName, final: newList})
                     .then((res) => {
                         console.log("----------------------------", res.data);
                         showToast('نام گروه با موفقیت ویرایش شد', 'success');

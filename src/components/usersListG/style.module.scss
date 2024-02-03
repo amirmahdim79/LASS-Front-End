@@ -79,7 +79,6 @@
             cursor: default;
             display: grid;
             grid-template-columns: max-content auto 24px 24px;
-            background-color: aquamarine;
 
             .avatar {
                 @include functions.avatarStyles(50px, 50%);
