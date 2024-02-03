@@ -1,7 +1,7 @@
 import { apiRequestObject } from "..";
 import { TRANSFORMER } from "./transformer"
 import { DELETE_REQUEST, GET_REQUEST, POST_REQUEST } from "../constants";
-import { FORUM_DATA, LAB_FORUMS, SEND_MSG } from "./endpoints";
+import { CREATE_FORUM, FORUM_DATA, LAB_FORUMS, SEND_MSG } from "./endpoints";
 
 
 export const GetLabForumsAPI = apiRequestObject({
@@ -18,6 +18,12 @@ export const GetOneForumDataAPI = apiRequestObject({
 
 export const SendMsgAPI = apiRequestObject({
     url: SEND_MSG,
+    requestType: POST_REQUEST,
+    transformer: TRANSFORMER,
+})
+
+export const CreateForumAPI = apiRequestObject({
+    url: CREATE_FORUM,
     requestType: POST_REQUEST,
     transformer: TRANSFORMER,
 })

@@ -27,6 +27,7 @@ import { degreeMapper } from 'utils/mapper'
 
 
 export default function UsersList({
+    type = 'editGroup',
     bgColor = '',
     width = '340px',
     height = '705px',
@@ -48,6 +49,7 @@ export default function UsersList({
     btnDisabled = true,
     btnLoad = false, 
     submitHandler = () => {},
+    onClickBtn,
 
     students=[],
     userHasClickOption = false,
@@ -94,17 +96,22 @@ export default function UsersList({
     };
 
     const submitChanges = () => {
-        if (groupName && groupName.trim().length) {
-            submitHandler({ Group: params.id, name: groupName})
-                .then(() => {
-                    showToast('نام گروه با موفقیت ویرایش شد', 'success');
-                    navigate('../settings');
-                })
-                .catch(() => showToast('مشکلی پیش اومده', 'error'))
+        if (type === 'editGroup') {
+            if (groupName && groupName.trim().length) {
+                submitHandler({ Group: params.id, name: groupName})
+                    .then(() => {
+                        showToast('نام گروه با موفقیت ویرایش شد', 'success');
+                        navigate('../settings');
+                    })
+                    .catch(() => showToast('مشکلی پیش اومده', 'error'))
+            } else {
+                dispatch(setNewName(''))
+                showToast('نام گروه نمی تواند خالی باشد', 'error');
+            }
         } else {
-            dispatch(setNewName(''))
-            showToast('نام گروه نمی تواند خالی باشد', 'error');
+            onClickBtn();
         }
+        
     }
 
     return (

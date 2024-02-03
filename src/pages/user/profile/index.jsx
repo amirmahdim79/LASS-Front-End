@@ -46,6 +46,7 @@ export default function Profile({editable=false}) {
         if (labId) {
             getLabStudentInfo({}, `?lab=${labId}&id=${params.id}`)
                 .then(res => {
+                    console.log("----res.data", res.data);
                     setUserData(res.data)
                 })
                 .catch(err => {
@@ -65,35 +66,35 @@ export default function Profile({editable=false}) {
             })
     }
 
-
+    
     useEffect(() => {
         if (labId) {
-            if (!editable) {
+            // if (!editable) {
+            //     getUserInfo();
+            // }
+            if (params.id) {
                 getUserInfo();
             }
             getLeaderboardData()
         }
-    }, [labId])
+    }, [params.id])
 
+    // useEffect(() => {
+    //     if (labId) {
+    //         // if (!editable) {
+    //         //     getUserInfo();
+    //         // }
+    //         if (params.id) {
+    //             getUserInfo();
+    //         }
+    //         getLeaderboardData()
+    //     }
+    // }, [labId, params.id])
 
-    const topUsers = [
-        {
-            name: 'امیرمهدی محمدیان',
-            avatar: user1,
-        },
-        {
-            name: 'فاطمه اسماعیلی',
-            avatar: avatar,
-        },
-        {
-            name: 'علیرضا ابراهیمی',
-            avatar: user3,
-        },
-        {
-            name: 'آبتین هیدجی',
-            avatar: user4,
-        },
-    ]
+    console.log("labId", labId);
+    console.log("userData", userData);
+    console.log("params.id", params.id);
+
 
     return (
         <div className={cs(styles['container'])}>
@@ -136,7 +137,7 @@ export default function Profile({editable=false}) {
 
                     <div className={cs(styles['education_info'])}>
                         {userInfo || userData ? <p> دانشجوی کارشناسی </p> : <div className={cs(styles['is_loading_type'])}/>}
-                        {userInfo || userData ? <p> 810197664 </p> : <div className={cs(styles['is_loading_SID'])}/>}
+                        {userInfo || userData ? <p> {editable ? userInfo?.sid : userData?.sid} </p> : <div className={cs(styles['is_loading_SID'])}/>}
                     </div>
                 </div>
 

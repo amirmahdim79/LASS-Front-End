@@ -5,6 +5,7 @@ import { GetOneForumDataAPI } from "api/forum";
 import { SendMsgAPI } from "api/forum";
 import { GetLabForumsAPI } from "api/forum";
 import { UpdatePresenceFormAPI } from "api/presenceForm";
+import { CreateForumAPI } from "api/forum";
 
 export const useForumsActions = () => {
     const { showToast } = useToast();
@@ -60,6 +61,17 @@ export const useForumsActions = () => {
         },
     })
 
+    const { pending: forumCreation, request: createForum } = useAPI({
+        apiMethod: CreateForumAPI,
+
+        successCallback: (res) => {
+            showToast('فروم با موفقیت ساخته شد', 'success')
+        },
+        
+        failedCallback: (e) => {
+        },
+    })
+
     
     return {
         getMyLabs,
@@ -75,6 +87,9 @@ export const useForumsActions = () => {
         gettingLabForums,
 
         updatePresenceForm,
-        updatingPresenceForm
+        updatingPresenceForm,
+
+        createForum,
+        forumCreation,
     }
 }

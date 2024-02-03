@@ -111,7 +111,8 @@ export const useLabActions = () => {
     const { pending: supsTaskAcceptance, request: acceptSupsTask } = useAPI({
         apiMethod: AcceptSupsTaskAPI,
 
-        successCallback: (res) => {
+        successCallback: () => {
+            showToast('مایلستون با موفقیت تایید شد', 'success')
         },
         
         failedCallback: (e) => {

@@ -230,11 +230,15 @@ export default function Forum() {
                                     forums
                                         ? (
                                             <div className={cs(styles['icons_container'])}>
-                                                <img 
-                                                    src={addIcon}
-                                                    alt='add icon'
-                                                    onClick={() => navigate('../create-forum')}
-                                                />
+                                                {
+                                                    ((userType === 'user' && permissions && permissions.indexOf('forums') > -1) || userType === 'supervisor') && (
+                                                        <img 
+                                                            src={addIcon}
+                                                            alt='add icon'
+                                                            onClick={() => navigate('../create-forum')}
+                                                        />
+                                                    )
+                                                }
                                                 <img 
                                                     src={filterIcon}
                                                     alt='filter icon'

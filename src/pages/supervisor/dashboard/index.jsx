@@ -93,7 +93,7 @@ export default function SupervisorDashboard() {
     const getTasks = () => {
         getSupsTasks()
             .then(res => {
-                // console.log("sups tasks", res.data);
+                console.log("sups tasks", res.data);
                 dispatchLab(setSupsTasks(res.data))
             })
             .catch(err => {

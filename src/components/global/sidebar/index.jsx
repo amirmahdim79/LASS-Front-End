@@ -80,7 +80,8 @@ export default function SideBar({type}) {
         }
     }, [location.pathname])
 
-
+// console.log("permissions", permissions.indexOf('lab'));
+// console.log("permissions", permissions);
 
     return (
         <aside className={cs(styles['container'])}>
@@ -100,7 +101,7 @@ export default function SideBar({type}) {
 
                         <img className={cs(styles['icon'], iconNum === '4' && styles['active'])} src={emailLight} alt='email icon' onClick={() => openEmails()} />
                         <img className={cs(styles['icon'], iconNum === '5' && styles['active'])} src={profileLight} alt='profile icon' onClick={() => openProfile()} />
-                        {((type === 'user' && permissions.includes('lab')) || type === 'supervisor') &&
+                        {((type === 'user' && permissions && permissions.indexOf('lab') > -1) || type === 'supervisor') &&
                             <img className={cs(styles['icon'], iconNum === '6' && styles['active'])} src={settingsLight} alt='settings icon' onClick={() => openSettings()}/>
                         }
                         

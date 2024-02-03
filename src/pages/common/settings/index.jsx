@@ -105,7 +105,7 @@ export default function Settings() {
                 <div className={cs(styles['path_container'])}>
                     <div className={cs(styles['header'])}>
                         <p> مسیر‌راه‌ها </p>
-                        { (userType === 'supervisor' || (userType === 'user' && permissions.include('lab'))) && 
+                        { (userType === 'supervisor' || (userType === 'user' && permissions && permissions.indexOf('lab') > -1)) && 
                             <img 
                                 src={addIcon}
                                 alt='add icon'

@@ -29,12 +29,12 @@ export default function ApproveMilestones() {
     const { getSupsTask, acceptSupsTask } = useLabActions();
 
     const approveTask = () => {
-        acceptSupsTask({Milestone: taskInfo.Milestone._id})
+        acceptSupsTask({Milestone: taskInfo.Milestone._id, User: taskInfo.User._id, taskId: params.id })
             .then(res => {
-                console.log("acceptttt", res.data);
+                navigate(-1);
             })
             .catch(err => {
-                console.log("accept err", err);
+                console.log(err);
             })
     }
 
@@ -50,7 +50,6 @@ export default function ApproveMilestones() {
             })
     }, [])
 
-    console.log("taskInfo", taskInfo);
 
 
     return (
