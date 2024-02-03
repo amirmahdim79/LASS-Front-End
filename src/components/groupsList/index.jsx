@@ -33,77 +33,7 @@ export default function Groups() {
 
 
     // const articles = useSelector(state => state.user.articles);
-    const { value: allPapers, setValue: setAllPapers } = useInput([]);
-
-    const groups = [
-        {
-            type: 'کارشناسی',
-            users: [
-                
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-                
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-
-
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-
-                {
-                    firstName: 'علیرضا',
-                    lastName: 'ابراهیمی',
-                    // avatar: user7,
-                },
-
-
-
-
-
-            ],
-            id: '0'
-        },
-    ]
+    // const { value: allPapers, setValue: setAllPapers } = useInput([]);
 
 
 

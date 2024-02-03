@@ -70,6 +70,7 @@ export default function UsersList({
 
     hasMoreInfo = false,
     moreInfo = '',
+    newList = [],
 }) {
 
     const params = useParams();
@@ -98,8 +99,9 @@ export default function UsersList({
     const submitChanges = () => {
         if (type === 'editGroup') {
             if (groupName && groupName.trim().length) {
-                submitHandler({ Group: params.id, name: groupName})
-                    .then(() => {
+                submitHandler({ Group: params.id, name: groupName, add: newList})
+                    .then((res) => {
+                        console.log("----------------------------", res.data);
                         showToast('نام گروه با موفقیت ویرایش شد', 'success');
                         navigate('../settings');
                     })

@@ -8,7 +8,7 @@ import SupArticlesDataBase from "pages/supervisor/articlesDataBase";
 import Task from "pages/user/task";
 import Profile from "pages/user/profile";
 import Forum from "pages/common/forum";
-import GroupSettings from "pages/supervisor/settings/groupSettings";
+import GroupSettings from "pages/common/settings/groupSettings";
 import Email from "pages/common/emails";
 import Settings from "pages/common/settings";
 import PathCreation from "pages/common/pathCreation";
