@@ -10,6 +10,7 @@ import { weekday } from 'utils/mapper';
 import { toEnDigit } from 'utils/mapper';
 import { monthNumber } from 'utils/mapper';
 import Activity from './components/activity';
+import { useLocation } from 'react-router-dom';
 
 
 export default function ActivitiesTable() {  
@@ -17,6 +18,7 @@ export default function ActivitiesTable() {
     moment.locale('fa');
 
     const today = moment();
+    const location = useLocation();  
 
 
     const { value: recentMonthsArr, setValue: setRecentMonthsArr } = useInput([]);
@@ -61,8 +63,9 @@ export default function ActivitiesTable() {
 
 
     useEffect(() => {
+        console.log("268");
         getRecentMonths();
-    }, [])
+    }, [location.pathname])
 
     useEffect(() => {
         getMonthDays();
