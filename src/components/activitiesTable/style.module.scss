@@ -1,0 +1,140 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+    // background-color: palevioletred;
+    color: $dark-shades-100;
+
+    .activitiy_container {
+        width: 100%;
+        height: calc(100% - 30px);
+        // height: max-content;
+        color: $dark-shades-100;
+        // background-color: darkseagreen;
+    
+        width: 100%;
+        // height: 100%;
+        display: flex;
+        // background-color: darkseagreen;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 10px;
+    
+    
+        // width: 88%;
+        width: inherit;
+    
+    
+        .month_container {
+            width: 100%;
+            width: 75%;
+            width: 55%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            @include mixins.description;
+            // background-color: greenyellow;
+    
+    
+            justify-content: center;
+            // column-gap: 110px;
+    
+    
+    
+            justify-content: space-evenly;
+        }
+    
+        .dates_container {
+            width: 100%;
+            height: 100%;
+            height: max-content;
+            display: flex;
+            justify-content: center;
+            // background-color: rgb(127, 224, 244);
+            flex-direction: row;
+            column-gap: 15px;
+    
+            .weekdays {
+                width: max-content;
+                height: 100%;
+                // background-color: lightcoral;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                justify-content: space-between;
+                @include mixins.sub-description;
+            }
+    
+            .activities {
+                width: fit-content;
+                display: flex;
+                max-height: 215px;
+                max-height: 250px;
+                flex-wrap: wrap;
+                flex-direction: column;
+                gap: 10px;
+                // background-color: darkblue;
+    
+    
+    
+    
+    
+    
+                align-content: flex-start;
+                justify-content: center;
+                width: 100%;
+                align-items: flex-end;
+            }
+    
+    
+        }
+    }
+
+    .table_info {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        column-gap: 10px;
+        @include mixins.description;
+
+        .activity {
+            width: 25px;
+            max-width: 25px;
+            min-width: 25px;
+            height: 25px;
+            max-height: 25px;
+            min-height: 25px;
+            border: 1.5px solid $light-accent-100;
+            border-radius: 6px;
+        }
+
+        .activity_0 {
+            background-color: transparent;
+        }
+
+        .activity_1 {
+            background-color: $main-color-25;
+            border-color: $light-accent-25;
+        }
+
+        .activity_2 {
+            background-color: $main-color-50;
+            border-color: $light-accent-50;
+        }
+
+        .activity_3 {
+            background-color: $main-color-75;
+            border-color: $light-accent-60;
+        }
+
+        .activity_4 {
+            background-color: $main-color-100;
+            border-color: $light-accent-100;
+        }
+
+    }
+}

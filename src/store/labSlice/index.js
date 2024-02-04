@@ -17,6 +17,7 @@ const initialState = {
     forum: undefined,
     labGroupNewName: undefined,
     leaderboard: [],
+    userActivities: [],
 }
 
 export const labSlice = createSlice({
@@ -68,6 +69,9 @@ export const labSlice = createSlice({
         setLeaderboard:  (state, action) => {
             state.leaderboard = action.payload
         },
+        setUserActivities:  (state, action) => {
+            state.userActivities = action.payload
+        },
     }
 })
 
@@ -87,4 +91,5 @@ export const {
     setLabStudentsTasks,
     setSupsTasks,
     setLeaderboard,
+    setUserActivities,
 } = labSlice.actions;

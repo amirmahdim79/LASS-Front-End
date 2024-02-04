@@ -25,6 +25,7 @@ import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions';
 import ProgressTracker from 'components/progressTracker';
 import Leaderboard from 'components/leaderboard';
 import { useProfileActions } from './hooks/useProfileActions';
+import ActivitiesTable from 'components/activitiesTable';
 
 
 export default function Profile({editable=false}) {  
@@ -192,7 +193,7 @@ export default function Profile({editable=false}) {
 
             <div className={cs(styles['user_activities'])}>
                 <p className={cs(styles['title'])}> فعالیت دانشجو </p>
-                <img src={activities} alt='activities chart'/>
+                <ActivitiesTable />
             </div>
             <div className={cs(styles['user_path'])}>
                 {

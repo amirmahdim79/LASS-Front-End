@@ -1,0 +1,14 @@
+@use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    width: 25px;
+    max-width: 25px;
+    min-width: 25px;
+    height: 25px;
+    max-height: 25px;
+    min-height: 25px;
+    border: 1.5px solid $light-accent-100;
+    border-radius: 6px;
+}

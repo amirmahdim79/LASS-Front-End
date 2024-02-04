@@ -59,6 +59,22 @@ export const month = (monthNum) => {
     else if (monthNum == 12) return 'اسفند'
 }
 
+export const monthNumber = (month) => {
+
+    if (month == 'فروردین') return 1
+    else if (month == 'اردیبهشت') return 2
+    else if (month == 'خرداد') return 3
+    else if (month == 'تیر') return 4
+    else if (month == 'مرداد') return 5
+    else if (month == 'شهریور') return 6
+    else if (month == 'مهر') return 7
+    else if (month == 'آبان') return 8
+    else if (month == 'آذر') return 9
+    else if (month == 'دی') return 10
+    else if (month == 'بهمن') return 11
+    else if (month == 'اسفند') return 12
+}
+
 export const getFirstLetters = (inputString) => {
     const words = inputString.split(' ');
     const firstLetters = words.map(word => word[0]);
