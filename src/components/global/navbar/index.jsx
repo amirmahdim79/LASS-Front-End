@@ -94,7 +94,7 @@ export default function Navbar({type}) {
                             </div>
                             <div className={cs(styles['data'])}>
                                 <img src={sand} alt='sand icon'/>
-                                <p style={{color: colors['main-color-100']}}> +{userInfo?.sand} </p>
+                                <p style={{color: colors['main-color-100']}}> {userInfo?.sand > 0 ? `+${userInfo?.sand}` : userInfo?.sand} </p>
                             </div>
                             <div className={cs(styles['data'])}>
                                 <img src={smarties} alt='smarties icon'/>
