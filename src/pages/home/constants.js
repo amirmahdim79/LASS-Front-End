@@ -1,11 +1,23 @@
 export const text = {
-    title: 'خوش برگشتی',
+    
+    title:{
+        login: 'خوش برگشتی',
+        signup: 'خوش آمدیدی',
+    },
 
     switch_left_data: 'دانشجو',
     switch_right_data: 'استاد',
 
     input_1: 'ایمیل',
     input_2: ' رمز عبور',
+    input_3: 'نام',
+    input_4: 'نام خانوادگی',
 
-    button: 'وارد شوید',
+
+    login_button: 'وارد شوید',
+    signup_button: 'ثبت نام کنید',
+    login_mode_footer_text: 'اکانت ندارید؟',
+    login_mode_footer_text2: 'ثبت نام کنید',
+    signup_mode_footer_text: 'اکانت دارید؟',
+    signup_mode_footer_text2: ' وارد شوید',
 }
