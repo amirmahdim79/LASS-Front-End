@@ -60,6 +60,11 @@
 
         .title {
             @include mixins.h3-text;  
+
+            span {
+                color: $main-color-100;
+                @include mixins.sub-description;
+            }
         }
 
         .date_wrapper {

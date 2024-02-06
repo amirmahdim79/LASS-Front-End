@@ -7,6 +7,7 @@ export default function Button({
     color, 
     disabled = false,
     fontSize = '20px',
+    borderRadius = '25px',
     fontWeight = 'normal',
     fontFamily = 'pinar_reg',
     height = '48px',
@@ -50,7 +51,8 @@ export default function Button({
                 fontWeight: fontWeight, 
                 fontFamily: fontFamily,
                 width: width, 
-                height: height
+                height: height,
+                borderRadius: borderRadius,
             }}
             id='#button'
         >

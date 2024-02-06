@@ -10,6 +10,7 @@ import addIcon from 'assets/icons/essential/add/dark-color.svg'
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
 import sortIcon from 'assets/icons/essential/sort/dark-color.svg'
 import backArrow from 'assets/icons/arrow/arrow-left/dark-color2.svg'
+import emptyMsg from 'assets/icons/messages/no-message/dark-color.svg'
 import send from 'assets/icons/arrow/send/main-color.svg'
 import ForumPreview from 'components/forum/forumPreview';
 import { useForumsActions } from './hooks/useForumsActions';
@@ -21,6 +22,7 @@ import { setForum } from 'store/labSlice';
 import PresenceList from './components/presenceList';
 import Preloader from 'components/global/preloaders'
 import { sortForum } from 'utils/mapper';
+import { ChatBox } from './components/chatbox';
 
 
 export default function Forum() {
@@ -29,6 +31,8 @@ export default function Forum() {
     const params = useParams();
     const dispatch = useDispatch();
     const forumRef = useRef(null);
+    const inputRef = useRef(null);
+
 
     const userType = localStorage.getItem('type');
 
@@ -46,10 +50,20 @@ export default function Forum() {
     const forum = useSelector(state => state.lab.forum);
     const userInfo = useSelector(state => state.user.user);
 
+
     const { value: msg, setValue: setMsg } = useInput('');
 
     const openForum = (id) => {
         navigate(`../forum/${id}`)
+    }
+
+    const onText = (inputMessage) => {
+        const emailRegex = /\*([^*]+)\*/g;
+
+        // Replace emails with @email format
+        const formattedMessage = inputMessage.replace(emailRegex, (_, email) => `@${email}`);
+        
+        setMsg(formattedMessage);
     }
 
     const getForumData = () => {
@@ -164,50 +178,80 @@ export default function Forum() {
                                         ? (
                                             <>
                                                 <div className={cs(styles['messages_wrapper'])} ref={forumRef}> 
-                                                    {forum.Messages && forum.Messages.map((msg, i) => 
-                                                        userInfo._id === msg.Sender ? (
-                                                            <div className={cs(styles['message'], styles['sent_message'])} key={i}> 
-                                                                {showMentionedUsers(msg.text)} 
-                                                            </div>
-                                                        ) : (<div className={cs(styles['recieved_message'])} key={i}> 
-                                                                <div 
-                                                                    style={{
-                                                                        backgroundImage: `url(${
-                                                                            msg.Sender === forum.Supervisor._id 
-                                                                                ? (forum.Supervisor.profilePicture ? forum.Supervisor.profilePicture : undefined)
-                                                                                : getSenderData(msg.Sender, 'profilePicture')
-                                                                            })`
-                                                                        }} 
-                                                                    className={cs(
-                                                                            styles['avatar'],
-                                                                            msg.Sender === forum.Supervisor._id 
-                                                                                ? !forum.Supervisor.profilePicture && styles['empty_avatar']
-                                                                                : !getSenderData(msg.Sender, 'profilePicture') && styles['empty_avatar']
-                                                                        )}
-                                                                >
-                                                                    {msg.Sender === forum.Supervisor._id && <div className={cs(styles['is_supervisor'])}/> }
-                                                                    { msg.Sender === forum.Supervisor._id 
-                                                                        ? !forum.Supervisor.profilePicture && <p>{getFirstLetters(`${forum.Supervisor?.firstName} ${forum.Supervisor?.lastName}`)}</p>
-                                                                        : !getSenderData(msg.Sender, 'profilePicture') && <p>{getFirstLetters(`${getSenderData(msg.Sender, 'firstName')} ${getSenderData(msg.Sender, 'lastName')}`)}</p>
-                                                                    }
+                                                    {
+                                                        forum.Messages.length
+                                                            ? (
+                                                                forum.Messages.map((msg, i) => 
+                                                                    userInfo._id === msg.Sender ? (
+                                                                        <div className={cs(styles['message'], styles['sent_message'])} key={i}> 
+                                                                            {showMentionedUsers(msg.text)} 
+                                                                        </div>
+                                                                    ) : (<div className={cs(styles['recieved_message'])} key={i}> 
+                                                                            <div 
+                                                                                style={{
+                                                                                    backgroundImage: `url(${
+                                                                                        msg.Sender === forum.Supervisor._id 
+                                                                                            ? (forum.Supervisor.profilePicture ? forum.Supervisor.profilePicture : undefined)
+                                                                                            : getSenderData(msg.Sender, 'profilePicture')
+                                                                                        })`
+                                                                                    }} 
+                                                                                className={cs(
+                                                                                        styles['avatar'],
+                                                                                        msg.Sender === forum.Supervisor._id 
+                                                                                            ? !forum.Supervisor.profilePicture && styles['empty_avatar']
+                                                                                            : !getSenderData(msg.Sender, 'profilePicture') && styles['empty_avatar']
+                                                                                    )}
+                                                                            >
+                                                                                {msg.Sender === forum.Supervisor._id && <div className={cs(styles['is_supervisor'])}/> }
+                                                                                { msg.Sender === forum.Supervisor._id 
+                                                                                    ? !forum.Supervisor.profilePicture && <p>{getFirstLetters(`${forum.Supervisor?.firstName} ${forum.Supervisor?.lastName}`)}</p>
+                                                                                    : !getSenderData(msg.Sender, 'profilePicture') && <p>{getFirstLetters(`${getSenderData(msg.Sender, 'firstName')} ${getSenderData(msg.Sender, 'lastName')}`)}</p>
+                                                                                }
+                                                                            </div>
+                                                                            <div className={cs(styles['message'], styles['content'])}>
+                                                                                <p> {
+                                                                                        msg.Sender === forum.Supervisor._id 
+                                                                                            ? `${forum.Supervisor.firstName} ${forum.Supervisor.lastName}` 
+                                                                                            : `${getSenderData(msg.Sender, 'firstName')} ${getSenderData(msg.Sender, 'lastName')}`
+                                                                                    }
+                                                                                    </p>
+                                                                                <p> {showMentionedUsers(msg.text)} </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                )
+                                                            ) : (
+                                                                <div className={cs(styles['empty_message'])}>
+                                                                    <img src={emptyMsg} alt='no message exists'/>
+                                                                    <p> {text.no_msg} </p>
                                                                 </div>
-                                                                <div className={cs(styles['message'], styles['content'])}>
-                                                                    <p> {
-                                                                            msg.Sender === forum.Supervisor._id 
-                                                                                ? `${forum.Supervisor.firstName} ${forum.Supervisor.lastName}` 
-                                                                                : `${getSenderData(msg.Sender, 'firstName')} ${getSenderData(msg.Sender, 'lastName')}`
-                                                                        }
-                                                                        </p>
-                                                                    <p> {showMentionedUsers(msg.text)} </p>
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    )}
+                                                            )
+                                                    }
+                                                    {}
                                                 </div>
 
                                                 <div className={cs(styles['chatbox'])}>
                                                     <div className={cs(styles['content'])}>
                                                         <textarea value={msg} onChange={(e) => setMsg(e.target.value)} placeholder={'محل وارد کردن پیام ...'}/>
+                                                        {/* <div>
+                                                            {
+                                                                msg.split(/@(\S+)/g).map((part, index) => (
+                                                                    console.log("partttt", part),
+                                                                    /@(\S+)/g.test(part) ? (
+                                                                      <span key={index} style={{ color: 'blue' }}>@{part}</span>
+                                                                    ) : (
+                                                                      <span key={index}>{part}</span>
+                                                                    )
+                                                                
+                                                            ))}
+                                                        </div>
+                                                        <input
+                                                            value={msg}
+                                                            onChange={(e) => setMsg(e.target.value)}
+                                                            placeholder={'محل وارد کردن پیام ...'}
+                                                        />
+                                                        
+                                                        <ChatBox message={msg}/> */}
                                                     </div>
                                                     <img 
                                                         src={send}

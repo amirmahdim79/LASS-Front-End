@@ -74,7 +74,6 @@ export const labSlice = createSlice({
             state.leaderboard = action.payload
         },
         setUserActivities:  (state, action) => {
-            console.log("ppppppppppppppppppppppppppppppppppppppp", action.payload);
             state.userActivities = action.payload
         },
     }

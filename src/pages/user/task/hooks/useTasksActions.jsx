@@ -4,6 +4,7 @@ import { GetUserTasksAPI } from "api/tasks";
 import { GetUserTaskAPI } from "api/tasks";
 import { CompleteReadingPapersAPI } from "api/tasks";
 import { GetMilestoneTaskInfoAPI } from "api/tasks";
+import { CompleteReadingMilestonPaperTasksAPI } from "api/tasks";
 
 export const useTasksActions = () => {
     const { showToast } = useToast();
@@ -35,6 +36,15 @@ export const useTasksActions = () => {
         },
     })
 
+    const { pending: completingReadingMilestonPaperTask, request: completeReadingMilestonPaperTask } = useAPI({
+        apiMethod: CompleteReadingMilestonPaperTasksAPI,
+
+        successCallback: () => {},
+        failedCallback: (e) => {
+            console.log(e);
+        },
+    })
+
     const { pending: gettingMilestoneTask, request: getMilestoneTask } = useAPI({
         apiMethod: GetMilestoneTaskInfoAPI,
 
@@ -55,6 +65,9 @@ export const useTasksActions = () => {
 
         completeReadingPapers,
         completingReadingPapers,
+
+        completeReadingMilestonPaperTask,
+        completingReadingMilestonPaperTask,
 
         getMilestoneTask,
         gettingMilestoneTask,

@@ -114,9 +114,9 @@ export default function Settings() {
                         }
                     </div>
 
-                    <Carousel 
+                    {/* <Carousel 
                         name = 'path-ways'    
-                    />
+                    /> */}
                 </div>
                 <div className={cs(styles['calendar_container'])}>
                     {/* <Carousel 

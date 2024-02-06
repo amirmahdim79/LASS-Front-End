@@ -8,10 +8,13 @@
     min-width: 340px;
     background-color: $dark-accent-20;
     border-radius: 12px;
-    padding: 18px 18px;
+    padding: 18px 18px 18px 10px;
     display: flex;
     flex-direction: column;
     row-gap: 18px;
+    max-height: calc(570px + 30px + 10px);
+    min-height: calc(570px + 30px + 10px);
+    
 
     .header {
         width: 100%;
@@ -29,6 +32,19 @@
         display: flex;
         flex-direction: column;
         row-gap: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        direction: rtl;
+
+        &::-webkit-scrollbar {
+            width: 7px;
+            background-color: #eeeeee;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background:  #3dbbff;
+            border-radius: 10px;
+        }
 
         .data_container {
             width: 100%;
@@ -36,6 +52,8 @@
             grid-template-columns: 85px 1fr;
             column-gap: 10px;
             align-items: start;
+            direction: ltr;
+            padding-left: 10px;
 
             .icons {
                 width: 100%;

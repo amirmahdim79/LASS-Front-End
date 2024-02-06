@@ -5,11 +5,11 @@ import taskIcon from 'assets/icons/clipboard-text.svg'
 import { useNavigate } from 'react-router-dom';
 import TaskStatusBar from 'components/dashboardTaskStatus';
 import moment from 'moment';
-// import 'moment/locale/fa';
+import 'moment/locale/fa';
 
 export default function TaskPreview({task, type='milestone-task'}) {
 
-    // moment.locale('fa');
+    moment.locale('fa');
 
     const navigate = useNavigate();
 
@@ -18,7 +18,6 @@ export default function TaskPreview({task, type='milestone-task'}) {
         else return time
     }
 
-    // console.log("task", task);
 
     return (
         <div 
@@ -36,7 +35,7 @@ export default function TaskPreview({task, type='milestone-task'}) {
 
                 <div className={cs(styles['activity-deadline'])}> 
                     {task?.dueDate 
-                        ? `${moment(task.dueDate)._d} - ${checkTime(moment(task.dueDate).hour())}:${checkTime(moment(task.dueDate).minute())}`
+                        ? `${moment(task.dueDate)._d.toLocaleDateString('fa-IR')} - ${checkTime(moment(task.dueDate).hour())}:${checkTime(moment(task.dueDate).minute())}`
                         : '-'
                     } 
                 </div>

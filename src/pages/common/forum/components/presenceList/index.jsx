@@ -23,6 +23,13 @@ export default function PresenceList({updatePresenceList, setMsg}) {
         }    
     }
 
+    // const onReplyUser = (msg) => {
+    //     const emailRegex = /\*([^*]+)\*/g;
+
+    //     const formattedMessage = msg && msg.replace(emailRegex, (_, email) => `@${email}`);
+    //     return formattedMessage
+    // }
+
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['header'])}> 
@@ -33,7 +40,7 @@ export default function PresenceList({updatePresenceList, setMsg}) {
                 {
                     Object.keys(forum?.PresenceForm?.list).length && Object.keys(forum?.PresenceForm?.list).map((userId, index) => 
                         <div className={cs(styles['data_container'])}> 
-                            <div className={cs(styles['user_data'])} onClick={() => setMsg(prev => prev + `*${getUserData(userId, 'email')}*`)}> 
+                            <div className={cs(styles['user_data'])} onClick={() => setMsg(prev => prev + `${getUserData(userId, 'firstName')}` + ' ' + `${getUserData(userId, 'lastName')}` + ' ')}> 
                                 <div 
                                     style={getUserData(userId, 'profilePicture') && {backgroundImage: `url(${getUserData(userId, 'profilePicture')})`}} 
                                     className={cs(styles['avatar'], !getUserData(userId, 'profilePicture') && styles['empty_avatar'])}
@@ -54,7 +61,7 @@ export default function PresenceList({updatePresenceList, setMsg}) {
                             </div>
                         </div>
                     )
-                }                    
+                }                  
             </div>
         </div>
     )

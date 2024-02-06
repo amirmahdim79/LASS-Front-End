@@ -23,7 +23,7 @@ export default function Task() {
 
     const constantText = text[params.type]
 
-    const { getUserTask, completeReadingPapers, getMilestoneTask } = useTasksActions();
+    const { getUserTask, completeReadingPapers, completeReadingMilestonPaperTask, getMilestoneTask } = useTasksActions();
     const { value: task, setValue: setTask } = useInput({});
     const { value: done, setValue: setDone } = useInput(false);
 
@@ -54,14 +54,23 @@ export default function Task() {
 
     const onClickCompleteTask = () => {
         if (!task.status) {
-            completeReadingPapers({UserTask: params.id})
-                .then(res => {
-                    console.log("---------rrrr", res.data);
-                    getTaskData();
-                })
-                .catch(err => {
-                    console.log("erreeeeeeeeeeeeeeeeeee", err)
-                })
+            if (location.pathname.includes('milestone-task')) {
+                completeReadingMilestonPaperTask({Task: params.id})
+                    .then(res => {
+                        getTaskData();
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            } else {
+                completeReadingPapers({UserTask: params.id})
+                    .then(res => {
+                        getTaskData();
+                    })
+                    .catch(err => {
+                        console.log( err)
+                    })
+            }
         }
     }
 
@@ -70,17 +79,10 @@ export default function Task() {
         <div className={cs(styles['container'])}>
             <div className={cs(styles['chart_container'])}>
                 <p className={cs(styles['title'])}> {constantText.chart.title} </p>
-
-                {/* { params.type === 'upload' && <p className={cs(styles['subtitle'])}> تعداد گزارش‌کارهای تحویل شده در هفته گذشته </p> }
-                { params.type === 'paper' && <span className={cs(styles['subtitle'])}> تعداد مقالات مطالعه شده با هشتگ <span>  {'E-Learning#'} </span> در هفته گذشته!</span> }
-
-                <img  src={chartImg} alt='chart' />
-
-                { params.type === 'upload' && <span className={cs(styles['info'])}> استریک آپلود به موقع گزارش کار شما <span>  {'7'} </span> دفعه می‌باشد </span> } */}
             </div>
 
             <div className={cs(styles['task_container'])}>
-                <p className={cs(styles['title'])}> {task.name} </p>
+                <p className={cs(styles['title'])}> {task.name} {task.status && <span> (انجام شده است) </span>} </p>
 
                 <div className={cs(styles['date_wrapper'])}>
                     <span> {constantText.date} :</span>
@@ -98,6 +100,7 @@ export default function Task() {
                                     info={'فرمت‌های قابل قبول عبارتند از: pdf، docx'}
                                     btnText={constantText.btn}
                                     type={location.pathname.includes('milestone-task') ? 'milestone-task' : 'usertask'}
+                                    disabled={task.status}
                                 />
                             </div>
 

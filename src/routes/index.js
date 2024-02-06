@@ -16,6 +16,7 @@ import ApproveMilestones from "pages/supervisor/milestonesApproval";
 import ForumCreation from "pages/common/forum/forumCreation";
 import GroupCreation from "pages/common/settings/groupCreation";
 import ErrorPage from "pages/error";
+import NotesPage from "pages/common/notes";
 
 export const router = createBrowserRouter([
     {
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
                 path: 'email-settings',
                 element: <Email />,
             },
+            {
+                path: 'notes',
+                element: <NotesPage />,
+            },
         ]
     },
 
@@ -164,6 +169,10 @@ export const router = createBrowserRouter([
             {
                 path: 'email-settings',
                 element: <Email />,
+            },
+            {
+                path: 'notes',
+                element: <NotesPage />,
             },
         ]
     },

@@ -7,6 +7,7 @@ import folderLight from 'assets/icons/files/folder/light-color.svg';
 import emailLight from 'assets/icons/messages/sms/light-color.svg';
 import profileLight from 'assets/icons/users/user/light-color.svg';
 import settingsLight from 'assets/icons/settings/settings-2/light-color.svg';
+import notesLight from 'assets/icons/contents/note-text/light-color.svg';
 import moonLight from 'assets/icons/weather/moon/light-color.svg';
 import useInput from 'hooks/useInputHandler';
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -57,9 +58,15 @@ export default function SideBar({type}) {
         else navigate('/supervisor/settings')
     }
 
+    const openNotesPage = () => {
+        setIconNum('7')
+        if ( type === 'user' ) navigate('/user/notes')
+        else navigate('/supervisor/notes')
+    }
+
     const enableDarkMode = () => {
         // modal for logout
-        setIconNum('7')
+        setIconNum('8')
         
     }
 
@@ -104,9 +111,10 @@ export default function SideBar({type}) {
                         {((type === 'user' && permissions && permissions.indexOf('lab') > -1) || type === 'supervisor') &&
                             <img className={cs(styles['icon'], iconNum === '6' && styles['active'])} src={settingsLight} alt='settings icon' onClick={() => openSettings()}/>
                         }
+                        <img className={cs(styles['icon'], iconNum === '7' && styles['active'])} src={notesLight} alt='notes icon' onClick={() => openNotesPage()} />
                         
                         <div className={cs(styles['dark-mode'])}>
-                            <img src={moonLight} alt='moon icon' className={cs(styles['dark-mode-icon'], iconNum === '7' && styles['active'])} onClick={() => enableDarkMode()}/>
+                            <img src={moonLight} alt='moon icon' className={cs(styles['dark-mode-icon'], iconNum === '8' && styles['active'])} onClick={() => enableDarkMode()}/>
                         </div>
                     </>
                 )

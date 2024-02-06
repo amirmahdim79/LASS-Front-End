@@ -77,8 +77,6 @@ export default function Navbar({type}) {
 
     // hover animation
 
-    console.log("labName", labName);
-
     return (
         <nav className={cs(styles['container'])}>
 

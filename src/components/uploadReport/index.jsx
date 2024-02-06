@@ -20,7 +20,7 @@ const $axios = axios.create({
     withCredentials: true,
 })
 
-export default function UploadReport({text, info, btnText, type}) {
+export default function UploadReport({text, info, btnText, type, disabled}) {
 
     const { showToast } = useToast();
 
@@ -66,12 +66,6 @@ export default function UploadReport({text, info, btnText, type}) {
         })
     }
 
-    // useEffect(() => {
-    //     if (progress === 100) {
-    //         closeProgressBarModal();         
-    //         setProgress(0)        
-    //     }
-    // } , [progress])
 
     const handleChange = (e) => {
         setFileData({});
@@ -87,9 +81,6 @@ export default function UploadReport({text, info, btnText, type}) {
     }
 
 
-    // console.log("progress", progress);
-
-
 
     return (
         <div className={cs(styles['wrapper'])}>
@@ -101,7 +92,7 @@ export default function UploadReport({text, info, btnText, type}) {
                     />
                     <div className={cs(styles['btn_wrapper'])}>
                         <button className={cs(styles['btn'])}> {text} </button>
-                        <input type="file" id='file-input' name="myfile" onChange={(e) => handleChange(e)}  accept=".docx,.pdf"/>
+                        <input type="file" id='file-input' name="myfile" disabled={disabled} onChange={(e) => handleChange(e)}  accept=".docx,.pdf"/>
                         <p className={cs(styles['upload_info'])}> {info} </p>
                     </div>
                 </div>

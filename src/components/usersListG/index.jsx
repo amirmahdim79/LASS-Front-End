@@ -209,14 +209,14 @@ export default function UsersList({
                                     <div className={cs(styles['info'])}>
                                         <div className={cs(styles['top'])} style={{alignItems: !hasMoreInfo ? 'center' : 'flex-start'}}>
                                             <div style={{maxWidth: userDataMaxWidth}}> 
-                                                <span>{s?.firstName} {s?.lastName}</span>
-                                                <div className={cs(styles['tooltip'])}> 
+                                                <span>{s?.firstName} {s?.lastName} {''}</span>
+                                                {/* <div className={cs(styles['tooltip'])}> 
                                                     <div className={cs(styles['arrow'])} />
                                                     {s?.firstName} {s?.lastName}   
-                                                    <p className={cs(styles['type'])}> {degreeMapper(s?.type)} </p>
-                                                </div>
+                                                    <p className={cs(styles['type'])}>{''} {degreeMapper(s?.type)} </p>
+                                                </div> */}
                                             </div>
-                                            <div style={{display:'inline', direction:'rtl'}}>{degreeMapper(s?.type)}</div>
+                                            <div style={{display:'inline', direction:'rtl'}}>{''} {degreeMapper(s?.type)}</div>
                                         </div>
 
                                         {hasMoreInfo && (

@@ -23,6 +23,7 @@
         position: relative;
         row-gap: 30px;
         padding: 40px 0 15px 0;
+        cursor: default;
     
         .upload_btn_wrapper {
             position: relative;
@@ -32,11 +33,12 @@
             align-items: center;
             justify-content: center;
             row-gap: 12px;
-            cursor: pointer;
+            cursor: inherit;
     
             img {
                 width: 128px;
                 height: 128px;
+                cursor: inherit;
             }
     
             .btn_wrapper {
@@ -45,14 +47,17 @@
                 justify-content: center;
                 align-items: center;
                 row-gap: 10px;
+                cursor: inherit;
     
                 .btn {
                     width: max-content;
                     @include mixins.sub-title;
                     color: $dark-shades-100;
+                    cursor: inherit;
                 }
         
                 .upload_info {
+                    cursor: inherit;
                     @include mixins.sub-description;
                 }
             }
@@ -63,6 +68,7 @@
                 left: 0;
                 top: 0;
                 opacity: 0;
+                cursor: inherit;
             } 
     
             

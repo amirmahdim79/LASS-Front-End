@@ -27,11 +27,13 @@ import ProgressTracker from 'components/progressTracker';
 import Leaderboard from 'components/leaderboard';
 import { useProfileActions } from './hooks/useProfileActions';
 import ActivitiesTable from 'components/activitiesTable';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Profile({editable=false}) {  
 
     const params = useParams();
+    const navigate = useNavigate();
     const userInfo = useSelector(state => state.user.user);
     const labId = useSelector(state => state.lab.labId);
     const path = useSelector(state => state.lab.Paths);
@@ -47,7 +49,7 @@ export default function Profile({editable=false}) {
         if (labId) {
             getLabStudentInfo({}, `?lab=${labId}&id=${params.id}`)
                 .then(res => {
-                    console.log("----res.data", res.data);
+                    // console.log("----res.data", res.data);
                     setUserData(res.data)
                 })
                 .catch(err => {
@@ -67,9 +69,6 @@ export default function Profile({editable=false}) {
             }
         }
     }, [params.id])
-
-
-
 
 
     // useEffect(() => {
@@ -188,7 +187,7 @@ export default function Profile({editable=false}) {
                     </div>
                 </div>
 
-                <div className={cs(styles['wrapper'] , styles['notes_wrapper'])}>
+                <div className={cs(styles['wrapper'] , styles['notes_wrapper'])} >
                     <p> یادداشت ها </p>
                     <img src={notesIcon} alt='notes icon'/>
                 </div>
