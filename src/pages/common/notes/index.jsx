@@ -24,9 +24,12 @@ export default function NotesPage() {
 
     const { value: searchKey, setValue: setSearchKey } = useInput('');
     const { value: documents, setValue: setDocuments } = useInput([]);
+    const permissions = useSelector(state => state.user.permissions);
 
     const { getLabDocs } = useNotesActions();
     const labId = useSelector(state => state.lab.labId);
+
+    console.log("permissions", permissions);
 
     const navigateToGoogleDocs = (docId) => {
         const externalUrl = `https://docs.google.com/document/d/${docId}`; 
@@ -60,16 +63,21 @@ export default function NotesPage() {
                 <div className={cs(styles['row_1'])}>
                     <div className={cs(styles['titles_wrapper'], styles['items'])}>
                         <p> {text.list_title_1} </p>
-                        <Button
-                            height={'30px'}
-                            color={colors['main-color-100']} 
-                            onClick={() => showAddDocModal()}
-                            text={text.add_btn} 
-                            fontSize={'12px'}
-                            fontWeight={'500'}
-                            fontFamily={'pinar_medium'}
-                            borderRadius={'12px'}
-                        />
+                        {
+                            (permissions && permissions.indexOf('documents') > -1) && (
+                                <Button
+                                    height={'30px'}
+                                    color={colors['main-color-100']} 
+                                    onClick={() => showAddDocModal()}
+                                    text={text.add_btn} 
+                                    fontSize={'12px'}
+                                    fontWeight={'500'}
+                                    fontFamily={'pinar_medium'}
+                                    borderRadius={'12px'}
+                                />
+                            )
+                        }
+
                     </div>
                     <div className={cs(styles['tools_wrapper'], styles['items'])}>
                         <div> 
