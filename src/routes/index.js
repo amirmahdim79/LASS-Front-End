@@ -15,17 +15,18 @@ import PathCreation from "pages/common/pathCreation";
 import ApproveMilestones from "pages/supervisor/milestonesApproval";
 import ForumCreation from "pages/common/forum/forumCreation";
 import GroupCreation from "pages/common/settings/groupCreation";
+import ErrorPage from "pages/error";
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        errorElement: 'tttest11',
+        errorElement: <ErrorPage />,
         element: <HomePage />,
     },
     {
         path: '/user',
         element: <Base type={'user'}/>,
-        errorElement: 'error user pages',
+        errorElement: <ErrorPage />,
         loader: () => (localStorage.getItem('type') !== 'user' && window.location.href('/')),
         children: [
             {

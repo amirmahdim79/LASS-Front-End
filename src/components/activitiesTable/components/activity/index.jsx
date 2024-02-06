@@ -47,14 +47,15 @@ export default function Activity({dayNum=0, monthValue,  isHidden=false }) {
         else if (num > 4) return {
             bg: colors['main-color-100'],
             borderColor:  colors['light-accent-100']
-        }
+        } 
+        
     }
 
 
     return (
         <div 
             className={cs(styles['container'])}
-            style={isHidden ? {visibility: 'hidden'} : {visibility: 'visible', backgroundColor: getColor().bg, borderColor: getColor().borderColor}}
+            style={isHidden ? {visibility: 'hidden'} : {visibility: 'visible', backgroundColor: getColor()?.bg, borderColor: getColor()?.borderColor}}
         />
     )
 

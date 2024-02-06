@@ -47,10 +47,6 @@ export default function ForumCreation() {
 
 
         usersUnique: []
-
-
-
-
     }
 
     const [ openShowUsersModal, showShowUsersModal, closeShowUsersModal ] = useModal();

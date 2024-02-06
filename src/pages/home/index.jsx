@@ -14,6 +14,11 @@ import useInput from 'hooks/useInputHandler';
 import colors from "styles/colors.module.scss"
 import Button from 'components/global/button';
 import { useDispatch } from 'react-redux';
+import SelectInputV1 from 'components/global/inputs/selectInputs/selectInputV2';
+import { useReducer } from 'react';
+import { reducer } from './reducer';
+import { degreeMapper } from 'utils/mapper';
+import { validateEmail } from 'utils/mapper';
 
 
 export default function HomePage() {
@@ -21,35 +26,49 @@ export default function HomePage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { value: email, onChange: onChangeEmail } = useInput('');
-    const { value: password, onChange: onChangePassword } = useInput('');
-    const { value: firstName, onChange: onChangeFirstName } = useInput('');
-    const { value: lastName, onChange: onChangeLastName } = useInput('');
+    const initialState = {
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        sid: '',
+        degree: '',
 
-    const { value: emailErr, setValue: setEmailErr } = useInput('');
-    const { value: passwordErr, setValue: setPasswordErr } = useInput('');
-    const { value: firstNameErr, setValue: setFirstNameErr } = useInput('');
-    const { value: lastNameErr, setValue: setLastNameErr } = useInput('');
+        emailErr: '',
+        passwordErr: '',
+        firstNameErr: '',
+        lastNameErr: '',
+        sidErr: '',
+        degreeErr: '',
 
-    const { value: type, setValue: setType } = useInput('دانشجو');
-    const { value: mode, setValue: setMode } = useInput('login');
+        type: 'دانشجو',
+        mode: 'login',
+    }
+
+    const [ state , dispatchState] = useReducer( reducer, initialState );
+
+    console.log("sssssssssssss", state);
+
 
     const { 
             authenticateUser, userAuthentication,
-            authenticateSupervisor, supervisorAuthentication 
-        } = useAuthActions(setEmailErr, setPasswordErr);
+            authenticateSupervisor, supervisorAuthentication ,
+            createUser, userCreation,
+            createSupervisor, supervisorCreation
+        } = useAuthActions(dispatchState, state);
+
 
     const login = () => {
-        if (type === 'دانشجو') {
-            authenticateUser({ email:email.replace(/^\s+|\s+$/gm,''), password:password.replace(/^\s+|\s+$/gm,'') }).then(res => {
+        if (state.type === 'دانشجو') {
+            authenticateUser({ email: state.email.replace(/^\s+|\s+$/gm,''), password: state.password.replace(/^\s+|\s+$/gm,'') }).then(res => {
                 dispatch(addUser(res.data))
                 localStorage.setItem('type', 'user')
                 navigate('/user/dashboard')
             }).catch(err => {
                 console.log("...........eeeeeeeeeeeeeeee", err);
             })
-        }else if (type === 'استاد') {
-            authenticateSupervisor({ email:email.replace(/^\s+|\s+$/gm,''), password:password.replace(/^\s+|\s+$/gm,'') }).then(res => {
+        }else if (state.type === 'استاد') {
+            authenticateSupervisor({ email: state.email.replace(/^\s+|\s+$/gm,''), password: state.password.replace(/^\s+|\s+$/gm,'') }).then(res => {
                 localStorage.setItem('type', 'supervisor')
                 dispatch(addUser(res.data))
                 navigate('/supervisor/dashboard')
@@ -58,177 +77,278 @@ export default function HomePage() {
             })
         }
     }    
+
+    const signup = () => {
+        if (state.type === 'دانشجو') {
+            let data = {
+                firstName: state.firstName,
+                lastName: state.lastName,
+                email: state.email.replace(/^\s+|\s+$/gm,''),
+                password: state.password.replace(/^\s+|\s+$/gm,''),
+                sid: state.sid,
+                type: degreeMapper(state.degree),
+            }
+            createUser({...data})
+                .then(res => {
+                    dispatch(addUser(res.data));
+                    localStorage.setItem('type', 'user');
+                    navigate('/user/dashboard');
+                    console.log("userrrrrrr", res.data);
+                })
+                .catch(err => {
+                    // console.log("...........eeeeeeeeeeeeeeee", err);
+                })
+
+        }else if (state.type === 'استاد') {
+            let data = {
+                firstName: state.firstName,
+                lastName: state.lastName,
+                email: state.email.replace(/^\s+|\s+$/gm,''),
+                password: state.password.replace(/^\s+|\s+$/gm,''),
+            }
+            createSupervisor({...data})
+                .then(res => {
+                    dispatch(addUser(res.data));
+                    localStorage.setItem('type', 'supervisor');
+                    navigate('/supervisor/dashboard')
+                    console.log("userrrrrrr", res.data);
+                })
+                .catch(err => {
+                    console.log("...........eeeeeeeeeeeeeeee", err);
+                })
+        }
+    }   
+
+    const checkBtnIsDisabled = () => {
+        if (state.mode === 'signup') {
+            if (state.type === 'دانشجو') {
+                return !state.email.trim().length || !state.password.trim().length || 
+                    !state.firstName.trim().length || !state.lastName.trim().length || 
+                    !state.sid.trim().length || !state.degree.trim().length || 
+                    !validateEmail(state.email) || state.password.toString().length < 8
+            } else {
+                return !state.email.trim().length || !state.password.trim().length || 
+                    !state.firstName.trim().length || !state.lastName.trim().length || 
+                    !validateEmail(state.email) || state.password.toString().length < 8
+            }
+        } else {
+            return !state.email.trim().length || !state.password.trim().length || 
+            !validateEmail(state.email) || state.password.toString().length < 8
+        }
+
+
+    }
+
+    const checkBtnLoadingStatus = () => {
+        if (state.mode === 'signup') {
+            if (state.type === 'دانشجو') return userCreation
+            else return supervisorCreation
+        } else {
+            if (state.type === 'دانشجو') return userAuthentication
+            else return supervisorAuthentication
+        }
+    }
     
     useEffect(() => {
-        setEmailErr('')
-    }, [email, type, password])
+        dispatchState({payload: {type: 'emailErr', value: ''}})
+    }, [state.email, state.type, state.password])
 
     useEffect(() => {
-        setPasswordErr('')
-    }, [password, type])
-    
+        dispatchState({payload: {type: 'passwordErr', value: ''}})
+    }, [state.password, state.type])
+
+    useEffect(() => {
+        if (state.email.trim().length) {
+            if (state.email.length < 5) dispatchState({payload: {type: 'emailErr', value:'ایمیل وارد شده باید حداقل 5 کاراکتر داشته باشد'}})
+            else if (!validateEmail(state.email)) dispatchState({payload: {type: 'emailErr', value: 'ایمیل وارد شده معتبر نیست'}})
+        }
+    }, [state.email])
+
+    useEffect(() => {
+        if (state.password.trim().length) {
+            if (state.password.toString().length < 8) dispatchState({payload: {type: 'passwordErr', value: 'رمز وارد شده باید حداقل 8 کاراکتر داشته باشد'}})
+        }
+    }, [state.password])
+
+
+
     return (
         <div className={cs(styles['container'])}>
-            <div className={cs(styles['login_form'])} style={{...(mode === 'signup' && {rowGap: '20px'})}}>
+            <div className={cs(styles['form'], state.mode === 'signup' ? styles['signup_form'] : styles['login_form'])}>
                 <div className={cs(styles['header'])}>
                     <Logo color={'light'}/>
-                    <h1>{text.title[mode]}</h1>
+                    <h1>{text.title[state.mode]}</h1>
                 </div>
-                <div className={cs(styles['inputs'])} style={{...(mode === 'signup' && {rowGap: '16px'})}}>
-                    <TextInput 
-                        value={email}
-                        onChange={onChangeEmail}
-                        placeholder={text.input_1} 
-                        errorMessage={emailErr}
-                        showError={true}
-                        isValid={!emailErr}
-                        dir={'ltr'}
-                    />
-                    <TextInput 
-                        value={password}
-                        onChange={onChangePassword}
-                        placeholder={text.input_2} 
-                        errorMessage={passwordErr}
-                        showError={true}
-                        isValid={!passwordErr}
-                        dir={'ltr'}
-                        type={'password'}
-                    />
+                <div className={cs(styles['inputs'], (state.type !== 'دانشجو' && state.mode === 'signup') && styles['sups_form'])} >
                     {
-                        mode === 'signup' && (
+                        state.mode === 'login' && (
                             <>
                                 <TextInput 
-                                    value={firstName}
-                                    onChange={onChangeFirstName}
-                                    placeholder={text.input_3} 
-                                    errorMessage={firstNameErr}
+                                    value={state.email}
+                                    onChange={(e) => dispatchState({payload: {type: 'email', value: e.target.value}})}
+                                    placeholder={text.input_1} 
+                                    errorMessage={state.emailErr}
                                     showError={true}
-                                    isValid={!firstNameErr}
-                                    dir={'rtl'}
+                                    isValid={!state.emailErr}
+                                    dir={'ltr'}
+                                    autofill={true}
                                 />
                                 <TextInput 
-                                    value={lastName}
-                                    onChange={onChangeLastName}
-                                    placeholder={text.input_4} 
-                                    errorMessage={lastNameErr}
+                                    value={state.password}
+                                    onChange={(e) => dispatchState({payload: {type: 'password', value: e.target.value}})}
+                                    placeholder={text.input_2} 
+                                    errorMessage={state.passwordErr}
                                     showError={true}
-                                    isValid={!lastNameErr}
-                                    dir={'rtl'}
+                                    isValid={!state.passwordErr}
+                                    dir={'ltr'}
+                                    type={'password'}
                                 />
                             </>
                         )
                     }
-                </div>
-                <div className={cs(styles['buttons'])} style={{...(mode === 'signup' && {paddingTop: '16px'})}}>
-                    <Switch 
-                        left={text.switch_left_data} 
-                        right={text.switch_right_data}
-                        setValue={setType}
-                        value={type}
-                    />
-                    <Button 
-                        color={colors['dark-shades-100']} 
-                        onClick={() => login()}
-                        text={mode === 'signup' ? text.signup_button : text.login_button} 
-                        disabled={!email || !password}
-                        load={type === 'دانشجو' ? userAuthentication : supervisorAuthentication}
-                    />
-                    {mode === 'signup' 
-                        ? (
-                            <p onClick={() => setMode('login')}> {text.signup_mode_footer_text} <span> {text.signup_mode_footer_text2} </span> </p>
-                        ) : (
-                            <p onClick={() => setMode('signup')}> {text.login_mode_footer_text} <span> {text.login_mode_footer_text2} </span> </p>
-                        )
-                    }
-                </div>
-                {/* <div className={cs(styles['inner_container'])}  style={{maxHeight: '540px', marginBottom: '40px'}}>
-                    <div className={cs(styles['inner_container'])} style={{maxHeight:'380px'}}>
-                        <div className={cs(styles['inner_container'])} style={{maxHeight:'160px'}}>
-                            <Logo color={'light'}/>
-                            <h1>{text.title[mode]}</h1>
-                        </div>
-                        <div className={cs(styles['inputs_container'])}>
-                            <TextInput 
-                                value={email}
-                                onChange={onChangeEmail}
-                                placeholder={text.input_1} 
-                                errorMessage={emailErr}
-                                showError={true}
-                                isValid={!emailErr}
-                                dir={'ltr'}
-                            />
-                            <TextInput 
-                                value={password}
-                                onChange={onChangePassword}
-                                placeholder={text.input_2} 
-                                errorMessage={passwordErr}
-                                showError={true}
-                                isValid={!passwordErr}
-                                dir={'ltr'}
-                                type={'password'}
-                            />
-                            {
-                                mode === 'signup' && (
+
+                    {
+                        state.mode === 'signup' && (
+                            state.type === 'دانشجو'
+                                ? (
                                     <>
                                         <TextInput 
-                                            value={email}
-                                            onChange={onChangeEmail}
+                                            value={state.email}
+                                            onChange={(e) => dispatchState({payload: {type: 'email', value: e.target.value}})}
                                             placeholder={text.input_1} 
-                                            errorMessage={emailErr}
+                                            errorMessage={state.emailErr}
                                             showError={true}
-                                            isValid={!emailErr}
+                                            isValid={!state.emailErr}
                                             dir={'ltr'}
+                                            type={'email'}
                                         />
                                         <TextInput 
-                                            value={password}
-                                            onChange={onChangePassword}
-                                            placeholder={text.input_2} 
-                                            errorMessage={passwordErr}
+                                            value={state.firstName}
+                                            onChange={(e) => dispatchState({payload: {type: 'firstName', value: e.target.value}})}
+                                            placeholder={text.input_3} 
+                                            errorMessage={state.firstNameErr}
                                             showError={true}
-                                            isValid={!passwordErr}
+                                            isValid={!state.firstNameErr}
+                                            dir={'rtl'}
+                                        />
+                                        <TextInput 
+                                            value={state.lastName}
+                                            onChange={(e) => dispatchState({payload: {type: 'lastName', value: e.target.value}})}
+                                            placeholder={text.input_4} 
+                                            errorMessage={state.lastNameErr}
+                                            showError={true}
+                                            isValid={!state.lastNameErr}
+                                            dir={'rtl'}
+                                        />
+                                        <TextInput 
+                                            value={state.password}
+                                            onChange={(e) => dispatchState({payload: {type: 'password', value: e.target.value}})}
+                                            placeholder={text.input_2} 
+                                            errorMessage={state.passwordErr}
+                                            showError={true}
+                                            isValid={!state.passwordErr}
+                                            dir={'ltr'}
+                                            type={'password'}
+                                        />
+                                        <TextInput 
+                                            value={state.sid}
+                                            onChange={(e) => dispatchState({payload: {type: 'sid', value: e.target.value}})}
+                                            placeholder={text.input_5} 
+                                            errorMessage={state.sidErr}
+                                            showError={true}
+                                            isValid={!state.sidErr}
+                                            dir={'rtl'}
+                                        />
+                                        <SelectInputV1
+                                            height={'48px'}
+                                            value={state.degree}
+                                            setValue={(e) => dispatchState({payload: {type: 'degree', value: e}})}
+                                            dir={'rtl'}
+                                            placeholder={text.input_6} 
+                                            suggestions={['کارشناسی', 'کارشناسی ارشد', 'دکترا', 'فوق دکترا', 'کارآموز']}
+                                        />
+    
+                                    </>
+                                ) : (
+                                    <>
+                                        <TextInput 
+                                            value={state.firstName}
+                                            onChange={(e) => dispatchState({payload: {type: 'firstName', value: e.target.value}})}
+                                            placeholder={text.input_3} 
+                                            errorMessage={state.firstNameErr}
+                                            showError={true}
+                                            isValid={!state.firstNameErr}
+                                            dir={'rtl'}
+                                        />
+                                        <TextInput 
+                                            value={state.lastName}
+                                            onChange={(e) => dispatchState({payload: {type: 'lastName', value: e.target.value}})}
+                                            placeholder={text.input_4} 
+                                            errorMessage={state.lastNameErr}
+                                            showError={true}
+                                            isValid={!state.lastNameErr}
+                                            dir={'rtl'}
+                                        />
+                                        <TextInput 
+                                            value={state.email}
+                                            onChange={(e) => dispatchState({payload: {type: 'email', value: e.target.value}})}
+                                            placeholder={text.input_1} 
+                                            errorMessage={state.emailErr}
+                                            showError={true}
+                                            isValid={!state.emailErr}
+                                            dir={'ltr'}
+                                            type={'email'}
+                                        />
+                                        <TextInput 
+                                            value={state.password}
+                                            onChange={(e) => dispatchState({payload: {type: 'password', value: e.target.value}})}
+                                            placeholder={text.input_2} 
+                                            errorMessage={state.passwordErr}
+                                            showError={true}
+                                            isValid={!state.passwordErr}
                                             dir={'ltr'}
                                             type={'password'}
                                         />
                                     </>
                                 )
-                            }
-                            
-                        </div>
-                    </div>
+                        )
+                    }
 
-                    <div className={cs(styles['buttons_container'])}>
-                        <Switch 
-                            left={text.switch_left_data} 
-                            right={text.switch_right_data}
-                            setValue={setType}
-                            value={type}
-                        />
-                        <Button 
-                            color={colors['dark-shades-100']} 
-                            onClick={() => login()}
-                            text={text.login_button} 
-                            disabled={!email || !password}
-                            load={type === 'دانشجو' ? userAuthentication : supervisorAuthentication}
-                            outlined={mode === 'signup'}
-                        />
-                        <Button 
-                            color={colors['dark-shades-100']} 
-                            onClick={() => login()}
-                            text={text.signup_button} 
-                            disabled={!email || !password}
-                            load={type === 'دانشجو' ? userAuthentication : supervisorAuthentication}
-                            outlined={mode === 'login'}
-                        />
-                    </div>
-                </div> */}
+                </div>
+                <div className={cs(styles['buttons'])} style={{...(state.mode === 'signup' && {paddingTop: '16px'})}}>
+                    <Switch 
+                        left={text.switch_left_data} 
+                        right={text.switch_right_data}
+                        setValue={(e) => dispatchState({payload: {type: 'type', value: e}})}
+                        value={state.type}
+                    />
+                    <Button 
+                        color={colors['dark-shades-100']} 
+                        onClick={() => state.mode === 'signup' ? signup() : login()}
+                        text={state.mode === 'signup' ? text.signup_button : text.login_button} 
+                        disabled={checkBtnIsDisabled()}
+                        load={checkBtnLoadingStatus()}
+                    />
+                    {state.mode === 'signup' 
+                        ? (
+                            <p onClick={(e) => dispatchState({payload: {type: 'mode', value: 'login'}})}> {text.signup_mode_footer_text} <span> {text.signup_mode_footer_text2} </span> </p>
+                        ) : (
+                            <p onClick={(e) => dispatchState({payload: {type: 'mode', value: 'signup'}})}> {text.login_mode_footer_text} <span> {text.login_mode_footer_text2} </span> </p>
+                        )
+                    }
+                </div>
             </div>
-            <div className={cs(styles['login_page_image_container'])}>
-                <img 
-                    className={cs(styles['login_page_image'])}
-                    src={mode === 'login' ? LoginPageImage : SignUpPageImage}
-                    alt='login_page_image'
-                />
-            </div>
+            {
+                state.mode === 'login' && (
+                    <div className={cs(styles['login_page_image_container'])}>
+                    <img 
+                        className={cs(styles['login_page_image'])}
+                        src={state.mode === 'login' ? LoginPageImage : SignUpPageImage}
+                        alt='login_page_image'
+                    />
+                </div>
+                )
+            }
         </div>
     )
 }

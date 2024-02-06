@@ -26,6 +26,7 @@ export default function TextInput({
     type = 'text',
     value ,
     width = '100%' ,
+    autofill = false,
 }) {
 
 
@@ -53,7 +54,7 @@ export default function TextInput({
                 }
                 
 
-                <div className={cs(styles['input'])} >
+                <div className={cs(styles['input'])} style={{direction: dir}} >
                     <input 
                         defaultValue={defaultValue}
                         dir={(type==='email'|| type==='number' || type==='password') ? 'ltr' : dir} 
@@ -65,7 +66,7 @@ export default function TextInput({
                         style={{width:width, height:height, fontSize:fontSize, fontWeight: fontWeight, color: color}}
                         type={type === 'password' ? (showPassword ? 'text' : 'password') : type} 
                         value={value} 
-                        autoComplete="off"
+                        autoComplete={(autofill || (autofill && type === 'password')) ? "off" : "new-password"}
                     />
                     {
                         type === 'password' && (

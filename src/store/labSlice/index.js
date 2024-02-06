@@ -10,6 +10,7 @@ const initialState = {
     Events: null,
     prevId: '',
     labId: '',
+    labName: '',
     labGroups: [],
     labStudentsTasks: [],
     supsTasks: [],
@@ -38,6 +39,9 @@ export const labSlice = createSlice({
         },
         setLabId: (state, action) => {
             state.labId = action.payload
+        },
+        setLabName: (state, action) => {
+            state.labName = action.payload
         },
         setLabGroups: (state, action) => {
             state.labGroups = action.payload
@@ -70,6 +74,7 @@ export const labSlice = createSlice({
             state.leaderboard = action.payload
         },
         setUserActivities:  (state, action) => {
+            console.log("ppppppppppppppppppppppppppppppppppppppp", action.payload);
             state.userActivities = action.payload
         },
     }
@@ -83,6 +88,7 @@ export const {
     setPrevInd, 
     setEvents, 
     setLabId, 
+    setLabName,
     setLabGroups,
     setLabForums,
     setForum,

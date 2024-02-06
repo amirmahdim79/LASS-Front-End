@@ -25,6 +25,20 @@
         align-items: flex-start;
         row-gap: 16px;
         padding-right: 12px;
+        max-height: 360px;
+        min-height: 360px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+            background-color: #eeeeee;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background:  #3dbbff;
+            border-radius: 10px;
+        }
     }
 
     .footer {

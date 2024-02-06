@@ -7,6 +7,7 @@ import user4 from 'assets/user4.svg';
 import editIcon from 'assets/icons/contents/edit_1/dark-color.svg';
 import routingIcon from 'assets/icons/location/routing-2/dark-color.svg';
 import infoIcon from 'assets/icons/essential/info-circle/dark-color.svg';
+import notesIcon from 'assets/icons/contents/note-text/main-color.svg';
 import activities from 'assets/user-activities.svg';
 import leaderboard from 'assets/leaderboard.svg';
 import developmentChart from 'assets/developChart.svg';
@@ -181,10 +182,15 @@ export default function Profile({editable=false}) {
 
                     <div className={cs(styles['left_column'])}>
                         {(userInfo || userData) ? <p> تاریخ </p> : <div className={cs(styles['is_loading_activity_title'])}/> }
-                        {(userInfo || userData) ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {(userInfo || userData) ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {(userInfo || userData) ? <p> 1402/08/29 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(userInfo || userData) ? <p> 1402/11/15 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(userInfo || userData) ? <p> 1402/11/15 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(userInfo || userData) ? <p> 1402/11/15 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
                     </div>
+                </div>
+
+                <div className={cs(styles['wrapper'] , styles['notes_wrapper'])}>
+                    <p> یادداشت ها </p>
+                    <img src={notesIcon} alt='notes icon'/>
                 </div>
             </div>
 

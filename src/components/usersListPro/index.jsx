@@ -19,6 +19,7 @@ import { isBefore } from 'utils/mapper'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions'
+import { degreeMapper } from 'utils/mapper'
 
 export default function UsersList() {
 
@@ -208,10 +209,10 @@ export default function UsersList() {
 
                                 <div className={cs(styles['name_container'])}>
                                     <p> {s?.firstName} {s?.lastName} </p>
-                                    <p> {s?.type} </p>
+                                    <p> {degreeMapper(s?.type)} </p>
                                 </div>
                             </div>
-                            <p> +{s?.sand} </p>
+                            <p> {s?.sand > 0 ? `+${s?.sand}` : `${s?.sand}`} </p>
                             <div> <p> {s?.smarties} </p> </div>
                             
                             <div className={cs(styles['recent_activities'])}>

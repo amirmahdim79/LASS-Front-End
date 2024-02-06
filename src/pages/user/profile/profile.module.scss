@@ -35,6 +35,10 @@
             padding: 0 6px 20px 6px;
         }
 
+        .wrapper:last-of-type {
+            border-bottom: none;
+        }
+
         .name_wrapper {
             padding-top: 5px;
             
@@ -150,7 +154,6 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            border-bottom: none;
             
             .right_column {
                 width: max-content;
@@ -194,6 +197,16 @@
                     @include functions.skeletonLoadingStyles(60px, 18px, 5px);
                 }
             }
+        }
+
+        .notes_wrapper {
+            width: 100%;
+            @include mixins.h6-text;
+            display: flex;
+            align-items: center;
+            column-gap: 3px;
+            flex-direction: row;
+            justify-content: space-between;
         }
     }
 

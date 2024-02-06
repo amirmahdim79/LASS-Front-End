@@ -63,7 +63,6 @@ export default function ActivitiesTable() {
 
 
     useEffect(() => {
-        console.log("268");
         getRecentMonths();
     }, [location.pathname])
 

@@ -21,266 +21,266 @@ export default function ReceivedEmails() {
 
     const emails = [
         {
-            title: '[عنوان ایمیل]',
+            title: 'عنوان ایمیل',
             desc: 'لورم ایپسوم یک سری توضیحات که چی شد این تاپیک را درست کردیم',
             creationDate: 'در تاریخ 16 آذر 1402 ساخته شد',
             participators: [
                 
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user3,
+                    profilePicture: user3,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user4,
+                    profilePicture: user4,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
 
             ]
         },
         {
-            title: '[عنوان ایمیل]',
+            title: 'عنوان ایمیل',
             desc: 'لورم ایپسوم یک سری توضیحات که چی شد این تاپیک را درست کردیم',
             creationDate: 'در تاریخ 16 آذر 1402 ساخته شد',
             participators: [
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user1,
+                    profilePicture: user1,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user2,
+                    profilePicture: user2,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user3,
+                    profilePicture: user3,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user4,
+                    profilePicture: user4,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
             ]
         },
         {
-            title: '[عنوان ایمیل]',
+            title: 'عنوان ایمیل',
             desc: 'لورم ایپسوم یک سری توضیحات که چی شد این تاپیک را درست کردیم',
             creationDate: 'در تاریخ 16 آذر 1402 ساخته شد',
             participators: [
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user1,
+                    profilePicture: user1,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user2,
+                    profilePicture: user2,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user3,
+                    profilePicture: user3,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user4,
+                    profilePicture: user4,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
             ]
         },
         {
-            title: '[عنوان ایمیل]',
+            title: 'عنوان ایمیل',
             desc: 'لورم ایپسوم یک سری توضیحات که چی شد این تاپیک را درست کردیم',
             creationDate: 'در تاریخ 16 آذر 1402 ساخته شد',
             participators: [
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user1,
+                    profilePicture: user1,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user2,
+                    profilePicture: user2,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user3,
+                    profilePicture: user3,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user4,
+                    profilePicture: user4,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
             ]
         },
         {
-            title: '[عنوان ایمیل]',
+            title: 'عنوان ایمیل',
             desc: 'لورم ایپسوم یک سری توضیحات که چی شد این تاپیک را درست کردیم',
             creationDate: 'در تاریخ 16 آذر 1402 ساخته شد',
             participators: [
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user1,
+                    profilePicture: user1,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user2,
+                    profilePicture: user2,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user3,
+                    profilePicture: user3,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user4,
+                    profilePicture: user4,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
             ]
         },
         {
-            title: '[عنوان ایمیل]',
+            title: 'عنوان ایمیل',
             desc: 'لورم ایپسوم یک سری توضیحات که چی شد این تاپیک را درست کردیم',
             creationDate: 'در تاریخ 16 آذر 1402 ساخته شد',
             participators: [
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user1,
+                    profilePicture: user1,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user2,
+                    profilePicture: user2,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user3,
+                    profilePicture: user3,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user4,
+                    profilePicture: user4,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
             ]
         },
@@ -291,43 +291,43 @@ export default function ReceivedEmails() {
             participators: [
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user1,
+                    profilePicture: user1,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user2,
+                    profilePicture: user2,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user3,
+                    profilePicture: user3,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user4,
+                    profilePicture: user4,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user5,
+                    profilePicture: user5,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user6,
+                    profilePicture: user6,
                 },
                 {
                     name: 'علیرضا ابراهیمی',
-                    avatar: user7,
+                    profilePicture: user7,
                 },
             ]
         },

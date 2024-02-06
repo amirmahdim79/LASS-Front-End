@@ -16,6 +16,7 @@ import { setPath } from "store/labSlice";
 import { setMilestone } from "store/labSlice";
 import { setLeaderboard } from "store/labSlice";
 import { setUserActivities } from "store/labSlice";
+import { setLabName } from "store/labSlice";
 
 export default function Base({type}) {
         
@@ -41,11 +42,12 @@ export default function Base({type}) {
                         getMyLabs()
                             .then(res =>  {
                                 // console.log("22222222222222", res.data);
+                                dispatch(setLabName(res.data.name))
                                 dispatch(setStudents(res.data?.Students))
                                 dispatch(setPath(res.data?.Paths[0]))
                                 dispatch(setMilestone(res.data.Paths[0]?.Milestones))
                             })
-                            .catch(err => console.log("err", err))
+                            .catch(err => console.log(err))
 
                         getLabGroups({}, `/${res.data.Labs[0]}`)
                             .then(res => {
@@ -62,10 +64,11 @@ export default function Base({type}) {
                         if (location.pathname === '/user/my-profile') {
                             getMyActivities()
                                 .then(res => {
+                                    console.log("rrrrrrrrrrrr1111111111111111111111111111111111111111", res.data);
                                     dispatch(setUserActivities(res.data))
                                 })
                                 .catch(err => {
-                                    console.log("err", err);
+                                    console.log("er1111111111111111111111111111111111111111111111111111r", err);
                                 })
                         }
                     })

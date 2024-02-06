@@ -9,6 +9,7 @@ import tick_inactive from 'assets/icons/essential/tick-circle/dark-color.svg';
 import tick_active from 'assets/icons/essential/tick-circle/success-color.svg';
 import { getFirstLetters } from 'utils/mapper';
 import { useSelector } from 'react-redux';
+import { degreeMapper } from 'utils/mapper';
 
 
 export default function PresenceList({updatePresenceList, setMsg}) {
@@ -42,7 +43,7 @@ export default function PresenceList({updatePresenceList, setMsg}) {
 
                                 <div className={cs(styles['info'])}> 
                                     <p className={cs(styles['name'])}> {`${getUserData(userId, 'firstName')} ${getUserData(userId, 'lastName')}`} </p>
-                                    <p className={cs(styles['degree'])}> {getUserData(userId, 'type')} </p>
+                                    <p className={cs(styles['degree'])}> {degreeMapper(getUserData(userId, 'type'))} </p>
                                 </div>
                             </div>
 

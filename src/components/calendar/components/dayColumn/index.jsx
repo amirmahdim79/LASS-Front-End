@@ -9,15 +9,15 @@ export default function Column({now, index, events, showMore, setEvent}) {
     const today = moment();
 
 
-    events && events.map(e => {
-        console.log("eeeeeee", e);
-        console.log("name", e.name);
-        console.log("start", e.start);
-        console.log("moemnt", moment(e)._d);
-        console.log("date/first day of week", date);
-        console.log("now", now);
-        console.log("----------------------------------------------------------------------------------------------");
-    })
+    // events && events.map(e => {
+    //     console.log("eeeeeee", e);
+    //     console.log("name", e.name);
+    //     console.log("start", e.start);
+    //     console.log("moemnt", moment(e)._d);
+    //     console.log("date/first day of week", date);
+    //     console.log("now", now);
+    //     console.log("----------------------------------------------------------------------------------------------");
+    // })
 
 
 

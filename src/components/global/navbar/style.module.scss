@@ -57,6 +57,18 @@
                 @include mixins.description;
             }
         }
+
+        .lab_info {
+            width: 180px;
+            background-color: $dark-shades-100;
+            border-radius: 12px;
+            color: $light-shades-100;
+            @include mixins.h6-text;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+        }
     }
 
 

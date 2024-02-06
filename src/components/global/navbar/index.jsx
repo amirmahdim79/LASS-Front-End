@@ -25,6 +25,7 @@ export default function Navbar({type}) {
     const dispatch = useDispatch();
     
     const userInfo = useSelector(state => state.user.user);
+    const labName = useSelector(state => state.lab.labName);
     const userType = localStorage.getItem('type');
 
     const searchedValue = useSelector(state => state.user.navSearchedValue);
@@ -76,6 +77,8 @@ export default function Navbar({type}) {
 
     // hover animation
 
+    console.log("labName", labName);
+
     return (
         <nav className={cs(styles['container'])}>
 
@@ -87,20 +90,25 @@ export default function Navbar({type}) {
                 </div>
                 {
                     userType === 'user' && (
-                        <div className={cs(styles['smarties_container'])}>
-                            <div className={cs(styles['data'])}>
-                                <img src={streak} alt='streak icon'/>
-                                <p style={{color: colors['warning-dark-100']}}> {'-'} </p>
+                        <>
+                            <div className={cs(styles['smarties_container'])}>
+                                <div className={cs(styles['data'])}>
+                                    <img src={streak} alt='streak icon'/>
+                                    <p style={{color: colors['warning-dark-100']}}> {'-'} </p>
+                                </div>
+                                <div className={cs(styles['data'])}>
+                                    <img src={sand} alt='sand icon'/>
+                                    <p style={{color: colors['main-color-100']}}> {userInfo?.sand > 0 ? `+${userInfo?.sand}` : userInfo?.sand} </p>
+                                </div>
+                                <div className={cs(styles['data'])}>
+                                    <img src={smarties} alt='smarties icon'/>
+                                    <p style={{color: colors['pink-100']}}> {userInfo?.smarties} </p>
+                                </div>   
                             </div>
-                            <div className={cs(styles['data'])}>
-                                <img src={sand} alt='sand icon'/>
-                                <p style={{color: colors['main-color-100']}}> {userInfo?.sand > 0 ? `+${userInfo?.sand}` : userInfo?.sand} </p>
+                            <div className={cs(styles['lab_info'])}>
+                                {labName}
                             </div>
-                            <div className={cs(styles['data'])}>
-                                <img src={smarties} alt='smarties icon'/>
-                                <p style={{color: colors['pink-100']}}> {userInfo?.smarties} </p>
-                            </div>   
-                        </div>
+                        </>
                     )
                 }
                

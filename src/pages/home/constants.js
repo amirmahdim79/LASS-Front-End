@@ -2,7 +2,7 @@ export const text = {
     
     title:{
         login: 'خوش برگشتی',
-        signup: 'خوش آمدیدی',
+        signup: 'خوش آمدید',
     },
 
     switch_left_data: 'دانشجو',
@@ -12,6 +12,8 @@ export const text = {
     input_2: ' رمز عبور',
     input_3: 'نام',
     input_4: 'نام خانوادگی',
+    input_5: 'شماره دانشجویی',
+    input_6: 'مقطع',
 
 
     login_button: 'وارد شوید',
