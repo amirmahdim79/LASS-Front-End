@@ -29,11 +29,9 @@ export default function NotesPage() {
     const { getLabDocs } = useNotesActions();
     const labId = useSelector(state => state.lab.labId);
 
-    console.log("permissions", permissions);
-
     const navigateToGoogleDocs = (docId) => {
         const externalUrl = `https://docs.google.com/document/d/${docId}`; 
-        window.location.href = externalUrl;
+        window.open(externalUrl, '_blank');
     };
 
     const getDocuments = () => {
