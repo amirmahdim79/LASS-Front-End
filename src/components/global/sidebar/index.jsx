@@ -84,12 +84,16 @@ export default function SideBar({type}) {
             else if (location.pathname === '/user/new-email' || location.pathname === '/user/received-emails' || location.pathname === '/user/email-settings') setIconNum('4')
             else if (location.pathname === '/user/my-profile') setIconNum('5')
             else if (location.pathname.includes('user/settings')) setIconNum('6')
+            else if (location.pathname.includes('user/notes')) setIconNum('7')
+            else if (location.pathname.includes('user/task-bounty')) setIconNum('8')
         }else {
             if (location.pathname === '/supervisor/dashboard' || location.pathname.includes('user_profile')) setIconNum('1')
             else if (location.pathname.includes('forum')) setIconNum('2')
             else if (location.pathname === '/supervisor/articles-database') setIconNum('3')
             else if (location.pathname === '/supervisor/new-email' || location.pathname === '/supervisor/received-emails' || location.pathname === '/supervisor/email-settings') setIconNum('4')
             else if (location.pathname.includes('supervisor/settings')) setIconNum('6')
+            else if (location.pathname.includes('supervisor/notes')) setIconNum('7')
+            else if (location.pathname.includes('supervisor/task-bounty')) setIconNum('8')
         }
     }, [location.pathname])
 
