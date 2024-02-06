@@ -66,7 +66,7 @@ export default function TextInput({
                         style={{width:width, height:height, fontSize:fontSize, fontWeight: fontWeight, color: color}}
                         type={type === 'password' ? (showPassword ? 'text' : 'password') : type} 
                         value={value} 
-                        autoComplete={(autofill || (autofill && type === 'password')) ? "off" : "new-password"}
+                        autoComplete={"off"}
                     />
                     {
                         type === 'password' && (
