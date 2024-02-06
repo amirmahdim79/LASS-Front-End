@@ -17,6 +17,7 @@ import ForumCreation from "pages/common/forum/forumCreation";
 import GroupCreation from "pages/common/settings/groupCreation";
 import ErrorPage from "pages/error";
 import NotesPage from "pages/common/notes";
+import TaskBounty from "pages/common/taskBounty";
 
 export const router = createBrowserRouter([
     {
@@ -101,6 +102,10 @@ export const router = createBrowserRouter([
                 path: 'notes',
                 element: <NotesPage />,
             },
+            {
+                path: 'task-bounty',
+                element: <TaskBounty />,
+            },
         ]
     },
 
@@ -173,6 +178,10 @@ export const router = createBrowserRouter([
             {
                 path: 'notes',
                 element: <NotesPage />,
+            },
+            {
+                path: 'task-bounty',
+                element: <TaskBounty />,
             },
         ]
     },

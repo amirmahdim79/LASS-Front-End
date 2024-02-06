@@ -13,6 +13,7 @@ export default function CheckBoxV2({
     onClick,
     name = 'name',
     id = 'id',
+    borderColor = 'light',
 
 }) {
 
@@ -23,7 +24,7 @@ export default function CheckBoxV2({
             style={{width: width, height: height, minWidth: width, minHeight: height, maxWidth: width, maxHeight: height}}
         >
             <input type="checkbox"  value={value} name={name} id={id}/>
-            <span className={cs(styles['checkmark'])} style={{backgroundColor: bgColor}} onClick={onClick}>
+            <span className={cs(styles['checkmark'])} style={{backgroundColor: bgColor, ...(borderColor === 'dark' && {borderColor: colors['dark-shades-60']})}} onClick={onClick}>
                 <div className={cs(styles['checkmark_value'])} style={{ ...(!value && {scale: 0})}}  />
             </span>
         </div>

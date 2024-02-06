@@ -1,7 +1,7 @@
 import {default as cs} from 'classnames'
 import { useEffect, useState } from 'react';
 import styles from './style.module.scss'
-
+import colors from "styles/colors.module.scss"
 
 
 export default function SwitchV2({
@@ -10,6 +10,7 @@ export default function SwitchV2({
     onClick,
     name = 'name',
     id = 'id',
+    isDark = true,
 }) {
 
     const toggleInput = document.getElementById(id);
@@ -32,7 +33,7 @@ export default function SwitchV2({
         <div className={cs(styles['btn_container'])} >
             <label className={cs(styles['switch'])} >
                 <input type="checkbox" id={id} name={name} className={cs(value && styles['checked_input'])} value={value} onClick={onClick}/>
-                <span className={cs(styles['slider'])} for={name} />
+                <span className={cs(styles['slider'])} style={{...(!isDark && {backgroundColor: colors['light-glass-100']})}} for={name} />
             </label>
         </div>
     )

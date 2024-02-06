@@ -8,7 +8,7 @@ import emailLight from 'assets/icons/messages/sms/light-color.svg';
 import profileLight from 'assets/icons/users/user/light-color.svg';
 import settingsLight from 'assets/icons/settings/settings-2/light-color.svg';
 import notesLight from 'assets/icons/contents/note-text/light-color.svg';
-import moonLight from 'assets/icons/weather/moon/light-color.svg';
+import taskLight from 'assets/icons/contents/task/light-color.svg';
 import useInput from 'hooks/useInputHandler';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
@@ -64,11 +64,17 @@ export default function SideBar({type}) {
         else navigate('/supervisor/notes')
     }
 
-    const enableDarkMode = () => {
-        // modal for logout
+    const openTaskBounty = () => {
         setIconNum('8')
-        
+        if ( type === 'user' ) navigate('/user/task-bounty')
+        else navigate('/supervisor/task-bounty')
     }
+
+    // const enableDarkMode = () => {
+    //     // modal for logout
+    //     setIconNum('8')
+        
+    // }
 
     useEffect(() => {
         if (type === 'user') {
@@ -113,9 +119,12 @@ export default function SideBar({type}) {
                         }
                         <img className={cs(styles['icon'], iconNum === '7' && styles['active'])} src={notesLight} alt='notes icon' onClick={() => openNotesPage()} />
                         
-                        <div className={cs(styles['dark-mode'])}>
-                            <img src={moonLight} alt='moon icon' className={cs(styles['dark-mode-icon'], iconNum === '8' && styles['active'])} onClick={() => enableDarkMode()}/>
-                        </div>
+                        {((type === 'user' && permissions && permissions.indexOf('bounties') > -1) || type === 'supervisor') &&
+                            <div className={cs(styles['last-mode'])}>
+                                <img src={taskLight} alt='tasks icon' className={cs(styles['icon'], iconNum === '8' && styles['active'])} onClick={() => openTaskBounty()}/>
+                            </div>
+                        }
+                        
                     </>
                 )
             }

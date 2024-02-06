@@ -106,7 +106,7 @@ export default function AddDocModal({close, updateDocs}) {
                     <p> {text.title_3} </p>
                     <div className={cs(styles['checkbox'])} onClick={() => setSelectAllUsers(!selectAllUsers)}>
                         <CheckBoxV2 value={selectAllUsers}  onClick={() => setSelectAllUsers(!selectAllUsers)}/>
-                        {text.input_16}
+                        {text.input_1}
                     </div>
                 </div>
                 <div className={cs(styles['users_name'])}>
