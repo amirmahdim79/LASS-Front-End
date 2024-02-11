@@ -13,9 +13,8 @@ import { month } from 'utils/mapper';
 
 export default function ShowEventDataModal({event, showDeleteModal}) {
 
-    let startDate =  moment(jaMoment.from(event.start, 'en', 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD'))
-    let endDate =  moment(jaMoment.from(event.end, 'en', 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD'))
-
+    let startDate = moment(event.start)._d.toLocaleDateString('fa-IR')
+    let endDate =  moment(event.end)._d.toLocaleDateString('fa-IR')
 
     return (
         <div className={cs(styles['container'])}>
@@ -38,8 +37,8 @@ export default function ShowEventDataModal({event, showDeleteModal}) {
                     
                </div>
                 <div className={cs(styles['time'])}>
-                    <p>{'زمان شروع:' + '\xa0\xa0' + weekday(startDate.weekday()) + '-' + startDate._i.split('/')[2] + month(startDate._i.split('/')[1])} </p>
-                    <p>{'زمان پایان:' + '\xa0\xa0' + weekday(endDate.weekday()) + '-' + endDate._i.split('/')[2] + month(endDate._i.split('/')[1])} </p>
+                    <p>{'زمان شروع:' + '\xa0\xa0' + weekday(moment(event.start).weekday()) + '-' + startDate.split('/')[2] + month(startDate.split('/')[1])} </p>
+                    <p>{'زمان پایان:' + '\xa0\xa0' + weekday(moment(event.end).weekday()) + '-' + endDate.split('/')[2] + month(endDate.split('/')[1])} </p>
                 </div>
             </div>
             <div className={cs(styles['users_container'])}>

@@ -61,7 +61,7 @@ export default function PresenceList({updatePresenceList, setMsg}) {
                             </div>
                         </div>
                     )
-                }                  
+                }    
             </div>
         </div>
     )

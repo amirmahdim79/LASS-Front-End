@@ -25,7 +25,8 @@ export default function TextAreaV1({
     resizable = true,
 }) {
     return (
-        <div className={cs(styles['container'])} style={{width: `calc(${width} + 10px)`, ...(fontFamily ? {fontFamily: fontFamily} : {fontFamily: 'pinar_reg'}),}}>
+        // <div className={cs(styles['container'])} style={{width: `calc(${width} + 10px)`, ...(fontFamily ? {fontFamily: fontFamily} : {fontFamily: 'pinar_reg'}),}}>
+        <div className={cs(styles['container'])} style={{width: width, ...(fontFamily ? {fontFamily: fontFamily} : {fontFamily: 'pinar_reg'}),}}>
                 {inputLabel && <label for={name} style={{fontWeight: fontWeight}}> {inputLabel} </label>}
 
                 <textarea 

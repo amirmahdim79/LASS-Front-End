@@ -1,0 +1,176 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.upcoming_activities_container {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid $light-accent-30;
+    padding: 15px 24px 30px 24px;
+    
+
+    .title {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 80% 20%;
+        direction: rtl;
+        align-items: center;
+        padding: 0 33px 14px 58px;
+        @include mixins.sub-title;
+        color: $dark-shades-100;
+    }
+
+    .title > div {
+        width: max-content;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        column-gap: 60px;
+
+        .filtering_inputs {
+            width: max-content;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            column-gap: 20px;
+
+            .bounties_filter {
+                color: $dark-shades-100;
+                @include mixins.description;
+                border: 1px solid $light-accent-100;
+                border-radius: 100px;
+                height: 41px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 130px;
+            }
+
+            .bounties_filter:hover {
+                cursor: pointer;
+                color: $main-color-100;
+            }
+
+            .active_bounties_filter {
+                background-color: $main-color-100;
+            }
+
+            .active_bounties_filter:hover {
+                color: $dark-shades-100;
+            }
+
+
+        }
+
+    }
+
+    .title > p {
+        text-align: center;
+        padding-right: calc(24*2px + 5px);
+    }
+
+    .activities {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 30px;
+        // min-height: 1310px;
+        // max-height: 1310px;
+        min-height: 378px;
+        max-height: 506px;
+        direction: rtl;
+        padding-left: 10px;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-gutter: stable;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+            background-color: #eeeeee;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background:  #3dbbff;
+            border-radius: 10px;
+        }
+
+        .activity-box {
+            width: 100%;
+            border-radius: 15px;
+            background-color: $light-accent-20;
+            display: flex;
+            flex-direction: column;
+            // align-items: flex-end;
+            align-items: flex-start;
+            justify-content: center;
+            row-gap: 10px;
+            padding: 14px 28px 16px 40px;
+            cursor: pointer;
+
+            .activity-data {
+                width: 100%;
+                display: grid;
+                align-items: baseline;
+                grid-template-columns: 88% 12%;
+                
+
+                .right-column {
+                    // // order: 1;
+                    // display: flex;
+                    // justify-content: flex-start;
+                    // // align-items: baseline;
+                    // align-items: center;
+                    // flex-direction: row-reverse;
+                    // column-gap: 10px;
+
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    // align-items: baseline;
+                    flex-direction: row;
+                    column-gap: 10px;
+
+                    .activity-title {
+                        @include mixins.text;
+                        color: $dark-shades-100;
+                        text-align: right;
+                    }
+
+                    .icon {
+                        width: 48px;
+                        height: 48px;
+                        background-color: $main-color-100;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        img {
+                            width: 24px;
+                            height: 24px;
+                        }
+                    }
+                }
+
+                .activity-deadline {
+                    @include mixins.sub-title;
+                    color: $dark-shades-100;
+                    text-align: right;
+                }
+
+            }
+
+            .activity-text {
+                direction: rtl;
+                @include mixins.sub-description;
+                color: $dark-shades-100;
+                padding-right: 17px;
+                max-width: 900px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+        }
+    }
+}

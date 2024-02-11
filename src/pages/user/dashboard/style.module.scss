@@ -1,0 +1,17 @@
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.container {
+    padding: 5px 118px 10px 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+
+    .calendar_container {
+        width: 100%;
+        min-height: 517px;
+        max-height: 517px;
+        background-color: $light-accent-20;
+        border-radius: 15px;
+    }
+}

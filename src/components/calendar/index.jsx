@@ -24,9 +24,6 @@ import DeleteModal from './components/deleteModal';
 
 export default function Calendar({events, date, setDate, getEvents}) {
 
-
-    const navigate = useNavigate();
-
     const { value: num, setValue: setNum } = useInput(0);
     const { value: calendar, setValue: setCalendar } = useInput('');
     const { value: event, setValue: setEvent } = useInput({});
@@ -45,10 +42,6 @@ export default function Calendar({events, date, setDate, getEvents}) {
         value += 1;
         setNum(value);
         setDate(moment(date).weekday(+1*7))
-
-        // setDate(moment(date).day(+1*7))
-
-        // setDate(moment().day(value*7))
     }
 
     const goPrevWeek = () => {
@@ -57,14 +50,10 @@ export default function Calendar({events, date, setDate, getEvents}) {
 
         setNum(value);
         setDate(moment(date).weekday(-1*7))
-        // setDate(moment(date).day(-1*7))
-
-        // setDate(moment().day(value*7))
-        // console.log("moment().day(10)", moment().week(7));
     }
 
     const goNextMonth = () => {
-        let jalaliDate = toEnDigit(date._d.toLocaleDateString('fa-IR'));
+        let jalaliDate = toEnDigit(date._d?.toLocaleDateString('fa-IR'));
         let newJalaliDate = '';
         let month = jalaliDate.split('/')[1];
         if(month === '12') {
@@ -81,7 +70,7 @@ export default function Calendar({events, date, setDate, getEvents}) {
     }
 
     const goPrevMonth = () => {
-        let jalaliDate = toEnDigit(date._d.toLocaleDateString('fa-IR'));
+        let jalaliDate = toEnDigit(date._d?.toLocaleDateString('fa-IR'));
         let newJalaliDate = '';
         let month = jalaliDate.split('/')[1];
         if(month === '1') {
@@ -122,152 +111,156 @@ export default function Calendar({events, date, setDate, getEvents}) {
             })
     }
 
-
     return (
         <div className={cs(styles['container'])}>
-            <div className={cs(styles['header'])}>
-                <div className={cs(styles['title_container'])}>
-                    <p> {text.title} </p>
-                    {
-                        ( localStorage.getItem('type') === 'supervisor' || permissions.includes('events') ) && 
-                            <div className={cs(styles['add_icon_container'])}>
-                                <img 
-                                    src={addIcon}
-                                    alt='add icon'
-                                    onClick={() => addEvent()}
-                                />
+            {
+                date &&
+                    <>
+                        <div className={cs(styles['header'])}>
+                            <div className={cs(styles['title_container'])}>
+                                <p> {text.title} </p>
+                                {
+                                    ( localStorage.getItem('type') === 'supervisor' || permissions.includes('events') ) && 
+                                        <div className={cs(styles['add_icon_container'])}>
+                                            <img 
+                                                src={addIcon}
+                                                alt='add icon'
+                                                onClick={() => addEvent()}
+                                            />
 
-                                <Modal
-                                    isOpen={openAddEventModal} 
-                                    close={closeEventsModal} 
-                                    content={
-                                        <div className={cs(styles['add_event_modal'])} style={{display: openAddEventModal ? 'block' : 'none'}} id='#users_modal'>
-                                            <AddEventModal 
-                                                close={closeAddEventModal} 
-                                                type={calendar}
-                                                setType={setCalendar}
-                                                getEvents={getEvents}
+                                            <Modal
+                                                isOpen={openAddEventModal} 
+                                                close={closeEventsModal} 
+                                                content={
+                                                    <div className={cs(styles['add_event_modal'])} style={{display: openAddEventModal ? 'block' : 'none'}} id='#users_modal'>
+                                                        <AddEventModal 
+                                                            close={closeAddEventModal} 
+                                                            type={calendar}
+                                                            setType={setCalendar}
+                                                            getEvents={getEvents}
+                                                        />
+                                                    </div>
+                                                }
                                             />
                                         </div>
-                                    }
+                                }                
+                            </div>
+                            <div  className={cs(styles['month'])}> 
+                                <p> {month(date._d?.toLocaleDateString('fa-IR').split("/")[1])} </p>
+                                
+                                <img
+                                    src={rightArrow}
+                                    alt='right arrow'
+                                    onClick={() => goNextMonth()}
+                                />
+                                <img
+                                    src={leftArrow}
+                                    alt='left arrow'
+                                    onClick={() => goPrevMonth()}
                                 />
                             </div>
-                    }                
-                </div>
-                <div  className={cs(styles['month'])}> 
-                    <p> {month(date._d.toLocaleDateString('fa-IR').split("/")[1])} </p>
-                    
-                    <img
-                        src={rightArrow}
-                        alt='right arrow'
-                        onClick={() => goNextMonth()}
-                    />
-                    <img
-                        src={leftArrow}
-                        alt='left arrow'
-                        onClick={() => goPrevMonth()}
-                    />
-                </div>
-            </div>
-            <div className={cs(styles['content'])}>
+                        </div>
+                        <div className={cs(styles['content'])}>
 
-                <div className={cs(styles['header_wrapper'])}>
+                            <div className={cs(styles['header_wrapper'])}>
 
-                    <img
-                        src={leftArrow}
-                        className={cs(styles['left_arrow'])}
-                        alt='left arrow'
-                        onClick={() => goPrevWeek()}
-                    />
+                                <img
+                                    src={leftArrow}
+                                    className={cs(styles['left_arrow'])}
+                                    alt='left arrow'
+                                    onClick={() => goPrevWeek()}
+                                />
 
-                    <img
-                        src={rightArrow}
-                        className={cs(styles['right_arrow'])}
-                        alt='right arrow'
-                        onClick={() => goNextWeek()}
-                    />
+                                <img
+                                    src={rightArrow}
+                                    className={cs(styles['right_arrow'])}
+                                    alt='right arrow'
+                                    onClick={() => goNextWeek()}
+                                />
 
-                    { Array.from(Array(7), (e, i) => {
-                        return (
-                            <div 
-                                className={cs(styles['header_data'], 
-                                    date.clone().weekday(i)._d.toLocaleDateString('fa-IR').split("/")[1] !== date._d.toLocaleDateString('fa-IR').split("/")[1] && styles['disabled_header_data']
-                                )} 
-                            >
-                                <div className={cs(styles['header_border'])}/>
-                                <p className={cs(styles['day'])}> {weekday(i)} </p>
-                                <p className={cs(styles['date'])}> 
-                                    {date.clone().weekday(i)._d.toLocaleDateString('fa-IR').split("/")[2]} 
-                                </p>
+                                { Array.from(Array(7), (e, i) => {
+                                    return (
+                                        <div 
+                                            className={cs(styles['header_data'], 
+                                                date.clone().weekday(i)._d?.toLocaleDateString('fa-IR').split("/")[1] !== date._d?.toLocaleDateString('fa-IR').split("/")[1] && styles['disabled_header_data']
+                                            )} 
+                                        >
+                                            <div className={cs(styles['header_border'])}/>
+                                            <p className={cs(styles['day'])}> {weekday(i)} </p>
+                                            <p className={cs(styles['date'])}> 
+                                                {date.clone().weekday(i)._d?.toLocaleDateString('fa-IR').split("/")[2]} 
+                                            </p>
 
-                                {
-                                    i === 0 &&  <hr className={cs(styles['header_line'])}/>
-                                }               
+                                            {
+                                                i === 0 &&  <hr className={cs(styles['header_line'])}/>
+                                            }               
+                                        </div>
+                                    )}) 
+                                }
                             </div>
-                        )}) 
-                    }
-                </div>
 
-                <div className={cs(styles['body'])}>
-                    { Array.from(Array(7), (e, i) => {
-                        return (
-                            <Column 
-                                now={date}
-                                events={events}
-                                key={i} 
-                                index={i}
-                                showMore={showMore}
-                                setEvent={setEvent}
-                            />
-                        )}) 
-                    }
+                            <div className={cs(styles['body'])}>
+                                { Array.from(Array(7), (e, i) => {
+                                    return (
+                                        <Column 
+                                            now={date}
+                                            events={events}
+                                            key={i} 
+                                            index={i}
+                                            showMore={showMore}
+                                            setEvent={setEvent}
+                                        />
+                                    )}) 
+                                }
 
-                    <div className={cs(styles['time_wrapper'])}>
-                        { Array.from(Array(24), (e, i) => {
-                                return (
-                                    <div className={cs(styles['time'])} key={i}>
-                                        <p> {i+1} </p>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-
-                {
-                    openShowMoreModal && (
-                        <Modal
-                            isOpen={openShowMoreModal} 
-                            close={closeShowMoreModal} 
-                            content={
-                                <div className={cs(styles['show_event_modal'])} style={{display: openShowMoreModal ? 'block' : 'none'}} id='#events_modal'>
-                                    <ShowEventDataModal event={event} showDeleteModal={showDeleteModal}/>
+                                <div className={cs(styles['time_wrapper'])}>
+                                    { Array.from(Array(24), (e, i) => {
+                                            return (
+                                                <div className={cs(styles['time'])} key={i}>
+                                                    <p> {i+1} </p>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
-                            }
-                        />
-                    )
-                }
+                            </div>
 
-                {
-                    openDeleteModal && (
-                        <Modal
-                            isOpen={openDeleteModal} 
-                            close={closeDeleteModal} 
-                            content={
-                                <div className={cs(styles['delete_modal'])} style={{display: openDeleteModal ? 'block' : 'none'}} >
-                                    <DeleteModal
-                                        onCancel={closeDeleteModal}
-                                        onSubmit={removeEvent}
-                                        submitLoad={deletingEvent}
-                                        data={event.name}
+                            {
+                                openShowMoreModal && (
+                                    <Modal
+                                        isOpen={openShowMoreModal} 
+                                        close={closeShowMoreModal} 
+                                        content={
+                                            <div className={cs(styles['show_event_modal'])} style={{display: openShowMoreModal ? 'block' : 'none'}} id='#events_modal'>
+                                                <ShowEventDataModal event={event} showDeleteModal={showDeleteModal}/>
+                                            </div>
+                                        }
                                     />
-                                </div>
+                                )
                             }
-                        />
-                    )
-                }
 
-            </div>
+                            {
+                                openDeleteModal && (
+                                    <Modal
+                                        isOpen={openDeleteModal} 
+                                        close={closeDeleteModal} 
+                                        content={
+                                            <div className={cs(styles['delete_modal'])} style={{display: openDeleteModal ? 'block' : 'none'}} >
+                                                <DeleteModal
+                                                    onCancel={closeDeleteModal}
+                                                    onSubmit={removeEvent}
+                                                    submitLoad={deletingEvent}
+                                                    data={event.name}
+                                                />
+                                            </div>
+                                        }
+                                    />
+                                )
+                            }
+
+                        </div>
+                    </>
+            }
         </div>
     )
 }

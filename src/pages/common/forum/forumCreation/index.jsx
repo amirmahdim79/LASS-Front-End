@@ -4,6 +4,7 @@ import styles from './style.module.scss'
 import trashIcon from 'assets/icons/essential/trash/error-color.svg'
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
 import moreIcon from 'assets/icons/essential/more/dark-color.svg'
+import backArrow from 'assets/icons/arrow/arrow-left/dark-color2.svg'
 import { useReducer } from 'react'
 import { reducer } from './reducer'
 import TextInputV2 from 'components/global/inputs/textInputs/textInputV2'
@@ -19,7 +20,7 @@ import UsersListModal from '../components/modals/usersList'
 import { getFirstLetters } from 'utils/mapper'
 import { degreeMapper } from 'utils/mapper'
 import colors from "styles/colors.module.scss"
-import UsersList from 'components/usersListG'
+import UsersList from 'components/usersList/simpleVersion'
 import { useEffect } from 'react'
 import { useForumsActions } from '../hooks/useForumsActions'
 import moment from 'moment';
@@ -29,7 +30,6 @@ import { useNavigate } from 'react-router-dom';
 export default function ForumCreation() { 
 
     const navigate = useNavigate();
-
 
     const initialState = {
         name: '',
@@ -61,9 +61,9 @@ export default function ForumCreation() {
     const students = useSelector(state => state.lab.Students);
     const labId = useSelector(state => state.lab.labId);
 
-    const { createForum, forumCreation } = useForumsActions();
+    const { createForum, forumCreation, getLabForums } = useForumsActions();
 
-    console.log("currentUsers", state.currentUsers);
+    // console.log("currentUsers", state.currentUsers);
     // console.log("labGroups", state.labGroups);
     // console.log("students", students);
 
@@ -285,7 +285,11 @@ export default function ForumCreation() {
             <div className={cs(styles['main_panel'])}>
                 <div className={cs(styles['header'])}>
                     <p> {text.main_title} </p>
-                    <img src={trashIcon} alt='trash icon' />
+                    <img 
+                        src={backArrow}
+                        alt='back icon'
+                        onClick={() => {navigate(`../forum`)}}
+                    />
                 </div>
                 <div className={cs(styles['users_list'])}>
                     <TextInputV2

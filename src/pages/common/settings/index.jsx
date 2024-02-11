@@ -7,7 +7,7 @@ import { text } from './constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import useInput from 'hooks/useInputHandler'
-import UsersList from 'components/usersListG'
+import UsersList from 'components/usersList/simpleVersion'
 import { useNavigate } from 'react-router-dom';
 import Groups from 'components/groupsList'
 import { useSettingsActions } from './hooks/useSettingsActions'
@@ -20,8 +20,15 @@ import PermissionsModal from './modals/permissions'
 import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions'
 import { setStudents } from 'store/labSlice'
 import addIcon from 'assets/icons/essential/add/dark-color.svg'
+import Calendar from 'components/calendar'
+import { setEvents } from 'store/labSlice'
+import moment from 'moment';
+import 'moment/locale/fa';
 
 export default function Settings() { 
+
+    moment.locale('fa');
+
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -33,19 +40,22 @@ export default function Settings() {
         updatePermissions,
         updatingPermissions,
         getPermissions,
+        getLabData
     } = useSettingsActions();
     
-    const { getMyLabs } = useLabActions();
+    const { getMyLabs, getLabEvents } = useLabActions();
 
 
     const students = useSelector(state => state.lab.Students);
     const labId = useSelector(state => state.lab.labId);
-    const permissions = useSelector(state => state.user.permissions);
+    const userInfo = useSelector(state => state.user.user);
+    const paths = useSelector(state => state.lab.Paths);
 
     const [openEditPermissionsModal, showEditPermissionsModal, closeEditPermissionsModal] = useModal();
 
     const { value: selectedStudent, setValue: setSelectedStudent } = useInput({});
     const { value: permissionsList, setValue: setPermissionsList } = useInput([]);
+    const { value: now, setValue: setNow } = useInput(moment());
 
     const userType = localStorage.getItem('type');
 
@@ -81,15 +91,33 @@ export default function Settings() {
             .catch(err => console.log(err))
     }
 
-    useEffect(() => {
-        getLabGroups({}, `/${labId}`)
-            .then(res => dispatch(setLabGroups(res.data)))
+    const getEvents= (labId) => {
+        getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
+            .then(res => {
+                // console.log("gettttt successs", res.data);
+                dispatch(setEvents(res.data))})
             .catch(err => console.log(err))
-            .finally(() => dispatch(setNewName(undefined)))
+    }
+
+
+
+    useEffect(() => {
+        if (labId) {
+            getLabGroups({}, `/${labId}`)
+                .then(res => dispatch(setLabGroups(res.data)))
+                .catch(err => console.log(err))
+                .finally(() => dispatch(setNewName(undefined)))
+        }
 
         getPermissions({}, `?withDesc=true`)
             .then(res => setPermissionsList(res.data.array))
             .catch(err => console.log(err))
+
+        // if (userType === 'user' && userInfo) {
+        //     getLabData({}, `/${userInfo.Labs[0]}`)
+        //         .then(res => setLabPaths(res.data))
+        //         .catch(err => console.log('ererer', err))
+        // }
     }, [])
 
 
@@ -104,8 +132,8 @@ export default function Settings() {
                 </div>
                 <div className={cs(styles['path_container'])}>
                     <div className={cs(styles['header'])}>
-                        <p> مسیر‌راه‌ها </p>
-                        { (userType === 'supervisor' || (userType === 'user' && permissions && permissions.indexOf('lab') > -1)) && 
+                        <p> نقشه راه ها </p>
+                        { userType === 'supervisor' && 
                             <img 
                                 src={addIcon}
                                 alt='add icon'
@@ -114,25 +142,36 @@ export default function Settings() {
                         }
                     </div>
 
-                    {/* <Carousel 
-                        name = 'path-ways'    
-                    /> */}
+                    {
+                        paths 
+                            ?
+                                <Carousel 
+                                    name='path-ways'   
+                                    type='path'
+                                    items={paths}
+                                />
+                            : <p>loading</p>
+                    }
+
+                    
                 </div>
                 <div className={cs(styles['calendar_container'])}>
-                    {/* <Carousel 
-                        name = 'path-ways2'    
-                    /> */}
+                    <Calendar events={[]} date={now} setDate={setNow} getEvents={getEvents}/>
                 </div>
             </div>
-            <UsersList 
-                canDeleteMember={true}
-                canEditPermissions={userType === 'supervisor'}
-                onClickEditPermissions={onClickEditPermissions}
-                students={students}
-                userHasClickOption={true}
-                height={'770px'}
-                userOnClickHandler={(uId) => navigate(`../user_profile/${uId}`)}
-            />
+            <div className={cs(styles['users_list'])}>
+                <UsersList 
+                    canDeleteMember={true}
+                    canEditPermissions={userType === 'supervisor'}
+                    onClickEditPermissions={onClickEditPermissions}
+                    students={students && students}
+                    userHasClickOption={true}
+                    height={'calc(380px + 380px + 10px)'}
+                    width={'100%'}
+                    userOnClickHandler={(uId) => navigate(`../user_profile/${uId}`)}
+                />
+            </div>
+
 
             <Modal
                 isOpen={openEditPermissionsModal} 

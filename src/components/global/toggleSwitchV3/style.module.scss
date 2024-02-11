@@ -1,0 +1,42 @@
+
+@use "styles/mixins.scss";
+@import "styles/colors.module.scss";
+
+.btn_container {
+    width: max-content;
+    height: 100%;
+    max-height: 41px;
+    min-height: 41px;
+    border: 1px solid $light-accent-100;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    @include mixins.description;
+
+    p {
+        text-align: center;
+        color: $dark-shades-100;
+    }
+
+    p:hover {
+        cursor: pointer;
+        color: $main-color-100;
+    }                        
+
+    .is_active {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $main-color-100;
+        border-radius: inherit;
+        transition: background-color 0.5s cubic-bezier(0.16, -1.72, 0.22, 0.93);
+    }
+
+    .is_active:hover {
+        color: $dark-shades-100;
+    }
+}

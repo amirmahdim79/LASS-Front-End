@@ -1,7 +1,6 @@
 import { default as cs } from 'classnames'
 // import { text } from './constants'
 import styles from './style.module.scss'
-import functions from "../../styles/mixins/_functions.module.scss"
 
 
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
@@ -45,7 +44,7 @@ export default function UsersList({
     btnColor = '',
     btnText = '',
     btnBottomPos = '18px',
-    btnWidth = '255px',
+    // btnWidth = '255px',
     btnDisabled = true,
     btnLoad = false, 
     submitHandler = () => {},
@@ -125,6 +124,7 @@ export default function UsersList({
             className={cs(styles['container'])} 
             style={{
                 minWidth: width, maxWidth: width, minHeight: height,
+                maxWidth: width, maxWidth: width, maxHeight: height,
                 backgroundColor: bgColor,
                 rowGap: titleListGap,
                 borderRadius: borderRadius,
@@ -183,7 +183,7 @@ export default function UsersList({
                 )}
             </div>
 
-            <div className={cs(styles['users_list'])} style={{rowGap: listItemSpacing}}>
+            <div className={cs(styles['users_list'])} style={{rowGap: listItemSpacing, maxHeight: `calc(${height} - 35px - 25px - 36px)`, minHeight: `calc(${height} - 35px - 25px - 36px)`}}>
                 {
                     !students 
                         ? <div className={cs(styles['loader_container'])}> <Preloader/> </div>
@@ -195,7 +195,7 @@ export default function UsersList({
                                         ...((userHasClickOption && ((userType === 'user' && permissions && permissions.indexOf('lab') > -1) || userType === 'supervisor')) && {cursor: 'pointer'}),
                                         ...(!canDeleteMember && {gridTemplateColumns: 'max-content auto'}),
                                     }} 
-                                    onClick={() => userType === 'user' ? (permissions && permissions.indexOf('lab') > -1 ? userOnClickHandler(s._id) : {}) : {}}
+                                    onClick={() => userType === 'user' ? ( permissions && permissions.indexOf('lab') > -1 ? userOnClickHandler(s._id) : {} ) : userOnClickHandler(s._id)}
                                 >
                                     <div 
                                         style={s?.profilePicture && {backgroundImage: `url(${s?.profilePicture})`}} 
@@ -262,7 +262,7 @@ export default function UsersList({
                         text={btnText} 
                         disabled={btnDisabled}
                         load={btnLoad}
-                        width={btnWidth}
+                        width={'100%'}
                     />
                 </div>  
             )}

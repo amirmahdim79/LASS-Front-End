@@ -8,13 +8,16 @@
     // border-bottom: 1px solid $dark-shades-100;
 
     .input_container {
+        // width: calc(100% - 10px);
         width: 100%;
         height: 100%;
         display: grid;
         align-items: center;
         grid-template-columns: 1fr auto;
         column-gap: 5px;
+        // padding: 0 5px 0 0;
         padding: 0 5px;
+
 
         .label_container {
             width: 100%;
@@ -34,6 +37,7 @@
             padding: 0 5px;
             color: $dark-shades-100;
             line-height: normal;
+            width: 100%;
         }
 
         input::placeholder {

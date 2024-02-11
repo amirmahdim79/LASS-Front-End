@@ -5,6 +5,7 @@ import { GetUserTaskAPI } from "api/tasks";
 import { CompleteReadingPapersAPI } from "api/tasks";
 import { GetMilestoneTaskInfoAPI } from "api/tasks";
 import { CompleteReadingMilestonPaperTasksAPI } from "api/tasks";
+import { GetBountyInfoAPI } from "api/bounties";
 
 export const useTasksActions = () => {
     const { showToast } = useToast();
@@ -54,6 +55,15 @@ export const useTasksActions = () => {
         },
     })
 
+    const { pending: gettingBountyTask, request: getBountyTask } = useAPI({
+        apiMethod: GetBountyInfoAPI,
+
+        successCallback: () => {},
+        failedCallback: (e) => {
+            console.log(e);
+        },
+    })
+
 
     
     return {
@@ -71,5 +81,8 @@ export const useTasksActions = () => {
 
         getMilestoneTask,
         gettingMilestoneTask,
+
+        getBountyTask,
+        gettingBountyTask,
     }
 }

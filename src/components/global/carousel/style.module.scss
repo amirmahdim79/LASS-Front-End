@@ -51,14 +51,14 @@
                 cursor: pointer;
                 opacity: 0;
 
-                width: 250px;
-                height: 250px;
-                background-color: rgb(255, 255, 255);
+                width: 240px;
+                height: 290px;
+                background-color: $light-shades-100;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 border-radius: 12px;
-                border: 1px solid $light-accent-100;
+                border: 2px solid $light-accent-100;
 
             }
 
@@ -85,32 +85,30 @@
             }
         }
 
+    }
+}
 
-          
-        // #item-1:checked ~ .cards #card-3, #item-2:checked ~ .cards #card-1, #item-3:checked ~ .cards #card-2 {
-        //     transform: translatex(-40%) scale(.8);
-        //     opacity: .8;
-        //     z-index: 0;
-        //     background-color: green;
-        //   }
-          
-        //   #item-1:checked ~ .cards #card-2, #item-2:checked ~ .cards #card-3, #item-3:checked ~ .cards #card-1 {
-        //     transform: translatex(40%) scale(.8);
-        //     opacity: .4;
-        //     z-index: 0;
-        //     background-color: yellow;
-        //   }
-          
-        //   #item-1:checked ~ .cards #card-1, #item-2:checked ~ .cards #card-2, #item-3:checked ~ .cards #card-3 {
-        //     transform: translatex(0) scale(1);
-        //     opacity: 1;
-        //     z-index: 1;
-        //     background-color: white;
-            
-        //     img {
-        //       box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
-        //     }
-        //   }
-          
+@media only screen and (max-width: 1250px) {
+    .container {
+        .items_container {
+            .cards {
+                .card {
+                    width: 190px;
+                    height: 230px;
+                }
+    
+                .checked {
+                    width: 190px;
+                }
+
+                .prev {
+                    transform: translatex(-30%) scale(.8);
+                }
+    
+                .after {
+                    transform: translatex(30%) scale(.8);
+                }
+            }
+        }
     }
 }

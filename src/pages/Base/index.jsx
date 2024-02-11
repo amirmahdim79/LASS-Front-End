@@ -17,6 +17,9 @@ import { setMilestone } from "store/labSlice";
 import { setLeaderboard } from "store/labSlice";
 import { setUserActivities } from "store/labSlice";
 import { setLabName } from "store/labSlice";
+import { getTime } from "utils/mapper";
+import { setCurrentTime } from "store/userSlice";
+import useInput from "hooks/useInputHandler";
 
 export default function Base({type}) {
         
@@ -27,8 +30,10 @@ export default function Base({type}) {
     const labId = useSelector(state => state.lab.labId);
     const params = useParams();
     const location = useLocation()
+    const { value: now, setValue: setNow } = useInput();
 
     useEffect(() => {
+        // getTime(setNow)
         if ( userType === type ) {
             if (userType === 'user') {
                 checkAuth()
@@ -44,7 +49,7 @@ export default function Base({type}) {
                                 // console.log("22222222222222", res.data);
                                 dispatch(setLabName(res.data.name))
                                 dispatch(setStudents(res.data?.Students))
-                                dispatch(setPath(res.data?.Paths[0]))
+                                dispatch(setPath(res.data?.Paths))
                                 dispatch(setMilestone(res.data.Paths[0]?.Milestones))
                             })
                             .catch(err => console.log(err))
@@ -64,7 +69,7 @@ export default function Base({type}) {
                         if (location.pathname === '/user/my-profile') {
                             getMyActivities()
                                 .then(res => {
-                                    console.log("rrrrrrrrrrrr1111111111111111111111111111111111111111", res.data);
+                                    // console.log("rrrrrrrrrrrr1111111111111111111111111111111111111111", res.data);
                                     dispatch(setUserActivities(res.data))
                                 })
                                 .catch(err => {
@@ -79,8 +84,9 @@ export default function Base({type}) {
                         dispatch(setArticles(res.data?.RecentFiles.reverse()))
                         getMyLabs({}, '?sups=true')
                             .then(res =>  {
-                                // console.log("sssssssssssssss", res.data);
+                                // console.log("supervisorsupervisorsupervisor", res.data);
                                 dispatch(setStudents(res.data?.Students))
+                                dispatch(setPath(res.data.Paths))
                                 dispatch(setLabId(res.data._id))
 
                                 getLabGroups({}, `/${res.data._id}`)
@@ -139,6 +145,10 @@ export default function Base({type}) {
             }
         }
     }, [params.id, location.pathname]);
+
+    // useEffect(() => {
+    //     dispatch(setCurrentTime(now))
+    // }, [now])
 
     
     return (

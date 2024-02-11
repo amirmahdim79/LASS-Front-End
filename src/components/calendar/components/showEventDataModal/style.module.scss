@@ -111,32 +111,32 @@
             direction: rtl;
             row-gap: 5px;
             padding-right: 5px;
-            // min-height: 245px;
-            // max-height: 245px;
-            // overflow-y: auto;
-            // overflow-y: scroll;
-            // overflow-x: hidden;
+            max-height: 130px;
+            min-height: 130px;
+            overflow-y: auto;
+            overflow-x: hidden;
 
             .user {
                 width: 100%;
                 @include mixins.sub-title;
                 font-size: 13px;
+                padding-left: 5px;
             }
 
-            // &::-webkit-scrollbar {
-            //     width: 5px;
-            //     border-radius: 10px;
-            //     background-color: #eeeeee55;
-            //     padding-left: 20px;
-            //     // display: none;
+            &::-webkit-scrollbar {
+                width: 5px;
+                border-radius: 10px;
+                background-color: #eeeeee55;
+                // padding-left: 20px;
+                // display: none;
 
-            // }
+            }
     
-            // &::-webkit-scrollbar-thumb {
-            //     background:  #3dbbff;
-            //     border-radius: 10px;
-            //     // display: none;
-            // }
+            &::-webkit-scrollbar-thumb {
+                background:  #3dbbff;
+                border-radius: 10px;
+                // display: none;
+            }
 
         }
     }

@@ -8,6 +8,7 @@ const initialState = {
     navSearchedValue: null,
     isLoggedIn: false,
     articles: [],
+    currentTime: '',
 }
 
 export const userSlice = createSlice({
@@ -34,10 +35,13 @@ export const userSlice = createSlice({
         setPermissions: (state, action) => {
             state.permissions = action.payload
         },
+        setCurrentTime: (state, action) => {
+            state.currentTime = action.payload
+        },
     }
 })
 
 export const { 
     addUser, clearUser, setArticles, setSearchedValue, 
-    setNavSearchedValue, setPermissions 
+    setNavSearchedValue, setPermissions, setCurrentTime
 } = userSlice.actions;

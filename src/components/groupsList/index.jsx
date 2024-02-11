@@ -6,18 +6,8 @@ import { useSelector } from 'react-redux'
 import ArticlesList from 'components/articlesList'
 import { useEffect } from 'react'
 import useInput from 'hooks/useInputHandler'
-import UsersList from 'components/usersListG'
+import UsersList from 'components/usersList/simpleVersion'
 import { useNavigate } from 'react-router-dom';
-
-
-import user1 from 'assets/user3.svg';
-import user2 from 'assets/user1.svg';
-import user3 from 'assets/user4.svg';
-import user4 from 'assets/user2.svg';
-import user5 from 'assets/user5.svg';
-import user6 from 'assets/user6.svg';
-import user7 from 'assets/user7.svg';
-
 import addIcon from 'assets/icons/essential/add/dark-color.svg'
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
 import sortIcon from 'assets/icons/essential/sort/dark-color.svg'
@@ -34,6 +24,8 @@ export default function Groups() {
 
     // const articles = useSelector(state => state.user.articles);
     // const { value: allPapers, setValue: setAllPapers } = useInput([]);
+
+    // console.log("--labGroups", labGroups);
 
 
 

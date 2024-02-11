@@ -18,7 +18,7 @@
         width: 100%;
         display: grid;
         align-items: baseline;
-        grid-template-columns: 88% 12%;
+        grid-template-columns: 80% 20%;
         
 
         .right-column {
@@ -43,6 +43,25 @@
                 text-align: right;
             }
 
+            .smarties-info {
+                width: max-content;
+                color: $pink-100;
+                @include mixins.description;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                column-gap: 5px;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+
+                p {
+                    direction: ltr;
+                }
+            }
+
             .icon {
                 width: 48px;
                 height: 48px;
@@ -59,13 +78,28 @@
             }
         }
 
-        .activity-deadline {
-            @include mixins.sub-title;
-            color: $dark-shades-100;
-            text-align: right;
-            direction: ltr;
-        }
+        .left-column {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            
+            .buttons-container {
+                width: max-content;
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+                column-gap: 5px;
+            }
 
+            .activity-deadline {
+                width: 100%;
+                max-width: calc(100% - (24*2px) - 5px);
+                @include mixins.sub-title;
+                color: $dark-shades-100;
+                text-align: center;
+                direction: ltr;
+            }
+        }
     }
 
     .activity-text {

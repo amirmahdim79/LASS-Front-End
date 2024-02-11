@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ArticlesList from 'components/articlesList'
 import { useEffect } from 'react'
 import useInput from 'hooks/useInputHandler'
-import UsersList from 'components/usersListG'
+import UsersList from 'components/usersList/simpleVersion'
 import { useNavigate } from 'react-router-dom';
 import Groups from 'components/groupsList'
 import { useSettingsActions } from './hooks/useSettingsActions'

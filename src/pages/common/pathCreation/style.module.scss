@@ -11,13 +11,13 @@
     column-gap: 30px;
 
     display: grid;
-    grid-template-columns: max-content auto;
+    grid-template-columns: minmax(270px, 23%) auto;
 
 
     .sidebar {
         width: 100%;
-        min-width: 290px;
-        max-width: 290px;
+        // min-width: 290px;
+        // max-width: 400px;
         // height: calc(100vh - 92px);
         // max-height: 700px;
         background-color: $dark-accent-100;
@@ -44,6 +44,7 @@
                 flex-direction: column;
                 align-items: flex-end;
                 row-gap: 5px;
+                width: 100%;
 
                 .header {
                     width: 100%;
@@ -106,16 +107,18 @@
         row-gap: 20px;
         min-height: 570px;
         min-height: 710px;
+        // position: relative;
 
         .inputs_container {
             width: 100%;
-            display: flex;
-            flex-direction: row-reverse;
             align-items: center;
             align-items: flex-start;
             justify-content: space-between;
             border-bottom: 1.5px solid $light-shades-100;
             padding-bottom: 22px;
+            display: grid;
+            grid-template-columns: minmax(310px, 40%) minmax(210px, 30%);
+            column-gap: 15px;
         }
 
         .inputs_container > div:first-child {
@@ -123,6 +126,7 @@
             flex-direction: column;
             align-items: flex-end;
             row-gap: 12px;
+            grid-area: 1 / 2 / 2 / 3;
         }
 
         .buttons_container {
@@ -189,8 +193,11 @@
                             // right: 47px;
 
                             top: 50%;
+                            // top: 65%;
                             left: 50%;
                             transform: translate(-50%, -50%);
+                            overflow: auto;
+                            position: fixed;
                         }
                     }
 
@@ -241,9 +248,11 @@
                                 // top: 7px;
                                 // top: 17px;
                                 top: 50%;
+                                // top: 65%;
                                 left: 50%;
                                 transform: translate(-50%, -50%);
-
+                                overflow: auto;
+                                position: fixed;
                                 // right: 47px;
                             }
                         }

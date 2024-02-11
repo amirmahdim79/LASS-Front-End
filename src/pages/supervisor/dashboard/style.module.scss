@@ -1,7 +1,6 @@
 @use "styles/mixins.scss";
 @import "styles/colors.module.scss";
 
-
 .container {
     padding: 5px 140px 30px 55px;
     display: flex;
@@ -10,10 +9,7 @@
     width: 100%;
     min-height: 100vh;
     height: max-content;
-    // z-index: 0;
     position: relative;
-    // background-color: forestgreen;
-
 
     .boxes_container {
         width: 100%;
@@ -34,6 +30,11 @@
             // grid-area: 1 / 1 / 2 / 4;
             // z-index: -2;
             position: relative;
+            width: 100%;
+            min-height: 517px;
+            max-height: 517px;
+            background-color: $light-accent-20;
+            border-radius: 15px;
         }
 
         .users_container {

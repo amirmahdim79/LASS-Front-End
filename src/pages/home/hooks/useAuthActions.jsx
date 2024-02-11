@@ -11,7 +11,7 @@ export const useAuthActions = (dispatchState, state) => {
         apiMethod: AuthUserAPI,
 
         successCallback: (res) => {
-            console.log(res);
+            // console.log(res);
         },
         
         failedCallback: (e) => {
@@ -29,17 +29,17 @@ export const useAuthActions = (dispatchState, state) => {
         apiMethod: AuthSupAPI,
 
         successCallback: (res) => {
-            console.log(res);
+            // console.log(res);
         },
         
         failedCallback: (e) => {
-            // dispatchState({payload: {type: 'emailErr', value: ''}})
-            // dispatchState({payload: {type: 'passwordErr', value: ''}})
-            // if (e.message === 'Network Error') showToast('لطفا دوباره امتحان کنید', 'error');
-            // else if (e.response.data === '"email" must be a valid email') dispatchState({payload: {type: 'emailErr', value: 'ایمیل وارد شده معتبر نیست'}})
-            // else if (e.response.data === '"email" length must be at least 5 characters long') dispatchState({payload: {type: 'emailErr', value: 'ایمیل وارد شده باید حداقل 5 کاراکتر داشته باشد'}}) 
-            // else if (e.response.data === '"password" length must be at least 8 characters long') dispatchState({payload: {type: 'passwordErr', value: 'رمز وارد شده باید حداقل 8 کاراکتر داشته باشد'}}) 
-            // else if (e.response.data === 'Invalid email or password.') dispatchState({payload: {type: 'passwordErr', value: 'رمز یا ایمیل نامعتبر است'}})
+            dispatchState({payload: {type: 'emailErr', value: ''}})
+            dispatchState({payload: {type: 'passwordErr', value: ''}})
+            if (e.message === 'Network Error') showToast('لطفا دوباره امتحان کنید', 'error');
+            else if (e.response.data === '"email" must be a valid email') dispatchState({payload: {type: 'emailErr', value: 'ایمیل وارد شده معتبر نیست'}})
+            else if (e.response.data === '"email" length must be at least 5 characters long') dispatchState({payload: {type: 'emailErr', value: 'ایمیل وارد شده باید حداقل 5 کاراکتر داشته باشد'}}) 
+            else if (e.response.data === '"password" length must be at least 8 characters long') dispatchState({payload: {type: 'passwordErr', value: 'رمز وارد شده باید حداقل 8 کاراکتر داشته باشد'}}) 
+            else if (e.response.data === 'Invalid email or password.') dispatchState({payload: {type: 'passwordErr', value: 'رمز یا ایمیل نامعتبر است'}})
         },
     })
 

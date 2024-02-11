@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react';
 import { default as cs } from 'classnames'
-import styles from './forum.module.scss'
+import styles from './style.module.scss'
 import useInput from 'hooks/useInputHandler';
 import { useDispatch, useSelector } from 'react-redux';
 import { text } from './constants';
@@ -22,7 +22,6 @@ import { setForum } from 'store/labSlice';
 import PresenceList from './components/presenceList';
 import Preloader from 'components/global/preloaders'
 import { sortForum } from 'utils/mapper';
-import { ChatBox } from './components/chatbox';
 
 
 export default function Forum() {
@@ -301,9 +300,13 @@ export default function Forum() {
                                 {
                                     forums 
                                         ? (
-                                            forums.map((f, i) => (
-                                                moment(f.start).isBefore(moment()) && <ForumPreview key={i} data={f} onClick={() => openForum(f._id)}/>
-                                            ))
+                                            forums.length 
+                                                ? forums.map((f, i) => moment(f.start).isBefore(moment()) && <ForumPreview key={i} data={f} onClick={() => openForum(f._id)}/>)
+                                                : <div className={cs(styles['empty_page'])}>
+                                                    <img src={emptyMsg} alt='no chats exists'/>
+                                                    <p> {text.no_forum} </p>
+                                                </div>
+                                            
                                         ) : (
                                             [...Array(5)].map((num, i) => (
                                                 <div className={cs(styles['is_loading_Preview'])} key={i}/>
@@ -315,11 +318,15 @@ export default function Forum() {
                     )
             }
 
-            { ((permissions.includes('forums') || userType === 'supervisor' ) && params.id) && (
-                forum
-                    ? <PresenceList updatePresenceList={updatePresenceList} setMsg={setMsg}/> 
-                    : <div className={cs(styles['is_loading_presence_list'])}/> 
-            )}           
+            {
+                params.id 
+                    && (
+                        (forum && (permissions.includes('forums') || userType === 'supervisor' ))
+                            ? <PresenceList updatePresenceList={updatePresenceList} setMsg={setMsg}/> 
+                            : <div className={cs(styles['is_loading_presence_list'])}/> 
+                    )
+            }     
+
         </div>
     )
 }

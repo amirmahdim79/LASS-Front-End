@@ -14,6 +14,7 @@ import moment from 'moment'
 import jaMoment from 'jalali-moment'
 import ColoredString from 'components/global/coloredText';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Task() {
 
@@ -23,11 +24,13 @@ export default function Task() {
 
     const constantText = text[params.type]
 
-    const { getUserTask, completeReadingPapers, completeReadingMilestonPaperTask, getMilestoneTask } = useTasksActions();
+    const labId = useSelector(state => state.lab.labId);
+
+    const { getUserTask, completeReadingPapers, completeReadingMilestonPaperTask, getMilestoneTask, getBountyTask } = useTasksActions();
     const { value: task, setValue: setTask } = useInput({});
     const { value: done, setValue: setDone } = useInput(false);
 
-    console.log("--task",task);
+    // console.log("--task",task);
 
 
     const getTaskData = () => {
@@ -38,18 +41,22 @@ export default function Task() {
 
     const getMilestoneTaskData = () => {
         getMilestoneTask({}, `?id=${params.id}`)
-            .then(res => {
-                console.log("-rrrr", res.data);
-                setTask(res.data.Task)
-            })
+            .then(res => setTask(res.data.Task))
             .catch(err =>console.log(err))
+    }
+
+    const getBountyTaskData = () => {
+        getBountyTask({}, `?lab=${labId}&id=${params.id}`)
+        .then(res => setTask(res.data))
+        .catch(err =>console.log(err))
     }
 
 
     useEffect(() => {
         if (params.id && location.pathname.includes('usertask')) getTaskData();
         else if (params.id && location.pathname.includes('milestone-task')) getMilestoneTaskData();
-    }, [params.id, location.pathname])
+        else if (params.id && location.pathname.includes('task-bounty') && labId) getBountyTaskData();
+    }, [params.id, location.pathname, labId])
 
 
     const onClickCompleteTask = () => {
@@ -62,7 +69,7 @@ export default function Task() {
                     .catch(err => {
                         console.log(err)
                     })
-            } else {
+            } else if (location.pathname.includes('usertask')){
                 completeReadingPapers({UserTask: params.id})
                     .then(res => {
                         getTaskData();
@@ -70,6 +77,14 @@ export default function Task() {
                     .catch(err => {
                         console.log( err)
                     })
+            } else if (location.pathname.includes('task-bounty')){
+                // completeReadingPapers({UserTask: params.id})
+                //     .then(res => {
+                //         getTaskData();
+                //     })
+                //     .catch(err => {
+                //         console.log( err)
+                //     })
             }
         }
     }
@@ -77,15 +92,15 @@ export default function Task() {
 
     return (
         <div className={cs(styles['container'])}>
-            <div className={cs(styles['chart_container'])}>
-                <p className={cs(styles['title'])}> {constantText.chart.title} </p>
-            </div>
+            {/* <div className={cs(styles['chart_container'])}>
+                <p className={cs(styles['title'])}> {location.pathname.includes('/user/task-bounty') ? 'tasktasktask' : constantText.chart.title} </p>
+            </div> */}
 
             <div className={cs(styles['task_container'])}>
-                <p className={cs(styles['title'])}> {task.name} {task.status && <span> (انجام شده است) </span>} </p>
+                <p className={cs(styles['title'])}> {task.name} {(location.pathname.includes('task-bounty') ? task.status==='done' : task.status) && <span> (انجام شده است) </span>} </p>
 
                 <div className={cs(styles['date_wrapper'])}>
-                    <span> {constantText.date} :</span>
+                    <span> {text.date} :</span>
                     <span className={cs(styles['date'])}> {task?.dueDate ? moment(jaMoment.from(task.dueDate, 'en', 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD'))._i : '-'} </span>
                 </div>
 
@@ -98,7 +113,7 @@ export default function Task() {
                                 <UploadReport 
                                     text={'برای آپلود فایل کلیک کنید یا فایل را بر روی مستطیل بکشید'}
                                     info={'فرمت‌های قابل قبول عبارتند از: pdf، docx'}
-                                    btnText={constantText.btn}
+                                    btnText={text.btn}
                                     type={location.pathname.includes('milestone-task') ? 'milestone-task' : 'usertask'}
                                     disabled={task.status}
                                 />
@@ -108,7 +123,7 @@ export default function Task() {
                 }
 
                 {
-                    params.type === 'paper' && 
+                    (params.type === 'paper' || params.type === 'complete') && 
                         <div className={cs(styles['reading_articles_container'])}>
                             <div className={cs(styles['desc_container'])}>
                                 {/* <span className={cs(styles['desc'])}> پس از مطالعه {'10'}  مقاله با هشتگ <span>  {'E-Learning#'} </span> چک‌باکس را پر کنید. </span> */}
@@ -120,7 +135,7 @@ export default function Task() {
                                     onClickColoredWord={(word) => navigate(`../articles-database/?search=${word.trim()}`)}
                                 />
 
-                                <CheckBoxV1 width={'30px'} height={'30px'} value={task.status} onClick={() => onClickCompleteTask()} />
+                                <CheckBoxV1 width={'30px'} height={'30px'} value={location.pathname.includes('task-bounty') ? task.status === 'done' : task.status} onClick={() => onClickCompleteTask()} />
                             </div>                            
                         </div>
                 }

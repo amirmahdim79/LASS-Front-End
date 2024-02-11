@@ -185,8 +185,6 @@
         overflow-y: auto;
         overflow-x: hidden;
 
-        // background-color: plum;
-
         .row {
             height: max-content;
             column-gap: 32px;
@@ -258,6 +256,11 @@
                         background:  #3dbbff;
                         border-radius: 10px;
                     }
+
+                    .activities_msg {
+                        @include mixins.sub-description;
+                        color: $light-accent-100;
+                    }
                 }
         
                 .status_boxes:hover {
@@ -299,16 +302,9 @@
             }
         }
 
-
-
-
-        
-        
-
-        
-
-        // .recent_activities::-webkit-scrollbar {
-        //     display: none;
-        // }
+        .loading_container {
+            width: 100%;
+            height: 100%;
+        }
     }
 }

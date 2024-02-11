@@ -15,7 +15,7 @@ import CheckBoxV1 from 'components/global/checkbox/v1'
 import { useSelector } from 'react-redux'
 import { getFirstLetters } from 'utils/mapper'
 import { degreeMapper } from 'utils/mapper'
-import UsersList from 'components/usersListG'
+import UsersList from 'components/usersList/simpleVersion'
 import colors from "styles/colors.module.scss"
 import { useSettingsActions } from '../hooks/useSettingsActions'
 import { useModal } from 'hooks/useModal'
@@ -38,7 +38,7 @@ export default function GroupCreation() {
 
     const [openInfoBox, showInfoBox, closeInfoBox] = useModal();
 
-    const { createGroup } = useSettingsActions();
+    const { createGroup, groupCreation } = useSettingsActions();
 
 
 
@@ -84,6 +84,10 @@ export default function GroupCreation() {
         createGroup({...data})
             .then(() => navigate('../settings'))
             .catch(err => console.log(err))
+    }
+
+    const checkCreateBtnIsDisabled = () => {
+        return !state.name.trim().length || state.currentUsers.length < 2
     }
 
 
@@ -203,8 +207,8 @@ export default function GroupCreation() {
                 students={students && students.filter(s => state.currentUsers.includes(s._id)).map(s => s)}
                 canDeleteMember={true}
                 hasSubmitBtn={true}
-                btnDisabled={false}
-                // btnLoad={forumCreation}
+                btnDisabled={checkCreateBtnIsDisabled()}
+                btnLoad={groupCreation}
                 onClickBtn={createNewGroup}
                 deleteOnClickHandler={removeUser}
                 type={'createGroup'}

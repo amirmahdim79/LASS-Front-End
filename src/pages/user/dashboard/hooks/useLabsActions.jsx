@@ -4,6 +4,7 @@ import { GetMyLabsAPI } from "api/labs"
 import { GetLabEventsAPI } from "api/events";
 import { GetUserTaskAPI } from "api/tasks";
 import { GetUserTasksAPI } from "api/tasks";
+import { GetLabBountiesAPI } from "api/bounties";
 
 export const useLabActions = () => {
     const { showToast } = useToast();
@@ -38,6 +39,17 @@ export const useLabActions = () => {
         },
     })
 
+    const { pending: gettingLabBounties, request: getLabBounties } = useAPI({
+        apiMethod: GetLabBountiesAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+            showToast('مشکلی پیش آمده', 'error');
+        },
+    })
+
     
     
     return {
@@ -49,5 +61,8 @@ export const useLabActions = () => {
 
         getUserTasks,
         gettingUserTasks,
+
+        getLabBounties,
+        gettingLabBounties,
     }
 }

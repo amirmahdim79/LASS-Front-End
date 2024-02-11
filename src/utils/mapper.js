@@ -1,6 +1,8 @@
 import moment from 'moment';
 import 'moment/locale/fa';
+import axios from "axios";
 import colors from "styles/colors.module.scss"
+import { setCurrentTime } from 'store/userSlice';
 
 export const truncateText = (string, length) => {
     if (string.length > length)
@@ -97,8 +99,7 @@ export const isEmptyObject = (obj) => {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-export const isBefore = (date) => {
-    const today = moment();
+export const isBefore = (date, today) => {
     if (moment(date).diff(today) < 0) return true;
     else return false
 }
@@ -175,5 +176,28 @@ export const validateEmail = (email) => {
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
-  };
-  
+};
+
+export const getCurrentTime = async () => {
+    try {
+        const response = await axios.get('https://worldtimeapi.org/api/ip');
+        return response.data.utc_datetime;
+    } catch (error) {
+        console.error('Error fetching current time:', error.message);
+        return null;
+    }
+};
+
+export const getTime = (setNow=() => {}) => {
+    getCurrentTime().then((apiTime) => {
+        if (apiTime) {
+          // Create a Moment.js object with the external time
+          const customDate = moment(apiTime);
+          setNow(customDate)
+
+        //   dispatch(setCurrentTime(customDate))
+      
+          // Display the formatted date and time
+        }
+      })
+};

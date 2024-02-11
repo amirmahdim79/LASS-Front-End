@@ -72,7 +72,6 @@ export default function Navbar({type}) {
         navigate('/')
         REMOVE_TOKEN()
         localStorage.removeItem("type")
-        showToast('با موفقیت خارج شدید', 'success')
     }
 
     // hover animation

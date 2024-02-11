@@ -1,6 +1,6 @@
 import { default as cs } from 'classnames'
 import { text } from './constants'
-import styles from './dashboard.module.scss'
+import styles from './style.module.scss'
 import emptyBox from 'assets/icons/empty_data.svg'
 import Button from 'components/global/button'
 import colors from "styles/colors.module.scss"
@@ -14,43 +14,38 @@ import { reducer } from './reducers'
 import { setPath, setStudents, setEvents, setLabId, setLabStudentsTasks, setSupsTasks } from "store/labSlice/index"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import LabSummary from 'components/labSummary'
-import OverdueTasks from 'components/overdueTasks'
-import EnrollmentRequests from 'components/global/enrollmentRequests'
 import useInput from 'hooks/useInputHandler'
 import moment from 'moment';
 import 'moment/locale/fa';
 import Calendar from 'components/calendar'
 import ToDos from '../../../components/toDos'
-// import UsersList from 'components/usersListG'
-import UsersList from 'components/usersListPro'
-
+import UsersList from 'components/usersList/proVersion'
+import { getTime } from 'utils/mapper'
+import Preloader from 'components/global/preloaders'
+import { getCurrentTime } from 'utils/mapper'
 
 
 export default function SupervisorDashboard() {
 
     moment.locale('fa');
 
-    const dispatchLab = useDispatch();
     const navigate = useNavigate();
+    const dispatchLab = useDispatch();
 
-    const events = useSelector(state => state.lab.Events);
-    const path = useSelector(state => state.lab.Paths);
-    const students = useSelector(state => state.lab.Students);
-
-
-    const { value: now, setValue: setNow } = useInput(moment());
-
-    const [open, show, close] = useModal();
     const { getMyLabs, createLabs, getLabEvents, getLabStudentsTasks, getSupsTasks } = useLabActions();
-    
+    const [open, show, close] = useModal();
+
     const initialState = {
         name: '',
         desc: '',
     }
 
-
     const [ state , dispatch] = useReducer( reducer, initialState );
+
+    const events = useSelector(state => state.lab.Events);
+
+    const { value: now, setValue: setNow } = useInput('');
+    const { value: loading, setValue: setLoading } = useInput(true);
 
     const openLabCreationModal = () => {
         show();
@@ -69,121 +64,65 @@ export default function SupervisorDashboard() {
         close();
     }
 
-    const getEvents = (labId) => {
-        console.log("now", now);
+    const getEvents = (labId, now) => {
         getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
-            .then(res => {
-                dispatchLab(setEvents(res.data))
-            }).catch(err => {
-                console.log( err);
-            })
+            .then(res => dispatchLab(setEvents(res.data)))
+            .catch(err => console.log( err))
     }
 
     const getStudentsTasks = (labId) => {
         getLabStudentsTasks({}, `?lab=${labId}`)
-            .then(res => {
-                // console.log("tasks", res.data);
-                dispatchLab(setLabStudentsTasks(res.data));
-            })
-            .catch(err => {
-                console.log(" tasks eeeeeeeeeeee", err);
-            })
+            .then(res => dispatchLab(setLabStudentsTasks(res.data)))
+            .catch(err => console.log(err))
     }
 
     const getTasks = () => {
         getSupsTasks()
-            .then(res => {
-                console.log("sups tasks", res.data);
-                dispatchLab(setSupsTasks(res.data))
-            })
-            .catch(err => {
-                console.log("eeeee tasks", err);
-            })
+            .then(res => dispatchLab(setSupsTasks(res.data)))
+            .catch(err => console.log(err))
     }
-
 
     useEffect(() => {
-        getMyLabs({}, '?sups=true').then(res => {
-            // console.log("rrrrrrrrrrrrr", res);
-            dispatchLab(setPath(res.data.Paths))
-            dispatchLab(setStudents(res.data.Students))
-            dispatchLab(setLabId(res.data._id))
-
-            getEvents(res.data._id)
-            getStudentsTasks(res.data._id)
-            getTasks()
-        }).catch(err => {
-            console.log("eeeeeeeeeeee", err);
-        })
+        getCurrentTime()
+            .then((apiTime) => {
+                if (apiTime) {
+                    const customDate = moment(apiTime);
+                    getMyLabs({}, '?sups=true')
+                        .then(res => {
+                            setNow(customDate)
+                            dispatchLab(setPath(res.data.Paths))
+                            dispatchLab(setStudents(res.data.Students))
+                            dispatchLab(setLabId(res.data._id))
+                
+                            getEvents(res.data._id, customDate)
+                            getStudentsTasks(res.data._id)
+                            getTasks()
+            
+                        }).catch(err => console.log(err))
+                }
+            })
     }, [])
 
-    // useEffect(() => {
-    //     if (path) {
-    //         getEvents()
-    //     }
-    // }, [now, path])
-
-    const openUserProfile = (uId) => {
-        // console.log("iddddddddd", uId);
-        navigate(`../user_profile/${uId}`)
-        // dispatch(addUser(res.data))
-    }
-
-
+    useEffect(() => { 
+        if(now) setLoading(false)
+    }, [now])
 
 
     return (
         <div className={cs(styles['container'])} >
             <div className={cs(styles['boxes_container'])}>
                 <div className={cs(styles['calendar_container'])}>
-                    <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents} />
+                {
+                    now 
+                        ? <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
+                        : <Preloader />
+                }                    
                 </div>
 
                 <div className={cs(styles['users_container'])}>
-                    <UsersList />
-                    {/* <UsersList canAddMember={true}/> */}
-
-                    <ToDos/>
+                    <UsersList loading={loading}/>
+                    <ToDos loading={loading}/>
                 </div>
-
-                
-            {/* <UsersList
-                students={students}
-                width={'unset'}
-                hasMoreInfo={true}
-                moreInfo={'تاریخ تحویل نمونه'}
-                userHasClickOption={true}
-                userOnClickHandler={(uId) => openUserProfile(uId)}
-                userDataMaxWidth={'14vw'}
-                canAddMember={true}
-            /> */}
-                {/* <div className={cs(styles['top_container'])}>
-                    <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents} />
-                </div> */}
-
-                {/* <div className={cs(styles['right_container'])} >
-                    <UsersList
-                        students={students}
-                        width={'unset'}
-                        hasMoreInfo={true}
-                        moreInfo={'تاریخ تحویل نمونه'}
-                        userHasClickOption={true}
-                        userOnClickHandler={(uId) => openUserProfile(uId)}
-                        userDataMaxWidth={'14vw'}
-                        canAddMember={true}
-                    />
-
-                </div> */}
-
-                {/* <div className={cs(styles['left_container'])}>
-                    <LabSummary />
-                    <div className={cs(styles['inner_container'])}>
-                        <OverdueTasks />
-                        <EnrollmentRequests />
-                    </div>
-                </div>                 */}
-
-
 
             </div>
 

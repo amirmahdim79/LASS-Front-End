@@ -19,6 +19,7 @@ import Modal from 'components/global/modal';
 export default function NotesPage() { 
 
     moment.locale('fa');
+    const userType = localStorage.getItem('type');
 
     const [ openAddDocModal, showAddDocModal, closeAddDocModal ] = useModal();
 
@@ -62,7 +63,7 @@ export default function NotesPage() {
                     <div className={cs(styles['titles_wrapper'], styles['items'])}>
                         <p> {text.list_title_1} </p>
                         {
-                            (permissions && permissions.indexOf('documents') > -1) && (
+                            (userType === 'supervisor' || (permissions && permissions.indexOf('documents') > -1)) && (
                                 <Button
                                     height={'30px'}
                                     color={colors['main-color-100']} 

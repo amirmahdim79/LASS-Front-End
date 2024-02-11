@@ -66,8 +66,8 @@ export default function SideBar({type}) {
 
     const openTaskBounty = () => {
         setIconNum('8')
-        if ( type === 'user' ) navigate('/user/task-bounty')
-        else navigate('/supervisor/task-bounty')
+        if ( type === 'user' ) navigate('/user/task-bounties')
+        else navigate('/supervisor/task-bounties')
     }
 
     // const enableDarkMode = () => {
@@ -78,22 +78,22 @@ export default function SideBar({type}) {
 
     useEffect(() => {
         if (type === 'user') {
-            if (location.pathname === '/user/dashboard' || location.pathname.includes('task')) setIconNum('1')
+            if (location.pathname.includes('/user/task-bounties')) setIconNum('8')
+            else if (location.pathname === '/user/dashboard' || location.pathname.includes('task')) setIconNum('1')
             else if (location.pathname.includes('forum')) setIconNum('2')
             else if (location.pathname === '/user/articles-database') setIconNum('3')
             else if (location.pathname === '/user/new-email' || location.pathname === '/user/received-emails' || location.pathname === '/user/email-settings') setIconNum('4')
             else if (location.pathname === '/user/my-profile') setIconNum('5')
-            else if (location.pathname.includes('user/settings')) setIconNum('6')
-            else if (location.pathname.includes('user/notes')) setIconNum('7')
-            else if (location.pathname.includes('user/task-bounty')) setIconNum('8')
+            else if (location.pathname.includes('/user/settings')) setIconNum('6')
+            else if (location.pathname.includes('/user/notes')) setIconNum('7')
         }else {
             if (location.pathname === '/supervisor/dashboard' || location.pathname.includes('user_profile')) setIconNum('1')
             else if (location.pathname.includes('forum')) setIconNum('2')
             else if (location.pathname === '/supervisor/articles-database') setIconNum('3')
             else if (location.pathname === '/supervisor/new-email' || location.pathname === '/supervisor/received-emails' || location.pathname === '/supervisor/email-settings') setIconNum('4')
-            else if (location.pathname.includes('supervisor/settings')) setIconNum('6')
-            else if (location.pathname.includes('supervisor/notes')) setIconNum('7')
-            else if (location.pathname.includes('supervisor/task-bounty')) setIconNum('8')
+            else if (location.pathname.includes('/supervisor/settings')) setIconNum('6')
+            else if (location.pathname.includes('/supervisor/notes')) setIconNum('7')
+            else if (location.pathname.includes('/supervisor/task-bounties')) setIconNum('8')
         }
     }, [location.pathname])
 
@@ -116,7 +116,9 @@ export default function SideBar({type}) {
 
                         <div className={cs(styles['divider'])} />
 
-                        <img className={cs(styles['icon'], iconNum === '4' && styles['active'])} src={emailLight} alt='email icon' onClick={() => openEmails()} />
+                        { type !== 'user' && <img className={cs(styles['icon'], iconNum === '4' && styles['active'])} src={emailLight} alt='email icon' onClick={() => openEmails()} /> }
+
+                        
                         <img className={cs(styles['icon'], iconNum === '5' && styles['active'])} src={profileLight} alt='profile icon' onClick={() => openProfile()} />
                         {((type === 'user' && permissions && permissions.indexOf('lab') > -1) || type === 'supervisor') &&
                             <img className={cs(styles['icon'], iconNum === '6' && styles['active'])} src={settingsLight} alt='settings icon' onClick={() => openSettings()}/>

@@ -28,12 +28,14 @@ export default function TextInputV2({
         <div 
             className={cs(styles['container'])} 
             style={{
-                height: height, width: `calc(${width} + 10px)`,
+                // height: height, width: `calc(${width} + 10px)`,
+                height: height, width: width,
+
                 ...(fontFamily ? {fontFamily: fontFamily} : {fontFamily: 'pinar_reg'}),
                 ...((!isValid && showError) && {borderBottom:`1px solid ${colors['error-100']}`} )}}>
             <div 
                 className={cs(styles['input_container'])} 
-                style={{...(labelDirection === 'ltr' && {gridTemplateColumns: 'auto 1fr'})}}
+                style={{ ...(!inputLabel && {gridTemplateColumns: '100%'}), ...(labelDirection === 'ltr' && {gridTemplateColumns: 'auto 1fr'})}}
             >
                 {
                     inputLabel && (
@@ -54,7 +56,7 @@ export default function TextInputV2({
                     placeholder={placeholder}
                     ref={inputRef}
                     required={required}
-                    style={{width:width, height: 'max-content', fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight}}
+                    style={{ height: 'max-content', fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight}}
                     type={type}
                     value={value} 
                 />

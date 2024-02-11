@@ -44,6 +44,7 @@ export default function Profile({editable=false}) {
     const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
     const { getLabStudentInfo } = useLabActions();
     const { value: userData, setValue: setUserData } = useInput({});
+    const { value: progress, setValue: setProgress } = useInput(0);
 
     const getUserInfo = () => {
         if (labId) {
@@ -58,8 +59,12 @@ export default function Profile({editable=false}) {
         }
     }
 
+    const calcProgress = (path) => {
+        console.log("-------", path);
+    }
     
     useEffect(() => {
+        calcProgress()
         if (labId) {
             // if (!editable) {
             //     getUserInfo();
@@ -69,6 +74,7 @@ export default function Profile({editable=false}) {
             }
         }
     }, [params.id])
+
 
 
     // useEffect(() => {
@@ -87,6 +93,7 @@ export default function Profile({editable=false}) {
     // console.log("userData", userData);
     // console.log("params.id", params.id);
 
+    // console.log("userData", userData);
 
     return (
         <div className={cs(styles['container'])}>
@@ -142,7 +149,7 @@ export default function Profile({editable=false}) {
                             </>
                         )}
                     </div>
-                    { (userInfo || userData) && <LinearProgressBar width={'100%'} height={'10px'} progress={40} color={colors['main-color-100']}/> }
+                    { (userInfo || userData) && <LinearProgressBar width={'100%'} height={'10px'} progress={progress} color={colors['main-color-100']}/> }
                     { !(userInfo || userData) && <div className={cs(styles['is_loading_progress_bar'])}/> }
                 </div>
 
@@ -239,10 +246,6 @@ export default function Profile({editable=false}) {
                         
                     </div> */}
                     <Leaderboard list={leaderboard}/>
-                </div>
-                <div className={cs(styles['development_chart'])}>
-                    <p> نمودار توسعه </p>
-                    <img src={developmentChart} alt='developmentChart'/>
                 </div>
             </div>
         </div>

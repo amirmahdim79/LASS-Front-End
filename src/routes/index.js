@@ -48,6 +48,10 @@ export const router = createBrowserRouter([
                 element: <Task />,
             },
             {
+                path: 'task-bounty/:id/:type',
+                element: <Task />,
+            },
+            {
                 path: 'my-profile',
                 element: <Profile editable={true}/>,
             },
@@ -103,7 +107,7 @@ export const router = createBrowserRouter([
                 element: <NotesPage />,
             },
             {
-                path: 'task-bounty',
+                path: 'task-bounties',
                 element: <TaskBounty />,
             },
         ]
@@ -180,7 +184,7 @@ export const router = createBrowserRouter([
                 element: <NotesPage />,
             },
             {
-                path: 'task-bounty',
+                path: 'task-bounties',
                 element: <TaskBounty />,
             },
         ]

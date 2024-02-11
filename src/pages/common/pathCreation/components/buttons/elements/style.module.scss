@@ -30,12 +30,11 @@
         // border-top-right-radius: 0px;
         @include  functions.setFixedSize(160px, 80px);
         @include mixins.open-modal-from-right;
-        // top: 16px;
-        // right: 95px;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        position: absolute;
+        overflow: auto;
+        position: fixed;
     }
 }
 

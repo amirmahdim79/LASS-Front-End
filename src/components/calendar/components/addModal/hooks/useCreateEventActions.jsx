@@ -28,8 +28,9 @@ export const useCreateEventActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("createEvent failed", e)
-            showToast('مشکلی پیش اومده', 'error')
+            console.log(e)
+            if (e.response.data === "Event has overlap") showToast('رویداد تداخل دارد', 'error')
+            else showToast('مشکلی پیش اومده', 'error')
         },
     })
 

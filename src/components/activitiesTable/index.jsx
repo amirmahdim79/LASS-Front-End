@@ -11,6 +11,7 @@ import { toEnDigit } from 'utils/mapper';
 import { monthNumber } from 'utils/mapper';
 import Activity from './components/activity';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 export default function ActivitiesTable() {  
@@ -19,6 +20,11 @@ export default function ActivitiesTable() {
 
     const today = moment();
     const location = useLocation();  
+    const activities = useSelector(state => state.lab.userActivities);
+
+
+
+
 
 
     const { value: recentMonthsArr, setValue: setRecentMonthsArr } = useInput([]);
@@ -32,18 +38,17 @@ export default function ActivitiesTable() {
         monthsArr.push(month(moment(jaMoment.from(moment(), 'en', 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD')).subtract(1, "month").month() + 1))
         monthsArr.push(month(moment(jaMoment.from(moment(), 'en', 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD')).month() + 1))
         setRecentMonthsArr(monthsArr)
-    }
 
-    const getMonthDays = () => {
+
         let monthDaysNum = [];
         let totalDaysNum = 0;
         let jalaliDate = toEnDigit(moment()._d.toLocaleDateString('fa-IR'));
         let jalaliYear = jalaliDate.split('/')[0];
         let nextDataMonth = month(moment(jaMoment.from(moment(), 'en', 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD')).add(1, "month").month() + 1)
 
-        let firstMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(recentMonthsArr[0])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
-        let secondMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(recentMonthsArr[1])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
-        let thirdMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(recentMonthsArr[2])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
+        let firstMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(monthsArr[0])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
+        let secondMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(monthsArr[1])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
+        let thirdMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(monthsArr[2])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
         let fourthMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(nextDataMonth)}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
         setFirstMonthStartWeekDay(moment(firstMonthFirstDate).weekday())
 
@@ -61,39 +66,37 @@ export default function ActivitiesTable() {
         setTotalActivities(totalDaysNum);
     }
 
+    // const getMonthDays = () => {
+    //     let monthDaysNum = [];
+    //     let totalDaysNum = 0;
+    //     let jalaliDate = toEnDigit(moment()._d.toLocaleDateString('fa-IR'));
+    //     let jalaliYear = jalaliDate.split('/')[0];
+    //     let nextDataMonth = month(moment(jaMoment.from(moment(), 'en', 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD')).add(1, "month").month() + 1)
+
+    //     let firstMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(recentMonthsArr[0])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
+    //     let secondMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(recentMonthsArr[1])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
+    //     let thirdMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(recentMonthsArr[2])}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
+    //     let fourthMonthFirstDate = jaMoment.from(`${jalaliYear}/${monthNumber(nextDataMonth)}/01`, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').replace(/\//g, '-');
+    //     setFirstMonthStartWeekDay(moment(firstMonthFirstDate).weekday())
+
+    //     let firstDate =  moment(firstMonthFirstDate);
+    //     let secondDate =  moment(secondMonthFirstDate);
+    //     let thirdDate =  moment(thirdMonthFirstDate);
+    //     let fourthDate =  moment(fourthMonthFirstDate);
+
+    //     monthDaysNum.push(secondDate.diff(firstDate, 'days'));
+    //     monthDaysNum.push(thirdDate.diff(secondDate, 'days'));
+    //     monthDaysNum.push(fourthDate.diff(thirdDate, 'days'));
+    //     setMonthDays(monthDaysNum);
+
+    //     totalDaysNum += monthDaysNum[0] + monthDaysNum[1] + monthDaysNum[2];
+    //     setTotalActivities(totalDaysNum);
+    // }
+
 
     useEffect(() => {
         getRecentMonths();
     }, [location.pathname])
-
-    useEffect(() => {
-        getMonthDays();
-    }, [recentMonthsArr])
-
-    // let jalaliDate = toEnDigit(moment()._d.toLocaleDateString('fa-IR'));
-    // console.log("monthDays", recentMonthsArr);
-    // // console.log("momendaysInMonth()", moment("2012-02", "YYYY-MM").daysInMonth());
-    // // console.log("today()", moment());
-    // console.log("azar 1", (jaMoment.from('1402/5/01', 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')));  //2023/11/22
-    // console.log("dey 1", (jaMoment.from('1402/10/01', 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')));   //2023/12/22
-    // console.log("bahman 1", (jaMoment.from('1402/11/01', 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')));   //2024/01/21
-    // console.log("esf 1", (jaMoment.from('1402/12/01', 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')));  // 2024/02/20
-    // console.log("far 1", (jaMoment.from('1403/01/01', 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')));  // 2024/03/20
-    // // console.log("today()", moment().subtract(1, "month").daysInMonth());
-
-
-    // var a = moment([2023, 11, 22]);
-    // var b = moment([2023, 11, 25]);
-
-    // const dateB = moment('2023-11-22');
-    // const dateC = moment('2023-12-22');
-    // const dateD = moment('2024-01-21');
-    // const dateE = moment('2024-02-20');
-    // const dateF = moment('2024-03-20');
-
-    // console.log("/////////////////", '2023/01/22'.replace(/\//g, '-'));
-
-    // console.log(`Difference is ${dateF.diff(dateE, 'days')}`);
 
 
     return (
@@ -140,6 +143,7 @@ export default function ActivitiesTable() {
                     </div>
 
                 </div>
+                
             </div>
 
 

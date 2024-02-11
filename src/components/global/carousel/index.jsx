@@ -1,15 +1,18 @@
 import {default as cs} from 'classnames'
 import { useState } from 'react';
+import CarouselItem from './items/paths';
 import styles from './style.module.scss'
 
 
 export default function Carousel({
     items = [],
+    typ='path',
     name = 'slider'
 }) {  
 
     const [cheecked, setCheecked] = useState(1)
 
+    console.log("items", items);
     // console.log("cheecked", cheecked);
 
 
@@ -29,35 +32,35 @@ export default function Carousel({
             id: 3,
             checked: false,
         },
-        {
-            item: <img src="https://ix-www.imgix.net/examples/moon.jpg?ixlib=js-3.8.0&fit=crop&crop=entropy&auto=compress%2Cformat&ar=400%3A300&w=689" alt="song" />,
-            id: 4,
-            checked: false,
-        },
+        // {
+        //     item: <img src="https://ix-www.imgix.net/examples/moon.jpg?ixlib=js-3.8.0&fit=crop&crop=entropy&auto=compress%2Cformat&ar=400%3A300&w=689" alt="song" />,
+        //     id: 4,
+        //     checked: false,
+        // },
     ];
 
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['items_container'])}>
-                {arr.map((item, i) => 
+                {items.map((item, i) => 
                     <>
                         <input type="radio" name={name} id={`item-${i+1}`} value={cheecked === item.i+1 ? true : false} onClick={() => setCheecked(i+1)}/>
                     </>
                 )}
                 <div className={cs(styles['cards'])}>
-                    {arr.map((item, i) => 
+                    {items.map((item, i) => 
                         <label 
                             className={cs(
                                 styles['card'], 
                                 cheecked === i+1 && styles['checked'], 
-                                (cheecked === 1 ? i+1 === arr.length : cheecked-1 === i+1) && styles['prev'],
-                                (cheecked === arr.length ? i+1 === 1 : cheecked+1 === i+1) && styles['after'],
+                                (items.length > 1 &&  (cheecked === 1 ? i+1 === items.length : cheecked-1 === i+1) && styles['prev']),
+                                (items.length > 1 &&  (cheecked === items.length ? i+1 === 1 : cheecked+1 === i+1) && styles['after']),                               
                             )} 
                             for={`item-${i+1}`} 
                             id={`card-${i+1}`} 
                             onClick={() => setCheecked(i+1)}
                         >
-                            {item.item}
+                            <CarouselItem item={item}/>
                         </label>
                     )}
                 </div>

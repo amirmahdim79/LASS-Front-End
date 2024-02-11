@@ -16,10 +16,13 @@ import TextAreaV1 from 'components/global/inputs/textareas/textareaV1'
 import SwitchV2 from 'components/global/toggleSwitchV2'
 import Button from 'components/global/button'
 import colors from "styles/colors.module.scss"
+import Modal from 'components/global/modal'
+import DeleteModal from './components/modals/deleteModal'
+import SwitchV3 from 'components/global/toggleSwitchV3'
 
 export default function TaskBounty() { 
     
-    const { getLabBounties, addNewBounty } = useBountyActions();
+    const { getLabBounties, addNewBounty, deleteBounty, deletingBounty } = useBountyActions();
 
     const [ openDeleteModal, showDeleteModal, closeDeleteModal ] = useModal();
 
@@ -32,8 +35,9 @@ export default function TaskBounty() {
         desc: '',
         smarties: undefined,
         hasFile: undefined,
+        deletingId: undefined,
 
-        types: 'doing',
+        types: 'none',
     }
 
     const [ state , dispatch] = useReducer( reducer, initialState );
@@ -42,7 +46,7 @@ export default function TaskBounty() {
     const labGroups = useSelector(state => state.lab.labGroups);
     const students = useSelector(state => state.lab.Students);
 
-console.log("state", state);
+// console.log("state", state);
 
     const getBounties = () => {
         getLabBounties({}, `?lab=${labId}`)
@@ -97,6 +101,13 @@ console.log("state", state);
 
     }
 
+    const deleteTask = (id) => {
+        deleteBounty({}, `?lab=${labId}&id=${state.deletingId}`)
+            .then(() => getBounties())
+            .catch(err => console.log(err))
+            .finally(() => closeDeleteModal())
+    }
+
     const changeBountyType = (value) => {
         dispatch({payload: {type: 'types', value: value}})
     }
@@ -114,16 +125,22 @@ console.log("state", state);
         <div className={cs(styles['container'])}>
 
             <div className={cs(styles['header'])}> {text.title} </div>
+            
 
             <div className={cs(styles['main_panel'])}>
                 <div className={cs(styles['activity_list'])}>
                     <div className={cs(styles['header'])}>
                         <p> {text.subtitle_1} </p>
-                        <div className={cs(styles['switch_types'])}>
-                            <p className={cs(state.types === 'none' && styles['is_active'])} onClick={() => changeBountyType('none')}> {text.mode_1} </p>
-                            <p className={cs(state.types === 'doing' && styles['is_active'])} onClick={() => changeBountyType('doing')}> {text.mode_2} </p>
-                            <p className={cs(state.types === 'done' && styles['is_active'])} onClick={() => changeBountyType('done')}> {text.mode_3} </p>
-                        </div>
+                        <SwitchV3 
+                            value={state.types}
+                            valueName_r={'none'} 
+                            valueName_m={'doing'} 
+                            valueName_l={'done'}
+                            title_r={text.mode_1}
+                            title_m={text.mode_2}
+                            title_l={text.mode_3}
+                            onClick={changeBountyType}
+                        />
                     </div>
                     <div className={cs(styles['list'])}>
                         {
@@ -135,7 +152,7 @@ console.log("state", state);
                                             <p> {activity?.name} </p>
                                         </div>
                                         <div className={cs(styles['tools'])}>
-                                            <img src={trashIcon} alt='trash icon' onClick={() => showDeleteModal()}/>
+                                            <img src={trashIcon} alt='trash icon' onClick={() => {showDeleteModal(); dispatch({payload: {type: 'deletingId', value: activity._id}})}}/>
                                         </div>
                                     </div>
                                     <div className={cs(styles['activity_desc'])}>
@@ -249,6 +266,16 @@ console.log("state", state);
                     </div>
                 </div>
             </div>
+
+            <Modal
+                isOpen={openDeleteModal} 
+                close={closeDeleteModal} 
+                content={
+                    <div className={cs(styles['delete_modal'])} style={{display: openDeleteModal ? 'block' : 'none'}} >
+                        <DeleteModal onCancel={closeDeleteModal} onSubmit={deleteTask} submitLoad={deletingBounty}/>
+                    </div>
+                }
+            />
             
         </div>
     )

@@ -10,6 +10,9 @@
     flex-direction: row-reverse;
     column-gap: 30px;
 
+    display: grid;
+    grid-template-columns: minmax(255px, 25%) auto;
+
     .settings_main_panel {
         width: 100%;
         height: 100%;
@@ -195,6 +198,12 @@
 
             }
         }
+    }
+
+    .users_list {
+        width: 100%;
+        height: 100%;
+        grid-area: 1 / 1 / 2 / 2;
     }
 
     .delete_modal {

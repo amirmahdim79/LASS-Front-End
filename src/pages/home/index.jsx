@@ -47,7 +47,7 @@ export default function HomePage() {
 
     const [ state , dispatchState] = useReducer( reducer, initialState );
 
-    console.log("sssssssssssss", state);
+    // console.log("sssssssssssss", state);
 
 
     const { 

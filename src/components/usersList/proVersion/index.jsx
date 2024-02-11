@@ -20,10 +20,13 @@ import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions'
 import { degreeMapper } from 'utils/mapper'
+import { useNavigate } from 'react-router-dom';
+import Preloader from 'components/global/preloaders'
 
-export default function UsersList() {
+export default function UsersList({loading}) {
 
     const ref = useRef(null);
+    const navigate = useNavigate();
 
     const students = useSelector(state => state.lab.Students);
     const studentsTasks = useSelector(state => state.lab.labStudentsTasks);
@@ -91,12 +94,6 @@ export default function UsersList() {
     useEffect(() => {
         if (listType === 'current') setUsers(students)
     }, [students])
-
-    // console.log("ssssss",students );
-    // console.log("users",users );
-    // console.log("alumni",alumni );
-
-    
 
 
     return (
@@ -195,45 +192,48 @@ export default function UsersList() {
             </div>
             <div className={cs(styles['data'])}>
                 {
-                    users && users.map((s,i) => 
-                        <div key={i} className={cs(styles['row'])}>
-                            <div className={cs(styles['user_info_container'])}>
-                                <div 
-                                    style={s?.profilePicture && {backgroundImage: `url(${s?.profilePicture})`}} 
-                                    className={cs(styles['avatar'], !s?.profilePicture && styles['empty_avatar'])}
-                                >
-                                    {!s?.profilePicture &&
-                                        <p>{getFirstLetters(`${s?.firstName} ${s?.lastName}`)}</p>
-                                    }
+                    loading 
+                        ? <div className={cs(styles['loading_container'])}> <Preloader /> </div> 
+                        : (
+                            users && users.map((s,i) => 
+                                <div key={i} className={cs(styles['row'])}  onClick={() => navigate(`../user_profile/${s._id}`)}>
+                                    <div className={cs(styles['user_info_container'])}>
+                                        <div 
+                                            style={s?.profilePicture && {backgroundImage: `url(${s?.profilePicture})`}} 
+                                            className={cs(styles['avatar'], !s?.profilePicture && styles['empty_avatar'])}
+                                        >
+                                            {!s?.profilePicture &&
+                                                <p>{getFirstLetters(`${s?.firstName} ${s?.lastName}`)}</p>
+                                            }
+                                        </div>
+        
+                                        <div className={cs(styles['name_container'])}>
+                                            <p> {s?.firstName} {s?.lastName} </p>
+                                            <p> {degreeMapper(s?.type)} </p>
+                                        </div>
+                                    </div>
+                                    <p> {s?.sand > 0 ? `+${s?.sand}` : `${s?.sand}`} </p>
+                                    <div> <p> {s?.smarties} </p> </div>
+                                    
+                                    <div className={cs(styles['recent_activities'])}>
+                                        <div className={cs(styles['status_boxes'])} ref={ref}> 
+                                            {
+                                                (studentsTasks && studentsTasks.length) ? studentsTasks.find(u => u._id === s._id)?.Tasks.slice(0).reverse().map((t, i) => 
+                                                    <div key={i}>
+                                                        <StatusBox task={t}/>
+                                                    </div>
+                                                ) : (
+                                                    <p className={cs(styles['activities_msg'])}> در حال حاضر فعالیتی موجود نیست </p>
+                                                )
+                                            }
+                                        </div>
+                                        <p> {studentsTasks.length ? calcUnCompletedTasks(studentsTasks.find(u => u._id === s._id)) : ''} </p>
+                                    </div>
+                                    
                                 </div>
-
-                                <div className={cs(styles['name_container'])}>
-                                    <p> {s?.firstName} {s?.lastName} </p>
-                                    <p> {degreeMapper(s?.type)} </p>
-                                </div>
-                            </div>
-                            <p> {s?.sand > 0 ? `+${s?.sand}` : `${s?.sand}`} </p>
-                            <div> <p> {s?.smarties} </p> </div>
-                            
-                            <div className={cs(styles['recent_activities'])}>
-                                <div className={cs(styles['status_boxes'])} ref={ref}> 
-                                    {
-                                        studentsTasks && studentsTasks.find(u => u._id === s._id)?.Tasks.slice(0).reverse().map((t, i) => 
-                                            <div key={i}>
-                                                <StatusBox task={t}/>
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                                <p> {calcUnCompletedTasks(studentsTasks.find(u => u._id === s._id))} </p>
-                            </div>
-                            
-                        </div>
-                    
-                    )
+                        ))
                 }
             </div>
         </div>
     )
-
 }

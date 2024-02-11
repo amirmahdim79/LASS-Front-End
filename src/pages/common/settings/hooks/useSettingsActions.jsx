@@ -1,6 +1,8 @@
+import { GetLabEventsAPI } from "api/events";
 import { CreateLabGroupAPI } from "api/groups";
 import { UpdateLabGroupAPI } from "api/groups";
 import { DeleteLabGroupAPI, GetLabGroupsAPI } from "api/groups";
+import { GetSpecificLabDataAPI } from "api/labs";
 import { GetPermissionsListAPI } from "api/labs";
 import { AddPermissionToUserAPI } from "api/sups";
 import useAPI from "hooks/useAPI"
@@ -77,6 +79,26 @@ export const useSettingsActions = () => {
             else if (err.response.data === 'You must at least add two users to a group.') showToast('شما باید حداقل دو کاربر را به یک گروه اضافه کنید', 'error');
         },
     })
+
+    const { pending: gettingLabData, request: getLabData } = useAPI({
+        apiMethod: GetSpecificLabDataAPI,
+
+        successCallback: (res) => {
+        },
+        
+        failedCallback: (e) => {
+            console.error(e)
+            showToast('مشکلی پیش اومده', 'error')
+        },
+    })
+
+    const { pending: gettingLabEvents, request: getLabEvents } = useAPI({
+        apiMethod: GetLabEventsAPI,
+
+        successCallback: () => {},
+        failedCallback: (e) => console.log(e),
+    })
+
  
     
     return {
@@ -96,6 +118,9 @@ export const useSettingsActions = () => {
         gettingPermissions,
 
         createGroup,
-        groupCreation
+        groupCreation,
+
+        getLabData,
+        gettingLabData,
     }
 }

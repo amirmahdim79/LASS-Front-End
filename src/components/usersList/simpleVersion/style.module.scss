@@ -63,10 +63,24 @@
 
     .users_list {
         width: 100%;
-        height: 100%;
         display: flex;
         flex-direction: column;
-        padding:0 3px;
+        padding:0 3px 0 5px;
+
+        direction: rtl;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+            background-color: #eeeeee;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background:  #3dbbff;
+            border-radius: 5px;
+        }
 
         .user_data_container {
             width: 100%;
@@ -111,6 +125,7 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    // max-width: 165px;
                     max-width: 165px;
                     min-width: 0;
                 }
@@ -223,7 +238,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 0 20px;
     }
+}
 
-
+@media only screen and (max-width: 1250px) {
+    .container {
+        .users_list {
+            .user_data_container {
+                .info {
+                    .top {
+                        max-width: 125px;
+                    }
+                }
+            }
+        }
+    
+    }
 }

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ArticlesList from 'components/articlesList'
 import { useEffect } from 'react'
 import useInput from 'hooks/useInputHandler'
-import UsersList from 'components/usersListG'
+import UsersList from 'components/usersList/simpleVersion'
 import { useNavigate, useParams } from 'react-router-dom';
 import Groups from 'components/groupsList'
 import colors from "styles/colors.module.scss"
@@ -16,6 +16,7 @@ import avatar from 'assets/images/avatar.png'
 import TextInputV2 from 'components/global/inputs/textInputs/textInputV2'
 import SearchBar from 'components/global/searchbar'
 import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
+import backArrow from 'assets/icons/arrow/arrow-left/dark-color2.svg'
 import CheckBoxV1 from 'components/global/checkbox/v1'
 import CheckBoxV2 from 'components/global/checkbox/v2'
 import { useModal } from 'hooks/useModal'
@@ -167,11 +168,7 @@ export default function GroupSettings() {
                         </div>
                         <div className={cs(styles['table_body'])}>
                             <div className={cs(styles['col_1'])}>
-                                <CheckBoxV2 
-                                    value={selectAllUsers} 
-                                    onClick={() => addAllUsers(!selectAllUsers)}
-                                    bgColor={colors['light-accent-20']}
-                                />
+                                <CheckBoxV1 value={selectAllUsers} onClick={() => addAllUsers(!selectAllUsers)}/>
                                 <p> {text.header_1} </p>
                             </div>
                             <div className={cs(styles['col_2'])}>
@@ -181,11 +178,7 @@ export default function GroupSettings() {
                                 {students && students.map((student, i) => 
                                     <div key={i} className={cs(styles['row'])} >
                                         <div className={cs(styles['name_wrapper'])}>
-                                            <CheckBoxV2 
-                                                value={usersId.includes(student._id)}
-                                                onClick={() => addUser(student._id)}
-                                                bgColor={colors['light-accent-20']}
-                                            />
+                                            <CheckBoxV1 value={usersId.includes(student._id)} onClick={() => addUser(student._id)}/>
                                             <div 
                                                 style={student?.profilePicture && {backgroundImage: `url(${student?.profilePicture})`}} 
                                                 className={cs(styles['avatar'], !student?.profilePicture && styles['empty_avatar'])}
@@ -207,21 +200,25 @@ export default function GroupSettings() {
                 </div>
             </div>
 
-            <UsersList 
-                title={'اعضای فعلی'}
-                btnText={'ذخیره تغییرات گروه'}
-                btnColor={colors['dark-shades-100']}
-                students={students && students.filter(s => usersId.includes(s._id)).map(s => s)}
-                canDeleteMember={true}
-                hasSubmitBtn={true}
-                btnDisabled={false}
-                btnLoad={updatingLabGroup}
-                submitHandler={updateLabGroup}
-                deleteOnClickHandler={onClickDeleteMember}
-                userHasClickOption={true}
-                userOnClickHandler={(uId) => navigate(`../user_profile/${uId}`)}
-                newList={usersId}
-            />
+            <div className={cs(styles['users_list'])}>
+                <UsersList 
+                    title={'اعضای فعلی'}
+                    btnText={'ذخیره تغییرات گروه'}
+                    btnColor={colors['dark-shades-100']}
+                    students={students && students.filter(s => usersId.includes(s._id)).map(s => s)}
+                    canDeleteMember={true}
+                    hasSubmitBtn={true}
+                    btnDisabled={false}
+                    btnLoad={updatingLabGroup}
+                    submitHandler={updateLabGroup}
+                    deleteOnClickHandler={onClickDeleteMember}
+                    userHasClickOption={true}
+                    userOnClickHandler={(uId) => navigate(`../user_profile/${uId}`)}
+                    newList={usersId}
+                    height={'100%'}
+                    width={'100%'}
+                />
+            </div>
 
             <Modal
                 isOpen={openDeleteModal} 

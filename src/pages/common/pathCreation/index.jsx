@@ -24,6 +24,7 @@ import useToast from 'hooks/useToast';
 import Button from 'components/global/button';
 import { degreeMapper } from 'utils/mapper';
 import { usePathActions } from './hooks/usePathActions';
+import { isEmptyObject } from 'utils/mapper';
 
 
 export default function PathCreation() { 
@@ -39,11 +40,7 @@ export default function PathCreation() {
 
     const [ state , dispatch] = useReducer( reducer, initialState );
     const { value: milestones, setValue: setMilestones } = useInput([]);
-    // const { value: tasks, setValue: setTasks } = useInput([]);
     const { value: milestoneModalId, setValue: setMilestoneModalId } = useInput('');
-    // const { value: uploadTaskModalId, setValue: setUploadTaskModalId } = useInput('');
-    // const { value: paperTaskModalId, setValue: setPaperTaskModalId } = useInput('');
-    // const { value: taskModalId, setValue: setTaskModalId } = useInput('');
     const { value: taskInfo, setValue: setTaskInfo } = useInput('');
     const { value: editingMilestone, setValue: setEditingMileStone } = useInput({});
     const { value: editingTask, setValue: setEditingTask } = useInput({});
@@ -57,14 +54,6 @@ export default function PathCreation() {
     const { createPath, pathCreation } = usePathActions();
 
 
-    
-
-    // console.log("-ssss", state);
-    // console.log("milestones", milestones);
-    // console.log("clickSaveBtn", clickSaveBtn);
-    // console.log("openMilestoneModal", openMilestoneModal);
-    // console.log("editingTask", editingTask);
-    // console.log("editingMilestone", editingMilestone);
 
     const closeAddMilestoneModal = () => {
         setMilestoneModalId('-1')
@@ -79,10 +68,20 @@ export default function PathCreation() {
     //     else setTaskModalId(id)
     // }
 
+    const checkBtnIsDisabled = () => {
+        return !state.name.trim().length || (state.typeDependency !== undefined && !state.typeDependency.trim().length) || !state.sandGain.trim().length
+    }
+
     const cancelAddMilestone = () => {
         let data = [...milestones];
         data.splice(-1);
         setMilestones(data);
+        setMilestoneModalId('-1');
+        closeMilestoneModal();
+    }
+
+    const cancelEditMilestone = () => {
+        setEditingMileStone({});
         setMilestoneModalId('-1');
         closeMilestoneModal();
     }
@@ -96,15 +95,23 @@ export default function PathCreation() {
         setTaskInfo('-1')
     }
 
+    const cancelEditTask = () => {
+        setEditingTask({});
+        setTaskInfo('-1')
+        setMilestoneModalId('-1');
+    }
+
+
     const closeAddModal = () => {
         setMilestoneModalId('-1')
-        // setTaskModalId('-1');
+        if (!isEmptyObject(editingMilestone)) setEditingMileStone({});
         closeMilestoneModal()
         setClickSaveBtn(false)
     }
 
     const closeTasksModal = () => {
         setTaskInfo('-1')
+        if (!isEmptyObject(editingTask)) setEditingTask({});
         setClickSaveBtn(false)
     }
 
@@ -157,6 +164,8 @@ export default function PathCreation() {
     //     setTaskModalId(tasks.length-1)
     // }, [tasks])
 
+    console.log("----editingTask----", editingTask);
+    console.log("----editingMilestone----", editingMilestone);
 
     return (
         <div className={cs(styles['container'])}>
@@ -213,7 +222,8 @@ export default function PathCreation() {
                             onChange={ (e) => dispatch({payload: {type: 'name', value: e.target.value}}) }
                             placeholder={text.input_1} 
                             dir={'rtl'}
-                            width={'330px'}
+                            // width={'330px'}
+                            
                             fontFamily={'pinar_light'}
                             fontWeight={'300'}
                             fontSize={'16px'}
@@ -221,7 +231,7 @@ export default function PathCreation() {
                         <SelectInputV2 
                             value={state.typeDependency}
                             setValue={ (e) => dispatch({payload: {type: 'typeDependency', value: e}}) }
-                            width={'340px'}
+                            // width={'340px'}
                             dir={'rtl'}
                             fontWeight={'300'}
                             fontSize={'16px'}
@@ -234,7 +244,8 @@ export default function PathCreation() {
                             onChange={ (e) => dispatch({payload: {type: 'sandGain', value: e.target.value}}) }
                             placeholder={text.input_3} 
                             dir={'rtl'}
-                            width={'330px'}
+                            // width={'330px'}
+                            
                             fontFamily={'pinar_light'}
                             fontWeight={'300'}
                             fontSize={'16px'}
@@ -247,7 +258,7 @@ export default function PathCreation() {
                             onChange={ (e) => dispatch({payload: {type: 'desc', value: e.target.value}}) }
                             placeholder={text.input_4} 
                             rows={'6'}
-                            width={'500px'}
+                            // width={'500px'}
                             fontFamily={'pinar_light'}
                             fontWeight={'300'}
                             fontSize={'16px'}
@@ -268,15 +279,15 @@ export default function PathCreation() {
                                             className={cs(styles['icon'])}
                                             // onClick={() => openAddModal(i, 'milestone')}
                                         />
-                                        {/* <p onClick={() => openAddModal(i, 'milestone')}> {text.side_subtitle_1} </p> */}
+
                                         <p> {text.side_subtitle_1} </p>
                                         <Modal
                                             isOpen={milestoneModalId === i} 
-                                            close={cancelAddMilestone} 
+                                            close={isEmptyObject(editingMilestone) ? cancelAddMilestone : cancelEditMilestone} 
                                             content={
                                                 <div className={cs(styles['milestone_modal'])} style={{display: milestoneModalId === i ? 'block' : 'none'}} id='#milestone_modal'>
                                                     <MilestoneInfo 
-                                                        close={closeAddModal} 
+                                                        close={closeAddModal } 
                                                         id={milestoneModalId}
                                                         milestones={milestones} 
                                                         setMilestones={setMilestones}
@@ -315,7 +326,7 @@ export default function PathCreation() {
 
                                                             <Modal
                                                                 isOpen={taskInfo?.milestoneId === i && taskInfo?.taskId === tInd} 
-                                                                close={cancelAddTask} 
+                                                                close={isEmptyObject(editingTask) ? cancelAddTask : cancelEditTask} 
                                                                 content={
                                                                     <div 
                                                                         className={cs(styles['task_modal'])} 
@@ -375,7 +386,7 @@ export default function PathCreation() {
                         onClick={() => savePath()}
                         text={text.button} 
                         width={'355px'}
-                        // disabled={!state.name.trim().length || !state.sandGain.trim().length}
+                        disabled={checkBtnIsDisabled()}
                         // load={eventCreation}
                     />
                 </div>

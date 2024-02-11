@@ -27,6 +27,7 @@ import CheckBoxV2 from 'components/global/checkbox/v2'
 import { useSelector } from 'react-redux'
 import { useCreateEventActions } from './hooks/useCreateEventActions'
 import useToast from 'hooks/useToast'
+import { degreeMapper } from 'utils/mapper'
 
 
 
@@ -64,7 +65,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         hasForum: true,
         hasTask: false,
         taskType: 'upload',
-        smarties: '5',
+        smarties: '',
         name: '',
         desc: '',
 
@@ -281,9 +282,9 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                 dispatch({payload: {type: 'reset', value: initialState}})
                 setInitValue(moment())
                 setEndValue(moment())
+                close();
             })
             .catch(err => console.log(err))
-            .finally(() => close())
     }
 
 
@@ -300,10 +301,12 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         end.set('hour', state.endHour); 
         end.set('minute', state.endMin ? state.endMin : '00'); 
 
+        // console.log("--end.minute()",end.minute());
+        // start.weekday() === end.weekday() ? ((end.hour() === 0 ? false : start >= end) || (end.hour() === 0 && end.minute() > 0)) : true
         return (
-            isEmpty(state.name) || isEmpty(state.initHour) || isEmpty(state.endHour)  ||
+            isEmpty(state.name) || (state.hasTask && isEmpty(state.smarties)) || isEmpty(state.initHour) || isEmpty(state.endHour)  ||
             state.usersList.length === 0 || (state.intervalBtn && (isEmpty(state.year) || 
-            isEmpty(state.month) || isEmpty(state.day))) || (end.hour() !== 0 ? start >= end : false)          
+            isEmpty(state.month) || isEmpty(state.day))) ||  (start.weekday() === end.weekday() ? start >= end : true )       
         )
     }
 
@@ -615,7 +618,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                                             <CheckBoxV2 value={state.usersList.includes(student._id)} onClick={() => addUser(student._id)}/>
                                             <div className={cs(styles['data'])}>
                                                 <p> {student?.firstName} {student?.lastName}</p>
-                                                <p> {student?.type} </p>
+                                                <p> {degreeMapper(student?.type)} </p>
                                             </div>
                                         </div>
                                     )

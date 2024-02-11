@@ -1,117 +1,120 @@
 import { default as cs } from 'classnames'
-import styles from './dashboard.module.scss'
-import ProgressTracker from 'components/progressTracker';
-import TaskStatusBar from 'components/dashboardTaskStatus';
-import taskIcon from 'assets/icons/clipboard-text.svg'
-import Pagination from 'components/global/pagination';
+import styles from './style.module.scss'
 import useInput from 'hooks/useInputHandler';
-import { truncateText } from 'utils/mapper';
-import { text } from './constants';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLabActions } from './hooks/useLabsActions';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
 import { setPath, setMilestone, setCurrentMilestone, setPrevInd, setEvents, setLabId, setStudents, setUserTasks } from "store/labSlice/index"
-import Preloader from 'components/global/preloaders';
 import Calendar from 'components/calendar';
 import moment from 'moment';
 import 'moment/locale/fa';
-import TaskPreview from './components';
+import { useReducer } from 'react';
+import { reducer } from './reducer';
+import { getTime } from 'utils/mapper';
+import ActivityList from './components/activityList';
+import Preloader from 'components/global/preloaders';
 
 export default function UserDashboard() {
 
     moment.locale('fa');
 
-
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    const title = 'عنوان فاز';
+    const initialState = {
+        activityType: 'all',
+        milestoneTasks: [],        
+    }
 
-    const path = useSelector(state => state.lab.Paths);
-    const milestones = useSelector(state => state.lab.Milestones);
-    const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
-    const userTasks = useSelector(state => state.lab.userTasks);
+    const [ state , dispatchStates] = useReducer( reducer, initialState );
+
     const events = useSelector(state => state.lab.Events);
-    const labId = useSelector(state => state.lab.labId);
+    const user = useSelector(state => state.user.user);
 
-    const { value: now, setValue: setNow } = useInput(moment());
+    const { value: now, setValue: setNow } = useInput('');
+    const { value: loading, setValue: setLoading } = useInput(true);
+    const { value: taskBounties, setValue: setTaskBounties } = useInput([]);
 
-
-
-
-    const { getMyLabs, getLabEvents, getUserTasks } = useLabActions();
+    const { getMyLabs, getLabEvents, getUserTasks, getLabBounties } = useLabActions();
 
     const getEvents= (labId) => {
         getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
-        .then(res => {
-            // console.log("gettttt successs", res.data);
-            dispatch(setEvents(res.data))})
+        .then(res => dispatch(setEvents(res.data)))
         .catch(err => console.log(err))
     }
 
+    const getAllUserTasks = () => {
+        getUserTasks()
+            .then(res => dispatch(setUserTasks(res.data)))
+            .catch(err => console.log(err))
+    }
+
+    const getAllBountyTasks = (labId) => {
+        getLabBounties({}, `?lab=${labId}&status=none`) 
+            .then(res => {
+                const tasks = res.data.filter((task) => {
+                    const index = task.PotentialList.findIndex(u => u._id === user._id);
+                    if (index > -1) return task;
+                })
+                setTaskBounties(tasks)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const changeActivityType = (value) => {
+        dispatchStates({payload: {type: 'activityType', value: value}})
+    }
+
     useEffect(() => {
+        setLoading(true)
         getMyLabs().then(res => {
-            dispatch(setPath(res.data.Paths[0]))
+            dispatch(setPath(res.data.Paths))
             dispatch(setMilestone(res.data.Paths[0].Milestones))
             dispatch(setStudents(res.data.Students))
             dispatch(setLabId(res.data._id))
-            // 'all': 'true'
-
-            // console.log("res.data", res.data);
 
             getEvents(res.data._id)
 
             for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
-                    if (milestone.status[0] === null) {
-                        dispatch(setCurrentMilestone(milestone))
-                        if (i === 0) dispatch(setPrevInd(0))
-                        else dispatch(setPrevInd(i-1))
-                        break;
-                    }
+                if (milestone.status[0] === null) {
+                    dispatch(setCurrentMilestone(milestone));
+                    dispatchStates({payload: {type: 'milestoneTasks', value: milestone?.Tasks}})
+                    if (i === 0) dispatch(setPrevInd(0))
+                    else dispatch(setPrevInd(i-1))
+                    break;
+                }
             }
 
-            getUserTasks()
-                .then(res => {
-                    dispatch(setUserTasks(res.data))
-                })
-                .catch(err => console.log(err))
+            getAllUserTasks();
+            getAllBountyTasks(res.data._id);
 
-        }).catch(err => {
-            console.log(err);
-        })
+        }).catch(err => console.log(err))
+        .finally(() =>setLoading(false))
 
-    }, [now])
+    }, [now, user])
 
-
+    useEffect(() => {
+        getTime(setNow)
+    }, [])
 
     return (
         <div className={cs(styles['container'])}>
-            <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
-
-            <div className={cs(styles['upcoming_activities_container'])}>
-                <div className={cs(styles['title'])}>
-                    <div> {text.t2.title} </div>
-                    <div> {text.t2.deadline} </div>
-                </div>
-                <div className={cs(styles['activities'])}>
-                    {
-                        (currentMilestone || userTasks)
-                            ? 
-                               <>
-                                    {currentMilestone?.Tasks.map((task, index) => <TaskPreview task={task} key={index}/>)}
-                                    {userTasks.map((task, index) => <TaskPreview task={task} type={'usertask'} key={index}/>) }
-                               </>
-                            : <Preloader />
-                    }
-                </div>
-
-                <div>
-                    {/* <Pagination /> */}
-                </div>
+            <div className={cs(styles['calendar_container'])}>
+                {
+                    now 
+                        ? <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
+                        : <Preloader />
+                }
+                
             </div>
-        </div>
+            <ActivityList 
+                state={state} 
+                loading={loading} 
+                now={now} 
+                changeActivityType={changeActivityType} 
+                taskBounties={taskBounties}
+            />
 
+        </div>
     )
 }
 
