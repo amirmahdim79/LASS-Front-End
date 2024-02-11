@@ -39,6 +39,7 @@ export default function Profile({editable=false}) {
     const path = useSelector(state => state.lab.Paths);
     const milestones = useSelector(state => state.lab.Milestones);
     const leaderboard = useSelector(state => state.lab.leaderboard);
+    const activities = useSelector(state => state.lab.userActivities);
 
 
     const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
@@ -202,7 +203,8 @@ export default function Profile({editable=false}) {
 
             <div className={cs(styles['user_activities'])}>
                 <p className={cs(styles['title'])}> فعالیت دانشجو </p>
-                <ActivitiesTable />
+                {activities &&  <ActivitiesTable />}
+               
             </div>
             <div className={cs(styles['user_path'])}>
                 {
