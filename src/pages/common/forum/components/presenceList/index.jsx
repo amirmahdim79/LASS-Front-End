@@ -10,11 +10,13 @@ import tick_active from 'assets/icons/essential/tick-circle/success-color.svg';
 import { getFirstLetters } from 'utils/mapper';
 import { useSelector } from 'react-redux';
 import { degreeMapper } from 'utils/mapper';
+import useInput from 'hooks/useInputHandler';
 
 
-export default function PresenceList({updatePresenceList, setMsg}) {
+export default function PresenceList({updatePresenceList, setMsg, setList, list}) {
 
     const forum = useSelector(state => state.lab.forum);
+
 
     const getUserData = (id, targetField) => {
         if (id) {
@@ -23,12 +25,19 @@ export default function PresenceList({updatePresenceList, setMsg}) {
         }    
     }
 
+    const onClickIcons = (newStatus, id) => {
+        const newList = { ...list, [id]: { status: newStatus } };
+        setList(newList)
+    }
+
     // const onReplyUser = (msg) => {
     //     const emailRegex = /\*([^*]+)\*/g;
 
     //     const formattedMessage = msg && msg.replace(emailRegex, (_, email) => `@${email}`);
     //     return formattedMessage
     // }
+
+
 
     return (
         <div className={cs(styles['container'])}>
@@ -55,9 +64,13 @@ export default function PresenceList({updatePresenceList, setMsg}) {
                             </div>
 
                             <div className={cs(styles['icons'])}> 
-                                <img onClick={() => updatePresenceList('absent', userId)} src={forum?.PresenceForm?.list[`${userId}`].status === 'absent' ? close_active : close_inactive} alt='absence icon'/>
+                                <img onClick={() => onClickIcons('absent', userId)} src={list[`${userId}`]?.status === 'absent' ? close_active : close_inactive} alt='absence icon'/>
+                                <img onClick={() => onClickIcons('optional', userId)} src={list[`${userId}`]?.status === 'optional' ? minus_active : minus_inactive} alt='optional icon'/>
+                                <img onClick={() => onClickIcons('present', userId)} src={list[`${userId}`]?.status === 'present' ? tick_active : tick_inactive} alt='presence icon'/>
+
+                                {/* <img onClick={() => updatePresenceList('absent', userId)} src={forum?.PresenceForm?.list[`${userId}`].status === 'absent' ? close_active : close_inactive} alt='absence icon'/>
                                 <img onClick={() => updatePresenceList('optional', userId)} src={forum?.PresenceForm?.list[`${userId}`].status === 'optional' ? minus_active : minus_inactive} alt='optional icon'/>
-                                <img onClick={() => updatePresenceList('present', userId)} src={forum?.PresenceForm?.list[`${userId}`].status === 'present' ? tick_active : tick_inactive} alt='presence icon'/>
+                                <img onClick={() => updatePresenceList('present', userId)} src={forum?.PresenceForm?.list[`${userId}`].status === 'present' ? tick_active : tick_inactive} alt='presence icon'/> */}
                             </div>
                         </div>
                     )

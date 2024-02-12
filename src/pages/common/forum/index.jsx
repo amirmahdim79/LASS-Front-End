@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useHistory, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react';
 import { default as cs } from 'classnames'
 import styles from './style.module.scss'
@@ -31,7 +31,7 @@ export default function Forum() {
     const dispatch = useDispatch();
     const forumRef = useRef(null);
     const inputRef = useRef(null);
-
+    const location = useLocation()
 
     const userType = localStorage.getItem('type');
 
@@ -51,6 +51,8 @@ export default function Forum() {
 
 
     const { value: msg, setValue: setMsg } = useInput('');
+    const { value: list, setValue: setList } = useInput([]);
+    const { value: isInForumsList, setValue: setIsInForumsList } = useInput(false);
 
     const openForum = (id) => {
         navigate(`../forum/${id}`)
@@ -67,7 +69,10 @@ export default function Forum() {
 
     const getForumData = () => {
         getOneForum({}, `/${params.id}?type=${userType === 'supervisor' ? 'Supervisor' : 'User'}`)
-            .then(res =>  dispatch(setForum(res.data)))
+            .then(res =>  {
+                setList(res.data?.PresenceForm?.list)
+                dispatch(setForum(res.data))
+            })
             .catch(err => console.log(err))
     }
 
@@ -83,18 +88,17 @@ export default function Forum() {
         }
     }
 
-    const updatePresenceList = (newStatus, id) => {
-        Object.freeze(forum?.PresenceForm?.list)
-        let newList = {...forum?.PresenceForm?.list}
-        newList[id] = {status: newStatus}
-
+    const updatePresenceList =  () => {
         let data = {
-            list: newList,
+            list: list,
             Forum: forum._id
         }
 
         updatePresenceForm({...data}, `?lab=${labId}`)
-            .then(() => getForumData())
+            .then(() => {
+                getForumData()
+                setIsInForumsList(false)
+            })
             .catch(err => {
                 console.log( err);
             })
@@ -136,6 +140,14 @@ export default function Forum() {
     }
 
     useEffect(() => {
+        if (isInForumsList === true) {
+            updatePresenceList()
+        }
+        
+      }, [isInForumsList]) 
+
+
+    useEffect(() => {
         if(labId) getForums();
     }, [labId])
 
@@ -146,8 +158,12 @@ export default function Forum() {
     useEffect(() => {
         if (forumRef.current) forumRef.current.scrollTo({ top: forumRef.current.scrollHeight, behavior: 'smooth' });
         if (params.id) {
+            setIsInForumsList('isIn')
             getForumData();
-        }        
+        } else {
+            if (isInForumsList === 'isIn') setIsInForumsList(true)
+           
+        }  
     }, [params.id])
 
 
@@ -322,7 +338,7 @@ export default function Forum() {
                 params.id 
                     && (
                         (forum && (permissions.includes('forums') || userType === 'supervisor' ))
-                            ? <PresenceList updatePresenceList={updatePresenceList} setMsg={setMsg}/> 
+                            ? <PresenceList updatePresenceList={updatePresenceList} setMsg={setMsg} list={list} setList={setList}/> 
                             : <div className={cs(styles['is_loading_presence_list'])}/> 
                     )
             }     
