@@ -96,7 +96,7 @@ export default function Forum() {
 
         updatePresenceForm({...data}, `?lab=${labId}`)
             .then(() => {
-                getForumData()
+                // getForumData()
                 setIsInForumsList(false)
             })
             .catch(err => {
