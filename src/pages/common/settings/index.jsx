@@ -152,7 +152,7 @@ export default function Settings() {
                     
                 </div>
                 <div className={cs(styles['calendar_container'])}>
-                    <Calendar events={[]} date={now} setDate={setNow} getEvents={getEvents}/>
+                    {/* <Calendar events={[]} date={now} setDate={setNow} getEvents={getEvents}/> */}
                 </div>
             </div>
             <div className={cs(styles['users_list'])}>

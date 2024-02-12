@@ -10,6 +10,7 @@
     flex-direction: column;
     row-gap: 10px;
     color: $dark-shades-100;
+    position: relative;
 
     .header {
         width: 100%;
@@ -184,7 +185,7 @@
         background-color: $dark-glass-75;
         border-radius: 12px;
         @include mixins.open-modal-from-right;
-        @include  functions.setFixedSize(420px, 450px);
+        @include  functions.setFixedSize(420px, 500px);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);

@@ -1,4 +1,5 @@
 @use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
 @import "styles/colors.module.scss";
 
 .container {
@@ -12,6 +13,37 @@
     row-gap: 22px;
     direction: rtl;
     color: $light-shades-100;
+    position: relative;
+
+    .info_icon_container {
+        position: relative;
+
+        img:hover {
+            cursor: pointer;
+        }
+
+        .info_box {
+            width: 208px; 
+            height: 315px; 
+            border-radius: 12px;
+            border-top-right-radius: 0px;
+            background-color: $light-glass-100;
+            @include mixins.open-modal-from-right;
+            @include  functions.setFixedSize(219px,161px);
+
+            .info_text_container {
+                width: 100%;
+                padding: 20px 15px;
+                text-align: justify;
+                direction: rtl;
+                white-space: pre-line;
+                word-spacing: 2px;
+                line-height: 21px;
+                color: $dark-shades-100;
+                @include mixins.description;
+            }
+        }
+    }
 
     .title {
         width: max-content;

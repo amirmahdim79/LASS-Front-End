@@ -324,6 +324,7 @@
                 align-items: center;
                 column-gap: 3px;
                 align-self: flex-end;
+
                 p {
                     direction: rtl;
                     color: $dark-shades-100;
@@ -331,9 +332,52 @@
                    
                 }
 
-                img {
-                    width: 24px;
-                    height: 24px;
+                .info_icon_container {
+                    position: relative;
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
+    
+                    img:hover {
+                        cursor: pointer;
+                    }
+
+                    .info_box {
+                        border-radius: 12px;
+                        border-top-right-radius: 0px;
+                        background-color: $dark-glass-75;
+                        @include mixins.open-modal-from-right;
+                        @include  functions.setFixedSize(330px, 177px);
+                        
+                        .info_text_container {
+                            width: 100%;
+                            padding: 20px 15px;
+                            text-align: justify;
+                            direction: rtl;
+                            white-space: pre-line;
+                            line-height: 24px;
+                            @include mixins.description;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            justify-content: space-between;
+                            row-gap: 10px;
+
+                            p {
+                                color: $light-shades-100
+                            }
+                        }
+
+                        .info_text_container > p:first-child {
+                            @include mixins.h6-text;
+                        }
+
+                        .info_text_container > p:last-child {
+                            @include mixins.description;
+                        }
+                    }
                 }
 
                 .is_loading_leaderboard_title {

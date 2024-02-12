@@ -36,6 +36,7 @@ import moment from 'moment';
 import 'moment/locale/fa';
 import EditElementsModal from './components/editElementsModal';
 import Preloader from 'components/global/preloaders';
+import { text } from './constants';
 
 export default function Profile({editable=false}) {  
 
@@ -59,6 +60,7 @@ export default function Profile({editable=false}) {
 
     const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
     const [ openEditUserElementsModal, showEditUserElementsModal, closeEditUserElementsModal ] = useModal();
+    const [openShowInfoBox, showShowInfoBox, closeShowInfoBox] = useModal();
 
     const { getLabStudentInfo } = useLabActions();
     const { value: userData, setValue: setUserData } = useInput({});
@@ -369,7 +371,25 @@ export default function Profile({editable=false}) {
                             (editable ? !myProfileLoading : !userProfileLoading) ? 
                                 <>
                                     <p> لیدربورد </p>
-                                    <img src={infoIcon} alt='info icon'/>
+                                    <div className={cs(styles['info_icon_container'])}>
+                                        <img src={infoIcon} alt='info icon' onClick={() => showShowInfoBox()}/>
+                                        <Modal
+                                            isOpen={openShowInfoBox} 
+                                            close={closeShowInfoBox} 
+                                            content={
+                                                <div 
+                                                    id='#info_box'
+                                                    style={{display: openShowInfoBox ? 'block' : 'none'}} 
+                                                    className={cs(styles['info_box'])} 
+                                                >
+                                                    <div className={cs(styles['info_text_container'])}>
+                                                        <p> {text.info_title} </p>
+                                                        <p> {text.info_desc} </p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        />
+                                    </div>
                                 </>
                              : <div className={cs(styles['is_loading_leaderboard_title'])}/>
                         }

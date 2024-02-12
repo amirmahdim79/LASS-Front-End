@@ -35,6 +35,9 @@ export default function TaskPreview({task, now, type='milestone-task'}) {
         }
     }
 
+    const approveTask = () => {
+    }
+
 
     return (
         <div 
@@ -71,7 +74,7 @@ export default function TaskPreview({task, now, type='milestone-task'}) {
                                 <img 
                                     src={acceptIcon}
                                     alt='accept icon'
-                                    // onClick={() => approveTask()}
+                                    onClick={() => approveTask()}
                                 />
                                 <img 
                                     src={rejectIcon}

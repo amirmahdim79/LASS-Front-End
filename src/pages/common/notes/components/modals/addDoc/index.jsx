@@ -10,6 +10,9 @@ import Button from 'components/global/button';
 import colors from "styles/colors.module.scss"
 import { useEffect } from 'react';
 import { useNotesActions } from 'pages/common/notes/hooks/useNotesActions';
+import { useModal } from 'hooks/useModal';
+import info from 'assets/icons/essential/info-circle/light-color.svg'
+import Modal from 'components/global/modal';
 
 export default function AddDocModal({close, updateDocs}) { 
 
@@ -22,6 +25,7 @@ export default function AddDocModal({close, updateDocs}) {
     const { value: selectAllUsers, setValue: setSelectAllUsers } = useInput(false);
 
     const { addNewDoc, addingNewDoc } = useNotesActions();
+    const [openShowInfoBox, showShowInfoBox, closeShowInfoBox] = useModal();
 
 
     const addGroup = (group) => {
@@ -84,6 +88,28 @@ export default function AddDocModal({close, updateDocs}) {
 
     return (
         <div className={cs(styles['container'])}>
+            <div className={cs(styles['info_icon_container'])}>
+                <img 
+                    src={info} 
+                    alt='info icon' 
+                    onClick={() => showShowInfoBox()}
+                />
+                <Modal
+                    isOpen={openShowInfoBox} 
+                    close={closeShowInfoBox} 
+                    content={
+                        <div 
+                            id='#info_box'
+                            style={{display: openShowInfoBox ? 'block' : 'none'}} 
+                            className={cs(styles['info_box'])} 
+                        >
+                            <div className={cs(styles['info_text_container'])}>
+                                <p> {text.info} </p>
+                            </div>
+                        </div>
+                    }
+                />
+            </div>
             <div className={cs(styles['title'])}>
                 <img src={usersIcon} alt='users icon' />
                 <p> {text.title_1} </p>

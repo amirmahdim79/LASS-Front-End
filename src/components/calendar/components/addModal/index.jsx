@@ -28,6 +28,8 @@ import { useSelector } from 'react-redux'
 import { useCreateEventActions } from './hooks/useCreateEventActions'
 import useToast from 'hooks/useToast'
 import { degreeMapper } from 'utils/mapper'
+import { useModal } from 'hooks/useModal'
+import Modal from 'components/global/modal'
 
 
 
@@ -44,6 +46,8 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     const students = useSelector(state => state.lab.Students);
     const labId = useSelector(state => state.lab.labId);
     const labGroups = useSelector(state => state.lab.labGroups);
+
+    const [openShowInfoBox, showShowInfoBox, closeShowInfoBox] = useModal();
     
     const { value: initValue, setValue: setInitValue } = useInput(moment());
     const { value: endValue, setValue: setEndValue } = useInput(moment());
@@ -328,8 +332,28 @@ export default function AddEventModal({close, type, setType, getEvents}) {
 
     return (
         <div className={cs(styles['container'])} onClick={(e) => onClickModal(e)}>
-            <img src={infoIcon} alt='info icon'/>
-
+            <div className={cs(styles['info_icon_container'])}>
+                <img 
+                    src={infoIcon} 
+                    alt='info icon' 
+                    onClick={() => showShowInfoBox()}
+                />
+                <Modal
+                    isOpen={openShowInfoBox} 
+                    close={closeShowInfoBox} 
+                    content={
+                        <div 
+                            id='#info_box'
+                            style={{display: openShowInfoBox ? 'block' : 'none'}} 
+                            className={cs(styles['info_box'])} 
+                        >
+                            <div className={cs(styles['info_text_container'])}>
+                                <p> {text.info} </p>
+                            </div>
+                        </div>
+                    }
+                />
+            </div>
             <div className={cs(styles['inputs'])}>                
                 <div className={cs(styles['checkbox_wrapper'])}>
                     <div className={cs(styles['checkbox'])} onClick={() => dispatch({payload: {type: 'hasForum', value: !state.hasForum}})}>

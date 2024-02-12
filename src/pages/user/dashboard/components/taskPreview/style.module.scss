@@ -89,6 +89,10 @@
                 flex-direction: row-reverse;
                 align-items: center;
                 column-gap: 5px;
+
+                img:hover {
+                    cursor: pointer;
+                }
             }
 
             .activity-deadline {
