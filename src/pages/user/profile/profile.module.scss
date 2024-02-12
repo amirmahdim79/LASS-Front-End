@@ -134,6 +134,26 @@
         .user_development_wrapper {
             @include mixins.description;
 
+            .title_container {
+                width: max-content;
+                position: relative;
+
+                .edit_elements_modal {
+                    width: 100%;
+                    min-width: 340px;
+                    max-width: 340px;
+                    height: max-content;
+                    min-height: 59px;
+                    // max-height: 539px;
+                    background-color: $dark-glass-75;
+                    border-radius: 12px;
+                    border-top-left-radius: 0px;
+                    position: absolute;
+                    @include mixins.open-modal-from-left;
+                }
+
+            }
+
             .cards {
                 display: grid;
                 grid-template-columns: 30% 30% 30%;
@@ -207,6 +227,22 @@
             column-gap: 3px;
             flex-direction: row;
             justify-content: space-between;
+
+            title {
+                @include mixins.description;
+            }
+
+            .is_loading_notes_title {
+                @include functions.skeletonLoadingStyles(74px, 24px, 5px);
+            }
+
+            .is_loading_notes_icon {
+                @include functions.skeletonLoadingStyles(24px, 24px, 5px);
+            }
+            
+            img:hover {
+                cursor: pointer;
+            }
         }
     }
 
@@ -232,6 +268,11 @@
             align-self: flex-end;
         }
 
+        .is_loading_title {
+            @include functions.skeletonLoadingStyles(99px, 24px, 5px);
+            align-self: flex-end;
+        }
+
         img {
             // width: 535px;
             // height: 271px;
@@ -245,20 +286,26 @@
         border-radius: 12px;
         padding: 20px 20px 35px 20px;
         grid-area: 2 / 2 / 3 / 3;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
 
         .title {
             direction: rtl;
             color: $dark-shades-100;
             @include mixins.h5-text;
             align-self: flex-end;
+            width: max-content;
+        }
+
+        .is_loading_notes_title {
+            @include functions.skeletonLoadingStyles(290px, 30px, 5px);
         }
     }
 
     .righ_col {
         grid-area: 1 / 3 / 3 / 4;
-        display: grid;
-        grid-template-rows: 61% 36%;
-        row-gap: 20px;
+        grid-template-rows: 100%;
 
         .leaderboard {
             width: 100%;

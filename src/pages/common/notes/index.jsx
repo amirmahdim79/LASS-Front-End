@@ -27,6 +27,8 @@ export default function NotesPage() {
     const { value: documents, setValue: setDocuments } = useInput([]);
     const permissions = useSelector(state => state.user.permissions);
 
+    // console.log("permissions", permissions);
+
     const { getLabDocs } = useNotesActions();
     const labId = useSelector(state => state.lab.labId);
 
@@ -42,7 +44,7 @@ export default function NotesPage() {
                 setDocuments(res.data);
             })
             .catch(err => {
-                console.log("errrrrrrrrr", err);
+                console.log(err);
             })
         }
     }

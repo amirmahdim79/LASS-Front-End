@@ -20,6 +20,8 @@ import { setLabName } from "store/labSlice";
 import { getTime } from "utils/mapper";
 import { setCurrentTime } from "store/userSlice";
 import useInput from "hooks/useInputHandler";
+import { setCurrentMilestone } from "store/labSlice";
+import { setPrevInd } from "store/labSlice";
 
 export default function Base({type}) {
         
@@ -33,12 +35,11 @@ export default function Base({type}) {
     const { value: now, setValue: setNow } = useInput();
 
     useEffect(() => {
-        // getTime(setNow)
         if ( userType === type ) {
             if (userType === 'user') {
                 checkAuth()
                     .then(res => {
-                        // console.log("111111111111111111111111111111", res.data);
+                        console.log("111111111111111111111111111111", res.data);
                         dispatch(addUser(res.data))
                         dispatch(setLabId(res.data.Labs[0]))
                         dispatch(setArticles([...res.data?.RecentFiles].reverse()))
@@ -51,6 +52,15 @@ export default function Base({type}) {
                                 dispatch(setStudents(res.data?.Students))
                                 dispatch(setPath(res.data?.Paths))
                                 dispatch(setMilestone(res.data.Paths[0]?.Milestones))
+
+                                for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
+                                    if (milestone.status[0] === null) {
+                                        dispatch(setCurrentMilestone(milestone));
+                                        if (i === 0) dispatch(setPrevInd(0))
+                                        else dispatch(setPrevInd(i-1))
+                                        break;
+                                    }
+                                }
                             })
                             .catch(err => console.log(err))
 
@@ -66,17 +76,17 @@ export default function Base({type}) {
                             .then(res => dispatch(setLeaderboard(res.data)))
                             .catch(err => console.log("leader err", err))
 
-                        if (location.pathname === '/user/my-profile') {
-                            getMyActivities()
-                                .then(res => {
-                                    // console.log("rrrrrrrrrrrr1111111111111111111111111111111111111111", res.data);
-                                    dispatch(setUserActivities(res.data))
-                                })
-                                .catch(err => {
-                                    console.log("er1111111111111111111111111111111111111111111111111111r", err);
-                                })
-                        }
-                    })
+                            // getMyActivities()
+                            //     .then(res => {
+                            //         // console.log("rrrrrrrrrrrr1111111111111111111111111111111111111111", res.data);
+                            //         dispatch(setUserActivities(res.data))
+                            //     })
+                            //     .catch(err => {
+                            //         console.log("er1111111111111111111111111111111111111111111111111111r", err);
+                            //     })
+
+                            
+                        })
                     .catch(err => console.log("err", err))
             }else if (userType === 'supervisor') {
                 checkSupAuth()
@@ -146,10 +156,25 @@ export default function Base({type}) {
         }
     }, [params.id, location.pathname]);
 
-    // useEffect(() => {
-    //     dispatch(setCurrentTime(now))
-    // }, [now])
+    useEffect(() => {
+        if (location.pathname.includes('my-profile')) {
+            getMyLabs()
+                .then(res =>  {
+                    dispatch(setPath(res.data?.Paths))
+                    dispatch(setMilestone(res.data.Paths[0]?.Milestones))
 
+                    for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
+                        if (milestone.status[0] === null) {
+                            dispatch(setCurrentMilestone(milestone));
+                            if (i === 0) dispatch(setPrevInd(0))
+                            else dispatch(setPrevInd(i-1))
+                            break;
+                        }
+                    }
+                })
+                .catch(err => console.log(err))
+        }
+    }, [params.id, location.pathname]);
     
     return (
         <>

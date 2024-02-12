@@ -105,74 +105,89 @@
     .time_warpper {
         width: 100%;
         padding: 17px 10px 7px 0;
-        display: flex;
-        align-items: flex-start;
-        column-gap: 27px;
         border-bottom: 1px solid $light-shades-100;
 
-        .time_inputs{
+        .time_inputs_wrapper {
             width: 100%;
             display: flex;
-            column-gap: 75px;
-            color: $light-shades-100;
-            
+            align-items: flex-start;
+            column-gap: 27px;
 
-            .time_input {
+            .time_inputs{
+                width: 100%;
                 display: flex;
-                flex-direction: column;
-                align-items: center;
-                row-gap: 6px;
-                position: relative;
-
-                .time {
-                    width: max-content;
-                    @include mixins.sub-description;
-                    direction: ltr;
-                    cursor: default;
-
-                    input {
-                        background-color: transparent;
-                        text-align: center;
+                column-gap: 75px;
+                color: $light-shades-100;
+                
+    
+                .time_input {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    row-gap: 6px;
+                    position: relative;
+    
+                    .time {
+                        width: max-content;
+                        @include mixins.sub-description;
+                        direction: ltr;
+                        cursor: default;
+    
+                        input {
+                            background-color: transparent;
+                            text-align: center;
+                        }
+    
+                        input:focus {
+                            outline: none !important;
+                            border: none;
+                        }
+    
+                        input:hover {
+                            cursor: pointer;
+                        }
+    
+                        input::placeholder {
+                            color: $light-shades-100;
+                        }
                     }
-
-                    input:focus {
-                        outline: none !important;
-                        border: none;
+    
+                    
+                    p:nth-child(1) {
+                        @include mixins.description;
+                        padding-bottom: 8px;
+                        cursor: default;
                     }
-
-                    input:hover {
+                    p:nth-child(2) {
+                        @include mixins.sub-description;
                         cursor: pointer;
                     }
-
-                    input::placeholder {
-                        color: $light-shades-100;
+                }
+    
+                .datepicker_wrapper {
+                    direction: ltr;
+                    position: absolute;
+                    top: 50px;
+                    z-index: 2;
+    
+                    .datepicker {
+                        @include mixins.h6-text;
+                        @include mixins.description;
                     }
-                }
-
-                
-                p:nth-child(1) {
-                    @include mixins.description;
-                    padding-bottom: 8px;
-                    cursor: default;
-                }
-                p:nth-child(2) {
-                    @include mixins.sub-description;
-                    cursor: pointer;
-                }
-            }
-
-            .datepicker_wrapper {
-                direction: ltr;
-                position: absolute;
-                top: 50px;
-                z-index: 2;
-
-                .datepicker {
-                    @include mixins.h6-text;
-                    @include mixins.description;
                 }
             }
         }
+
+        .msg {
+            @include mixins.sub-description;
+            font-size: 9px;
+            word-spacing: 1px;
+            color: $light-shades-80;
+            white-space: pre-line;
+            padding-right: 5px;
+            padding-top: 5px;
+        }
+
     }
 
     .repetition_inputs {

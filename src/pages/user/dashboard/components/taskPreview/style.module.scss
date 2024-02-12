@@ -114,3 +114,11 @@
     }
 
 }
+
+.activity-box:hover {
+    background-color: $light-accent-30;
+}
+
+.unclickable-box:hover {
+    cursor: default;
+}

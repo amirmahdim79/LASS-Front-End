@@ -15,11 +15,10 @@ import { useSelector } from 'react-redux';
 import { isEmptyObject } from 'utils/mapper';
 
 
-export default function ActivitiesTable() {  
+export default function ActivitiesTable({activities}) {  
+
 
     moment.locale('fa');
-
-    const activities = useSelector(state => state.lab.userActivities);
 
     const { value: recentMonthsArr, setValue: setRecentMonthsArr } = useInput([]);
     const { value: monthDays, setValue: setMonthDays } = useInput([]);
@@ -83,6 +82,10 @@ export default function ActivitiesTable() {
     }
 
 
+    useEffect(() => {
+        makeData();
+    }, [activities])
+
     // const getMonthDays = () => {
     //     let monthDaysNum = [];
     //     let totalDaysNum = 0;
@@ -112,12 +115,6 @@ export default function ActivitiesTable() {
 
 
 
-    useEffect(() => {
-        makeData();
-    }, [activities])
-
-
-
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['activitiy_container'])}>
@@ -140,7 +137,7 @@ export default function ActivitiesTable() {
                         className={cs(styles['activities'])} 
                         style={{width: `calc(${(Math.ceil(totalActivities/7) * 25) + (10 * (Math.ceil(totalActivities/7) - 1)) + (firstMonthStartWeekDay !== 0 && 35)}px)`}}
                     >
-                        {totalActivities > 0 && monthDays.length && recentMonthsArr.length && !isEmptyObject(activitiesObj) && (
+                        {!isEmptyObject(activitiesObj) && (
                             Array.from(Array(totalActivities), (e, i) => (
                                 <>
                                     {i === 0 && 

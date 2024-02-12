@@ -30,9 +30,6 @@ export default function Task() {
     const { value: task, setValue: setTask } = useInput({});
     const { value: done, setValue: setDone } = useInput(false);
 
-    // console.log("--task",task);
-
-
     const getTaskData = () => {
         getUserTask({}, `/${params.id}`)
             .then(res => setTask(res.data))
@@ -89,6 +86,8 @@ export default function Task() {
         }
     }
 
+    console.log("task", task);
+
 
     return (
         <div className={cs(styles['container'])}>
@@ -112,10 +111,10 @@ export default function Task() {
                             <div className={cs(styles['upload_wrapper'])}>
                                 <UploadReport 
                                     text={'برای آپلود فایل کلیک کنید یا فایل را بر روی مستطیل بکشید'}
-                                    info={'فرمت‌های قابل قبول عبارتند از: pdf، docx'}
+                                    info={!location.pathname.includes('task-bounty') && 'فرمت‌های قابل قبول عبارتند از: pdf، docx'}
                                     btnText={text.btn}
                                     type={location.pathname.includes('milestone-task') ? 'milestone-task' : 'usertask'}
-                                    disabled={task.status}
+                                    // disabled={task.status}
                                 />
                             </div>
 

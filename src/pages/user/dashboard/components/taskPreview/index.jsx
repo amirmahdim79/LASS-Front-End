@@ -38,8 +38,12 @@ export default function TaskPreview({task, now, type='milestone-task'}) {
 
     return (
         <div 
-            className={cs(styles['activity-box'])} 
-            onClick={() => navigate(`../${type}/${task._id}/${checkNavigationURL()}`)}
+            className={cs(
+                styles['activity-box'], 
+                type === 'task-bounty' && task.status === 'none' && styles['unclickable-box']
+            )} 
+            onClick={() => (type !== 'task-bounty' || (type === 'task-bounty' && task.status !== 'none')) && navigate(`../${type}/${task._id}/${checkNavigationURL()}`)}
+            // onClick={() =>  navigate(`../${type}/${task._id}/${checkNavigationURL()}`)}
         >
             <div className={cs(styles['activity-data'])}>
                 <div className={cs(styles['right-column'])}> 

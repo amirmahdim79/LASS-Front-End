@@ -1,7 +1,7 @@
 import { apiRequestObject } from "..";
 import { TRANSFORMER } from "./transformer"
 import { GET_REQUEST, POST_REQUEST, PATCH_REQUEST, DELETE_REQUEST } from "../constants";
-import { MY_ACTIVITY, USER_ACTIVITY } from "./endpoints";
+import { LAST_ACTIVITY, MY_ACTIVITY, USER_ACTIVITY } from "./endpoints";
 
 
 export const GetUserActivitiesAPI = apiRequestObject({
@@ -15,4 +15,11 @@ export const GetMyActivitiesAPI = apiRequestObject({
     requestType: GET_REQUEST,
     transformer: TRANSFORMER,
 })
+
+export const GetLastActivitiesAPI = apiRequestObject({
+    url: LAST_ACTIVITY,
+    requestType: GET_REQUEST,
+    transformer: TRANSFORMER,
+})
+
 

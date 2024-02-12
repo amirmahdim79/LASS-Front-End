@@ -98,6 +98,8 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         labGroups: [],
         selectAllUsers: false,
 
+        datesInfoMsg: '',
+
     }
 
     const [ state , dispatch] = useReducer( reducer, initialState );
@@ -140,6 +142,29 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         }
 
     }, [state.selectAllUsers])
+
+    useEffect(() => {
+        let start = moment(initValue);
+        start.set('hour', state.initHour); 
+        start.set('minute', state.initMin ? state.initMin : '00'); 
+
+        let end = moment(endValue);
+        end.set('hour', state.endHour); 
+        end.set('minute', state.endMin ? state.endMin : '00'); 
+
+        // console.log("start > end",start, end);
+        // console.log("start.weekday()", start.day());
+        // console.log("end.weekday()", end.day());
+
+        if (start.weekday() !== end.weekday()) {
+            if (end > start) {
+                if (state.endHour > 0 || (state.endHour === 0 && state.endMin > 0 )) dispatch({payload: {type: 'datesInfoMsg', value: 'زمان پایان نباید 12 شب را رد کند'}})
+            } else if (state.endHour > 0 || (state.endHour === 0 && state.endMin > 0 )) dispatch({payload: {type: 'datesInfoMsg', value: 'زمان وارد شده اشتباه است'}})
+        } else if (start.weekday() === end.weekday() && (state.endHour.trim().length && start > end)){
+            dispatch({payload: {type: 'datesInfoMsg', value: 'زمان وارد شده اشتباه است'}})
+        } else dispatch({payload: {type: 'datesInfoMsg', value: ''}})
+
+    }, [state.initHour, state.initMin, state.endHour, state.endMin, initValue, endValue])
 
 
     const onClickModal = (e) => {
@@ -301,12 +326,12 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         end.set('hour', state.endHour); 
         end.set('minute', state.endMin ? state.endMin : '00'); 
 
-        // console.log("--end.minute()",end.minute());
+        // console.log("--end",end);
         // start.weekday() === end.weekday() ? ((end.hour() === 0 ? false : start >= end) || (end.hour() === 0 && end.minute() > 0)) : true
         return (
             isEmpty(state.name) || (state.hasTask && isEmpty(state.smarties)) || isEmpty(state.initHour) || isEmpty(state.endHour)  ||
             state.usersList.length === 0 || (state.intervalBtn && (isEmpty(state.year) || 
-            isEmpty(state.month) || isEmpty(state.day))) ||  (start.weekday() === end.weekday() ? start >= end : true )       
+            isEmpty(state.month) || isEmpty(state.day))) ||  (start.weekday() === end.weekday() ? start >= end : (end.hour() === 0 && end.minute() === 0 ? false : true) )       
         )
     }
 
@@ -390,6 +415,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
             </div>
             
             <div className={cs(styles['time_warpper'])}>
+            <div className={cs(styles['time_inputs_wrapper'])}>
                 <img src={clockIcon} alt='clock icon'/>
                 <div className={cs(styles['time_inputs'])}>
                     <div className={cs(styles['time_input'])}>
@@ -460,6 +486,9 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                         }
                     </div>
                 </div>
+            </div>
+
+                <p className={cs(styles['msg'])}> {state.datesInfoMsg ? `*${state.datesInfoMsg}` : ''} </p>
             </div>
 
 

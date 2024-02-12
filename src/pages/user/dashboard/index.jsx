@@ -72,7 +72,7 @@ export default function UserDashboard() {
             dispatch(setStudents(res.data.Students))
             dispatch(setLabId(res.data._id))
 
-            getEvents(res.data._id)
+            if(now) getEvents(res.data._id)
 
             for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
                 if (milestone.status[0] === null) {
@@ -85,7 +85,7 @@ export default function UserDashboard() {
             }
 
             getAllUserTasks();
-            getAllBountyTasks(res.data._id);
+            if(user) getAllBountyTasks(res.data._id);
 
         }).catch(err => console.log(err))
         .finally(() =>setLoading(false))

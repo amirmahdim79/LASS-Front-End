@@ -136,6 +136,8 @@
 
         .event:hover {
             cursor: pointer;
+            background-color: $main-color-75;
+            border-color: $main-color-75;
         }
 
         .today_flag {

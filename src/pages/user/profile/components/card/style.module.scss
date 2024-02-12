@@ -1,6 +1,6 @@
 @use "styles/mixins.scss";
+@use "styles/mixins/functions.module.scss";
 @import "styles/colors.module.scss";
-
 
 .container {
     width: 100%;
@@ -17,6 +17,7 @@
     row-gap: 5px;
     @include mixins.h6-text;
     direction: ltr;
+    position: relative;
 
     .smarties {
         color: $pink-100;
@@ -30,6 +31,15 @@
         color: $warning-dark-100;
     }
 
+    .add_icon {
+        @include  functions.setFixedSize(24px, 24px);
+        position: absolute;
+        left: -7px;
+        bottom: -10px;
+        visibility: hidden;
+        cursor: pointer;
+    }
+
     img {
         width: 48px;
         max-width: 48px;
@@ -38,4 +48,8 @@
         max-height: 48px;
         min-height: 48px;
     }
+}
+
+.container:hover .add_icon {
+    visibility: unset;
 }

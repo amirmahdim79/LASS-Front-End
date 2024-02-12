@@ -44,7 +44,7 @@ export default function ProfileV1({profile, loading, editable}) {
                     ))
             }
 
-            <input type="file" name='avatar' id='my-file' accept="image/* " onChange={handleUploadFile}/>
+            {editable && <input type="file" name='avatar' id='my-file' accept="image/* " onChange={() => editable ? handleUploadFile : {}}/> }
 
         </div>
     )

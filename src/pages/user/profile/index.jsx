@@ -12,11 +12,11 @@ import activities from 'assets/user-activities.svg';
 import leaderboard from 'assets/leaderboard.svg';
 import developmentChart from 'assets/developChart.svg';
 import ProfileV1 from 'components/global/profile/v1';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LinearProgressBar from 'components/global/progressbar';
 import colors from "styles/colors.module.scss"
 import Card from './components/card';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useInput from 'hooks/useInputHandler';
 import { useEffect } from 'react';
 import { useModal } from 'hooks/useModal';
@@ -28,89 +28,155 @@ import Leaderboard from 'components/leaderboard';
 import { useProfileActions } from './hooks/useProfileActions';
 import ActivitiesTable from 'components/activitiesTable';
 import { useNavigate } from 'react-router-dom';
-
+import { setCurrentMilestone } from 'store/labSlice';
+import { setPrevInd } from 'store/labSlice';
+import { isEmptyObject } from 'utils/mapper';
+import { setUserActivities } from 'store/labSlice';
+import moment from 'moment';
+import 'moment/locale/fa';
+import EditElementsModal from './components/editElementsModal';
+import Preloader from 'components/global/preloaders';
 
 export default function Profile({editable=false}) {  
 
+    moment.locale('fa');
+
     const params = useParams();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation()
+
+    const { getMyActivities, getUserActivities } = useProfileActions()
+
     const userInfo = useSelector(state => state.user.user);
     const labId = useSelector(state => state.lab.labId);
     const path = useSelector(state => state.lab.Paths);
     const milestones = useSelector(state => state.lab.Milestones);
     const leaderboard = useSelector(state => state.lab.leaderboard);
     const activities = useSelector(state => state.lab.userActivities);
+    const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
 
 
     const [ openEditInfoModal, showEditInfoModal, closeEditInfoModal ] = useModal();
+    const [ openEditUserElementsModal, showEditUserElementsModal, closeEditUserElementsModal ] = useModal();
+
     const { getLabStudentInfo } = useLabActions();
     const { value: userData, setValue: setUserData } = useInput({});
+    const { value: userCurrentMilestones, setValue: setUserCurrentMilestones } = useInput(null);
     const { value: progress, setValue: setProgress } = useInput(0);
+    const { value: lastActivities, setValue: setLastActivities } = useInput([]);
+    const { value: activitiesOfUser , setValue: setActivitiesOfUser } = useInput([]);
+    const { value: elementType, setValue: setElementTypes } = useInput('');
+    const { value: myProfileLoading, setValue: setMyProfileLoading } = useInput(true);
+    const { value: userProfileLoading, setValue: setUserProfileLoading } = useInput(true);
+
 
     const getUserInfo = () => {
-        if (labId) {
-            getLabStudentInfo({}, `?lab=${labId}&id=${params.id}`)
-                .then(res => {
-                    // console.log("----res.data", res.data);
-                    setUserData(res.data)
-                })
-                .catch(err => {
-                    console.log( err);
-                })
-        }
+        getLabStudentInfo({}, `?lab=${labId}&id=${params.id}`)
+            .then(res => {
+                setUserData(res.data)
+                calcProgress(res.data.path);
+                
+                for (const [i, milestone] of res.data.path[0].Milestones.entries()) {
+                    if (milestone.status[0] === null) {
+                        setUserCurrentMilestones(milestone);
+                        if (i === 0) dispatch(setPrevInd(0))
+                        else dispatch(setPrevInd(i-1))
+                        break;
+                    }
+                }
+            })
+            .catch(err => {
+                console.log( err);
+            })
     }
 
     const calcProgress = (path) => {
-        console.log("-------", path);
-    }
-    
-    useEffect(() => {
-        calcProgress()
-        if (labId) {
-            // if (!editable) {
-            //     getUserInfo();
-            // }
-            if (params.id) {
-                getUserInfo();
-            }
+        let totalCompletedTasks = 0;
+        let totalTasks = 0;
+        if (path) {
+            path[0].Milestones.forEach(milestone => {
+                milestone.Tasks.forEach(task => {
+                  if (task.status && task.status[0] !== null) totalCompletedTasks++;
+                  totalTasks++;
+                });
+            }); 
         }
-    }, [params.id])
+        setProgress((totalCompletedTasks/totalTasks)*100)
+    }
+
+    const getActivities = (myActivities=true) => {
+        if (myActivities) {
+            getMyActivities()
+                .then(res => {
+                    dispatch(setUserActivities(res.data))
+                    const lastThree = res.data.slice(-3);
+                    setLastActivities(lastThree)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        } else if (!myActivities) {
+            getUserActivities({}, `?User=${params.id}`)
+                .then(res => {
+                    setActivitiesOfUser(res.data)
+                    const lastThree = res.data.slice(-3);
+                    setLastActivities(lastThree)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }
+
+    
+    const showEditElementsModal = (type) => {
+        setElementTypes(type)
+        showEditUserElementsModal();
+    }
+
+    useEffect(() => {
+        if (params.id) {
+            getUserInfo();
+            getActivities(false)
+        }
+    }, [params.id, labId])
+
+    useEffect(() => {
+        if (!params.id) {
+            calcProgress(path)
+            setUserData({})
+            getActivities(true)
+        }
+    }, [params.id, labId, userInfo, path])
+
+    useEffect(() => {
+        if (editable) setMyProfileLoading(false)
+        else setUserProfileLoading(false)
+
+    }, [progress, userData, lastActivities, milestones, currentMilestone, location.pathname, userCurrentMilestones])
 
 
-
-    // useEffect(() => {
-    //     if (labId) {
-    //         // if (!editable) {
-    //         //     getUserInfo();
-    //         // }
-    //         if (params.id) {
-    //             getUserInfo();
-    //         }
-    //         getLeaderboardData()
-    //     }
-    // }, [labId, params.id])
-
-    // console.log("labId", labId);
-    // console.log("userData", userData);
-    // console.log("params.id", params.id);
-
-    // console.log("userData", userData);
 
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['user_data'])}>
                 <ProfileV1 
                     profile={editable ? userInfo?.profilePicture : userData?.profilePicture} 
-                    loading={(editable ? userInfo : userData) ? false : true}
+                    loading={editable ? myProfileLoading : userProfileLoading}
                     editable={editable}
                 />
                 
                 <div className={cs(styles['wrapper'], styles['name_wrapper'])}>
 
-                    <div className={cs(styles['name'], (editable ? !userInfo : !userData) && styles['is_loading_name'])}>
-                        <p> {editable ? userInfo?.firstName : userData?.firstName} {editable ? userInfo?.lastName : userData?.lastName} </p>
+                    <div className={cs(styles['name'], (editable ? myProfileLoading : userProfileLoading) && styles['is_loading_name'])}>
+                        <p> 
+                            {editable ? (!myProfileLoading && userInfo?.firstName) : (!userProfileLoading && userData?.firstName)} 
+                            {' '}
+                            {editable ? (!myProfileLoading && userInfo?.lastName) : (!userProfileLoading && userData?.lastName)} 
+                        </p>
                         {
-                            (editable && userInfo) && (
+                            (editable && userInfo && !myProfileLoading) && (
                                 <div className={cs(styles['edit_icon_container'])}>
                                     <img 
                                         src={editIcon} 
@@ -136,34 +202,54 @@ export default function Profile({editable=false}) {
                     </div>
 
                     <div className={cs(styles['education_info'])}>
-                        {userInfo || userData ? <p> دانشجوی کارشناسی </p> : <div className={cs(styles['is_loading_type'])}/>}
-                        {userInfo || userData ? <p> {editable ? userInfo?.sid : userData?.sid} </p> : <div className={cs(styles['is_loading_SID'])}/>}
+                        {(editable ? !myProfileLoading : !userProfileLoading) ? <p> دانشجوی کارشناسی </p> : <div className={cs(styles['is_loading_type'])}/>}
+                        {(editable ? !myProfileLoading : !userProfileLoading) ? <p> {editable ? userInfo?.sid : userData?.sid} </p> : <div className={cs(styles['is_loading_SID'])}/>}
                     </div>
                 </div>
 
                 <div className={cs(styles['wrapper'] , styles['development_wrapper'])}>
-                    <div className={cs((userInfo || userData) ? styles['title'] : styles['is_loading_progress_title'])}>
-                        {(userInfo || userData) && (
+                    <div className={cs((editable ? !myProfileLoading : !userProfileLoading) ? styles['title'] : styles['is_loading_progress_title'])}>
+                        {(editable ? (!myProfileLoading && userInfo) : (!userProfileLoading && userData)) && (
                             <>
                                 <p>میزان پیشرفت در راه </p>
                                 <img src={routingIcon} alt='route icon'/>
                             </>
                         )}
                     </div>
-                    { (userInfo || userData) && <LinearProgressBar width={'100%'} height={'10px'} progress={progress} color={colors['main-color-100']}/> }
-                    { !(userInfo || userData) && <div className={cs(styles['is_loading_progress_bar'])}/> }
+                    { (editable ? !myProfileLoading : !userProfileLoading) && <LinearProgressBar width={'100%'} height={'10px'} progress={progress} color={colors['main-color-100']}/> }
+                    { (editable ? myProfileLoading : userProfileLoading) && <div className={cs(styles['is_loading_progress_bar'])}/> }
                 </div>
 
                 <div className={cs(styles['wrapper'] , styles['user_development_wrapper'])}>
-                    {(userInfo || userData) ? <p> توسعه دانشجو </p> : <div className={cs(styles['is_loading_dev_title'])}/>}
+                    {(editable ? !myProfileLoading : !userProfileLoading) 
+                        ? <div className={cs(styles['title_container'])}> 
+                            <p> توسعه دانشجو </p> 
+                            <Modal
+                                isOpen={openEditUserElementsModal} 
+                                close={closeEditUserElementsModal} 
+                                content={
+                                    <div className={cs(styles['edit_elements_modal'])} style={{display: openEditUserElementsModal ? 'block' : 'none'}} id='#users_elements_modal'>
+                                        <EditElementsModal 
+                                            close={closeEditUserElementsModal} 
+                                            type={elementType}
+                                            email={userData.email}
+                                            upDateData={getUserInfo}
+                                        />
+                                    </div>
+                                }
+                            />
+                        </div>
+                        
+                        : <div className={cs(styles['is_loading_dev_title'])}/>
+                    }
                     
                     <div className={cs(styles['cards'])}>
-                        {(userInfo || userData) 
+                        {(editable ? !myProfileLoading : !userProfileLoading) 
                             ? (
                                 <>
-                                    <Card type={'smarties'} value={editable ? userInfo?.smarties : userData?.smarties}/>
-                                    <Card type={'sand'}  value={editable ? userInfo?.sand : userData?.sand}/>
-                                    <Card type={'streak'}  value={editable ? userInfo?.streak : userData?.streak}/>
+                                    <Card type={'smarties'} value={editable ? userInfo?.smarties : userData?.smarties} onClick={showEditElementsModal}/>
+                                    <Card type={'sand'}  value={editable ? userInfo?.sand : userData?.sand} onClick={showEditElementsModal}/>
+                                    <Card type={'streak'}  value={editable ? userInfo?.streak : userData?.streak} onClick={showEditElementsModal}/>
                                 </>
                             ) : (
                                 <>
@@ -178,44 +264,100 @@ export default function Profile({editable=false}) {
 
                 <div className={cs(styles['wrapper'] , styles['last_activity_wrapper'])}>
                     <div className={cs(styles['right_column'])}>
-                        {(userInfo || userData) 
+                        {(editable ? !myProfileLoading : !userProfileLoading) 
                             ? <p className={cs(styles['title'])}> آخرین فعالیت‌ها </p>
                             : <div className={cs(styles['is_loading_activity_title'])}/>
                         }
-                        {(userInfo || userData) ? <p> تحویل نمونه اولیه </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {(userInfo || userData) ? <p> تحویل گزارش کار </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {(userInfo || userData) ? <p> مطالعه مقاله </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }  
+                        {/* {((userInfo && lastActivities) || userData) ? <p> {lastActivities[0]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {((userInfo && lastActivities) || userData) ?<p> {lastActivities[1]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {((userInfo && lastActivities) || userData) ?<p> {lastActivities[2]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }   */}
+                        {(editable ? (!myProfileLoading && lastActivities) : (!userProfileLoading && userData)) ?<p> {lastActivities[0]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(editable ? (!myProfileLoading && lastActivities) : (!userProfileLoading && userData)) ?<p> {lastActivities[1]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(editable ? (!myProfileLoading && lastActivities) : (!userProfileLoading && userData)) ?<p> {lastActivities[2]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }  
                     </div>
 
                     <div className={cs(styles['left_column'])}>
-                        {(userInfo || userData) ? <p> تاریخ </p> : <div className={cs(styles['is_loading_activity_title'])}/> }
-                        {(userInfo || userData) ? <p> 1402/11/15 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {(userInfo || userData) ? <p> 1402/11/15 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
-                        {(userInfo || userData) ? <p> 1402/11/15 </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(editable ? !myProfileLoading : !userProfileLoading)  ? <p> تاریخ </p> : <div className={cs(styles['is_loading_activity_title'])}/> }
+                        {/* {((userInfo && lastActivities) || userData) ? <p> {moment(lastActivities[0]?.createdAt)._d.toLocaleDateString('fa-IR')} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {((userInfo && lastActivities) || userData) ? <p> {moment(lastActivities[1]?.createdAt)._d.toLocaleDateString('fa-IR')} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {((userInfo && lastActivities) || userData) ? <p> {moment(lastActivities[2]?.createdAt)._d.toLocaleDateString('fa-IR')} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> } */}
+
+                        {(editable ? (!myProfileLoading && lastActivities) : (!userProfileLoading && userData)) ? <p> {moment(lastActivities[0]?.createdAt)._d.toLocaleDateString('fa-IR')} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(editable ? (!myProfileLoading && lastActivities) : (!userProfileLoading && userData)) ? <p> {moment(lastActivities[1]?.createdAt)._d.toLocaleDateString('fa-IR')} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
+                        {(editable ? (!myProfileLoading && lastActivities) : (!userProfileLoading && userData)) ? <p> {moment(lastActivities[2]?.createdAt)._d.toLocaleDateString('fa-IR')} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
                     </div>
                 </div>
 
-                <div className={cs(styles['wrapper'] , styles['notes_wrapper'])} >
-                    <p> یادداشت ها </p>
-                    <img src={notesIcon} alt='notes icon'/>
-                </div>
+                {
+                    editable && (
+                        <div className={cs(styles['wrapper'] , styles['notes_wrapper'])} >
+                            {(!myProfileLoading) 
+                                ? <p className={cs(styles['title'])}>  یادداشت ها</p>
+                                : <div className={cs(styles['is_loading_notes_title'])}/>
+                            }
+                            {
+                                (!myProfileLoading) 
+                                    ? <img src={notesIcon} alt='notes icon' onClick={() => navigate('../notes')}/>
+                                    : <div className={cs(styles['is_loading_notes_icon'])}/>
+                            }
+                          
+                        </div>
+                    )
+                }
+
             </div>
 
             <div className={cs(styles['user_activities'])}>
-                <p className={cs(styles['title'])}> فعالیت دانشجو </p>
-                {activities &&  <ActivitiesTable />}
+                {(editable ? !myProfileLoading : !userProfileLoading) ? <p className={cs(styles['title'])}> فعالیت دانشجو</p> : <div className={cs(styles['is_loading_title'])}/>}
+                {
+                    editable 
+                        ? (!myProfileLoading) ? <ActivitiesTable activities={activities}/> : <Preloader />
+                        : (!userProfileLoading) ?  <ActivitiesTable activities={activitiesOfUser}/> : <Preloader />
+                }
                
             </div>
+
             <div className={cs(styles['user_path'])}>
                 {
-                    (userInfo || userData) 
-                        ? 
-                            <>
-                                <p className={cs(styles['title'])}> {`مسیر راه  - ${editable ? path?.name : userData?.path?.name}`} </p>
-                                <ProgressTracker milestones={editable ? milestones : userData?.path?.Milestones}/> 
-                            </>
-                        : <div/>
+                    !editable   
+                        ? (
+                            userProfileLoading
+                                ? (
+                                    <>
+                                        <div className={cs(styles['is_loading_notes_title'])} />
+                                        <Preloader />
+                                    </>
+                                ) : (
+                                    !isEmptyObject(userData) && userCurrentMilestones && (
+                                        <>
+                                            <p className={cs(styles['title'])}> {`نقشه راه  - ${userData ? userData?.path[0]?.name : '-'}`} </p>
+                                            <ProgressTracker 
+                                                milestones={userData?.path[0]?.Milestones}
+                                                currentMilestone={userCurrentMilestones}
+                                            /> 
+                                        </>
+                                    )
+                                )
+                        ) : (
 
+                            myProfileLoading 
+                                ? (
+                                    <>
+                                        <div className={cs(styles['is_loading_notes_title'])} />
+                                        <Preloader />
+                                    </>
+                                ) : (
+                                    milestones && currentMilestone && (
+                                        <> 
+                                            <p className={cs(styles['title'])}> {`نقشه راه  - ${path && path[0]?.name ? path[0]?.name : '-'}`} </p>
+                                            <ProgressTracker 
+                                                milestones={milestones}
+                                                currentMilestone={currentMilestone}
+                                            /> 
+                                        </>
+                                    )
+                                )
+                        )
                 }
 
             </div>
@@ -224,30 +366,19 @@ export default function Profile({editable=false}) {
                 <div className={cs(styles['leaderboard'])}>
                     <div className={cs(styles['title'])}>
                         {
-                            userInfo ? 
+                            (editable ? !myProfileLoading : !userProfileLoading) ? 
                                 <>
                                     <p> لیدربورد </p>
                                     <img src={infoIcon} alt='info icon'/>
                                 </>
                              : <div className={cs(styles['is_loading_leaderboard_title'])}/>
                         }
-                        
                     </div>
-                   
-                    {/* <img src={leaderboard} alt='leaderboard chart'/>
-                    <div className={cs(styles['top_users'])}>
-                        {
-                            topUsers.map((user, i) => 
-                                <div className={cs(styles['user'])} key={i}>
-                                    <p> {i+1}. </p>
-                                    <img src={user.avatar} alt='avatar' />
-                                    <p> {user.name} </p>
-                                </div>
-                            )
-                        }
-                        
-                    </div> */}
-                    <Leaderboard list={leaderboard}/>
+                    {
+                        (editable ? !myProfileLoading : !userProfileLoading) ? <Leaderboard list={leaderboard}/> : <Preloader />
+                    }
+                    
+                    
                 </div>
             </div>
         </div>

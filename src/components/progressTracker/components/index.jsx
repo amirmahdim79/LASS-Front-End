@@ -1,8 +1,7 @@
 import { default as cs } from 'classnames'
 import CheckBoxV1 from 'components/global/checkbox/v1'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import styles from './style.module.scss'
-import colors from "styles/colors.module.scss"
 import checkmarkDark from "assets/icons/checkmark/dark-shades.svg"
 import checkmarkLight from "assets/icons/checkmark/light-shades.svg"
 import useInput from 'hooks/useInputHandler'
@@ -20,6 +19,7 @@ export default function DataContainer({name, isLast=false, tasks=[], width='20%'
     }
     }, [tasks])
 
+    // console.log("milestoneStatus?.status", milestoneStatus);
 
     return (
         
@@ -39,21 +39,8 @@ export default function DataContainer({name, isLast=false, tasks=[], width='20%'
             <div className={cs(styles['step_data'])}>
                 <div 
                     className={cs( milestoneStatus?.status ? styles['completed_step_circle'] : styles['step_circle'])} 
-                    // style={{...((hasCompletedTask && prevId !== currInd) && {borderColor: colors['success-100']})}}
                 >
-                    {/* {
-                        prevId === currInd 
-                            ? <p> {width} </p>
-                            : (
-                                <img 
-                                    src={  hasCompletedTask ? checkmarkSuccess : checkmarkDark}
-                                    alt='checkmark'
-                                    className={cs(styles['checkmark_icon'])}
-                                />
-                            )
-                    } */}
                     {
-                        // prevId === currInd
                         milestoneStatus?.status
                             ? <img 
                                 src={checkmarkLight}
@@ -77,7 +64,7 @@ export default function DataContainer({name, isLast=false, tasks=[], width='20%'
                         {
                             tasks.map((task, i) => 
                                 <div className={cs(styles['task_data'])} key={i}>
-                                    <CheckBoxV1 checked={task?.status[0]?.status}/>
+                                    <CheckBoxV1 value={task?.status[0]?.status} clickable={false}/>
                                     <p> {task.name} </p>
                                 </div>
                             )
@@ -85,10 +72,6 @@ export default function DataContainer({name, isLast=false, tasks=[], width='20%'
                     </div>
                 </div>
             </div>
-           
-
-            
-            
         </div>
     )
 }

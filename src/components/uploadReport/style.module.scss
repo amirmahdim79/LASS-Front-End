@@ -59,6 +59,7 @@
                 .upload_info {
                     cursor: inherit;
                     @include mixins.sub-description;
+                    direction: rtl;
                 }
             }
     

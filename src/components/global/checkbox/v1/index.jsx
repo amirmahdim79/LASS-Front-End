@@ -12,11 +12,12 @@ export default function CheckBoxV1({
     onClick,
     name = 'name',
     id = 'id',
+    clickable = true,
 }) {
 
     return (
         <div 
-            className={cs(styles['container'])} 
+            className={cs(styles['container'], clickable && styles['clickable'])} 
             style={{width: width, height: height, minWidth: width, minHeight: height, maxWidth: width, maxHeight: height}}
         >
             <input type="checkbox" value={value} name={name} id={id}/>
