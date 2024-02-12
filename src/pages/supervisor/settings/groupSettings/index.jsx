@@ -288,7 +288,6 @@ export default function GroupSettings() {
     ]
 
     const onClickDeleteMember = (id) => {
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         showDeleteModal();
         setUserId(id);
         setDeleteType('user')

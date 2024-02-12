@@ -86,8 +86,6 @@ export default function Task() {
         }
     }
 
-    console.log("task", task);
-
 
     return (
         <div className={cs(styles['container'])}>

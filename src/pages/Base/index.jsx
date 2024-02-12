@@ -39,7 +39,7 @@ export default function Base({type}) {
             if (userType === 'user') {
                 checkAuth()
                     .then(res => {
-                        console.log("111111111111111111111111111111", res.data);
+                        // console.log("111111111111111111111111111111", res.data);
                         dispatch(addUser(res.data))
                         dispatch(setLabId(res.data.Labs[0]))
                         dispatch(setArticles([...res.data?.RecentFiles].reverse()))
@@ -110,7 +110,7 @@ export default function Base({type}) {
                                 
                                 getLeaderboard({}, `?lab=${res.data._id}`)
                                     .then(res => dispatch(setLeaderboard(res.data)))
-                                    .catch(err => console.log("leader err", err))
+                                    .catch(err => console.log(err))
                             })
                             .catch(err => console.log(err))
                         dispatch(addUser(res.data))

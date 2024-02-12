@@ -21,19 +21,12 @@ import settingsIconLight from 'assets/icons/settings/settings-2/light-color.svg'
 import infoIcon from 'assets/icons/essential/info-circle/dark-color.svg'
 import ReceivedEmails from 'components/email/receivedEmails';
 
-// import ForumPreview from 'components/forum/forumPreview';
-
 
 export default function Email() {
 
     const navigate = useNavigate();
     const location = useLocation();
     const currentURL = location.pathname.split('/').slice(-1)[0];
-    const params = useParams();
-
-    console.log("currentURL", currentURL);
-
-
 
     return (
         <div className={cs(styles['container'])}> 

@@ -94,7 +94,6 @@ export default function Settings() {
     const getEvents= (labId) => {
         getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
             .then(res => {
-                // console.log("gettttt successs", res.data);
                 dispatch(setEvents(res.data))})
             .catch(err => console.log(err))
     }
@@ -120,9 +119,6 @@ export default function Settings() {
         // }
     }, [])
 
-
-
-    // console.log("--permissions", permissions);
     
     return (
         <div className={cs(styles['container'])}>

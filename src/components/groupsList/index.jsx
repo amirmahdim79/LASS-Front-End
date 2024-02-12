@@ -25,7 +25,6 @@ export default function Groups() {
     // const articles = useSelector(state => state.user.articles);
     // const { value: allPapers, setValue: setAllPapers } = useInput([]);
 
-    // console.log("--labGroups", labGroups);
 
 
 

@@ -44,7 +44,6 @@ export default function SupSettings() {
     useEffect(() => {
         getLabGroups({}, `/${labId}`)
         .then(res => {
-            // console.log("///////////////////////", res.data);
             dispatch(setLabGroups(res.data))
         }).catch(err => {
             console.log(err);

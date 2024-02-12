@@ -63,10 +63,6 @@ export default function ForumCreation() {
 
     const { createForum, forumCreation, getLabForums } = useForumsActions();
 
-    // console.log("currentUsers", state.currentUsers);
-    // console.log("labGroups", state.labGroups);
-    // console.log("students", students);
-
     const addGroup = (group) => {
         let groups = [...state.labGroups];
         let usersId = [...state.currentUsers];
@@ -210,7 +206,7 @@ export default function ForumCreation() {
         createForum({...data})
             .then(() => navigate(-1))
             .catch(err => {
-                console.log("errrrrrrrrrrrrrrrrrrrr", err);
+                console.log(err);
             })
     }
 

@@ -51,7 +51,7 @@ export default function UploadReport({text, info, btnText, type, disabled}) {
             }
         })
         .then((res) => {
-            console.log("sucessssssssssssssssssss", res.data);
+            console.log(res.data);
             showToast('آپلود موفقیت آمیز بود', 'success')
             closeProgressBarModal();         
             setProgress(0)       

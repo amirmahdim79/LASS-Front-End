@@ -16,7 +16,7 @@ export const useArticlesActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("eeeeeeeeeeeeeeeeeeeeeeee", e);
+            console.log(e);
         },
     })
 
@@ -29,7 +29,7 @@ export const useArticlesActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("cant add papers", e);
+            console.log(e);
         },
     })
 
@@ -41,7 +41,7 @@ export const useArticlesActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("tags errrrrrrrrrrrrrr", e);
+            console.log(e);
         },
     })
 
@@ -53,7 +53,7 @@ export const useArticlesActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("sarcg paper errrrrrrrrrrrrrr", e);
+            console.log(e);
         },
     })
 

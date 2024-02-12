@@ -7,6 +7,7 @@ import { useBountyActions } from './hooks/useBountyActions'
 import { reducer } from './reducer'
 import trashIcon from 'assets/icons/essential/trash/dark-color.svg'
 import usersIcon from 'assets/icons/users/people/dark-color.svg'
+import dateIcon from 'assets/icons/time/calendar/light-accent.svg';
 import styles from './style.module.scss'
 import { useModal } from 'hooks/useModal'
 import CheckBoxV2 from 'components/global/checkbox/v2'
@@ -19,6 +20,11 @@ import colors from "styles/colors.module.scss"
 import Modal from 'components/global/modal'
 import DeleteModal from './components/modals/deleteModal'
 import SwitchV3 from 'components/global/toggleSwitchV3'
+import { Calendar, CalendarProvider } from 'zaman'
+import moment from 'moment';
+import 'moment/locale/fa';
+import useInput from 'hooks/useInputHandler'
+import { getTime } from 'utils/mapper'
 
 export default function TaskBounty() { 
     
@@ -36,6 +42,10 @@ export default function TaskBounty() {
         smarties: undefined,
         hasFile: undefined,
         deletingId: undefined,
+        openCalendar: false,
+
+        hour: '',
+        minutes: '',
 
         types: 'none',
     }
@@ -46,7 +56,8 @@ export default function TaskBounty() {
     const labGroups = useSelector(state => state.lab.labGroups);
     const students = useSelector(state => state.lab.Students);
 
-// console.log("state", state);
+    const { value: initValue, setValue: setInitValue } = useInput('');
+
 
     const getBounties = () => {
         getLabBounties({}, `?lab=${labId}`)
@@ -54,7 +65,7 @@ export default function TaskBounty() {
                 dispatch({payload: {type: 'activities', value: res.data}})
             })
             .catch(err => {
-                console.log("eeeeeeeeeeeeeeeeeeeee", err);
+                console.log(err);
             })
     }
     
@@ -111,18 +122,51 @@ export default function TaskBounty() {
     const changeBountyType = (value) => {
         dispatch({payload: {type: 'types', value: value}})
     }
+
+    const onClickCalendarModal = (e) => {
+        if (state.openCalendar) {
+            const targetClassList = e.target.classList;
+            const targetParentClassList = e.target.parentElement.classList;
+
+            if (targetClassList.value) {
+                if (targetClassList[0].includes('container') || targetClassList[0].includes('new_activity_panel') || 
+                    targetClassList[0].includes('main_panel') || targetClassList[0].includes('activity_list') || targetClassList[0].includes('header') || 
+                    targetClassList[0].includes('list') ||  targetClassList[0].includes('checkmark') || targetClassList[0].includes('data') || 
+                    targetClassList[0].includes('checked_input') || targetClassList[0].includes('text_inputs') || 
+                    targetClassList[0].includes('users_name')) dispatch({payload: {type: 'openCalendar', value: ''}})
+            }else {
+                if ( targetParentClassList[0].includes('container') || targetParentClassList[0].includes('main_panel') || 
+                targetParentClassList[0].includes('header') || targetParentClassList[0].includes('btn_container') || 
+                targetParentClassList[0].includes('activity_list') ||  targetParentClassList[0].includes('info') || 
+                targetParentClassList[0].includes('tools') || targetParentClassList[0].includes('users_list') || 
+                targetParentClassList[0].includes('username') || targetParentClassList[0].includes('data') || 
+                targetParentClassList[0].includes('switch') || targetParentClassList[0].includes('inputs') || 
+                targetParentClassList[0].includes('inputs_container') || targetClassList[0].includes('list')) dispatch({payload: {type: 'openCalendar', value: ''}})
+            }
+        }
+    }
+
+    const checkBtnIsDisabled = () => {
+        return isNaN(+state.hour) || isNaN(+state.minutes) ||
+               state.hour < 0 || state.hour > 24 ||  state.minutes < 0 || state.minutes > 60 || 
+               state.name.trim().length === 0 || state.smarties.trim().length === 0  
+    }
     
     useEffect(() => {
         if (labId) getBounties();
-    }, [labId])
-
+    }, [labId]) 
     useEffect(() => {
         const filteredList = state.activities.filter((activity) => activity.status === state.types);
         dispatch({payload: {type: 'filteredActivities', value: filteredList}})
     }, [state.types, state.activities])
 
+    useEffect(() => {
+        getTime(setInitValue)
+    }, [])
+
+
     return (
-        <div className={cs(styles['container'])}>
+        <div className={cs(styles['container'])} onClick={(e) => onClickCalendarModal(e)}>
 
             <div className={cs(styles['header'])}> {text.title} </div>
             
@@ -229,6 +273,41 @@ export default function TaskBounty() {
                                     fontSize={'16px'}
                                 />
                                 <div className={cs(styles['switch_container'])}>
+                                    <p> {text.input_5} </p>
+                                    <div className={cs(styles['icon_container'])}>
+                                        <img src={dateIcon} alt='date icon' onClick={() => dispatch({payload: {type: 'openCalendar', value: !state.openCalendar}})}/>
+                                        {
+                                            state.openCalendar && (
+                                                <div className={cs(styles['datepicker_wrapper'])} id='#date-picker'>
+                                                    <CalendarProvider locale='fa' accentColor={colors['main-color-100']} direction='ltr' round="x2">
+                                                        <Calendar
+                                                            defaultValue={initValue}
+                                                            onChange={(day) => setInitValue(moment(day))}
+                                                            weekends={[6]}
+                                                            className={cs(styles['datepicker'])}
+                                                        />
+                                                    </CalendarProvider>
+                                                </div>
+                                            )
+                                        }
+                                        <div className={cs(styles['time'])}>
+                                            <input 
+                                                placeholder=''
+                                                value={state.hour}
+                                                onChange={(e) => dispatch({payload: {type: 'hour', value: e.target.value}})}
+                                                style={{width: state.hour ? '20px' : '8px'}}
+                                            />
+                                            :
+                                            <input 
+                                                placeholder=''
+                                                value={state.minutes}
+                                                onChange={(e) => dispatch({payload: {type: 'minutes', value: e.target.value}})}
+                                                style={{width: state.hour ? '20px' : '8px'}}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={cs(styles['switch_container'])}>
                                     <p> {text.input_3} </p>
                                     <SwitchV2
                                         value={state.hasFile} 
@@ -257,7 +336,7 @@ export default function TaskBounty() {
                                     onClick={() => addTask()}
                                     text={text.button} 
                                     width={'255px'}
-                                    // disabled={!state.name.trim().length}
+                                    disabled={checkBtnIsDisabled()}
                                     // load={eventCreation}
                                 />
                             </div>

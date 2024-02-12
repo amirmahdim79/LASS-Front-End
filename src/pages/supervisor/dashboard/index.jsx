@@ -53,9 +53,9 @@ export default function SupervisorDashboard() {
 
     const createLab = () => {
         createLabs({name: state.name, desc: state.desc}).then(res => {
-            console.log("createeeeeeeeeeeeeeee", res);
+            console.log(res);
         }).catch(err => {
-            console.log("e22222222222222222222", err);
+            console.log(err);
         })
     }
     

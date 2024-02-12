@@ -27,8 +27,6 @@ export default function NotesPage() {
     const { value: documents, setValue: setDocuments } = useInput([]);
     const permissions = useSelector(state => state.user.permissions);
 
-    // console.log("permissions", permissions);
-
     const { getLabDocs } = useNotesActions();
     const labId = useSelector(state => state.lab.labId);
 

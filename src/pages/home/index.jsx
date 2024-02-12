@@ -47,8 +47,6 @@ export default function HomePage() {
 
     const [ state , dispatchState] = useReducer( reducer, initialState );
 
-    // console.log("sssssssssssss", state);
-
 
     const { 
             authenticateUser, userAuthentication,
@@ -65,7 +63,7 @@ export default function HomePage() {
                 localStorage.setItem('type', 'user')
                 navigate('/user/dashboard')
             }).catch(err => {
-                console.log("...........eeeeeeeeeeeeeeee", err);
+                console.log(err);
             })
         }else if (state.type === 'استاد') {
             authenticateSupervisor({ email: state.email.replace(/^\s+|\s+$/gm,''), password: state.password.replace(/^\s+|\s+$/gm,'') }).then(res => {
@@ -73,7 +71,7 @@ export default function HomePage() {
                 dispatch(addUser(res.data))
                 navigate('/supervisor/dashboard')
             }).catch(err => {
-                console.log("...........eeeeeeeeeeeeeeee", err);
+                console.log(err);
             })
         }
     }    
@@ -93,10 +91,10 @@ export default function HomePage() {
                     dispatch(addUser(res.data));
                     localStorage.setItem('type', 'user');
                     navigate('/user/dashboard');
-                    console.log("userrrrrrr", res.data);
+                    console.log(res.data);
                 })
                 .catch(err => {
-                    // console.log("...........eeeeeeeeeeeeeeee", err);
+                    console.log(err);
                 })
 
         }else if (state.type === 'استاد') {
@@ -111,10 +109,10 @@ export default function HomePage() {
                     dispatch(addUser(res.data));
                     localStorage.setItem('type', 'supervisor');
                     navigate('/supervisor/dashboard')
-                    console.log("userrrrrrr", res.data);
+                    console.log(res.data);
                 })
                 .catch(err => {
-                    console.log("...........eeeeeeeeeeeeeeee", err);
+                    console.log(err);
                 })
         }
     }   

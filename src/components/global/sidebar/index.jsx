@@ -97,9 +97,6 @@ export default function SideBar({type}) {
         }
     }, [location.pathname])
 
-// console.log("permissions", permissions.indexOf('lab'));
-// console.log("permissions", permissions);
-
     return (
         <aside className={cs(styles['container'])}>
 

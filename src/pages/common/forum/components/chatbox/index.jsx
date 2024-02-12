@@ -21,8 +21,6 @@ export const ChatBox = ({ message }) => {
         }
     });
 
-    console.log("messageParts", messageParts);
-    console.log("formattedMessage", formattedMessage);
 
     return <div>{formattedMessage}</div>;
     };

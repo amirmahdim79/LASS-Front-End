@@ -51,7 +51,7 @@ export const useAuthActions = (dispatchState, state) => {
         },
         
         failedCallback: (e) => {
-            console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee userrrrrrrrrrrrrrrrrrrrrrrrrrrr", e);
+            console.log(e);
             // dispatchState({payload: {type: 'emailErr', value: ''}})
             // dispatchState({payload: {type: 'passwordErr', value: ''}})
             // if (e.message === 'Network Error') showToast('لطفا دوباره امتحان کنید', 'error');
@@ -73,7 +73,7 @@ export const useAuthActions = (dispatchState, state) => {
         failedCallback: (e) => {
             if (state.degree.trim().length === 0) dispatchState({payload: {type: 'degreeErr', value: 'وارد کردن مقطع تحصیلی الزامی است'}})
             else if (state.sid.trim().length === 0) dispatchState({payload: {type: 'sidErr', value: 'وارد کردن شماره دانشجویی الزامی است'}})
-            console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeee createSupervisor", e);
+            console.log(e);
             // dispatchState({payload: {type: 'emailErr', value: ''}})
             // dispatchState({payload: {type: 'passwordErr', value: ''}})
             // if (e.message === 'Network Error') showToast('لطفا دوباره امتحان کنید', 'error');

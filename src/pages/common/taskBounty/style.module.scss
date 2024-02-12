@@ -290,13 +290,65 @@
                     position: relative;
                     
                     .switch_container {
-                        width: 100%;
+                        width: 245px;
                         display: flex;
                         align-items: center;
-                        justify-content: flex-start;
-                        column-gap: 120px;
+                        justify-content: space-between;
                         @include mixins.description;
                         padding-top: 10px;
+
+                        .icon_container {
+                            width: max-content;
+                            position: relative;
+                            display: flex;
+                            flex-direction: row-reverse;
+                            align-items: center;
+                            column-gap: 15px;
+
+                            img:hover {
+                                cursor: pointer;
+                            }
+    
+                            .datepicker_wrapper {
+                                direction: ltr;
+                                position: absolute;
+                                top: 0px;
+                                left: 15px;
+                                z-index: 2;
+                
+                                .datepicker {
+                                    @include mixins.h6-text;
+                                    @include mixins.description;
+                                }
+                            }
+
+                            .time {
+                                width: max-content;
+                                @include mixins.sub-description;
+                                direction: ltr;
+                                cursor: default;
+                                color: $light-accent-100;
+            
+                                input {
+                                    background-color: transparent;
+                                    text-align: center;
+                                    border-bottom: 1px solid $light-accent-100;
+                                }
+            
+                                input:focus {
+                                    outline: none !important;
+                                    border: none;
+                                }
+            
+                                input:hover {
+                                    cursor: pointer;
+                                }
+            
+                                input::placeholder {
+                                    color: $light-accent-100;
+                                }
+                            }
+                        }
                     }
 
                     .textarea {

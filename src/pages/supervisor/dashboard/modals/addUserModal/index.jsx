@@ -30,7 +30,7 @@ export default function AddUserModal({close}) {
                 close()
             })
             .catch(err => {
-                console.log("eeeeeeeeeeeeeeeeeeeeeeeeeee", err)
+                console.log(err)
                 close()
             })
             .finally(() => {

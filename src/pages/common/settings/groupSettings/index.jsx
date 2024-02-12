@@ -55,12 +55,10 @@ export default function GroupSettings() {
     const { value: usersId, setValue: setUsersId } = useInput([]);
     const { value: selectAllUsers, setValue: setSelectAllUsers } = useInput(false);
 
-    // console.log("---groupData---", groupData);
     // 653bc740f2cf6ab7787279e1
     // 65322b1e95e0d4f18a0563cf
 
     const onClickDeleteMember = (id) => {
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         showDeleteModal();
         setUserId(id);
         setDeleteType('user')

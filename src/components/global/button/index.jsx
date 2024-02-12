@@ -29,7 +29,7 @@ export default function Button({
     //         let y = e.clientY - e.target.offsetTop + 12; 
     //         ripple.style.left = `${x}px`; 
     //         ripple.style.top = `${y}px`; 
-    //         console.log("rrrrrrrrrrrrrrrrrrrrrrr", ripple);
+    //         console.log(ripple);
     //         setTimeout(() => { 
     //             ripple.remove(); 
     //         }, 300); 

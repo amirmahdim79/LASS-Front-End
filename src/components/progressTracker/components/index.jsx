@@ -19,8 +19,6 @@ export default function DataContainer({name, isLast=false, tasks=[], width='20%'
     }
     }, [tasks])
 
-    // console.log("milestoneStatus?.status", milestoneStatus);
-
     return (
         
         <div className={cs(styles['progress_data_container'])} style={{...(isLast && {width:'max-content', minWidth:'unset'})}} key={currInd}>

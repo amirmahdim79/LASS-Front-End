@@ -12,32 +12,6 @@ export default function Carousel({
 
     const [cheecked, setCheecked] = useState(1)
 
-    console.log("items", items);
-    // console.log("cheecked", cheecked);
-
-
-    const arr = [
-        {
-            item: <img src="https://images.unsplash.com/photo-1530651788726-1dbf58eeef1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=882&q=80" alt="song" />,
-            id: 1,
-            checked: true,
-        },
-        {
-            item: <img src="https://images.unsplash.com/photo-1559386484-97dfc0e15539?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80" alt="song"/>,
-            id: 2,
-            checked: false,
-        },
-        {
-            item: <img src="https://images.unsplash.com/photo-1533461502717-83546f485d24?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" alt="song" />,
-            id: 3,
-            checked: false,
-        },
-        // {
-        //     item: <img src="https://ix-www.imgix.net/examples/moon.jpg?ixlib=js-3.8.0&fit=crop&crop=entropy&auto=compress%2Cformat&ar=400%3A300&w=689" alt="song" />,
-        //     id: 4,
-        //     checked: false,
-        // },
-    ];
 
     return (
         <div className={cs(styles['container'])}>

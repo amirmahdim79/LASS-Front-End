@@ -42,11 +42,10 @@ export default function ApproveMilestones() {
     useEffect(() => {
         getSupsTask({}, `/${params.id}`)
             .then(res => {
-                // console.log("sups task data", res.data);
                 setTaskInfo(res.data)
             })
             .catch(err => {
-                console.log("sup task err", err);
+                console.log(err);
             })
     }, [])
 

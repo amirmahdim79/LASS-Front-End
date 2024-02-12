@@ -45,8 +45,6 @@ export default function ProgressTracker({milestones, currentMilestone}) {
           });
     }
 
-    // console.log("milestones", milestones);
-    // console.log("prevId", prevId);
 
     return (
 

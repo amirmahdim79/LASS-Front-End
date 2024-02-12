@@ -78,8 +78,8 @@ export default function UploadFile({updatePapers}) {
         formData.append('file', fileData.data)
 
 
-        console.log("formData", formData);
-        console.log("fileData", fileData);
+        console.log(formData);
+        console.log(fileData);
 
         fileData.tags
             .filter((item, index) => fileData.tags.indexOf(item) === index)
@@ -90,21 +90,19 @@ export default function UploadFile({updatePapers}) {
                 'x-auth-token': GET_TOKEN()
             },
             onUploadProgress: data => {
-                console.log("ddddddddd", data);
+                console.log(data);
                 setProgress(Math.round((100 * data.loaded) / data.total))
             }
         })
         .then(() => {
-            console.log("sucessssssssssssssssssss");
             closeProgressBarModal();
             updatePapers();
         })
         .catch(err => {
-            console.log("erreeeeeeeeeeeeeeeeeee", err)
+            console.log(err)
             closeProgressBarModal();
         })
         .finally(() => {
-            console.log("finallllllllllllllllllll");
             input.value = '';
             setHasTag(false);
             setFileData({});
@@ -151,7 +149,7 @@ export default function UploadFile({updatePapers}) {
     useEffect(() => {
         searchTags({}, `?query=${debouncedTag}`)
             .then(res => setSuggestedTags(res.data))
-            .catch(err => console.log("err search", err))
+            .catch(err => console.log(err))
       }, [debouncedTag]);
 
 

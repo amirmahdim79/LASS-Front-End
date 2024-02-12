@@ -22,12 +22,10 @@ export default function PermissionsModal({submit, data, permissions, userPermiss
 
     const selectAll = () => {
         if (state.totalPermissions) {
-            console.log("to reset");
             dispatch({payload: {type: 'totalPermissions', value: false}})
             permissions.map(p => dispatch({payload: {type: 'reset', value: p.value}}))
         }
         else {
-            console.log("to set");
             dispatch({payload: {type: 'totalPermissions', value: true}})
             permissions.map(p => dispatch({payload: {type: 'set_all', value: p.value}}))
         }

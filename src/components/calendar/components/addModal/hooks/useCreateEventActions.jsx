@@ -42,7 +42,7 @@ export const useCreateEventActions = () => {
         },
         
         failedCallback: (e) => {
-            console.log("createEvent failed", e)
+            console.log(e)
             showToast('مشکلی پیش اومده', 'error')
         },
     })

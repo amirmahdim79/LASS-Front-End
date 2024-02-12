@@ -103,7 +103,6 @@ export default function UsersList({
             if (groupName && groupName.trim().length) {
                 submitHandler({ Group: params.id, name: groupName, final: newList})
                     .then((res) => {
-                        console.log("----------------------------", res.data);
                         showToast('نام گروه با موفقیت ویرایش شد', 'success');
                         navigate('../settings');
                     })

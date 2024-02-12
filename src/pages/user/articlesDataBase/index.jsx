@@ -45,10 +45,9 @@ export default function UserArticlesDataBase() {
     const addRecentFiles = (id) => {
         addRecentFile({File: id, Lab: labId})
             .then(res => {
-                console.log("---res.data",res.data);
                 dispatch(setArticles(res.data.reverse()))
             }).catch(err => {
-                console.log("eeeeeeeeeeee", err);
+                console.log(err);
             })
     }
 

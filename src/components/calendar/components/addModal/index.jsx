@@ -105,13 +105,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
     const [ state , dispatch] = useReducer( reducer, initialState );
 
 
-    // console.log(".........",  moment(initValue._d + ' ' + `${state.initHour}:${state.initMin}:${state.initSec}`));
-    // console.log("1111", initValue.year(), initValue.month(), initValue.date(), state.initHour, state.initMin, state.initSec);
-    // console.log(".....aa", new Date(initValue.year(), initValue.month(), initValue.date(), state.initHour, state.initMin, state.initSec));
-
-    // console.log("fuck", moment(`${initValue.date()}/${initValue.month()}/${initValue.year()} 09:15:00`, "DD MM YYYY hh:mm:ss"));
-
-
     useEffect(() => {
         let todayDay = initValue.day() === 6 ?  weekday(initValue.day() %6 ): weekday(initValue.day() + 1 );
         let todayDate = `${initValue._d.toLocaleDateString('fa-IR').split('/')[2]}  ${month(initValue._d.toLocaleDateString('fa-IR').split('/')[1])} `;
@@ -151,10 +144,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         let end = moment(endValue);
         end.set('hour', state.endHour); 
         end.set('minute', state.endMin ? state.endMin : '00'); 
-
-        // console.log("start > end",start, end);
-        // console.log("start.weekday()", start.day());
-        // console.log("end.weekday()", end.day());
 
         if (start.weekday() !== end.weekday()) {
             if (end > start) {
@@ -302,7 +291,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
 
         createEvent({...data})
             .then((res) => {
-                console.log("rrrrrrr", res.data);
+                console.log(res.data);
                 getEvents(labId)
                 dispatch({payload: {type: 'reset', value: initialState}})
                 setInitValue(moment())
@@ -326,8 +315,6 @@ export default function AddEventModal({close, type, setType, getEvents}) {
         end.set('hour', state.endHour); 
         end.set('minute', state.endMin ? state.endMin : '00'); 
 
-        // console.log("--end",end);
-        // start.weekday() === end.weekday() ? ((end.hour() === 0 ? false : start >= end) || (end.hour() === 0 && end.minute() > 0)) : true
         return (
             isEmpty(state.name) || (state.hasTask && isEmpty(state.smarties)) || isEmpty(state.initHour) || isEmpty(state.endHour)  ||
             state.usersList.length === 0 || (state.intervalBtn && (isEmpty(state.year) || 

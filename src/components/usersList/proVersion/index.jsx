@@ -83,7 +83,7 @@ export default function UsersList({loading}) {
             // dispatch(setNavSearchedValue(searchKey))
             const keyDownHandler = event => {    
                 if (event.key === 'Enter') {
-                    console.log("eeeee", searchKey);
+                    console.log(searchKey);
                     // if (searchKey) navigate(`../${localStorage.getItem('type')}/articles-database/?search=${searchKey.trim()}`)
                     // else navigate(`../${localStorage.getItem('type')}/articles-database`)
                 }
@@ -110,8 +110,6 @@ export default function UsersList({loading}) {
         if (listType === 'current') setUsers(students)
     }, [students])
 
-
-    console.log("usersActivities", usersActivities);
 
     return (
         <div className={cs(styles['container'])}>

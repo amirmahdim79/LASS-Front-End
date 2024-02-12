@@ -136,17 +136,15 @@ export default function PathCreation() {
             Milestones: milestones
         }
 
-        // console.log("data",data);
         const emptyMilestoneInd = milestones.findIndex((m) => m.Tasks.length === 0);
-        // console.log("emptyMilestoneInd",emptyMilestoneInd);
 
         if (emptyMilestoneInd === -1) {
             createPath({...data})
                 .then(res => {
-                    console.log("rrr-------", res.data);
+                    console.log(res.data);
                 })
                 .catch(err => {
-                    console.log("-----eee--",err);
+                    console.log(err);
                 })
         }
     }
@@ -164,8 +162,6 @@ export default function PathCreation() {
     //     setTaskModalId(tasks.length-1)
     // }, [tasks])
 
-    console.log("----editingTask----", editingTask);
-    console.log("----editingMilestone----", editingMilestone);
 
     return (
         <div className={cs(styles['container'])}>

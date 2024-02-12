@@ -23,7 +23,6 @@ export default function SwitchV2({
     // }
 
     // const onClick = () => {
-    //     console.log('value', value);
     //     if (value) setValue(false);
     //     else setValue(true);
     // }
