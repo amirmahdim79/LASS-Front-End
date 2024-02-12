@@ -214,17 +214,44 @@
                     @include mixins.h6-text;
                 }
 
-                .name_container {
+                .user_info {
                     width: 100%;
                     max-width: 200px;
+                    max-width: 215px;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
                     align-items: flex-start;
                 }
+
+                .user_info > p:last-child {
+                    @include mixins.sub-description;
+                }
+
+                .name_container {
+                    width: 100%;
+                    display: flex;
+                    align-items: stretch;
+                    justify-content: flex-start;
+                    column-gap: 5px;
+                    // flex-wrap: wrap;
+
+                }
+
+                .name_container > p:nth-child(1) {
+                    border-left: 1px solid $dark-shades-100;
+                    padding-left: 5px;
+                    // width: 100%;
+                    max-width: 54%;
+                    min-width: 0;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
                 
                 .name_container > p:nth-child(2) {
                     @include mixins.sub-description;
+                    font-size: 15px;
                 }
             }
 

@@ -1,3 +1,4 @@
+import { GetLastActivitiesAPI } from "api/activity";
 import { GetLabEventsAPI } from "api/events";
 import { EnrollUserAPI } from "api/labs";
 import { GetLabStudentsTasksAPI } from "api/labs";
@@ -119,6 +120,17 @@ export const useLabActions = () => {
         },
     })
 
+    const { pending: gettingUsersLastActivity, request: getUsersLastActivity } = useAPI({
+        apiMethod: GetLastActivitiesAPI,
+
+        successCallback: () => {
+        },
+        
+        failedCallback: (e) => {
+            showToast('مشکلی پیش اومده', 'error')
+        },
+    })
+
     
     
     return {
@@ -151,6 +163,9 @@ export const useLabActions = () => {
 
         acceptSupsTask,
         supsTaskAcceptance,
+
+        getUsersLastActivity,
+        gettingUsersLastActivity,
 
     }
 }

@@ -153,7 +153,6 @@ export default function Profile({editable=false}) {
     useEffect(() => {
         if (editable) setMyProfileLoading(false)
         else setUserProfileLoading(false)
-
     }, [progress, userData, lastActivities, milestones, currentMilestone, location.pathname, userCurrentMilestones])
 
 
@@ -268,6 +267,7 @@ export default function Profile({editable=false}) {
                             ? <p className={cs(styles['title'])}> آخرین فعالیت‌ها </p>
                             : <div className={cs(styles['is_loading_activity_title'])}/>
                         }
+                        
                         {/* {((userInfo && lastActivities) || userData) ? <p> {lastActivities[0]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
                         {((userInfo && lastActivities) || userData) ?<p> {lastActivities[1]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }
                         {((userInfo && lastActivities) || userData) ?<p> {lastActivities[2]?.text} </p> : <div className={cs(styles['is_loading_activity_subtitle'])}/> }   */}

@@ -30,6 +30,7 @@ export default function UsersList({loading}) {
 
     const students = useSelector(state => state.lab.Students);
     const studentsTasks = useSelector(state => state.lab.labStudentsTasks);
+    const labId = useSelector(state => state.lab.labId);
 
     const [openAddMemberModal, showAddMemberModal, closeAddMemberModal] = useModal();
     const [openShowInfoBox, showShowInfoBox, closeShowInfoBox] = useModal();
@@ -38,8 +39,9 @@ export default function UsersList({loading}) {
     const { value: searchKey, setValue: setSearchKey } = useInput('');
     const { value: alumni, setValue: setAlumni } = useInput([]);
     const { value: users, setValue: setUsers } = useInput(students);
+    const { value: usersActivities, setValue: setUsersActivities } = useInput(null);
 
-    const { getLabAlumni } = useLabActions();
+    const { getLabAlumni, getUsersLastActivity } = useLabActions();
 
 
     const calcUnCompletedTasks = (userData) => {
@@ -52,6 +54,20 @@ export default function UsersList({loading}) {
             })
         }
         return num;
+    }
+
+    const getStudentsLastActivity = () => {
+        if (labId) {
+            getUsersLastActivity({}, `?lab=${labId}`)
+                .then(res => setUsersActivities(res.data))
+                .catch(err => console.log(err))
+        }
+    }
+
+    const getAlumniStudents = () => {
+        getLabAlumni()
+            .then(res => setAlumni(res.data))
+            .catch(err => console.log(err))
     }
 
     // useEffect(() => {
@@ -81,9 +97,8 @@ export default function UsersList({loading}) {
     }, [searchKey]);
 
     useEffect(() => {
-        getLabAlumni()
-            .then(res => setAlumni(res.data))
-            .catch(err => console.log(err))
+        getAlumniStudents()
+        getStudentsLastActivity();
     }, [])
 
     useEffect(() => {
@@ -95,6 +110,8 @@ export default function UsersList({loading}) {
         if (listType === 'current') setUsers(students)
     }, [students])
 
+
+    console.log("usersActivities", usersActivities);
 
     return (
         <div className={cs(styles['container'])}>
@@ -194,7 +211,7 @@ export default function UsersList({loading}) {
                 {
                     loading 
                         ? <div className={cs(styles['loading_container'])}> <Preloader /> </div> 
-                        : (
+                        : usersActivities && (
                             users && users.map((s,i) => 
                                 <div key={i} className={cs(styles['row'])}  onClick={() => navigate(`../user_profile/${s._id}`)}>
                                     <div className={cs(styles['user_info_container'])}>
@@ -207,9 +224,12 @@ export default function UsersList({loading}) {
                                             }
                                         </div>
         
-                                        <div className={cs(styles['name_container'])}>
-                                            <p> {s?.firstName} {s?.lastName} </p>
-                                            <p> {degreeMapper(s?.type)} </p>
+                                        <div className={cs(styles['user_info'])}>
+                                            <div className={cs(styles['name_container'])}>
+                                                <p> {s?.firstName} {s?.lastName} </p>
+                                                <p> {degreeMapper(s?.type)} </p>
+                                            </div>
+                                            <p> { usersActivities[`${s._id}`].text} </p>
                                         </div>
                                     </div>
                                     <p> {s?.sand > 0 ? `+${s?.sand}` : `${s?.sand}`} </p>
