@@ -116,7 +116,7 @@ export default function Base({type}) {
                                         console.log(err);
                                     })
 
-                                    console.log("res.data",res.data);
+                                    
                                     getLeaderboard({}, `?lab=${res.data._id}`)
                                         .then(res => dispatch(setLeaderboard(res.data)))
                                         .catch(err => console.log(err))

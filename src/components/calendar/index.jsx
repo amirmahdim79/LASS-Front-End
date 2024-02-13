@@ -181,6 +181,7 @@ export default function Calendar({events, date, setDate, getEvents}) {
                                 { Array.from(Array(7), (e, i) => {
                                     return (
                                         <div 
+                                            key={i}
                                             className={cs(styles['header_data'], 
                                                 date.clone().weekday(i)._d?.toLocaleDateString('fa-IR').split("/")[1] !== date._d?.toLocaleDateString('fa-IR').split("/")[1] && styles['disabled_header_data']
                                             )} 
@@ -205,8 +206,9 @@ export default function Calendar({events, date, setDate, getEvents}) {
                                         <Column 
                                             now={date}
                                             events={events}
-                                            key={i} 
+                                            key={`column-${i}`} 
                                             index={i}
+                                            keyValue={`column-${i}`} 
                                             showMore={showMore}
                                             setEvent={setEvent}
                                         />

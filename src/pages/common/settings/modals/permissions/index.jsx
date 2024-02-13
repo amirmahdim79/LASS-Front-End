@@ -59,6 +59,7 @@ export default function PermissionsModal({submit, data, permissions, userPermiss
                             onClick={() => dispatch({payload: {type: p?.value, value: !state[p?.value]}})}
                             name={p?.value}
                             id={p?.value}
+                            key={i}
                         />
                     )
                 }

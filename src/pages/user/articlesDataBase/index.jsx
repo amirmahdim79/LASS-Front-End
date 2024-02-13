@@ -51,6 +51,15 @@ export default function UserArticlesDataBase() {
             })
     }
 
+    const downloadPaper = (paper) => {
+        var link = document.createElement('a');
+        link.href = paper.url;
+        link.download = paper.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);   
+    }
+
     useEffect(() => {
         if (searchParams.size === 0) {
             // if (searchKeyword) searchPapers(searchKeyword)
@@ -87,7 +96,6 @@ export default function UserArticlesDataBase() {
 
 
         // redux , url update value when api call
-        console.log("articles", articles);
 
     return (
         <div className={cs(styles['container'])}>
@@ -109,7 +117,7 @@ export default function UserArticlesDataBase() {
                             <div className={cs(styles['articles'])}>
                                 {
                                     articles.map((article, i) => 
-                                        <div className={cs(styles['article_wrapper'])} key={i}>
+                                        <div className={cs(styles['article_wrapper'])} key={i} onClick={() => downloadPaper(article)}>
                                             <div className={cs(styles['icon_wrapper'])}>
                                                 <img src={downloadIcon} alt='download icon'/>
                                             </div>

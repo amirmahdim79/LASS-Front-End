@@ -239,7 +239,7 @@ export default function UsersList({loading}) {
                                                         <p> {s?.firstName} {s?.lastName} </p>
                                                         <p> {degreeMapper(s?.type)} </p>
                                                     </div>
-                                                    <p> { usersActivities[`${s._id}`]?.text} </p>
+                                                    <p> {usersActivities[`${s._id}`]?.text ? usersActivities[`${s._id}`]?.text : 'فعلا فعالیتی نکرده است'} </p>
                                                 </div>
                                             </div>
                                             <p> {s?.sand > 0 ? `+${s?.sand}` : `${s?.sand}`} </p>

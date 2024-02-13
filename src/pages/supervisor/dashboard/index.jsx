@@ -88,31 +88,27 @@ export default function SupervisorDashboard() {
     }
 
     useEffect(() => {
-        getCurrentTime()
-            .then((apiTime) => {
-                if (apiTime) {
-                    const customDate = moment(apiTime);
-                    getMyLabs({}, '?sups=true')
-                        .then(res => {
-                            setNow(customDate)
-                            if (res.data) {
-                                dispatch(setSupHasLab(true));    
-                                dispatchLab(setPath(res.data.Paths))
-                                dispatchLab(setStudents(res.data.Students))
-                                dispatchLab(setLabId(res.data._id))
-                    
-                                getEvents(res.data._id, customDate)
-                                getStudentsTasks(res.data._id)
-                                getTasks()
-                            } else dispatch(setSupHasLab(false));
-                        }).catch(err => console.log(err))
-                }
-            })
-    }, [])
+        setLoading(true)
+        getMyLabs({}, '?sups=true')
+            .then(res => {
+                if (res.data) {
+                    dispatch(setSupHasLab(true));    
+                    dispatchLab(setPath(res.data.Paths))
+                    dispatchLab(setStudents(res.data.Students))
+                    dispatchLab(setLabId(res.data._id))
+        
+                    if(now) getEvents(res.data._id)
+                    getStudentsTasks(res.data._id)
+                    getTasks()
+                } else dispatch(setSupHasLab(false));
+            }).catch(err => console.log(err))
+        .finally(() =>setLoading(false))
 
-    useEffect(() => { 
-        if(now) setLoading(false)
     }, [now])
+
+    useEffect(() => {
+        getTime(setNow)
+    }, [])
 
 
     return (

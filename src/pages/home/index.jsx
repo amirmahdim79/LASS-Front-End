@@ -177,7 +177,7 @@ export default function HomePage() {
                     <Logo color={'light'}/>
                     <h1>{text.title[state.mode]}</h1>
                 </div>
-                <div className={cs(styles['inputs'], (state.type !== 'دانشجو' && state.mode === 'signup') && styles['sups_form'])} >
+                <form className={cs(styles['inputs'], (state.type !== 'دانشجو' && state.mode === 'signup') && styles['sups_form'])} >
                     {
                         state.mode === 'login' && (
                             <>
@@ -312,7 +312,7 @@ export default function HomePage() {
                         )
                     }
 
-                </div>
+                </form>
                 <div className={cs(styles['buttons'])} style={{...(state.mode === 'signup' && {paddingTop: '16px'})}}>
                     <Switch 
                         left={text.switch_left_data} 

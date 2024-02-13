@@ -21,10 +21,10 @@ export default function Column({now, index, events, showMore, setEvent}) {
 
     return (
         <div className={cs(styles['container'])}>
-            <div className={cs(styles['body'])}>
+            <div className={cs(styles['body'])} > 
                 { Array.from(Array(24), (e, i) => {
                         return (
-                            <div className={cs(styles['cell'])} key={i} />
+                            <div className={cs(styles['cell'])} key={`cell-${i}${index}`}  />
                         )
                     })
                 }
@@ -32,24 +32,22 @@ export default function Column({now, index, events, showMore, setEvent}) {
                 {
                     events && events.map((e, i) => {
                         return (
-                            <>
-                                <div 
-                                    className={cs(styles['event'])} 
-                                    onClick={() => {setEvent(e); showMore()}}
-                                    key={i} 
-                                    style={{
-                                        ...(moment(e?.start)._d?.toLocaleDateString('fa-IR') !== date && { display: 'none'}),
-                                        ...(moment(e?.start).hour() !== 0 && { top: `${ (moment(e?.start).hour()*40)+(Math.ceil(moment(e?.start).minute()*0.6666)) }px`}),
-                                        ...(moment(e?.end).hour() !== 0 && { 
-                                            height:`${ 
-                                                ((moment.duration(moment(e?.end).diff(moment(e?.start)))._data.hours)*40)+(moment.duration(moment(e?.end).diff(moment(e?.start)))._data.minutes*0.6666)
-                                            }px`
-                                        }),
-                                    }}
-                                >
-                                   <p>  {e?.name } </p>
-                                </div>
-                            </>
+                            <div 
+                                className={cs(styles['event'])} 
+                                onClick={() => {setEvent(e); showMore()}}
+                                key={`event-${i}${index}`}  
+                                style={{
+                                    ...(moment(e?.start)._d?.toLocaleDateString('fa-IR') !== date && { display: 'none'}),
+                                    ...(moment(e?.start).hour() !== 0 && { top: `${ (moment(e?.start).hour()*40)+(Math.ceil(moment(e?.start).minute()*0.6666)) }px`}),
+                                    ...(moment(e?.end).hour() !== 0 && { 
+                                        height:`${ 
+                                            ((moment.duration(moment(e?.end).diff(moment(e?.start)))._data.hours)*40)+(moment.duration(moment(e?.end).diff(moment(e?.start)))._data.minutes*0.6666)
+                                        }px`
+                                    }),
+                                }}
+                            >
+                            <p>  {e?.name } </p>
+                            </div>
                         )
                     })
                 }

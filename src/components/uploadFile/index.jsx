@@ -243,7 +243,7 @@ export default function UploadFile({updatePapers}) {
                                     <img 
                                         src={Add}
                                         alt='add icon'
-                                        className={openTagsListModal && cs(styles['active_add_icon'])}
+                                        className={cs(openTagsListModal && styles['active_add_icon'])}
                                         onClick={() => openTagsModal()}
                                     /> 
                                     {openTagsListModal && 

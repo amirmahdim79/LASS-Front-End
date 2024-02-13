@@ -28,7 +28,7 @@ export default function Switch({
         <div className={cs(styles['btn-container'])} onClick={() => handleClick()}>
             <label className={cs(styles['btn-color-mode-switch'])} >
                 <input id="color_mode" name="color_mode" type="checkbox"/>
-                <label for="color_mode" className={cs(styles['btn-color-mode-switch-inner'], styles['btn-color-mode-switch'])} data-left={left} data-right={right} />
+                <label htmlFor="color_mode" className={cs(styles['btn-color-mode-switch-inner'], styles['btn-color-mode-switch'])} data-left={left} data-right={right} />
             </label>
         </div>
     )

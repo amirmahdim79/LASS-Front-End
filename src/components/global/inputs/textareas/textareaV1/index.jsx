@@ -37,12 +37,12 @@ export default function TextAreaV1({
                     dir={dir}
                     onChange={onChange}
                     defaultValue={defaultValue}
+                    value={value}
                     placeholder={placeholder}
                     disabled={disabled}
                     ref={inputRef}
                     style={{width:width, fontSize:fontSize, fontFamily: fontFamily, fontWeight: fontWeight, height:'100%', ...(!resizable && {resize:'none'})}}
                 >
-                    {value}
                 </textarea>
 
             {(!isValid && showError) && <p className={cs(styles['container'])}>{errorMessage}</p>}

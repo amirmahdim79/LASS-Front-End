@@ -40,9 +40,7 @@ export default function ArticlesList({
         link.download = paper.name;
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
-
-        
+        document.body.removeChild(link);   
     }
 
     useEffect(() => {
@@ -155,14 +153,14 @@ export default function ArticlesList({
                                                     <img src={downloadIcon} alt='download icon'/>
                                                     <span className={cs(styles['tags'])}> 
                                                         { paper.Tags.length 
-                                                            ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)
-                                                            : <p>...</p>
+                                                            ? paper.Tags.map((tag, i) => <span key={`tag-${i}`}> {tag?.name ? `#${tag?.name}` : '-'} </span>)
+                                                            : <p key={`no-tag-${i}`}>...</p>
                                                         } 
         
                                                         <div className={cs(styles['tooltip'])}>
                                                             { paper.Tags.length 
-                                                                ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)
-                                                                : <p>...</p>
+                                                                ? paper.Tags.map((tag, i) => <span key={`tooltip-tag-${i}`}> {tag?.name ? `#${tag?.name}` : '-'} </span>)
+                                                                : <p  key={`no-tag-tooltip-${i}`}>...</p>
                                                             }
                                                         </div>
                                                     </span>

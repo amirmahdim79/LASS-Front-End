@@ -192,6 +192,7 @@ export default function UsersList({
                                 students.map((s, i) => 
                                     <div 
                                         className={cs(styles['user_data_container'])}
+                                        key={`students-${i}`}
                                         style={{
                                             alignItems: !hasMoreInfo ? 'center' : 'flex-start',
                                             ...((userHasClickOption && ((userType === 'user' && permissions && permissions.indexOf('lab') > -1) || userType === 'supervisor')) && {cursor: 'pointer'}),

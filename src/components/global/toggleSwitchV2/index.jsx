@@ -32,7 +32,7 @@ export default function SwitchV2({
         <div className={cs(styles['btn_container'])} >
             <label className={cs(styles['switch'])} >
                 <input type="checkbox" id={id} name={name} className={cs(value && styles['checked_input'])} value={value} onClick={onClick}/>
-                <span className={cs(styles['slider'])} style={{...(!isDark && {backgroundColor: colors['light-glass-100']})}} for={name} />
+                <span className={cs(styles['slider'])} style={{...(!isDark && {backgroundColor: colors['light-glass-100']})}} htmlFor={name}/>
             </label>
         </div>
     )

@@ -87,7 +87,7 @@ const SelectInputV1 = ({
         
             { title &&  <p style={{fontSize:fontSize, fontWeight:fontWeight}}> {title} </p> }
             
-            <div onClick={openToggle} className={cs(styles['input_container'])}  scrollbar={true} style={{height: height, ...(toggle && {boxShadow: '0px 6px 10px -5px #00000012'})}}>
+            <div onClick={openToggle} className={cs(styles['input_container'], { [styles['scrollbar']]: true })} style={{height: height, ...(toggle && {boxShadow: '0px 6px 10px -5px #00000012'})}}>
                 <input 
                     value={value} 
                     type={type} 
