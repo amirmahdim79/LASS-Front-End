@@ -213,7 +213,7 @@ export default function GroupSettings() {
                     userHasClickOption={true}
                     userOnClickHandler={(uId) => navigate(`../user_profile/${uId}`)}
                     newList={usersId}
-                    height={'100%'}
+                    height={'705px'}
                     width={'100%'}
                 />
             </div>

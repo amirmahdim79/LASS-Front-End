@@ -117,7 +117,7 @@ export default function UsersList({loading}) {
 
 
     return (
-        <div className={cs(styles['container'])}  style={{...(users && !users.length && {maxHeight: '435px'})}}>
+        <div className={cs(styles['container'])} >
             <div className={cs(styles['header'])}>
                 <div className={cs(styles['row_1'])}>
                     <div className={cs(styles['titles_wrapper'], styles['items'])}>

@@ -33,7 +33,7 @@ export default function MilestoneInfo({
         data[id] = {
             ...data[id],
             name: state.name,
-            sandGain: state.sandGain,
+            sandGain: +state.sandGain,
             desc: state.desc,
         }
         setMilestones(data);

@@ -63,7 +63,7 @@ export default function SupSettings() {
                     <Groups />
                 </div>
                 <div className={cs(styles['path_container'])}>
-                    <p> مسیر‌راه‌ها </p>
+                    <p> نقشه راه ها </p>
 
                     <Carousel 
                         name = 'path-ways'    

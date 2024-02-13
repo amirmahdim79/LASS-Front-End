@@ -59,7 +59,7 @@
 }
 
 @mixin open-modal-from-right {
-    z-index: 3;
+    z-index: 100;
     backdrop-filter: blur(2px);
     position: absolute;
     top: 14px;
@@ -68,7 +68,7 @@
 }
 
 @mixin open-modal-from-left {
-    z-index: 3;
+    z-index: 100;
     backdrop-filter: blur(2px);
     position: absolute;
     top: 14px;

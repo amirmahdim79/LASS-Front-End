@@ -183,7 +183,7 @@ export default function UsersList({
                 )}
             </div>
 
-            <div className={cs(styles['users_list'])} style={{rowGap: listItemSpacing, maxHeight: `calc(${height} - 35px - 25px - 36px - 48px)`, minHeight: `calc(${height} - 35px - 25px - 36px - 48px)`}}>
+            <div className={cs(styles['users_list'])} style={{rowGap: listItemSpacing, maxHeight: `calc(${height} - 35px - 25px - 36px - 58px)`, minHeight: `calc(${height} - 35px - 25px - 36px - 58px)`}}>
                 {
                     !students 
                         ? <div className={cs(styles['loader_container'])}> <Preloader/> </div>

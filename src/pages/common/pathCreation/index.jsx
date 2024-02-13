@@ -25,9 +25,18 @@ import Button from 'components/global/button';
 import { degreeMapper } from 'utils/mapper';
 import { usePathActions } from './hooks/usePathActions';
 import { isEmptyObject } from 'utils/mapper';
+import { useNavigate } from 'react-router-dom';
+import { setStudents } from 'store/labSlice';
+import { useDispatch } from 'react-redux';
+import { setPath } from 'store/labSlice';
+import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions';
+import { setSupHasLab } from 'store/userSlice';
 
 
 export default function PathCreation() { 
+
+    const navigate = useNavigate();
+    const dispatchLab = useDispatch();
 
     const { showToast } = useToast();
 
@@ -52,6 +61,7 @@ export default function PathCreation() {
     const [ openDeleteModal, showDeleteModal, closeDeleteModal ] = useModal();
 
     const { createPath, pathCreation } = usePathActions();
+    const { getMyLabs } = useLabActions();
 
 
 
@@ -128,10 +138,23 @@ export default function PathCreation() {
         closeDeleteModal();
     }
 
+    const updateLabData = () => {
+        getMyLabs({}, '?sups=true')
+        .then(res =>  {
+                
+            if (res.data._id) {
+                dispatchLab(setStudents(res.data?.Students))
+                dispatchLab(setPath(res.data.Paths))
+            } else dispatchLab(setSupHasLab(false));                               
+        })
+        .catch(err => console.log(err))
+    }
+
     const savePath = () => {
         setClickSaveBtn(true);
         let data = {
             ...state,
+            sandGain: +state.sandGain,
             typeDependency: degreeMapper(state.typeDependency),
             Milestones: milestones
         }
@@ -142,6 +165,8 @@ export default function PathCreation() {
             createPath({...data})
                 .then(res => {
                     console.log(res.data);
+                    updateLabData();
+                    navigate(-1);
                 })
                 .catch(err => {
                     console.log(err);
@@ -383,7 +408,7 @@ export default function PathCreation() {
                         text={text.button} 
                         width={'355px'}
                         disabled={checkBtnIsDisabled()}
-                        // load={eventCreation}
+                        load={pathCreation}
                     />
                 </div>
             </div>
