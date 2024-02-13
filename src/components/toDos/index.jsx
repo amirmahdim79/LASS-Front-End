@@ -16,7 +16,7 @@ export default function ToDos({loading}) {
     const tasks = useSelector(state => state.lab.supsTasks);
 
     return (
-        <div className={cs(styles['container'])}  style={{...(!tasks.length && {maxHeight: '435px'})}}>
+        <div className={cs(styles['container'])} >
             <div className={cs(styles['header'])}> 
                 <h2> {text.title} </h2> 
                 <div className={cs(styles['icons'])}>
@@ -37,6 +37,7 @@ export default function ToDos({loading}) {
                 <div className={cs(styles['list_header'])}> 
                     <p> {text.header} </p>
                 </div>
+                {/* <div className={cs(styles['list_body'])} style={{...(!tasks.length && {maxHeight: '315px', minHeight: '315px', justifyContent: 'center' })}}>  */}
                 <div className={cs(styles['list_body'])} style={{...(!tasks.length && {maxHeight: '315px', minHeight: '315px', justifyContent: 'center' })}}> 
                     { 
                     

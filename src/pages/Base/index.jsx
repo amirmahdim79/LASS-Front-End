@@ -40,7 +40,7 @@ export default function Base({type}) {
             if (userType === 'user') {
                 checkAuth()
                     .then(res => {
-                        console.log("111111111111111111111111111111", res.data);
+                        // console.log("111111111111111111111111111111", res.data);
                         dispatch(addUser(res.data))
                         dispatch(setLabId(res.data.Labs[0]))
                         dispatch(setArticles([...res.data?.RecentFiles].reverse()))
@@ -48,7 +48,7 @@ export default function Base({type}) {
 
                         getMyLabs()
                             .then(res =>  {
-                                console.log("res.data",res.data);
+                                // console.log("res.data",res.data);
                                 if (res.data._id) {
                                     dispatch(setLabName(res.data.name))
                                     dispatch(setStudents(res.data?.Students))
@@ -72,7 +72,7 @@ export default function Base({type}) {
 
                             getLabGroups({}, `/${res.data.Labs[0]}`)
                             .then(res => {
-                                console.log("///////////////////////", res.data);
+                                // console.log("///////////////////////", res.data);
                                 dispatch(setLabGroups(res.data))
                             }).catch(err => {
                                 console.log(err);
@@ -132,7 +132,7 @@ export default function Base({type}) {
 
     useEffect(() => {
         if (labId) {
-            console.log("labIdlabId", labId);
+            // console.log("labIdlabId", labId);
             const interval = setInterval(() => {
                 if (userType === 'supervisor') {
                     getLabForums({}, `/${labId}`)

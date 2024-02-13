@@ -70,7 +70,6 @@ export default function SupervisorDashboard() {
     }
 
     const getEvents = (labId) => {
-        console.log("now", now);
         getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
             .then(res => dispatchLab(setEvents(res.data)))
             .catch(err => console.log( err))
