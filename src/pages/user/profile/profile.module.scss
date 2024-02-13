@@ -302,6 +302,18 @@
         .is_loading_notes_title {
             @include functions.skeletonLoadingStyles(290px, 30px, 5px);
         }
+
+        .empty_path {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            row-gap: 30px;
+            color: $dark-shades-100;
+            @include mixins.text;
+        }
     }
 
     .righ_col {

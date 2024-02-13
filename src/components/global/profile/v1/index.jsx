@@ -35,7 +35,7 @@ export default function ProfileV1({profile, loading, editable}) {
                             
                         </div>
                     ) : ( 
-                        (profile && editable) && (
+                        (editable) && (
                             <div className={cs(styles['circle_container'])}>
                                 <div className={cs(styles['circle'])}>
                                     <img src={cameraIcon} alt='camera icon' />     
@@ -44,7 +44,7 @@ export default function ProfileV1({profile, loading, editable}) {
                     ))
             }
 
-            {editable && <input type="file" name='avatar' id='my-file' accept="image/* " onChange={() => editable ? handleUploadFile : {}}/> }
+            {editable && <input type="file" name='avatar' id='my-file' accept="image/* " onChange={(e) => handleUploadFile(e)}/> }
 
         </div>
     )

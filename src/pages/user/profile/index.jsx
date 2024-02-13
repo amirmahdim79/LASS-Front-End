@@ -37,6 +37,7 @@ import 'moment/locale/fa';
 import EditElementsModal from './components/editElementsModal';
 import Preloader from 'components/global/preloaders';
 import { text } from './constants';
+import emptyList from 'assets/icons/contents/empty-path/dark-color.svg'
 
 export default function Profile({editable=false}) {  
 
@@ -156,7 +157,6 @@ export default function Profile({editable=false}) {
         if (editable) setMyProfileLoading(false)
         else setUserProfileLoading(false)
     }, [progress, userData, lastActivities, milestones, currentMilestone, location.pathname, userCurrentMilestones])
-
 
 
     return (
@@ -330,15 +330,21 @@ export default function Profile({editable=false}) {
                                         <Preloader />
                                     </>
                                 ) : (
-                                    !isEmptyObject(userData) && userCurrentMilestones && (
-                                        <>
-                                            <p className={cs(styles['title'])}> {`نقشه راه  - ${userData ? userData?.path[0]?.name : '-'}`} </p>
-                                            <ProgressTracker 
-                                                milestones={userData?.path[0]?.Milestones}
-                                                currentMilestone={userCurrentMilestones}
-                                            /> 
-                                        </>
-                                    )
+                                    !isEmptyObject(userData) && userCurrentMilestones && userCurrentMilestones.length 
+                                        ? (
+                                            <>
+                                                <p className={cs(styles['title'])}> {`نقشه راه  - ${userData ? userData?.path[0]?.name : '-'}`} </p>
+                                                <ProgressTracker 
+                                                    milestones={userData?.path[0]?.Milestones}
+                                                    currentMilestone={userCurrentMilestones}
+                                                /> 
+                                            </>
+                                        ) : (
+                                            <div className={cs(styles['empty_path'])}> 
+                                                <img src={emptyList} alt='no paths exists'/>
+                                                <p> {text.empty_paths} </p>
+                                            </div>
+                                        )
                                 )
                         ) : (
 
@@ -349,7 +355,7 @@ export default function Profile({editable=false}) {
                                         <Preloader />
                                     </>
                                 ) : (
-                                    milestones && currentMilestone && (
+                                    milestones && currentMilestone && currentMilestone.length ? (
                                         <> 
                                             <p className={cs(styles['title'])}> {`نقشه راه  - ${path && path[0]?.name ? path[0]?.name : '-'}`} </p>
                                             <ProgressTracker 
@@ -357,6 +363,11 @@ export default function Profile({editable=false}) {
                                                 currentMilestone={currentMilestone}
                                             /> 
                                         </>
+                                    ) : (
+                                        <div className={cs(styles['empty_path'])}> 
+                                            <img src={emptyList} alt='no paths exists'/>
+                                            <p> {text.empty_paths} </p>
+                                        </div>
                                     )
                                 )
                         )
