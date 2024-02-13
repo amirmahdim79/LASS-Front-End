@@ -19,4 +19,8 @@ export const text = {
     mode_1: 'بدون داوطلب',
     mode_2: 'در حال اجرا',
     mode_3: 'انجام شده',
+
+    empty_users_list: 'هنوز هیچ دانشجویی به آزمایشگاه اضافه نشده است',
+    empty_groups_list: 'هنوز هیچ گروهی وجود ندارد',
+    empty_activities_list: 'چنین فعالیتی هنوز وجود ندارد',
 }

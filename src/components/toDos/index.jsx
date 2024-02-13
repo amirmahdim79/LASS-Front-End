@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { waitingTimeColorDecider } from 'utils/mapper'
 import Preloader from 'components/global/preloaders'
+import emptyList from 'assets/icons/contents/task-square/dark-color.svg'
 
 export default function ToDos({loading}) {
 
@@ -15,7 +16,7 @@ export default function ToDos({loading}) {
     const tasks = useSelector(state => state.lab.supsTasks);
 
     return (
-        <div className={cs(styles['container'])}>
+        <div className={cs(styles['container'])}  style={{...(!tasks.length && {maxHeight: '435px'})}}>
             <div className={cs(styles['header'])}> 
                 <h2> {text.title} </h2> 
                 <div className={cs(styles['icons'])}>
@@ -36,32 +37,40 @@ export default function ToDos({loading}) {
                 <div className={cs(styles['list_header'])}> 
                     <p> {text.header} </p>
                 </div>
-                <div className={cs(styles['list_body'])}> 
+                <div className={cs(styles['list_body'])} style={{...(!tasks.length && {maxHeight: '315px', minHeight: '315px', justifyContent: 'center' })}}> 
                     { 
                     
                         loading  
                             ? <Preloader />
                             : (
-                                tasks && tasks.map((t, i) => 
-
-                                <div className={cs(styles['list_item'])} key={i} onClick={() => navigate(`../approve-milsetone/${t._id}`)}>  
-                                    <div className={cs(styles['icon'])}> 
-                                        <img 
-                                            src={tickIcon}
-                                            alt='tick icon'
-                                        />
-                                    </div>
-        
-                                    <div className={cs(styles['user_info'])}> 
-                                        <p> {t.name} </p>
-                                        <p> {`برای ${t?.User?.firstName} ${t?.User?.lastName}`} </p>
-                                    </div>
-        
-                                    <div className={cs(styles['task_time'])} style={{color: waitingTimeColorDecider(t.createdAt).color}}> 
-                                        {waitingTimeColorDecider(t.createdAt).text}
-                                    </div>
-                                </div>
-                            ))  
+                                tasks && !tasks.length 
+                                    ? 
+                                        <div className={cs(styles['empty_tasks'])}> 
+                                            <img src={emptyList} alt='no activities exists'/>
+                                            <p> {text.empty_tasks_list} </p>
+                                        </div>
+                                    : (
+                                        tasks.map((t, i) => 
+                                            <div className={cs(styles['list_item'])} key={i} onClick={() => navigate(`../approve-milsetone/${t._id}`)}>  
+                                                <div className={cs(styles['icon'])}> 
+                                                    <img 
+                                                        src={tickIcon}
+                                                        alt='tick icon'
+                                                    />
+                                                </div>
+                    
+                                                <div className={cs(styles['user_info'])}> 
+                                                    <p> {t.name} </p>
+                                                    <p> {`برای ${t?.User?.firstName} ${t?.User?.lastName}`} </p>
+                                                </div>
+                    
+                                                <div className={cs(styles['task_time'])} style={{color: waitingTimeColorDecider(t.createdAt).color}}> 
+                                                    {waitingTimeColorDecider(t.createdAt).text}
+                                                </div>
+                                            </div>
+                                        )
+                                    )
+                                )  
                     }
                 </div>
             </div>

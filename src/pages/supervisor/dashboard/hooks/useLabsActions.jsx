@@ -3,6 +3,7 @@ import { GetLabEventsAPI } from "api/events";
 import { EnrollUserAPI } from "api/labs";
 import { GetLabStudentsTasksAPI } from "api/labs";
 import { GetLabAlumniAPI } from "api/labs";
+import { GetLabStudentsAPI } from "api/labs";
 import { GetLabStudentInfoAPI } from "api/labs";
 import { GetMyLabsAPI, CreateLabAPI } from "api/labs";
 import { GetSupsTaskAPI } from "api/tasks";
@@ -39,6 +40,7 @@ export const useLabActions = () => {
         apiMethod: EnrollUserAPI,
 
         successCallback: (res) => {
+            showToast('کاربر با موفقیت اضافه شد', 'success')
         },
         
         failedCallback: (e) => {
@@ -131,6 +133,17 @@ export const useLabActions = () => {
         },
     })
 
+    const { pending: gettingLabStudents, request: getLabStudents } = useAPI({
+        apiMethod: GetLabStudentsAPI,
+
+        successCallback: () => {
+        },
+        
+        failedCallback: (e) => {
+            showToast('مشکلی پیش اومده', 'error')
+        },
+    })
+
     
     
     return {
@@ -167,5 +180,7 @@ export const useLabActions = () => {
         getUsersLastActivity,
         gettingUsersLastActivity,
 
+        getLabStudents, 
+        gettingLabStudents
     }
 }

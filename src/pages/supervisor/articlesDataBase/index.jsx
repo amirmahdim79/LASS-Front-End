@@ -97,8 +97,6 @@ export default function SupArticlesDataBase() {
     // useEffect(() => {
     //     searchPapers(searchedValue)
     // }, [searchedValue]);
-
-      
     
     return (
         <div className={cs(styles['container'])}>
@@ -114,7 +112,9 @@ export default function SupArticlesDataBase() {
             <div className={cs(styles['current_articles_container'])}>
                 <h6> {text.current_articles} </h6>
                 {
-                    articles && 
+                    articles && articles.length === 0 
+                    ? <p className={cs(styles['empty_articles_list'])}> {text.empty_articles_list} </p>
+                    : (
                         <div className={cs(styles['articles'])}>
                             {
                                 articles.map((article, i) => 
@@ -132,6 +132,7 @@ export default function SupArticlesDataBase() {
                                 )
                             }
                         </div>
+                    )
                 }
 
                 {(articles && articles.length!==0) && <div className={cs(styles['border_bottom'])}/> }

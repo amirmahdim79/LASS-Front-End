@@ -116,6 +116,18 @@
                 cursor: pointer;
                 color: $main-color-100;
             }
+
+            .empty_tasks {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                color: $dark-shades-100;
+                @include mixins.sub-title;
+                row-gap: 30px;
+            }
         }
     }
 

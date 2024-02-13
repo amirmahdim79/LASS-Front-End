@@ -299,7 +299,7 @@ export default function AddEventModal({close, type, setType, getEvents}) {
                 getEvents(labId)
                 dispatch({payload: {type: 'reset', value: initialState}})
                 setInitValue(moment())
-                setEndValue(moment())
+                setEndValue(moment());
                 close();
             })
             .catch(err => console.log(err))

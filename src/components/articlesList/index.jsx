@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSearchedValue } from 'store/userSlice'
 import { setNavSearchedValue } from 'store/userSlice'
+import emptyList from 'assets/icons/contents/notes-remove/dark-color.svg'
 
 export default function ArticlesList({
     data, 
@@ -126,42 +127,51 @@ export default function ArticlesList({
                         load   
                             ? <Preloader/>
                             : 
-                                data.map((paper, i) => 
-                                    <div key={i} className={cs(styles['row'])} onClick={() => downloadPaper(paper, i)}>
-                                        <div className={cs(styles['name_wrapper'])}>
-                                            <CheckBoxV1 checked={false}/>
-                                            <img 
-                                                src={docIcon}
-                                                alt='doc icon'
-                                            />
-                                            <span> {paper?.name} </span>
-                                        </div>
-                                    
-                                        <div className={cs(styles['size_wrapper'])}>
-                                            <p> {formatFileSize(paper?.size)} </p>
-                                        </div>
-                                        <div className={cs(styles['date_wrapper'])}>
-                                            <p> 2019/06/18 </p>
-                                        </div>
-                                        <div className={cs(styles['tags_wrapper'])}>
-                                            <img src={downloadIcon} alt='download icon'/>
-                                            <span className={cs(styles['tags'])}> 
-                                                { paper.Tags.length 
-                                                    ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)
-                                                    : <p>...</p>
-                                                } 
-
-                                                <div className={cs(styles['tooltip'])}>
-                                                    { paper.Tags.length 
-                                                        ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)
-                                                        : <p>...</p>
-                                                    }
-                                                </div>
-                                            </span>
-                                        </div>
-            
+                                data && data.length === 0 
+                                    ? 
+                                    <div className={cs(styles['empty_list'])}> 
+                                        <img src={emptyList} alt='no papers exists'/>
+                                        <p> {text.empty_list} </p>
                                     </div>
-                                )
+                                    : (
+                                        data.map((paper, i) => 
+                                            <div key={i} className={cs(styles['row'])} onClick={() => downloadPaper(paper, i)}>
+                                                <div className={cs(styles['name_wrapper'])}>
+                                                    <CheckBoxV1 checked={false}/>
+                                                    <img 
+                                                        src={docIcon}
+                                                        alt='doc icon'
+                                                    />
+                                                    <span> {paper?.name} </span>
+                                                </div>
+                                            
+                                                <div className={cs(styles['size_wrapper'])}>
+                                                    <p> {formatFileSize(paper?.size)} </p>
+                                                </div>
+                                                <div className={cs(styles['date_wrapper'])}>
+                                                    <p> 2019/06/18 </p>
+                                                </div>
+                                                <div className={cs(styles['tags_wrapper'])}>
+                                                    <img src={downloadIcon} alt='download icon'/>
+                                                    <span className={cs(styles['tags'])}> 
+                                                        { paper.Tags.length 
+                                                            ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)
+                                                            : <p>...</p>
+                                                        } 
+        
+                                                        <div className={cs(styles['tooltip'])}>
+                                                            { paper.Tags.length 
+                                                                ? paper.Tags.map((tag, i) => <span> {tag?.name ? `#${tag?.name}` : '-'} </span>)
+                                                                : <p>...</p>
+                                                            }
+                                                        </div>
+                                                    </span>
+                                                </div>
+                    
+                                            </div>
+                                        )
+                                    )
+
                     }
                     
                 </div>

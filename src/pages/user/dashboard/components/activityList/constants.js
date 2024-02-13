@@ -7,4 +7,6 @@ export const text = {
     mode_4: 'تسک‌های امتیازی',
     deadline: 'ددلاین',
 
+    empty_activities_list: 'در حال حاضر هیچ وظیفه‌ای ندارید!',
+
 }

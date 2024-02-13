@@ -186,9 +186,10 @@ export default function TaskBounty() {
                             onClick={changeBountyType}
                         />
                     </div>
-                    <div className={cs(styles['list'])}>
+                    <div className={cs(styles['list'])} style={{...(state.filteredActivities.length===0 && {justifyContent:'center', alignItems: 'center'})}}>
                         {
-                            state.filteredActivities && state.filteredActivities.map((activity, i) => 
+                            state.filteredActivities && state.filteredActivities.length 
+                                ? state.filteredActivities.map((activity, i) => 
                             
                                 <div className={cs(styles['activity'])} key={i}> 
                                     <div className={cs(styles['activity_header'])}>
@@ -204,6 +205,10 @@ export default function TaskBounty() {
                                     </div>
                                 </div>
                                 
+                            ) : (
+                                <div className={cs(styles['empty_list'])}> 
+                                    <p> {text.empty_activities_list} </p>
+                                </div>
                             )
                         }
                     </div>
@@ -215,18 +220,26 @@ export default function TaskBounty() {
                         <div className={cs(styles['users_list'])}>
                             <p> {text.subtitle_2_1} </p>
                             <div className={cs(styles['list'])}>
+                                
                                 <div className={cs(styles['list_header_1'])}>
                                     <img src={usersIcon} alt='users icon' />
                                     <p > {text.text_2_1} </p>
                                 </div>
                                 <div className={cs(styles['users_name'])}>
                                     {
-                                        labGroups && labGroups.map((group, ind) => 
-                                            <div className={cs(styles['username'])} key={ind}>
-                                                <CheckBoxV2 borderColor={'dark'} value={state.groups.findIndex(g => g._id === group._id) !== -1} onClick={() => addGroup(group)}/>
-                                                <p> {group?.name} </p>
-                                            </div>
-                                        )
+                                        labGroups && labGroups.length
+                                            ?
+                                                labGroups.map((group, ind) => 
+                                                <div className={cs(styles['username'])} key={ind}>
+                                                    <CheckBoxV2 borderColor={'dark'} value={state.groups.findIndex(g => g._id === group._id) !== -1} onClick={() => addGroup(group)}/>
+                                                    <p> {group?.name} </p>
+                                                </div>
+                                            ) : (
+                                                <div className={cs(styles['empty_users_list'])}>
+                                                    <p> {text.empty_groups_list} </p>
+                                                </div>
+                                            )
+                                        
                                     }
                                 </div>
                                 <div className={cs(styles['list_header_2'])}>
@@ -234,15 +247,22 @@ export default function TaskBounty() {
                                 </div>
                                 <div className={cs(styles['users_name'])}>
                                     {
-                                        students && students.map((student, ind) => 
-                                            <div className={cs(styles['username'])} key={ind}>
-                                                <CheckBoxV2 borderColor={'dark'} value={state.users.includes(student._id)} onClick={() => addUser(student._id)}/>
-                                                <div className={cs(styles['data'])}>
-                                                    <p> {student?.firstName} {student?.lastName}</p>
-                                                    <p> {degreeMapper(student?.type)} </p>
+                                        students && students.length
+                                            ?
+                                                students.map((student, ind) => 
+                                                <div className={cs(styles['username'])} key={ind}>
+                                                    <CheckBoxV2 borderColor={'dark'} value={state.users.includes(student._id)} onClick={() => addUser(student._id)}/>
+                                                    <div className={cs(styles['data'])}>
+                                                        <p> {student?.firstName} {student?.lastName}</p>
+                                                        <p> {degreeMapper(student?.type)} </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
+                                            ) : (
+                                                <div className={cs(styles['empty_users_list'])}>
+                                                    <p> {text.empty_users_list} </p>
+                                                </div>
+                                            )
+                                        
                                     }
                                 </div>
                                     

@@ -115,9 +115,9 @@ export default function GroupSettings() {
         }
     }, [labGroups])
 
-    useEffect(() => {
-        dispatch(setNewName(undefined))
-    }, [])
+    // useEffect(() => {
+    //     dispatch(setNewName(undefined))
+    // }, [])
 
     return (
         <div className={cs(styles['container'])}>

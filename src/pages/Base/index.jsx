@@ -22,6 +22,7 @@ import { setCurrentTime } from "store/userSlice";
 import useInput from "hooks/useInputHandler";
 import { setCurrentMilestone } from "store/labSlice";
 import { setPrevInd } from "store/labSlice";
+import { setSupHasLab } from "store/userSlice";
 
 export default function Base({type}) {
         
@@ -39,7 +40,7 @@ export default function Base({type}) {
             if (userType === 'user') {
                 checkAuth()
                     .then(res => {
-                        // console.log("111111111111111111111111111111", res.data);
+                        console.log("111111111111111111111111111111", res.data);
                         dispatch(addUser(res.data))
                         dispatch(setLabId(res.data.Labs[0]))
                         dispatch(setArticles([...res.data?.RecentFiles].reverse()))
@@ -47,34 +48,40 @@ export default function Base({type}) {
 
                         getMyLabs()
                             .then(res =>  {
-                                // console.log("22222222222222", res.data);
-                                dispatch(setLabName(res.data.name))
-                                dispatch(setStudents(res.data?.Students))
-                                dispatch(setPath(res.data?.Paths))
-                                dispatch(setMilestone(res.data.Paths[0]?.Milestones))
+                                console.log("res.data",res.data);
+                                if (res.data._id) {
+                                    dispatch(setLabName(res.data.name))
+                                    dispatch(setStudents(res.data?.Students))
+                                    dispatch(setPath(res.data?.Paths))
+                                    dispatch(setMilestone(res.data.Paths[0]?.Milestones))
 
-                                for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
-                                    if (milestone.status[0] === null) {
-                                        dispatch(setCurrentMilestone(milestone));
-                                        if (i === 0) dispatch(setPrevInd(0))
-                                        else dispatch(setPrevInd(i-1))
-                                        break;
+                                    for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
+                                        if (milestone.status[0] === null) {
+                                            dispatch(setCurrentMilestone(milestone));
+                                            if (i === 0) dispatch(setPrevInd(0))
+                                            else dispatch(setPrevInd(i-1))
+                                            break;
+                                        }
                                     }
-                                }
+                                }                                
                             })
                             .catch(err => console.log(err))
 
-                        getLabGroups({}, `/${res.data.Labs[0]}`)
+                            
+                        if (res.data.Labs[0]) {
+
+                            getLabGroups({}, `/${res.data.Labs[0]}`)
                             .then(res => {
-                                // console.log("///////////////////////", res.data);
+                                console.log("///////////////////////", res.data);
                                 dispatch(setLabGroups(res.data))
                             }).catch(err => {
                                 console.log(err);
                             })
 
-                        getLeaderboard({}, `?lab=${res.data.Labs[0]}`)
-                            .then(res => dispatch(setLeaderboard(res.data)))
-                            .catch(err => console.log("leader err", err))
+                            getLeaderboard({}, `?lab=${res.data.Labs[0]}`)
+                                .then(res => dispatch(setLeaderboard(res.data)))
+                                .catch(err => console.log("leader err", err))
+                        }
 
                             // getMyActivities()
                             //     .then(res => {
@@ -91,15 +98,17 @@ export default function Base({type}) {
             }else if (userType === 'supervisor') {
                 checkSupAuth()
                     .then(res => {
+                       
                         dispatch(setArticles(res.data?.RecentFiles.reverse()))
                         getMyLabs({}, '?sups=true')
                             .then(res =>  {
-                                // console.log("supervisorsupervisorsupervisor", res.data);
-                                dispatch(setStudents(res.data?.Students))
-                                dispatch(setPath(res.data.Paths))
-                                dispatch(setLabId(res.data._id))
-
-                                getLabGroups({}, `/${res.data._id}`)
+                                 
+                                if (res.data._id) {
+                                    dispatch(setSupHasLab(true));    
+                                    dispatch(setStudents(res.data?.Students))
+                                    dispatch(setPath(res.data.Paths))
+                                    dispatch(setLabId(res.data._id))
+                                    getLabGroups({}, `/${res.data._id}`)
                                     .then(res => {
                                         // console.log("///////////////////////", res.data);
                                         dispatch(setLabGroups(res.data))
@@ -107,10 +116,11 @@ export default function Base({type}) {
                                         console.log(err);
                                     })
 
-                                
-                                getLeaderboard({}, `?lab=${res.data._id}`)
-                                    .then(res => dispatch(setLeaderboard(res.data)))
-                                    .catch(err => console.log(err))
+                                    console.log("res.data",res.data);
+                                    getLeaderboard({}, `?lab=${res.data._id}`)
+                                        .then(res => dispatch(setLeaderboard(res.data)))
+                                        .catch(err => console.log(err))
+                                } else dispatch(setSupHasLab(false));                               
                             })
                             .catch(err => console.log(err))
                         dispatch(addUser(res.data))
@@ -122,13 +132,15 @@ export default function Base({type}) {
 
     useEffect(() => {
         if (labId) {
+            console.log("labIdlabId", labId);
             const interval = setInterval(() => {
                 if (userType === 'supervisor') {
                     getLabForums({}, `/${labId}`)
                         .then(res => {
+                            console.log("rsssssssssssss", res.data);
                             dispatch(setLabForums(sortForum(res.data)))
                         })
-                        .catch(err => console.log(err))
+                        .catch(err => console.log("errrrrr", err))
                 }else {
                     getLabForums({}, `/user/${labId}`)
                         .then(res => {
@@ -144,7 +156,7 @@ export default function Base({type}) {
 
     useEffect(() => {
         if (location.pathname.includes('forum')) {
-            if (params.id) {
+            if (params.id && labId) {
                 const interval = setInterval(() => {
                     getOneForum({}, `/${params.id}?type=${userType === 'supervisor' ? 'Supervisor' : 'User'}`)
                     .then(res => dispatch(setForum(res.data)))
@@ -157,7 +169,7 @@ export default function Base({type}) {
     }, [params.id, location.pathname]);
 
     useEffect(() => {
-        if (location.pathname.includes('my-profile')) {
+        if (location.pathname.includes('my-profile') && labId) {
             getMyLabs()
                 .then(res =>  {
                     dispatch(setPath(res.data?.Paths))
@@ -172,6 +184,10 @@ export default function Base({type}) {
                         }
                     }
                 })
+                .catch(err => console.log(err))
+
+            getLeaderboard({}, `?lab=${labId}`)
+                .then(res => dispatch(setLeaderboard(res.data)))
                 .catch(err => console.log(err))
         }
     }, [params.id, location.pathname]);

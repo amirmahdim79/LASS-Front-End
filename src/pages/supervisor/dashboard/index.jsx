@@ -23,6 +23,7 @@ import UsersList from 'components/usersList/proVersion'
 import { getTime } from 'utils/mapper'
 import Preloader from 'components/global/preloaders'
 import { getCurrentTime } from 'utils/mapper'
+import { setSupHasLab } from 'store/userSlice'
 
 
 export default function SupervisorDashboard() {
@@ -32,7 +33,7 @@ export default function SupervisorDashboard() {
     const navigate = useNavigate();
     const dispatchLab = useDispatch();
 
-    const { getMyLabs, createLabs, getLabEvents, getLabStudentsTasks, getSupsTasks } = useLabActions();
+    const { getMyLabs, createLabs, labCreation, getLabEvents, getLabStudentsTasks, getSupsTasks } = useLabActions();
     const [open, show, close] = useModal();
 
     const initialState = {
@@ -43,6 +44,7 @@ export default function SupervisorDashboard() {
     const [ state , dispatch] = useReducer( reducer, initialState );
 
     const events = useSelector(state => state.lab.Events);
+    const hasLab = useSelector(state => state.user.supHasLab);
 
     const { value: now, setValue: setNow } = useInput('');
     const { value: loading, setValue: setLoading } = useInput(true);
@@ -52,11 +54,14 @@ export default function SupervisorDashboard() {
     }
 
     const createLab = () => {
-        createLabs({name: state.name, desc: state.desc}).then(res => {
-            console.log(res);
-        }).catch(err => {
-            console.log(err);
-        })
+        createLabs({name: state.name, desc: state.desc})
+            .then(res => {
+                dispatchLab(setLabId(res.data._id))
+                dispatchLab(setSupHasLab(true));
+                close();
+            }).catch(err => {
+                console.log(err);
+            })
     }
     
     const cancel = () => {
@@ -64,7 +69,8 @@ export default function SupervisorDashboard() {
         close();
     }
 
-    const getEvents = (labId, now) => {
+    const getEvents = (labId) => {
+        console.log("now", now);
         getLabEvents({'date': `${now.month()+1}/${now.date()}/${now.year()}`}, `/${labId}`)
             .then(res => dispatchLab(setEvents(res.data)))
             .catch(err => console.log( err))
@@ -90,14 +96,16 @@ export default function SupervisorDashboard() {
                     getMyLabs({}, '?sups=true')
                         .then(res => {
                             setNow(customDate)
-                            dispatchLab(setPath(res.data.Paths))
-                            dispatchLab(setStudents(res.data.Students))
-                            dispatchLab(setLabId(res.data._id))
-                
-                            getEvents(res.data._id, customDate)
-                            getStudentsTasks(res.data._id)
-                            getTasks()
-            
+                            if (res.data) {
+                                dispatch(setSupHasLab(true));    
+                                dispatchLab(setPath(res.data.Paths))
+                                dispatchLab(setStudents(res.data.Students))
+                                dispatchLab(setLabId(res.data._id))
+                    
+                                getEvents(res.data._id, customDate)
+                                getStudentsTasks(res.data._id)
+                                getTasks()
+                            } else dispatch(setSupHasLab(false));
                         }).catch(err => console.log(err))
                 }
             })
@@ -110,86 +118,95 @@ export default function SupervisorDashboard() {
 
     return (
         <div className={cs(styles['container'])} >
-            <div className={cs(styles['boxes_container'])}>
-                <div className={cs(styles['calendar_container'])}>
-                {
-                    now 
-                        ? <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
-                        : <Preloader />
-                }                    
-                </div>
-
-                <div className={cs(styles['users_container'])}>
-                    <UsersList loading={loading}/>
-                    <ToDos loading={loading}/>
-                </div>
-
-            </div>
-
-
-
-
-            {/* <div className={cs(styles['lab_creator_box'])}>
-                <h3> {text.title} </h3>
-                <img 
-                    src={emptyBox}
-                    alt='empty box'
-                />
-                <div style={{textAlign:' center'}}>
-                    <p> {text.subtitle_1} </p>
-                    <p> {text.subtitle_2} </p>
-                </div>
-
-                <div className={cs(styles['button_container'])}>
-                    <Button
-                        color={colors['main-color-100']} 
-                        onClick={() => openLabCreationModal()}
-                        text={text.button} 
-                        // disabled={!email || !password}
+            {
+                hasLab === true && (
+                    <div className={cs(styles['boxes_container'])}>
+                        <div className={cs(styles['calendar_container'])}>
+                        {
+                            now 
+                                ? <Calendar events={events} date={now} setDate={setNow} getEvents={getEvents}/>
+                                : <Preloader />
+                        }                    
+                        </div>
+        
+                        <div className={cs(styles['users_container'])}>
+                            <UsersList loading={loading}/>
+                            <ToDos loading={loading}/>
+                        </div>
+        
+                    </div>
+                )
+            }
+            {
+               hasLab === false &&  (
+                <div className={cs(styles['lab_creator_box'])}>
+                    <h3> {text.title} </h3>
+                    <img 
+                        src={emptyBox}
+                        alt='empty box'
                     />
-                </div>
-                
-
-                <div className={cs(styles['lab_creation_modal'], styles['opacity'])} style={{display: open ? 'block' : 'none'}}> 
-                    <div className={cs(styles['modal_content'])}>
-                        <div className={cs(styles['inputs_container'])}>
-                            <div>
-                                <TextInputV2 
-                                    value={state.name}
-                                    onChange={(e)=>dispatch({payload: {type: 'name', value: e.target.value}})}
-                                    placeholder={text.input_1} 
-                                    dir={'rtl'}
+                    <div style={{textAlign:' center'}}>
+                        <p> {text.subtitle_1} </p>
+                        <p> {text.subtitle_2} </p>
+                    </div>
+    
+                    <div className={cs(styles['button_container'])}>
+                        <Button
+                            color={colors['main-color-100']} 
+                            onClick={() => openLabCreationModal()}
+                            text={text.button} 
+                            // disabled={!email || !password}
+                        />
+                    </div>
+                    
+    
+                    <div className={cs(styles['lab_creation_modal'], styles['opacity'])} style={{display: open ? 'block' : 'none'}}> 
+                        <div className={cs(styles['modal_content'])}>
+                            <div className={cs(styles['inputs_container'])}>
+                                <div>
+                                    <TextInputV2 
+                                        value={state.name}
+                                        onChange={(e)=>dispatch({payload: {type: 'name', value: e.target.value}})}
+                                        placeholder={text.input_1} 
+                                        dir={'rtl'}
+                                    />
+                                </div>
+                                <div>
+                                    <TextAreaV1 
+                                        name={'description'}
+                                        value={state.desc}
+                                        onChange={(e)=>dispatch({payload: {type: 'desc', value: e.target.value}})}
+                                        placeholder={text.input_2} 
+                                        rows={'4'}
+                                        resizable={false}
+                                    />
+                                </div>
+                            </div>
+    
+                            <div className={cs(styles['buttons_container'])}>
+                                <Button
+                                    color={colors['main-color-100']} 
+                                    onClick={() => createLab()}
+                                    text={text.button_1} 
+                                    load={labCreation}
+                                    disabled={!state.name.trim().length || !state.desc.trim().length}
+                                />
+                                <Button
+                                    color={colors['main-color-100']} 
+                                    onClick={() => cancel()}
+                                    text={text.button_2} 
+                                    outlined={true}
+                                    // disabled={!email || !password}
                                 />
                             </div>
-                            <div>
-                                <TextAreaV1 
-                                    name={'description'}
-                                    value={state.desc}
-                                    onChange={(e)=>dispatch({payload: {type: 'desc', value: e.target.value}})}
-                                    placeholder={text.input_2} 
-                                    rows={'4'}
-                                />
-                            </div>
-                        </div>
-
-                        <div className={cs(styles['buttons_container'])}>
-                            <Button
-                                color={colors['main-color-100']} 
-                                onClick={() => createLab()}
-                                text={text.button_1} 
-                                // disabled={!email || !password}
-                            />
-                            <Button
-                                color={colors['main-color-100']} 
-                                onClick={() => cancel()}
-                                text={text.button_2} 
-                                outlined={true}
-                                // disabled={!email || !password}
-                            />
-                        </div>
-                    </div> 
+                        </div> 
+                    </div>
                 </div>
-            </div> */}
+                )
+            }
+            {
+                hasLab === null && <Preloader />
+            }
         </div>
     )
 }

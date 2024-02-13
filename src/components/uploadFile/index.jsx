@@ -90,7 +90,6 @@ export default function UploadFile({updatePapers}) {
                 'x-auth-token': GET_TOKEN()
             },
             onUploadProgress: data => {
-                console.log(data);
                 setProgress(Math.round((100 * data.loaded) / data.total))
             }
         })

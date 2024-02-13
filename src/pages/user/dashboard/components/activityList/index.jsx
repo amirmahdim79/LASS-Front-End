@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 import Preloader from 'components/global/preloaders';
 import SwitchV3 from 'components/global/toggleSwitchV3';
 import TaskPreview from '../taskPreview';
+import emptyList from 'assets/icons/contents/task-square/dark-color.svg'
 
 export default function ActivityList({state, loading, now, changeActivityType, taskBounties}) {
 
     const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
     const userTasks = useSelector(state => state.lab.userTasks);
-
 
     return (
         <div className={cs(styles['upcoming_activities_container'])}>
@@ -39,12 +39,21 @@ export default function ActivityList({state, loading, now, changeActivityType, t
             <div className={cs(styles['activities'])}>
                 {
                     (!(loading))
-                        ? 
-                            <>
-                                {(state.activityType === 'all' || state.activityType === 'milestone') && currentMilestone?.Tasks.map((task, index) => <TaskPreview task={task} now={now} key={index}/>)}
-                                {(state.activityType === 'all' || state.activityType === 'userTasks') && userTasks.map((task, index) => <TaskPreview task={task} now={now} type={'usertask'} key={index}/>) }
-                                {(state.activityType === 'all' || state.activityType === 'bounties') && taskBounties.map((task, index) => <TaskPreview task={task} now={now} type={'task-bounty'} key={index}/>) }
-                            </>
+                        ? (
+                            ((currentMilestone === null || !currentMilestone.length ) && !userTasks.length && !taskBounties.lenght)
+                                ?
+                                    <div className={cs(styles['empty_activities_list'])}>
+                                        <img src={emptyList} alt='no activities exists'/>
+                                        <p> {text.empty_activities_list} </p>
+                                    </div>
+                                :
+                                    <>
+                                        {(state.activityType === 'all' || state.activityType === 'milestone') && currentMilestone?.Tasks.map((task, index) => <TaskPreview task={task} now={now} key={index}/>)}
+                                        {(state.activityType === 'all' || state.activityType === 'userTasks') && userTasks.map((task, index) => <TaskPreview task={task} now={now} type={'usertask'} key={index}/>) }
+                                        {(state.activityType === 'all' || state.activityType === 'bounties') && taskBounties.map((task, index) => <TaskPreview task={task} now={now} type={'task-bounty'} key={index}/>) }
+                                    </>
+                        )
+
                         : <Preloader />
                 }
             </div>

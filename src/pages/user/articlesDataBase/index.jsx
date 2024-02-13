@@ -87,7 +87,8 @@ export default function UserArticlesDataBase() {
 
 
         // redux , url update value when api call
-        
+        console.log("articles", articles);
+
     return (
         <div className={cs(styles['container'])}>
             <div className={cs(styles['articles_container'])}>
@@ -102,24 +103,27 @@ export default function UserArticlesDataBase() {
             <div className={cs(styles['current_articles_container'])}>
                 <h6> {text.current_articles} </h6>
                 {
-                    articles && 
-                        <div className={cs(styles['articles'])}>
-                            {
-                                articles.map((article, i) => 
-                                    <div className={cs(styles['article_wrapper'])} key={i}>
-                                        <div className={cs(styles['icon_wrapper'])}>
-                                            <img src={downloadIcon} alt='download icon'/>
+                    articles && articles.length === 0 
+                        ? <p className={cs(styles['empty_articles_list'])}> {text.empty_articles_list} </p>
+                        : (
+                            <div className={cs(styles['articles'])}>
+                                {
+                                    articles.map((article, i) => 
+                                        <div className={cs(styles['article_wrapper'])} key={i}>
+                                            <div className={cs(styles['icon_wrapper'])}>
+                                                <img src={downloadIcon} alt='download icon'/>
+                                            </div>
+                                            <div className={cs(styles['name_wrapper'])}>
+                                                <span> {article?.name} </span>
+                                            </div>
+                                            <div className={cs(styles['more_info_wapper'])}>
+                                                <img src={moreIcon} alt='more icon'/>
+                                            </div>
                                         </div>
-                                        <div className={cs(styles['name_wrapper'])}>
-                                            <span> {article?.name} </span>
-                                        </div>
-                                        <div className={cs(styles['more_info_wapper'])}>
-                                            <img src={moreIcon} alt='more icon'/>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                        </div>
+                                    )
+                                }
+                            </div>
+                        )
                 }
 
                 { (articles && articles.length!==0) && <div className={cs(styles['border_bottom'])}/> }

@@ -13,20 +13,13 @@ import filterIcon from 'assets/icons/essential/filter/dark-color.svg'
 import sortIcon from 'assets/icons/essential/sort/dark-color.svg'
 import editIcon from 'assets/icons/contents/edit_2/dark-color.svg';
 import UserAvatarCollage from 'components/global/usersAvatarCollage'
+import emptyList from 'assets/icons/users/user-remove/dark-color.svg';
 
 export default function Groups() { 
 
     const navigate = useNavigate();
 
     const labGroups = useSelector(state => state.lab.labGroups);
-
-
-
-    // const articles = useSelector(state => state.user.articles);
-    // const { value: allPapers, setValue: setAllPapers } = useInput([]);
-
-
-
 
     return (
         <div className={cs(styles['container'])}>
@@ -51,20 +44,29 @@ export default function Groups() {
                 </div>
                 
             </div>
-            <div className={cs(styles['groups'])}>
-                { labGroups && labGroups.map((group, i) => 
-                    <div className={cs(styles['group_container'])}>
-                        <div className={cs(styles['groups_data'])}>
-                            <p> {group.name} </p>
-                            <UserAvatarCollage users={group.Users} size={'25px'} alignment={'flex-start'} fontSize={'12px'} maxNum={9}/>
+            <div className={cs(styles['groups'], !labGroups.length && styles['empty_groups'])}>
+                { labGroups && !labGroups.length 
+                    ?
+                        <div className={cs(styles['empty_list'])}>
+                            <img src={emptyList} alt='no groups exists'/>
+                            <p> {text.empty_list} </p>
                         </div>
-                        <img 
-                            src={editIcon}
-                            alt='edit icon'
-                            onClick={() => navigate(`./group/${group._id}`)}
-                        />
-                    </div>
-                )}
+                    :
+                        labGroups.map((group, i) => 
+                        <div className={cs(styles['group_container'])}>
+                            <div className={cs(styles['groups_data'])}>
+                                <p className={cs(styles['groups_name'])}> {group.name} </p>
+                                
+                                <UserAvatarCollage users={group.Users} size={'25px'} alignment={'flex-start'} fontSize={'12px'} maxNum={6}/>
+                            </div>
+                            <img 
+                                src={editIcon}
+                                alt='edit icon'
+                                onClick={() => navigate(`./group/${group._id}`)}
+                            />
+                        </div>
+                    )
+                }
             </div>
             
         </div>

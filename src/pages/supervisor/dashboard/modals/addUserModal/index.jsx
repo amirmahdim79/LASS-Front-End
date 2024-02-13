@@ -8,10 +8,17 @@ import { reducer } from './reducer'
 import styles from './style.module.scss'
 import colors from "styles/colors.module.scss"
 import { useLabActions } from '../../hooks/useLabsActions'
+import { useDispatch } from 'react-redux'
+import { setStudents } from 'store/labSlice'
+import { setSupHasLab } from 'store/userSlice'
+import { setLabGroups } from 'store/labSlice'
+import { setPath } from 'store/labSlice'
 
 
 
 export default function AddUserModal({close}) {
+
+    const dispatchLab = useDispatch();
 
     const initialState = {
         email: '',
@@ -19,7 +26,19 @@ export default function AddUserModal({close}) {
 
     const [ state , dispatch] = useReducer( reducer, initialState );
 
-    const { enrollUser, userEnrollment } = useLabActions();
+    const { enrollUser, userEnrollment, getLabStudents, getMyLabs } = useLabActions();
+
+    const updateLab = () => {
+        getMyLabs({}, '?sups=true')
+            .then(res =>  {
+                    
+                if (res.data._id) {
+                    dispatchLab(setStudents(res.data?.Students))
+                    dispatchLab(setPath(res.data.Paths))
+                } else dispatchLab(setSupHasLab(false));                               
+            })
+            .catch(err => console.log(err))
+    }
 
     const submit = () => {
         const data = {
@@ -27,11 +46,14 @@ export default function AddUserModal({close}) {
         }
         enrollUser({...data})
             .then(res => {
-                close()
+                close();
+                updateLab();
+                // getLabStudents()
+                //     .then(res => dispatchLab(setStudents(res.data)))
+                //     .catch(err => console.log(err))
             })
             .catch(err => {
                 console.log(err)
-                close()
             })
             .finally(() => {
                 dispatch({payload: {type: 'reset', value: initialState}})

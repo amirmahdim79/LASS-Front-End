@@ -24,6 +24,8 @@ import Calendar from 'components/calendar'
 import { setEvents } from 'store/labSlice'
 import moment from 'moment';
 import 'moment/locale/fa';
+import Preloader from 'components/global/preloaders'
+import emptyList from 'assets/icons/contents/empty-path/dark-color.svg'
 
 export default function Settings() { 
 
@@ -139,14 +141,22 @@ export default function Settings() {
                     </div>
 
                     {
-                        paths 
+                        paths !== null
                             ?
-                                <Carousel 
-                                    name='path-ways'   
-                                    type='path'
-                                    items={paths}
-                                />
-                            : <p>loading</p>
+                             paths.length
+                                ? 
+                                    <Carousel 
+                                        name='path-ways'   
+                                        type='path'
+                                        items={paths}
+                                    />
+                                : 
+                                    <div className={cs(styles['empty_path'])}> 
+                                        <img src={emptyList} alt='no paths exists'/>
+                                        <p> {text.empty_paths} </p>
+                                    </div>
+
+                            : <Preloader />
                     }
 
                     

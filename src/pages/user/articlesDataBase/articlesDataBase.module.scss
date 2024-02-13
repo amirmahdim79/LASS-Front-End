@@ -50,6 +50,14 @@
         display: flex;
         flex-direction: column;
         row-gap: 12px;
+
+        .empty_articles_list {
+            direction: rtl;
+            color: $light-shades-100;
+            @include mixins.description;
+            padding-top: 15px;
+            padding-right: 10px;
+        }
         
 
         h6 {

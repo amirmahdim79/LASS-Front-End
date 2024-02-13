@@ -15,6 +15,7 @@ import 'moment/locale/fa';
 import { useModal } from 'hooks/useModal';
 import AddDocModal from './components/modals/addDoc';
 import Modal from 'components/global/modal';
+import emptyList from 'assets/icons/contents/notes-remove/dark-color.svg'
 
 export default function NotesPage() { 
 
@@ -112,15 +113,23 @@ export default function NotesPage() {
             </div>
             <div className={cs(styles['list_body'])} style={{...(documents.length > 5 && {paddingLeft: '30px'})}}>
                 {
-                    documents && documents.map((doc, i) => 
-                        <div className={cs(styles['row'])} key={i} onClick={() => navigateToGoogleDocs(doc?.documentId)}> 
-                            <div className={cs(styles['doc_name'])}> {doc?.name} </div>
-                            <div className={cs(styles['doc_users'])}>
-                                <UserAvatarCollage users={doc?.Users} />
-                            </div>
-                            <div className={cs(styles['doc_creationDate'])}> {moment(doc?.createdAt)._d.toLocaleDateString('fa-IR')} </div>
+                    documents && !documents.length
+                        ? <div className={cs(styles['empty_list'])}>
+                                <img src={emptyList} alt='no notes exists'/>
+                                <p> {text.empty_list} </p>
                         </div>
-                    )
+                        : (
+                            documents.map((doc, i) => 
+                                <div className={cs(styles['row'])} key={i} onClick={() => navigateToGoogleDocs(doc?.documentId)}> 
+                                    <div className={cs(styles['doc_name'])}> {doc?.name} </div>
+                                    <div className={cs(styles['doc_users'])}>
+                                        <UserAvatarCollage users={doc?.Users} />
+                                    </div>
+                                    <div className={cs(styles['doc_creationDate'])}> {moment(doc?.createdAt)._d.toLocaleDateString('fa-IR')} </div>
+                                </div>
+                            )
+                        )
+                    
                 }
             
             </div>

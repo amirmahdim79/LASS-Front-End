@@ -23,7 +23,7 @@ import useToast from 'hooks/useToast'
 import { getFirstLetters } from 'utils/mapper'
 import { setNewName } from 'store/labSlice'
 import { degreeMapper } from 'utils/mapper'
-
+import emptyList from 'assets/icons/users/user-remove/dark-color.svg';
 
 export default function UsersList({
     type = 'editGroup',
@@ -98,12 +98,13 @@ export default function UsersList({
         setImageHoverStates(newHoverStates);
     };
 
+
     const submitChanges = () => {
         if (type === 'editGroup') {
             if (groupName && groupName.trim().length) {
                 submitHandler({ Group: params.id, name: groupName, final: newList})
                     .then((res) => {
-                        showToast('نام گروه با موفقیت ویرایش شد', 'success');
+                        showToast(' گروه با موفقیت ویرایش شد', 'success');
                         navigate('../settings');
                     })
                     .catch(() => showToast('مشکلی پیش اومده', 'error'))
@@ -182,73 +183,82 @@ export default function UsersList({
                 )}
             </div>
 
-            <div className={cs(styles['users_list'])} style={{rowGap: listItemSpacing, maxHeight: `calc(${height} - 35px - 25px - 36px)`, minHeight: `calc(${height} - 35px - 25px - 36px)`}}>
+            <div className={cs(styles['users_list'])} style={{rowGap: listItemSpacing, maxHeight: `calc(${height} - 35px - 25px - 36px - 48px)`, minHeight: `calc(${height} - 35px - 25px - 36px - 48px)`}}>
                 {
                     !students 
                         ? <div className={cs(styles['loader_container'])}> <Preloader/> </div>
-                        : (students && students.map((s, i) => 
-                                <div 
-                                    className={cs(styles['user_data_container'])}
-                                    style={{
-                                        alignItems: !hasMoreInfo ? 'center' : 'flex-start',
-                                        ...((userHasClickOption && ((userType === 'user' && permissions && permissions.indexOf('lab') > -1) || userType === 'supervisor')) && {cursor: 'pointer'}),
-                                        ...(!canDeleteMember && {gridTemplateColumns: 'max-content auto'}),
-                                    }} 
-                                    onClick={() => userType === 'user' ? ( permissions && permissions.indexOf('lab') > -1 ? userOnClickHandler(s._id) : {} ) : userOnClickHandler(s._id)}
-                                >
+                        : (students && students.length
+                            ? (
+                                students.map((s, i) => 
                                     <div 
-                                        style={s?.profilePicture && {backgroundImage: `url(${s?.profilePicture})`}} 
-                                        className={cs(styles['avatar'], !s?.profilePicture && styles['empty_avatar'])}
+                                        className={cs(styles['user_data_container'])}
+                                        style={{
+                                            alignItems: !hasMoreInfo ? 'center' : 'flex-start',
+                                            ...((userHasClickOption && ((userType === 'user' && permissions && permissions.indexOf('lab') > -1) || userType === 'supervisor')) && {cursor: 'pointer'}),
+                                            ...(!canDeleteMember && {gridTemplateColumns: 'max-content auto'}),
+                                        }} 
+                                        onClick={() => userType === 'user' ? ( permissions && permissions.indexOf('lab') > -1 ? userOnClickHandler(s._id) : {} ) : userOnClickHandler(s._id)}
                                     >
-                                        {!s?.profilePicture &&
-                                            <p>{getFirstLetters(`${s?.firstName} ${s?.lastName}`)}</p>
-                                        }
-                                    </div>
-
-                                    <div className={cs(styles['info'])}>
-                                        <div className={cs(styles['top'])} style={{alignItems: !hasMoreInfo ? 'center' : 'flex-start'}}>
-                                            <div style={{maxWidth: userDataMaxWidth}}> 
-                                                <span>{s?.firstName} {s?.lastName} {''}</span>
-                                                {/* <div className={cs(styles['tooltip'])}> 
-                                                    <div className={cs(styles['arrow'])} />
-                                                    {s?.firstName} {s?.lastName}   
-                                                    <p className={cs(styles['type'])}>{''} {degreeMapper(s?.type)} </p>
-                                                </div> */}
-                                            </div>
-                                            <div style={{display:'inline', direction:'rtl'}}>{''} {degreeMapper(s?.type)}</div>
+                                        <div 
+                                            style={s?.profilePicture && {backgroundImage: `url(${s?.profilePicture})`}} 
+                                            className={cs(styles['avatar'], !s?.profilePicture && styles['empty_avatar'])}
+                                        >
+                                            {!s?.profilePicture &&
+                                                <p>{getFirstLetters(`${s?.firstName} ${s?.lastName}`)}</p>
+                                            }
                                         </div>
 
-                                        {hasMoreInfo && (
-                                            <div className={cs(styles['bottom'])}>
-                                                <p> {moreInfo}</p>
+                                        <div className={cs(styles['info'])}>
+                                            <div className={cs(styles['top'])} style={{alignItems: !hasMoreInfo ? 'center' : 'flex-start'}}>
+                                                <div style={{maxWidth: userDataMaxWidth}}> 
+                                                    <span>{s?.firstName} {s?.lastName} {''}</span>
+                                                    {/* <div className={cs(styles['tooltip'])}> 
+                                                        <div className={cs(styles['arrow'])} />
+                                                        {s?.firstName} {s?.lastName}   
+                                                        <p className={cs(styles['type'])}>{''} {degreeMapper(s?.type)} </p>
+                                                    </div> */}
+                                                </div>
+                                                <div style={{display:'inline', direction:'rtl'}}>{''} {degreeMapper(s?.type)}</div>
                                             </div>
+
+                                            {hasMoreInfo && (
+                                                <div className={cs(styles['bottom'])}>
+                                                    <p> {moreInfo}</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        { canDeleteMember && (
+                                            <img 
+                                                // src={imageHoverStates[i] ? delRedIcon : delIcon}
+                                                src={delIcon}
+                                                alt='trash icon'
+                                                className={cs(styles['trash_icon'], styles['icon'])}
+                                                onClick={(e) => {e.stopPropagation(); deleteOnClickHandler(s._id)}}
+                                                // onMouseEnter={() => handleMouseEnter(i)}
+                                                // onMouseLeave={() => handleMouseLeave(i)}
+                                            />
+                                        )}
+                                        
+                                        { canEditPermissions && (
+                                            // <div className={cs(styles['edit_icon_container'])}>
+                                                <img 
+                                                    src={editIcon}
+                                                    alt='edit icon'
+                                                    onClick={(e) => {e.stopPropagation(); onClickEditPermissions(s)}}
+                                                    className={cs(styles['icon'])}
+                                                />
+                                            // </div>
                                         )}
                                     </div>
-
-                                    { canDeleteMember && (
-                                        <img 
-                                            // src={imageHoverStates[i] ? delRedIcon : delIcon}
-                                            src={delIcon}
-                                            alt='trash icon'
-                                            className={cs(styles['trash_icon'], styles['icon'])}
-                                            onClick={(e) => {e.stopPropagation(); deleteOnClickHandler(s._id)}}
-                                            // onMouseEnter={() => handleMouseEnter(i)}
-                                            // onMouseLeave={() => handleMouseLeave(i)}
-                                        />
-                                    )}
-                                    
-                                    { canEditPermissions && (
-                                        // <div className={cs(styles['edit_icon_container'])}>
-                                            <img 
-                                                src={editIcon}
-                                                alt='edit icon'
-                                                onClick={(e) => {e.stopPropagation(); onClickEditPermissions(s)}}
-                                                className={cs(styles['icon'])}
-                                            />
-                                        // </div>
-                                    )}
+                            )) : (
+                                <div className={cs(styles['empty_list'])}>
+                                    <img src={emptyList} alt='no groups exists'/>
+                                    <p> {'هنوز هیچ دانشجویی به آزمایشگاه اضافه نشده است'} </p>
                                 </div>
                             )
+                            
+
                         )
                 }
             </div>

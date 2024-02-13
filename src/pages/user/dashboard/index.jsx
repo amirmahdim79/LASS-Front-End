@@ -67,26 +67,28 @@ export default function UserDashboard() {
     useEffect(() => {
         setLoading(true)
         getMyLabs().then(res => {
-            dispatch(setPath(res.data.Paths))
-            dispatch(setMilestone(res.data.Paths[0].Milestones))
-            dispatch(setStudents(res.data.Students))
-            dispatch(setLabId(res.data._id))
-
-            if(now) getEvents(res.data._id)
-
-            for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
-                if (milestone.status[0] === null) {
-                    dispatch(setCurrentMilestone(milestone));
-                    dispatchStates({payload: {type: 'milestoneTasks', value: milestone?.Tasks}})
-                    if (i === 0) dispatch(setPrevInd(0))
-                    else dispatch(setPrevInd(i-1))
-                    break;
+            console.log("/////", res.data);
+            if (res.data) {
+                dispatch(setPath(res.data.Paths))
+                dispatch(setMilestone(res.data.Paths[0].Milestones))
+                dispatch(setStudents(res.data.Students))
+                dispatch(setLabId(res.data._id))
+    
+                if(now) getEvents(res.data._id)
+    
+                for (const [i, milestone] of res.data.Paths[0].Milestones.entries()) {
+                    if (milestone.status[0] === null) {
+                        dispatch(setCurrentMilestone(milestone));
+                        dispatchStates({payload: {type: 'milestoneTasks', value: milestone?.Tasks}})
+                        if (i === 0) dispatch(setPrevInd(0))
+                        else dispatch(setPrevInd(i-1))
+                        break;
+                    }
                 }
+    
+                getAllUserTasks();
+                if(user) getAllBountyTasks(res.data._id);
             }
-
-            getAllUserTasks();
-            if(user) getAllBountyTasks(res.data._id);
-
         }).catch(err => console.log(err))
         .finally(() =>setLoading(false))
 

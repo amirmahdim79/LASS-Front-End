@@ -16,6 +16,7 @@ import { setNavSearchedValue } from 'store/userSlice'
 import { REMOVE_TOKEN } from "utils/tokenHandler";
 import useToast from 'hooks/useToast';
 import colors from "styles/colors.module.scss"
+import { setSupHasLab } from 'store/userSlice';
 
 export default function Navbar({type}) {  
     
@@ -71,6 +72,7 @@ export default function Navbar({type}) {
     const logout = () => {
         navigate('/')
         REMOVE_TOKEN()
+        dispatch(setSupHasLab(null));
         localStorage.removeItem("type")
     }
 

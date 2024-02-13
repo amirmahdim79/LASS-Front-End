@@ -68,14 +68,45 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
+                column-gap: 10px;
                 @include mixins.description;
-                cursor: default
+                cursor: default;
+
+                .groups_name {
+                    max-width: 120px;
+                    min-width: auto;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    direction: rtl;
+                }
+
+                
             }
     
             img {
                 @include functions.setIconStyles(24px);
             }
         }
+
+        .empty_list {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            column-gap: 50px;
+            color: $dark-shades-100;
+            @include mixins.sub-title;
+            flex-direction: column;
+            row-gap: 30px;
+        }
+    }
+
+    .empty_groups {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     

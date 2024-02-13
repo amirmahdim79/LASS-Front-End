@@ -185,6 +185,17 @@
         overflow-y: auto;
         overflow-x: hidden;
 
+        
+        &::-webkit-scrollbar {
+            width: 5px;
+            background-color: #eeeeee;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background:  #3dbbff;
+            border-radius: 5px;
+        }
+
         .row {
             height: max-content;
             column-gap: 32px;
@@ -332,6 +343,22 @@
         .loading_container {
             width: 100%;
             height: 100%;
+        }
+
+        .empty_users {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            column-gap: 50px;
+            color: $dark-shades-100;
+            @include mixins.sub-title;
+
+            img {
+                width: 64px;
+                height: 64px;
+            }
         }
     }
 }

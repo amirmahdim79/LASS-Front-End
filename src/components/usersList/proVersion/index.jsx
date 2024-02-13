@@ -22,6 +22,7 @@ import { useLabActions } from 'pages/supervisor/dashboard/hooks/useLabsActions'
 import { degreeMapper } from 'utils/mapper'
 import { useNavigate } from 'react-router-dom';
 import Preloader from 'components/global/preloaders'
+import emptyList from 'assets/icons/users/user-remove/dark-color.svg';
 
 export default function UsersList({loading}) {
 
@@ -31,6 +32,7 @@ export default function UsersList({loading}) {
     const students = useSelector(state => state.lab.Students);
     const studentsTasks = useSelector(state => state.lab.labStudentsTasks);
     const labId = useSelector(state => state.lab.labId);
+    const hasLab = useSelector(state => state.user.supHasLab);
 
     const [openAddMemberModal, showAddMemberModal, closeAddMemberModal] = useModal();
     const [openShowInfoBox, showShowInfoBox, closeShowInfoBox] = useModal();
@@ -97,9 +99,12 @@ export default function UsersList({loading}) {
     }, [searchKey]);
 
     useEffect(() => {
-        getAlumniStudents()
-        getStudentsLastActivity();
+        if (hasLab && labId) {
+            getAlumniStudents()
+            getStudentsLastActivity();
+        }
     }, [])
+
 
     useEffect(() => {
         if (listType === 'current') setUsers(students)
@@ -112,7 +117,7 @@ export default function UsersList({loading}) {
 
 
     return (
-        <div className={cs(styles['container'])}>
+        <div className={cs(styles['container'])}  style={{...(users && !users.length && {maxHeight: '435px'})}}>
             <div className={cs(styles['header'])}>
                 <div className={cs(styles['row_1'])}>
                     <div className={cs(styles['titles_wrapper'], styles['items'])}>
@@ -205,51 +210,60 @@ export default function UsersList({loading}) {
                     </div>
                 </div>
             </div>
-            <div className={cs(styles['data'])}>
+            <div className={cs(styles['data'])} style={{...(!users.length && {maxHeight: '300px', minHeight: '300px'})}}>
                 {
                     loading 
                         ? <div className={cs(styles['loading_container'])}> <Preloader /> </div> 
                         : usersActivities && (
-                            users && users.map((s,i) => 
-                                <div key={i} className={cs(styles['row'])}  onClick={() => navigate(`../user_profile/${s._id}`)}>
-                                    <div className={cs(styles['user_info_container'])}>
-                                        <div 
-                                            style={s?.profilePicture && {backgroundImage: `url(${s?.profilePicture})`}} 
-                                            className={cs(styles['avatar'], !s?.profilePicture && styles['empty_avatar'])}
-                                        >
-                                            {!s?.profilePicture &&
-                                                <p>{getFirstLetters(`${s?.firstName} ${s?.lastName}`)}</p>
-                                            }
-                                        </div>
-        
-                                        <div className={cs(styles['user_info'])}>
-                                            <div className={cs(styles['name_container'])}>
-                                                <p> {s?.firstName} {s?.lastName} </p>
-                                                <p> {degreeMapper(s?.type)} </p>
-                                            </div>
-                                            <p> { usersActivities[`${s._id}`].text} </p>
-                                        </div>
+                            users && users.length === 0 
+                                ?
+                                    <div className={cs(styles['empty_users'])}> 
+                                        <img src={emptyList} alt='no users exists'/>
+                                        <p> {text.empty_list} </p>
                                     </div>
-                                    <p> {s?.sand > 0 ? `+${s?.sand}` : `${s?.sand}`} </p>
-                                    <div> <p> {s?.smarties} </p> </div>
-                                    
-                                    <div className={cs(styles['recent_activities'])}>
-                                        <div className={cs(styles['status_boxes'])} ref={ref}> 
-                                            {
-                                                (studentsTasks && studentsTasks.length) ? studentsTasks.find(u => u._id === s._id)?.Tasks.slice(0).reverse().map((t, i) => 
-                                                    <div key={i}>
-                                                        <StatusBox task={t}/>
+                                : (
+                                    users.map((s,i) => 
+                                        <div key={i} className={cs(styles['row'])}  onClick={() => navigate(`../user_profile/${s._id}`)}>
+                                            <div className={cs(styles['user_info_container'])}>
+                                                <div 
+                                                    style={s?.profilePicture && {backgroundImage: `url(${s?.profilePicture})`}} 
+                                                    className={cs(styles['avatar'], !s?.profilePicture && styles['empty_avatar'])}
+                                                >
+                                                    {!s?.profilePicture &&
+                                                        <p>{getFirstLetters(`${s?.firstName} ${s?.lastName}`)}</p>
+                                                    }
+                                                </div>
+                
+                                                <div className={cs(styles['user_info'])}>
+                                                    <div className={cs(styles['name_container'])}>
+                                                        <p> {s?.firstName} {s?.lastName} </p>
+                                                        <p> {degreeMapper(s?.type)} </p>
                                                     </div>
-                                                ) : (
-                                                    <p className={cs(styles['activities_msg'])}> در حال حاضر فعالیتی موجود نیست </p>
-                                                )
-                                            }
+                                                    <p> { usersActivities[`${s._id}`]?.text} </p>
+                                                </div>
+                                            </div>
+                                            <p> {s?.sand > 0 ? `+${s?.sand}` : `${s?.sand}`} </p>
+                                            <div> <p> {s?.smarties} </p> </div>
+                                            
+                                            <div className={cs(styles['recent_activities'])}>
+                                                <div className={cs(styles['status_boxes'])} ref={ref}> 
+                                                    {
+                                                        (studentsTasks && studentsTasks.length) ? studentsTasks.find(u => u._id === s._id)?.Tasks.slice(0).reverse().map((t, i) => 
+                                                            <div key={i}>
+                                                                <StatusBox task={t}/>
+                                                            </div>
+                                                        ) : (
+                                                            <p className={cs(styles['activities_msg'])}> در حال حاضر فعالیتی موجود نیست </p>
+                                                        )
+                                                    }
+                                                </div>
+                                                <p> {studentsTasks.length ? calcUnCompletedTasks(studentsTasks.find(u => u._id === s._id)) : ''} </p>
+                                            </div>
+                                            
                                         </div>
-                                        <p> {studentsTasks.length ? calcUnCompletedTasks(studentsTasks.find(u => u._id === s._id)) : ''} </p>
-                                    </div>
-                                    
-                                </div>
-                        ))
+                                    )
+                                )
+                            )
                 }
             </div>
         </div>
