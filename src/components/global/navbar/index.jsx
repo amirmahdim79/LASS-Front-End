@@ -17,6 +17,7 @@ import { REMOVE_TOKEN } from "utils/tokenHandler";
 import useToast from 'hooks/useToast';
 import colors from "styles/colors.module.scss"
 import { setSupHasLab } from 'store/userSlice';
+import { useNavbarActions } from './hooks/useNavbarActions';
 
 export default function Navbar({type}) {  
     
@@ -24,6 +25,8 @@ export default function Navbar({type}) {
     const location = useLocation();  
     const { showToast } = useToast();  
     const dispatch = useDispatch();
+
+    const { getNotifications } = useNavbarActions();
     
     const userInfo = useSelector(state => state.user.user);
     const labName = useSelector(state => state.lab.labName);
@@ -77,6 +80,12 @@ export default function Navbar({type}) {
         localStorage.removeItem("type")
     }
 
+    const showNotifications = () => {
+        // getNotifications()
+        //     .then(res => console.log(res.data))
+        //     .catch(err => console.log(err))
+    }
+
     const openSettings = () => {
         if ( type === 'user' ) navigate('/user/settings')
         else navigate('/supervisor/settings')
@@ -91,7 +100,7 @@ export default function Navbar({type}) {
             <div className={cs(styles['left_container'])}>
                 <div className={cs(styles['icons_container'])}>
                     <img className={cs(styles['icon'])} src={logoutIcon} alt='logout icon' onClick={() => logout()}/>
-                    <img className={cs(styles['icon'])} src={notification} alt='notification icon' />
+                    <img className={cs(styles['icon'])} src={notification} alt='notification icon' onClick={() => showNotifications()}/>
                     {((type === 'user' && permissions && permissions.indexOf('lab') > -1) || type === 'supervisor') &&
                         <img className={cs(styles['icon'])} src={settings} alt='settings icon'  onClick={() => openSettings()}/>
                     }
@@ -121,7 +130,6 @@ export default function Navbar({type}) {
                 }
                
             </div>
-            
            
             <div className={cs(styles['searchbar_container'])}>
                 <SearchBar value={searchKey} setValue={setSearchKey} />
