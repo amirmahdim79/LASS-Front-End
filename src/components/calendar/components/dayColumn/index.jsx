@@ -8,15 +8,18 @@ import { getTime } from 'utils/mapper';
 
 export default function Column({now, index, events, showMore, setEvent}) {
 
-    const { value: today, setValue: setToday } = useInput('');
-    const { value: date, setValue: setDate } = useInput('');
+    // const { value: today, setValue: setToday } = useInput('');
+    // const { value: date, setValue: setDate } = useInput('');
 
 
-    useEffect(() => {
-        getTime(setToday);
-        setDate(now.clone().weekday(index)._d.toLocaleDateString('fa-IR'))
-    }, [])
-;
+    // useEffect(() => {
+    //     getTime(setToday);
+    //     setDate(now.clone().weekday(index)._d.toLocaleDateString('fa-IR'))
+    // }, [])
+
+    const date = now.clone().weekday(index)._d.toLocaleDateString('fa-IR')
+    const today = moment();
+
 
 
     return (
