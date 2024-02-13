@@ -12,6 +12,9 @@ export default function ActivityList({state, loading, now, changeActivityType, t
     const currentMilestone = useSelector(state => state.lab.CurrentMilestone);
     const userTasks = useSelector(state => state.lab.userTasks);
 
+
+    console.log("loading",loading);
+
     return (
         <div className={cs(styles['upcoming_activities_container'])}>
             <div className={cs(styles['title'])}>
@@ -37,9 +40,11 @@ export default function ActivityList({state, loading, now, changeActivityType, t
                 <p> {text.deadline} </p>
             </div>
             <div className={cs(styles['activities'])}>
-                {
-                    (!(loading))
-                        ? (
+                {loading && <Preloader />}
+
+                {!loading && (
+                    state.activityType === 'all' && 
+                        (
                             ((currentMilestone === null || !currentMilestone.length ) && !userTasks.length && !taskBounties.lenght)
                                 ?
                                     <div className={cs(styles['empty_activities_list'])}>
@@ -48,14 +53,62 @@ export default function ActivityList({state, loading, now, changeActivityType, t
                                     </div>
                                 :
                                     <>
-                                        {(state.activityType === 'all' || state.activityType === 'milestone') && currentMilestone?.Tasks.map((task, index) => <TaskPreview task={task} now={now} key={index}/>)}
-                                        {(state.activityType === 'all' || state.activityType === 'userTasks') && userTasks.map((task, index) => <TaskPreview task={task} now={now} type={'usertask'} key={index}/>) }
-                                        {(state.activityType === 'all' || state.activityType === 'bounties') && taskBounties.map((task, index) => <TaskPreview task={task} now={now} type={'task-bounty'} key={index}/>) }
+                                        {currentMilestone?.Tasks.map((task, index) => <TaskPreview task={task} now={now} key={index}/>)}
+                                        {userTasks.map((task, index) => <TaskPreview task={task} now={now} type={'usertask'} key={index}/>) }
+                                        {taskBounties.map((task, index) => <TaskPreview task={task} now={now} type={'task-bounty'} key={index}/>) }
                                     </>
                         )
 
-                        : <Preloader />
-                }
+                )}
+
+                {!loading && (
+                    state.activityType === 'milestone' && 
+                        (
+                            (currentMilestone === null || !currentMilestone.length) 
+                                ?
+                                    <div className={cs(styles['empty_activities_list'])}>
+                                        <img src={emptyList} alt='no activities exists'/>
+                                        <p> {text.empty_activities_list} </p>
+                                    </div>
+                                :
+                                    <>
+                                        {currentMilestone?.Tasks.map((task, index) => <TaskPreview task={task} now={now} key={index}/>)}
+
+                                    </>
+                        )
+                )}
+
+                {!loading && (
+                    state.activityType === 'userTasks' && 
+                        (
+                            !userTasks.length
+                                ?
+                                    <div className={cs(styles['empty_activities_list'])}>
+                                        <img src={emptyList} alt='no activities exists'/>
+                                        <p> {text.empty_activities_list} </p>
+                                    </div>
+                                :
+                                    <>
+                                        {userTasks.map((task, index) => <TaskPreview task={task} now={now} type={'usertask'} key={index}/>) }
+                                    </>
+                        )
+                )}
+
+                {!loading && (
+                    state.activityType === 'bounties' && 
+                        (
+                            !taskBounties.lenght
+                                ?
+                                    <div className={cs(styles['empty_activities_list'])}>
+                                        <img src={emptyList} alt='no activities exists'/>
+                                        <p> {text.empty_activities_list} </p>
+                                    </div>
+                                :
+                                    <>
+                                        {taskBounties.map((task, index) => <TaskPreview task={task} now={now} type={'task-bounty'} key={index}/>) }
+                                    </>
+                        )
+                )}
             </div>
         </div>
     )

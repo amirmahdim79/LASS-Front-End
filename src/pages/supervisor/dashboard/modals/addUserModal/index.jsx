@@ -48,9 +48,6 @@ export default function AddUserModal({close}) {
             .then(res => {
                 close();
                 updateLab();
-                // getLabStudents()
-                //     .then(res => dispatchLab(setStudents(res.data)))
-                //     .catch(err => console.log(err))
             })
             .catch(err => {
                 console.log(err)

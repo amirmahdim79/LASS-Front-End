@@ -65,9 +65,7 @@ export default function UserDashboard() {
     }
 
     useEffect(() => {
-        setLoading(true)
         getMyLabs().then(res => {
-            console.log("/////", res.data);
             if (res.data) {
                 dispatch(setPath(res.data.Paths))
                 dispatch(setMilestone(res.data.Paths[0].Milestones))
