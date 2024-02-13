@@ -138,7 +138,7 @@ export default function Profile({editable=false}) {
     }
 
     useEffect(() => {
-        if (params.id) {
+        if (params.id && labId) {
             getUserInfo();
             getActivities(false)
         }
