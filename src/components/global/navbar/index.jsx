@@ -28,6 +28,7 @@ export default function Navbar({type}) {
     const userInfo = useSelector(state => state.user.user);
     const labName = useSelector(state => state.lab.labName);
     const userType = localStorage.getItem('type');
+    const permissions = useSelector(state => state.user.permissions);
 
     const searchedValue = useSelector(state => state.user.navSearchedValue);
     const [searchParams] = useSearchParams();
@@ -76,6 +77,12 @@ export default function Navbar({type}) {
         localStorage.removeItem("type")
     }
 
+    const openSettings = () => {
+        if ( type === 'user' ) navigate('/user/settings')
+        else navigate('/supervisor/settings')
+    }
+
+
     // hover animation
 
     return (
@@ -85,7 +92,9 @@ export default function Navbar({type}) {
                 <div className={cs(styles['icons_container'])}>
                     <img className={cs(styles['icon'])} src={logoutIcon} alt='logout icon' onClick={() => logout()}/>
                     <img className={cs(styles['icon'])} src={notification} alt='notification icon' />
-                    <img className={cs(styles['icon'])} src={settings} alt='settings icon' />
+                    {((type === 'user' && permissions && permissions.indexOf('lab') > -1) || type === 'supervisor') &&
+                        <img className={cs(styles['icon'])} src={settings} alt='settings icon'  onClick={() => openSettings()}/>
+                    }
                 </div>
                 {
                     userType === 'user' && (

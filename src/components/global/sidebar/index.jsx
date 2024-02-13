@@ -52,11 +52,11 @@ export default function SideBar({type}) {
         navigate('./my-profile')
     }
 
-    const openSettings = () => {
-        setIconNum('6')
-        if ( type === 'user' ) navigate('/user/settings')
-        else navigate('/supervisor/settings')
-    }
+    // const openSettings = () => {
+    //     setIconNum('6')
+    //     if ( type === 'user' ) navigate('/user/settings')
+    //     else navigate('/supervisor/settings')
+    // }
 
     const openNotesPage = () => {
         setIconNum('7')
@@ -69,12 +69,6 @@ export default function SideBar({type}) {
         if ( type === 'user' ) navigate('/user/task-bounties')
         else navigate('/supervisor/task-bounties')
     }
-
-    // const enableDarkMode = () => {
-    //     // modal for logout
-    //     setIconNum('8')
-        
-    // }
 
     useEffect(() => {
         if (type === 'user') {
@@ -103,30 +97,36 @@ export default function SideBar({type}) {
             {
                 type && (
                     <>
-                        <div className={cs(styles['logo'])}>
-                            <Logo />
+
+
+                        <div className={cs(styles['icons'])}>
+                            <div className={cs(styles['logo'])}>
+                                <Logo />
+                            </div>
+                            <img className={cs(styles['icon'], iconNum === '1' && styles['active'])} src={dashboardLight} alt='dashboard icon' onClick={() => openDashboard()} />
+                            <img className={cs(styles['icon'], iconNum === '2' && styles['active'])} src={messagesLight} alt='messages icon'  onClick={() => openForum()} />
+                            <img className={cs(styles['icon'], iconNum === '3' && styles['active'])} src={folderLight} alt='folder icon' onClick={() => openArticlesDatabase()} />
+
+                            {/* <div className={cs(styles['divider'])} /> */}
+
+                            { type !== 'user' && <img className={cs(styles['icon'], iconNum === '4' && styles['active'])} src={emailLight} alt='email icon' onClick={() => openEmails()} /> }
+
+                            
+                            <img className={cs(styles['icon'], iconNum === '5' && styles['active'])} src={profileLight} alt='profile icon' onClick={() => openProfile()} />
+                            {/* {((type === 'user' && permissions && permissions.indexOf('lab') > -1) || type === 'supervisor') &&
+                                <img className={cs(styles['icon'], iconNum === '6' && styles['active'])} src={settingsLight} alt='settings icon' onClick={() => openSettings()}/>
+                            } */}
+                            <img className={cs(styles['icon'], iconNum === '7' && styles['active'])} src={notesLight} alt='notes icon' onClick={() => openNotesPage()} />
+
+                            {((type === 'user' && permissions && permissions.indexOf('bounties') > -1) || type === 'supervisor') &&
+                                <img src={taskLight} alt='tasks icon' className={cs(styles['icon'], iconNum === '8' && styles['active'])} onClick={() => openTaskBounty()}/>
+                            }
                         </div>
 
-                        <img className={cs(styles['icon'], iconNum === '1' && styles['active'])} src={dashboardLight} alt='dashboard icon' onClick={() => openDashboard()} />
-                        <img className={cs(styles['icon'], iconNum === '2' && styles['active'])} src={messagesLight} alt='messages icon'  onClick={() => openForum()} />
-                        <img className={cs(styles['icon'], iconNum === '3' && styles['active'])} src={folderLight} alt='folder icon' onClick={() => openArticlesDatabase()} />
 
-                        <div className={cs(styles['divider'])} />
-
-                        { type !== 'user' && <img className={cs(styles['icon'], iconNum === '4' && styles['active'])} src={emailLight} alt='email icon' onClick={() => openEmails()} /> }
-
+                       
                         
-                        <img className={cs(styles['icon'], iconNum === '5' && styles['active'])} src={profileLight} alt='profile icon' onClick={() => openProfile()} />
-                        {((type === 'user' && permissions && permissions.indexOf('lab') > -1) || type === 'supervisor') &&
-                            <img className={cs(styles['icon'], iconNum === '6' && styles['active'])} src={settingsLight} alt='settings icon' onClick={() => openSettings()}/>
-                        }
-                        <img className={cs(styles['icon'], iconNum === '7' && styles['active'])} src={notesLight} alt='notes icon' onClick={() => openNotesPage()} />
-                        
-                        {((type === 'user' && permissions && permissions.indexOf('bounties') > -1) || type === 'supervisor') &&
-                            <div className={cs(styles['last-mode'])}>
-                                <img src={taskLight} alt='tasks icon' className={cs(styles['icon'], iconNum === '8' && styles['active'])} onClick={() => openTaskBounty()}/>
-                            </div>
-                        }
+
                         
                     </>
                 )
