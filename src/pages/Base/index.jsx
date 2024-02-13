@@ -137,7 +137,7 @@ export default function Base({type}) {
                 if (userType === 'supervisor') {
                     getLabForums({}, `/${labId}`)
                         .then(res => {
-                            console.log("rsssssssssssss", res.data);
+                            // console.log("rsssssssssssss", res.data);
                             dispatch(setLabForums(sortForum(res.data)))
                         })
                         .catch(err => console.log("errrrrr", err))
@@ -151,7 +151,7 @@ export default function Base({type}) {
             }, 60000);
     
             return () => clearInterval(interval);
-        }
+        } else dispatch(setLabForums([]))
     }, []);
 
     useEffect(() => {

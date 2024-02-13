@@ -78,8 +78,7 @@ export default function Profile({editable=false}) {
         getLabStudentInfo({}, `?lab=${labId}&id=${params.id}`)
             .then(res => {
                 setUserData(res.data)
-                calcProgress(res.data.path);
-                
+                calcProgress(res.data.path);                
                 for (const [i, milestone] of res.data.path[0].Milestones.entries()) {
                     if (milestone.status[0] === null) {
                         setUserCurrentMilestones(milestone);
@@ -330,7 +329,7 @@ export default function Profile({editable=false}) {
                                         <Preloader />
                                     </>
                                 ) : (
-                                    !isEmptyObject(userData) && userCurrentMilestones && userCurrentMilestones.length 
+                                    !isEmptyObject(userData) && userCurrentMilestones  
                                         ? (
                                             <>
                                                 <p className={cs(styles['title'])}> {`نقشه راه  - ${userData ? userData?.path[0]?.name : '-'}`} </p>
@@ -355,7 +354,7 @@ export default function Profile({editable=false}) {
                                         <Preloader />
                                     </>
                                 ) : (
-                                    milestones && currentMilestone && currentMilestone.length ? (
+                                    milestones && currentMilestone ? (
                                         <> 
                                             <p className={cs(styles['title'])}> {`نقشه راه  - ${path && path[0]?.name ? path[0]?.name : '-'}`} </p>
                                             <ProgressTracker 

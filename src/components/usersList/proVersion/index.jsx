@@ -210,7 +210,7 @@ export default function UsersList({loading}) {
                     </div>
                 </div>
             </div>
-            <div className={cs(styles['data'])} style={{...(!users.length && {maxHeight: '300px', minHeight: '300px'})}}>
+            <div className={cs(styles['data'])} style={{...(users && !users.length && {maxHeight: '300px', minHeight: '300px'})}}>
                 {
                     loading 
                         ? <div className={cs(styles['loading_container'])}> <Preloader /> </div> 

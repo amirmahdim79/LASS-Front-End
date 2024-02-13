@@ -69,6 +69,18 @@
             align-items: center;
             height: 48px;
         }
+
+        .empty_lab_info {
+            @include mixins.sub-description;
+            width: 100%;
+            background-color: $dark-shades-100;
+            border-radius: 12px;
+            color: $light-shades-100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+        }
     }
 
 

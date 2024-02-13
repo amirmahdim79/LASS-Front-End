@@ -166,7 +166,6 @@ export default function Forum() {
     }, [params.id])
 
 
-
     return (
         <div className={cs(styles['container'])}>
             {
@@ -282,10 +281,10 @@ export default function Forum() {
                     ) : (
                         <div className={cs(styles['forums_container'])}>
                             <div className={cs(styles['header'])}>
-                                {forums ? <h5> {text.forum_title} </h5> : <div className={cs(styles['is_loading_title'])} />}
+                                {forums && forums.length ? <h5> {text.forum_title} </h5> : <div className={cs(styles['is_loading_title'])} />}
                                 
                                 {
-                                    forums
+                                    forums && forums.length
                                         ? (
                                             <div className={cs(styles['icons_container'])}>
                                                 {

@@ -122,9 +122,16 @@ export default function Navbar({type}) {
                                     <p style={{color: colors['pink-100']}}> {userInfo?.smarties} </p>
                                 </div>   
                             </div>
-                            <div className={cs(styles['lab_info'])}>
-                                {labName}
-                            </div>
+                            {
+                                labName
+                                    ? <div className={cs(styles['lab_info'])}>
+                                        {labName}
+                                    </div>
+                                    :   <div className={cs(styles['empty_lab_info'])}>
+                                        {'هنوز به آزمایشگاهی اضافه نشدید'}
+                                    </div>
+                            }
+                            
                         </>
                     )
                 }

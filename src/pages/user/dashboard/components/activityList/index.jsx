@@ -13,7 +13,6 @@ export default function ActivityList({state, loading, now, changeActivityType, t
     const userTasks = useSelector(state => state.lab.userTasks);
 
 
-    console.log("loading",loading);
 
     return (
         <div className={cs(styles['upcoming_activities_container'])}>

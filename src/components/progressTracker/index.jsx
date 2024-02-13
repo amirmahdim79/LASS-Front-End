@@ -11,6 +11,7 @@ export default function ProgressTracker({milestones, currentMilestone}) {
 
     const prevId = useSelector(state => state.lab.prevId);
 
+
     const [width, setWidth] = useState(0)
 
     useEffect(() => {
