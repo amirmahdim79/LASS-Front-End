@@ -37,25 +37,26 @@ export default function ForumCreation() {
         users: [],
 
         groupUsers: [],
-        labGroups: [],
+        
 
         selectAllUsers: false,
         selectAllGroups: false,
-        listType: 'groups',
+        listType: 'users',
 
         currentUsers: [],
 
 
-        usersUnique: []
+        usersUnique: [],
+
+        mapArr: [],
+        labGroups: [],
     }
 
     const [ openShowUsersModal, showShowUsersModal, closeShowUsersModal ] = useModal();
 
-
     const [ state , dispatch] = useReducer( reducer, initialState );
     const { value: searchKey, setValue: setSearchKey } = useInput('');
     const { value: groupData, setValue: setGroupData } = useInput({name:'', users:[]});
-    // 65322b1e95e0d4f18a0563cf
 
     const labGroups = useSelector(state => state.lab.labGroups);
     const students = useSelector(state => state.lab.Students);
@@ -63,31 +64,51 @@ export default function ForumCreation() {
 
     const { createForum, forumCreation, getLabForums } = useForumsActions();
 
+
     const addGroup = (group) => {
+        let usersList = state.mapArr;
         let groups = [...state.labGroups];
-        let usersId = [...state.currentUsers];
+        let newList = []
         const index = groups.findIndex(g => g._id === group._id);
         if (index === -1) {
             groups.push(group);
-            group.Users.map(u => {
-                // const uInd = usersId.indexOf(u._id);
-                // console.log("uInd", uInd);
-                // if (uInd === -1) usersId.push(u._id)
-                usersId.push(u._id)
-                // const unique = usersId.filter((u, i) => i === usersId.findIndex(o => u._id === o._id));
-                // usersId = [...unique]
-            })
+            newList = [...usersList, ...group.Users.map(u => u['_id'])];
         } else {
             group.Users.map(u => {
-                const index = usersId.indexOf(u._id);
-                usersId.splice(index, 1);
+                const index = usersList.indexOf(u._id);
+                usersList.splice(index, 1);
+                newList = [...usersList];
             })
-            groups.splice(index, 1);
+            groups.splice(index, 1);  
         }
+        dispatch({payload: {type: 'labGroups', value: [...new Set(groups)]}})
+        dispatch({payload: {type: 'mapArr', value: [...new Set(newList)]}})
+       
+
+        // let groups = [...state.labGroups];
+        // let usersId = [...state.currentUsers];
+        // const index = groups.findIndex(g => g._id === group._id);
+        // if (index === -1) {
+        //     groups.push(group);
+        //     group.Users.map(u => {
+        //         // const uInd = usersId.indexOf(u._id);
+        //         // console.log("uInd", uInd);
+        //         // if (uInd === -1) usersId.push(u._id)
+        //         usersId.push(u._id)
+        //         // const unique = usersId.filter((u, i) => i === usersId.findIndex(o => u._id === o._id));
+        //         // usersId = [...unique]
+        //     })
+        // } else {
+        //     group.Users.map(u => {
+        //         const index = usersId.indexOf(u._id);
+        //         usersId.splice(index, 1);
+        //     })
+        //     groups.splice(index, 1);
+        // }
 
         
-        dispatch({payload: {type: 'labGroups', value: groups}})
-        dispatch({payload: {type: 'currentUsers', value: usersId}})
+        // dispatch({payload: {type: 'labGroups', value: groups}})
+        // dispatch({payload: {type: 'currentUsers', value: usersId}})
         // let groups = [...state.labGroups];
         // let groupUsers = [...state.groupUsers];
 
@@ -115,48 +136,59 @@ export default function ForumCreation() {
     }
 
     const addUser = (id) => {
-        let usersId = state.currentUsers;
-        let labGroups = [...state.labGroups];
-        let updatedGroups = [];
-        const index = usersId.indexOf(id);
+        let usersList = state.mapArr;
 
+        const index = usersList.indexOf(id);
         if (index > -1) {
-            usersId.splice(index, 1);
-            usersId.map(uId => {
-                if (uId === id) {
-                    const index2 = usersId.indexOf(uId);
-                    usersId.splice(index2, 1);
-                }
-            })
-
-            // labGroups.forEach(function (g) {
-            //     const index2 = g.Users.findIndex(u => u._id === id);
-            //     console.log("index2", index2);
-            //     if (index2 > -1) updatedGroups.push(g)
-            // });
-
-            
-            for (const [i, g] of labGroups.entries()) {
-                const index2 = g.Users.findIndex(u => u._id === id);
-                if (index2 === -1) updatedGroups.push(g)
-          
-            }
-
-            // labGroups.map((g, gInd) => {
-            //     console.log("ggggggg", g);
-            //     [...g.Users].map(u => {
-            //         console.log("uuuuuuu", u);
-            //         // console.log("idid", id);
-            //         if (u._id === id) labGroups.splice(gInd, 1);
-            //     })
-            // })
-            
-
+            usersList.splice(index, 1);
         } else {
-            usersId.push(id);
+            usersList.push(id);
         }
-        dispatch({payload: {type: 'currentUsers', value: usersId}})
-        dispatch({payload: {type: 'labGroups', value: updatedGroups}})
+
+        dispatch({payload: {type: 'mapArr', value: [...new Set(usersList)]}})
+
+        // let usersId = state.currentUsers;
+        // let labGroups = [...state.labGroups];
+        // let updatedGroups = [];
+        // const index = usersId.indexOf(id);
+
+        // if (index > -1) {
+        //     usersId.splice(index, 1);
+        //     usersId.map(uId => {
+        //         if (uId === id) {
+        //             const index2 = usersId.indexOf(uId);
+        //             usersId.splice(index2, 1);
+        //         }
+        //     })
+
+        //     // labGroups.forEach(function (g) {
+        //     //     const index2 = g.Users.findIndex(u => u._id === id);
+        //     //     console.log("index2", index2);
+        //     //     if (index2 > -1) updatedGroups.push(g)
+        //     // });
+
+            
+        //     for (const [i, g] of labGroups.entries()) {
+        //         const index2 = g.Users.findIndex(u => u._id === id);
+        //         if (index2 === -1) updatedGroups.push(g)
+          
+        //     }
+
+        //     // labGroups.map((g, gInd) => {
+        //     //     console.log("ggggggg", g);
+        //     //     [...g.Users].map(u => {
+        //     //         console.log("uuuuuuu", u);
+        //     //         // console.log("idid", id);
+        //     //         if (u._id === id) labGroups.splice(gInd, 1);
+        //     //     })
+        //     // })
+            
+
+        // } else {
+        //     usersId.push(id);
+        // }
+        // dispatch({payload: {type: 'currentUsers', value: usersId}})
+        // dispatch({payload: {type: 'labGroups', value: updatedGroups}})
 
         // let usersId = state.usersId;
         // let users = [...state.users];
@@ -177,30 +209,52 @@ export default function ForumCreation() {
     }
 
     const removeUser = (id) => {
-        // let users = [...state.currentUsers];
-        // console.log("users", users);
-        // let groupUsers = [...state.groupUsers];
-        // let usersId = state.usersId;
-        // const index = users.findIndex(u => u._id === id);
-        // const index2 = usersId.indexOf(id);
-        // const index3 = groupUsers.indexOf(id);
-        // users.splice(index, 1);
-        // usersId.splice(index2, 1);
-        // groupUsers.splice(index3, 1)
-        // console.log("after",users);
-        // dispatch({payload: {type: 'currentUsers', value: users}})
-        // dispatch({payload: {type: 'users', value: users}})
-        // dispatch({payload: {type: 'usersId', value: usersId}})
-        // dispatch({payload: {type: 'groupUsers', value: groupUsers}})
+        let usersId = state.mapArr;
+        const index = usersId.indexOf(id);
+        usersId.splice(index, 1);
+        dispatch({payload: {type: 'mapArr', value: usersId}})
+
+        if (usersId.length !== 0 && usersId.length !== students.length) {
+            dispatch({payload: {type: 'selectAllUsers', value: false}})
+        }
+    }
+    
+    const selectAllUsers = (selectAll) => {
+        dispatch({payload: {type: 'selectAllUsers',value: selectAll}})
+
+        if (selectAll) {
+            let result = students.map(s => s._id);
+            dispatch({payload: {type: 'mapArr', value: result}})
+        } else dispatch({payload: {type: 'mapArr', value: []}})
+    }
+
+    const selectAllGroups = (selectAll) => {
+        let usersId = [...state.mapArr];
+        dispatch({payload: {type: 'selectAllGroups',value: selectAll}})
+
+        if (selectAll) {
+            dispatch({payload: {type: 'labGroups', value: [...new Set(labGroups)]}});
+            labGroups.map(g => {
+                g.Users.map(u => usersId.push(u._id))
+            })
+        } else {
+            dispatch({payload: {type: 'mapArr', value: []}})
+                labGroups.map(g => {
+                    g.Users.map(u => {
+                        const uInd = usersId.indexOf(u._id);
+                        if (uInd > -1) usersId.splice(uInd, 1);
+                    })
+                })
+        }
+        dispatch({payload: {type: 'mapArr', value: [...new Set(usersId)]}})
     }
 
     const createNewForum = () => {
         let data = {
             name: state.name,
-            Collaborators: state.currentUsers,
+            Collaborators: state.mapArr,
             Lab: labId,
             start:  moment(),
-
         }
 
         createForum({...data})
@@ -211,69 +265,24 @@ export default function ForumCreation() {
     }
 
     useEffect(() => {
-        if (state.selectAllUsers) {
-            let result = students.map(s => s._id);
-            dispatch({payload: {type: 'currentUsers', value: result}})
-            // dispatch({payload: {type: 'usersId', value: result}})
-            // dispatch({payload: {type: 'users', value: students}})
-        }else {
-            dispatch({payload: {type: 'currentUsers', value: []}})
-            // dispatch({payload: {type: 'usersId', value: []}})
-            // dispatch({payload: {type: 'users', value: []}})
-        }
-    }, [state.selectAllUsers])
+        if (labGroups && (state.labGroups.length !== labGroups.length)) dispatch({payload: {type: 'selectAllGroups',value: false}})
+    }, [state.labGroups])
 
     useEffect(() => {
-        let usersId = [...state.currentUsers];
-        if (state.selectAllGroups) {
-            dispatch({payload: {type: 'labGroups', value: labGroups}});
-            labGroups.map(g => {
-                g.Users.map(u => {
-                    // const uInd = usersId.indexOf(u._id);
-                    // console.log("uInd", uInd);
-                    // if (uInd === -1) usersId.push(u._id)
-                    usersId.push(u._id)
-                })
-            })
-        } else {
-            dispatch({payload: {type: 'labGroups', value: []}});
-            // here ater removing all groups users get removed
-            // labGroups.map(g => {
-            //     g.Users.map(u => {
-            //         const uInd = usersId.indexOf(u._id);
-            //         if (uInd > -1) usersId.splice(uInd, 1);
-            //     })
-            // })
-        }
-        dispatch({payload: {type: 'currentUsers', value: usersId}})
-        // let groupUsers = []
-        // if (state.selectAllGroups) {
-        //     dispatch({payload: {type: 'labGroups', value: labGroups}})
-        //     labGroups.map(group => {
-        //         group.Users.map(user => {
-        //             groupUsers.push(user)
-        //         })
-        //     })
+        labGroups.map(group => {
+            if (group.Users.every(user => state.mapArr.includes(user._id))) {
+                let groups = [...state.labGroups];
+                groups.push(group);
+                dispatch({payload: {type: 'labGroups', value:  [...new Set(groups)]}})
+            } 
+            // else {
+            //     const index = state.labGroups.findIndex(g => g._id === group._id);
+            //     state.labGroups.splice(index, 1);  
+            // }
+        })
 
-        //     const unique = groupUsers.filter((g, i) => i === groupUsers.findIndex(o => g._id === o._id));
-        //     groupUsers = [...unique]
-        //     dispatch({payload: {type: 'groupUsers', value: groupUsers}})
-        // }else {
-        //     dispatch({payload: {type: 'labGroups', value: []}})
-        //     dispatch({payload: {type: 'groupUsers', value: []}})
-        // }
-    }, [state.selectAllGroups])
-
-    
-    useEffect(() => {
-        let mySet = new Set(state.currentUsers);
-        let myArr = Array.from(mySet);
-        dispatch({payload: {type: 'usersUnique', value: myArr}})
-        if (state.labGroups.length === 0) dispatch({payload: {type: 'selectAllGroups', value: false}})
-        // let allUsersId = [...state.groupUsers, ...state.users];
-        // const unique = allUsersId.filter((g, i) => i === allUsersId.findIndex(o => g._id === o._id));
-        // dispatch({payload: {type: 'currentUsers', value: unique}})
-    }, [state.labGroups, state.currentUsers])
+        if (students && (state.mapArr.length !== students.length)) dispatch({payload: {type: 'selectAllUsers',value: false}})
+    }, [state.mapArr])
     
 
     return (
@@ -328,8 +337,8 @@ export default function ForumCreation() {
                             <div 
                                 className={cs(styles['cols'])} 
                                 onClick={() => state.listType === 'users' 
-                                    ? dispatch({payload: {type: 'selectAllUsers',value: !state.selectAllUsers}}) 
-                                    : dispatch({payload: {type: 'selectAllGroups',value: !state.selectAllGroups}})
+                                    ? selectAllUsers(!state.selectAllUsers)
+                                    : selectAllGroups(!state.selectAllGroups)
                                 }
                             >
                                 <CheckBoxV1 value={state.listType === 'users' ? state.selectAllUsers : state.selectAllGroups}/>
@@ -350,7 +359,7 @@ export default function ForumCreation() {
                                         <div className={cs(styles['row'], styles['group'])} key={i} onClick={() => {showShowUsersModal(); setGroupData({users:group.Users, name: group.name})}}>
                                             <div className={cs(styles['data_name'])}>
                                                 {/* <CheckBoxV2  */}
-                                                <CheckBoxV1 value={state.labGroups.findIndex(g => g._id === group._id) !== -1} onClick={(e) => {e.stopPropagation(); addGroup(group)}}/>
+                                                <CheckBoxV1 value={group.Users.every(user => state.mapArr.includes(user._id))} onClick={(e) => {e.stopPropagation(); addGroup(group)}}/>
                                                 <p> {group?.name} </p>
                                             </div>
                                             <div className={cs(styles['group_users'])}>
@@ -365,7 +374,7 @@ export default function ForumCreation() {
                                     students && students.map((student,i) => 
                                         <div className={cs(styles['row'])} key={i}>
                                             <div className={cs(styles['data_name'])}>
-                                                <CheckBoxV1 value={state.currentUsers.includes(student._id)} onClick={() => addUser(student._id)}/>
+                                                <CheckBoxV1 value={state.mapArr.includes(student._id)} onClick={() => addUser(student._id)}/>
                                                 <div 
                                                     style={student?.profilePicture && {backgroundImage: `url(${student?.profilePicture})`}} 
                                                     className={cs(styles['avatar'], !student?.profilePicture && styles['empty_avatar'])}
@@ -394,7 +403,7 @@ export default function ForumCreation() {
                 title={text.side_title}
                 btnText={text.side_btn}
                 btnColor={colors['main-color-100']}
-                students={state.currentUsers}
+                students={state.mapArr && students && students.filter(item => state.mapArr.includes(item._id))}
                 canDeleteMember={true}
                 hasSubmitBtn={true}
                 btnDisabled={false}

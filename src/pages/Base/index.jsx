@@ -159,8 +159,8 @@ export default function Base({type}) {
             if (params.id && labId) {
                 const interval = setInterval(() => {
                     getOneForum({}, `/${params.id}?type=${userType === 'supervisor' ? 'Supervisor' : 'User'}`)
-                    .then(res => dispatch(setForum(res.data)))
-                    .catch(err => console.log(err))
+                        .then(res => dispatch(setForum(res.data)))
+                        .catch(err => console.log(err))
                 }, 10000);
         
                 return () => clearInterval(interval);

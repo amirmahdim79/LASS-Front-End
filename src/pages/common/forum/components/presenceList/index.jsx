@@ -47,7 +47,7 @@ export default function PresenceList({updatePresenceList, setMsg, setList, list}
             </div>
             <div className={cs(styles['content'])}> 
                 {
-                    Object.keys(forum?.PresenceForm?.list).length && Object.keys(forum?.PresenceForm?.list).map((userId, index) => 
+                   forum?.PresenceForm?.list && Object.keys(forum?.PresenceForm?.list).length && Object.keys(forum?.PresenceForm?.list).map((userId, index) => 
                         <div className={cs(styles['data_container'])}> 
                             <div className={cs(styles['user_data'])} onClick={() => setMsg(prev => prev + `${getUserData(userId, 'firstName')}` + ' ' + `${getUserData(userId, 'lastName')}` + ' ')}> 
                                 <div 

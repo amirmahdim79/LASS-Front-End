@@ -87,7 +87,6 @@ export default function Forum() {
                 .catch(err => console.log(err))
         }
     }
-
     const updatePresenceList =  () => {
         let data = {
             list: list,
@@ -140,7 +139,7 @@ export default function Forum() {
     }
 
     useEffect(() => {
-        if (isInForumsList === true) {
+        if (isInForumsList === true && list && forum) {
             updatePresenceList()
         }
         
