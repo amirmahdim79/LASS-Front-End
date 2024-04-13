@@ -4,21 +4,20 @@ import { text } from './constants';
 import { useAuthActions } from './hooks/useAuthActions';
 import { default as cs } from 'classnames'
 import { addUser } from "store/userSlice/index"
-import styles from './home.module.scss'
-import Logo from 'components/global/logo';
-import Switch from 'components/global/toggleSwitch';
-import LoginPageImage from 'assets/images/login_page.svg';
-import SignUpPageImage from 'assets/images/signup_page.svg';
-import TextInput from 'components/global/inputs/textInput';
-import useInput from 'hooks/useInputHandler';
-import colors from "styles/colors.module.scss"
-import Button from 'components/global/button';
 import { useDispatch } from 'react-redux';
-import SelectInputV1 from 'components/global/inputs/selectInputs/selectInputV2';
 import { useReducer } from 'react';
 import { reducer } from './reducer';
 import { degreeMapper } from 'utils/mapper';
 import { validateEmail } from 'utils/mapper';
+import styles from './style.module.scss'
+import Logo from 'components/global/logo';
+import Switch from 'components/global/toggleSwitch';
+import LoginPageImage from 'assets/images/login_page.svg';
+import SignUpPageImage from 'assets/images/signup_page.svg';
+import colors from "styles/colors.module.scss"
+import Button from 'components/global/button';
+import Login from './modes/login';
+import Signup from './modes/signup';
 
 
 export default function HomePage() {
@@ -177,142 +176,16 @@ export default function HomePage() {
                     <Logo color={'light'}/>
                     <h1>{text.title[state.mode]}</h1>
                 </div>
+
                 <form className={cs(styles['inputs'], (state.type !== 'دانشجو' && state.mode === 'signup') && styles['sups_form'])} >
                     {
-                        state.mode === 'login' && (
-                            <>
-                                <TextInput 
-                                    value={state.email}
-                                    onChange={(e) => dispatchState({payload: {type: 'email', value: e.target.value}})}
-                                    placeholder={text.input_1} 
-                                    errorMessage={state.emailErr}
-                                    showError={true}
-                                    isValid={!state.emailErr}
-                                    dir={'ltr'}
-                                    autofill={true}
-                                />
-                                <TextInput 
-                                    value={state.password}
-                                    onChange={(e) => dispatchState({payload: {type: 'password', value: e.target.value}})}
-                                    placeholder={text.input_2} 
-                                    errorMessage={state.passwordErr}
-                                    showError={true}
-                                    isValid={!state.passwordErr}
-                                    dir={'ltr'}
-                                    type={'password'}
-                                />
-                            </>
-                        )
-                    }
-
-                    {
-                        state.mode === 'signup' && (
-                            state.type === 'دانشجو'
-                                ? (
-                                    <>
-                                        <TextInput 
-                                            value={state.email}
-                                            onChange={(e) => dispatchState({payload: {type: 'email', value: e.target.value}})}
-                                            placeholder={text.input_1} 
-                                            errorMessage={state.emailErr}
-                                            showError={true}
-                                            isValid={!state.emailErr}
-                                            dir={'ltr'}
-                                            type={'email'}
-                                        />
-                                        <TextInput 
-                                            value={state.firstName}
-                                            onChange={(e) => dispatchState({payload: {type: 'firstName', value: e.target.value}})}
-                                            placeholder={text.input_3} 
-                                            errorMessage={state.firstNameErr}
-                                            showError={true}
-                                            isValid={!state.firstNameErr}
-                                            dir={'rtl'}
-                                        />
-                                        <TextInput 
-                                            value={state.lastName}
-                                            onChange={(e) => dispatchState({payload: {type: 'lastName', value: e.target.value}})}
-                                            placeholder={text.input_4} 
-                                            errorMessage={state.lastNameErr}
-                                            showError={true}
-                                            isValid={!state.lastNameErr}
-                                            dir={'rtl'}
-                                        />
-                                        <TextInput 
-                                            value={state.password}
-                                            onChange={(e) => dispatchState({payload: {type: 'password', value: e.target.value}})}
-                                            placeholder={text.input_2} 
-                                            errorMessage={state.passwordErr}
-                                            showError={true}
-                                            isValid={!state.passwordErr}
-                                            dir={'ltr'}
-                                            type={'password'}
-                                        />
-                                        <TextInput 
-                                            value={state.sid}
-                                            onChange={(e) => dispatchState({payload: {type: 'sid', value: e.target.value}})}
-                                            placeholder={text.input_5} 
-                                            errorMessage={state.sidErr}
-                                            showError={true}
-                                            isValid={!state.sidErr}
-                                            dir={'rtl'}
-                                        />
-                                        <SelectInputV1
-                                            height={'48px'}
-                                            value={state.degree}
-                                            setValue={(e) => dispatchState({payload: {type: 'degree', value: e}})}
-                                            dir={'rtl'}
-                                            placeholder={text.input_6} 
-                                            suggestions={['کارشناسی', 'کارشناسی ارشد', 'دکترا', 'فوق دکترا', 'کارآموز']}
-                                        />
-    
-                                    </>
-                                ) : (
-                                    <>
-                                        <TextInput 
-                                            value={state.firstName}
-                                            onChange={(e) => dispatchState({payload: {type: 'firstName', value: e.target.value}})}
-                                            placeholder={text.input_3} 
-                                            errorMessage={state.firstNameErr}
-                                            showError={true}
-                                            isValid={!state.firstNameErr}
-                                            dir={'rtl'}
-                                        />
-                                        <TextInput 
-                                            value={state.lastName}
-                                            onChange={(e) => dispatchState({payload: {type: 'lastName', value: e.target.value}})}
-                                            placeholder={text.input_4} 
-                                            errorMessage={state.lastNameErr}
-                                            showError={true}
-                                            isValid={!state.lastNameErr}
-                                            dir={'rtl'}
-                                        />
-                                        <TextInput 
-                                            value={state.email}
-                                            onChange={(e) => dispatchState({payload: {type: 'email', value: e.target.value}})}
-                                            placeholder={text.input_1} 
-                                            errorMessage={state.emailErr}
-                                            showError={true}
-                                            isValid={!state.emailErr}
-                                            dir={'ltr'}
-                                            type={'email'}
-                                        />
-                                        <TextInput 
-                                            value={state.password}
-                                            onChange={(e) => dispatchState({payload: {type: 'password', value: e.target.value}})}
-                                            placeholder={text.input_2} 
-                                            errorMessage={state.passwordErr}
-                                            showError={true}
-                                            isValid={!state.passwordErr}
-                                            dir={'ltr'}
-                                            type={'password'}
-                                        />
-                                    </>
-                                )
-                        )
+                        state.mode === 'login'
+                            ? <Login state={state} dispatch={dispatchState}/>
+                            : <Signup state={state} dispatch={dispatchState}/>
                     }
 
                 </form>
+
                 <div className={cs(styles['buttons'])} style={{...(state.mode === 'signup' && {paddingTop: '16px'})}}>
                     <Switch 
                         left={text.switch_left_data} 
@@ -328,11 +201,8 @@ export default function HomePage() {
                         load={checkBtnLoadingStatus()}
                     />
                     {state.mode === 'signup' 
-                        ? (
-                            <p onClick={(e) => dispatchState({payload: {type: 'mode', value: 'login'}})}> {text.signup_mode_footer_text} <span> {text.signup_mode_footer_text2} </span> </p>
-                        ) : (
-                            <p onClick={(e) => dispatchState({payload: {type: 'mode', value: 'signup'}})}> {text.login_mode_footer_text} <span> {text.login_mode_footer_text2} </span> </p>
-                        )
+                        ? <p onClick={(e) => dispatchState({payload: {type: 'mode', value: 'login'}})}> {text.signup_mode_footer_text} <span> {text.signup_mode_footer_text2} </span> </p> 
+                        : <p onClick={(e) => dispatchState({payload: {type: 'mode', value: 'signup'}})}> {text.login_mode_footer_text} <span> {text.login_mode_footer_text2} </span> </p>
                     }
                 </div>
             </div>
