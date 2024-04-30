@@ -23,6 +23,7 @@ import useInput from "hooks/useInputHandler";
 import { setCurrentMilestone } from "store/labSlice";
 import { setPrevInd } from "store/labSlice";
 import { setSupHasLab } from "store/userSlice";
+import { setLabDesc } from "store/labSlice";
 
 export default function Base({type}) {
         
@@ -102,12 +103,15 @@ export default function Base({type}) {
                         dispatch(setArticles(res.data?.RecentFiles.reverse()))
                         getMyLabs({}, '?sups=true')
                             .then(res =>  {
+                                console.log("///////////////////////", res.data);
                                  
                                 if (res.data._id) {
                                     dispatch(setSupHasLab(true));    
                                     dispatch(setStudents(res.data?.Students))
                                     dispatch(setPath(res.data.Paths))
                                     dispatch(setLabId(res.data._id))
+                                    dispatch(setLabName(res.data.name))
+                                    dispatch(setLabDesc(res.data?.desc))
                                     getLabGroups({}, `/${res.data._id}`)
                                     .then(res => {
                                         // console.log("///////////////////////", res.data);

@@ -1,7 +1,7 @@
 import { apiRequestObject } from "..";
 import { TRANSFORMER } from "./transformer"
 import { POST_REQUEST } from "../constants";
-import { ADD_PERMISSIONS, ADD_SAND, ADD_SMARTIES, CREATE_SUPS, SUPS_RECENT_FILES } from "./endpoints";
+import { ADD_PERMISSIONS, ADD_SAND, ADD_SMARTIES, CREATE_SUPS, SUPS_RECENT_FILES, UPDATE_SUPS_PROFILE_PICTURE } from "./endpoints";
 
 
 export const AddSupRecentFileAPI = apiRequestObject({
@@ -33,3 +33,14 @@ export const AddSmartiesAPI = apiRequestObject({
     requestType: POST_REQUEST,
     transformer: TRANSFORMER,
 })
+
+export const UpdateSupsProfilePicAPI = apiRequestObject({
+    url: UPDATE_SUPS_PROFILE_PICTURE,
+    requestType: POST_REQUEST,
+    requestConfig:{
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    }
+})
+

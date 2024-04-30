@@ -7,9 +7,9 @@ import UploadPreloader from 'components/global/button/preloaders'
 
 
 
-export default function ProfileV1({profile, loading, editable}) {  
+export default function ProfileV1({profile, loading, editable, userType='user', height='250px'}) {  
 
-    const {uploading , uploadFile } = useUpload(2000000)
+    const {uploading , uploadFile } = useUpload(2000000, userType)
 
     const handleUploadFile = (e) => {
         uploadFile(e)
@@ -18,7 +18,7 @@ export default function ProfileV1({profile, loading, editable}) {
     }
 
     return (
-        <div className={cs(styles['container'])} >
+        <div className={cs(styles['container'])} style={{minHeight:height, maxHeight: height}}>
             {/* <img src={profile} alt='avatar' className={cs(styles['avatar'])}/> */}
 
             {

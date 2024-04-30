@@ -11,6 +11,7 @@ const initialState = {
     prevId: '',
     labId: '',
     labName: '',
+    labDesc: '',
     labGroups: [],
     labStudentsTasks: [],
     supsTasks: [],
@@ -42,6 +43,9 @@ export const labSlice = createSlice({
         },
         setLabName: (state, action) => {
             state.labName = action.payload
+        },
+        setLabDesc: (state, action) => {
+            state.labDesc = action.payload
         },
         setLabGroups: (state, action) => {
             state.labGroups = action.payload
@@ -88,6 +92,7 @@ export const {
     setEvents, 
     setLabId, 
     setLabName,
+    setLabDesc,
     setLabGroups,
     setLabForums,
     setForum,

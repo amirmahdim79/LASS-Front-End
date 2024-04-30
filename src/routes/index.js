@@ -7,6 +7,7 @@ import UserArticlesDataBase from "pages/user/articlesDataBase";
 import SupArticlesDataBase from "pages/supervisor/articlesDataBase";
 import Task from "pages/user/task";
 import Profile from "pages/user/profile";
+import SupsProfile from "pages/supervisor/profile";
 import Forum from "pages/common/forum";
 import GroupSettings from "pages/common/settings/groupSettings";
 import Email from "pages/common/emails";
@@ -130,6 +131,10 @@ export const router = createBrowserRouter([
             {
                 path: 'user_profile/:id',
                 element: <Profile />,
+            },
+            {
+                path: 'my-profile',
+                element: <SupsProfile />,
             },
             {
                 path: 'forum',

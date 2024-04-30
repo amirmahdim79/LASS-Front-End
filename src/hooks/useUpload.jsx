@@ -1,16 +1,17 @@
+import { UpdateSupsProfilePicAPI } from "api/sups";
 import { UpdateUserProfilePicAPI } from "api/users";
 import { useDispatch } from "react-redux";
 import { addUser } from "store/userSlice";
 import useAPI from "./useAPI";
 import useToast from "./useToast";
 
-const useUpload = (maxVolume=5*1024) => {
+const useUpload = (maxVolume=5*1024, userType='user') => {
 
     const dispatch = useDispatch();
     const { showToast } = useToast()
 
     const {pending:uploading , request: uploadImage} = useAPI({
-        apiMethod: UpdateUserProfilePicAPI,
+        apiMethod: userType === 'user' ? UpdateUserProfilePicAPI : UpdateSupsProfilePicAPI,
         successCallback: (res) => { 
             dispatch(addUser(res.data));
             showToast(`پروفایل شما تغییر کرد`,'success')

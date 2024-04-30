@@ -310,11 +310,11 @@ export default function Profile({editable=false}) {
 
             <div className={cs(styles['user_activities'])}>
                 {(editable ? !myProfileLoading : !userProfileLoading) ? <p className={cs(styles['title'])}> فعالیت دانشجو</p> : <div className={cs(styles['is_loading_title'])}/>}
-                {
+                {/* {
                     editable 
                         ? (!myProfileLoading) ? <ActivitiesTable activities={activities}/> : <Preloader />
                         : (!userProfileLoading) ?  <ActivitiesTable activities={activitiesOfUser}/> : <Preloader />
-                }
+                } */}
                
             </div>
 
